@@ -1,19 +1,20 @@
-import { Grid, Link } from "@mui/material";
+import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function MainMenu() {
   return (
     <Grid container>
       <Grid item padding={2}>
-        <Link href="/">Карта</Link>
+        <Link to="/">Карта</Link>
       </Grid>
       <Grid item padding={2}>
-        <Link href="/players">Участники</Link>
+        <Link to="/players">Участники</Link>
       </Grid>
       <Grid item padding={2}>
-        <Link href="/rules">Правила</Link>
+        <Link to="/rules">Правила</Link>
       </Grid>
       <Grid item padding={2}>
-        <Link href="/about">О Аукусе</Link>
+        <Link to="/about">О Аукусе</Link>
       </Grid>
     </Grid>
   );
