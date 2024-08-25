@@ -48,7 +48,7 @@ export default function PlayerPage(props: Props) {
   }
 
   return (
-    <Box>
+    <Box marginLeft={2}>
       <h1>Страница участника {player.name}</h1>
       <Link to={player.streamLink}>{player.streamLink}</Link>
 

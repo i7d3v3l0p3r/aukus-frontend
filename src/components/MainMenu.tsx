@@ -16,6 +16,9 @@ export default function MainMenu() {
       <Grid item padding={2}>
         <Link to="/about">О Аукусе</Link>
       </Grid>
+      <Grid item padding={2}>
+        <Link to="/plan">План</Link>
+      </Grid>
     </Grid>
   );
 }

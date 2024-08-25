@@ -1,4 +1,5 @@
 import AboutPage from "pages/about/AboutPage";
+import PlanPage from "pages/plan/PlanPage";
 import RulesPage from "pages/rules/RulesPage";
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -47,6 +48,14 @@ const router = createBrowserRouter(
       element: (
         <MainScreen>
           <AboutPage />
+        </MainScreen>
+      ),
+    },
+    {
+      path: "/plan",
+      element: (
+        <MainScreen>
+          <PlanPage />
         </MainScreen>
       ),
     },
