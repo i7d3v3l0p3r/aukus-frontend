@@ -9,11 +9,6 @@ export default function MapComponent() {
   const cells = 100;
   const cellsInRow = 10;
 
-  const cellsRef = useRef<HTMLElement[]>([]);
-  const addCellRef = (id: number, element: HTMLElement) => {
-    cellsRef.current[id] = element;
-  };
-
   const finishCell = { id: 101, direction: null } as MapCell;
   const startCell = { id: 0, direction: "right" } as MapCell;
 
@@ -54,18 +49,18 @@ export default function MapComponent() {
           <Grid container item key={index} xs="auto">
             {index === 0 && (
               <Grid item border={1}>
-                <CellItem cell={finishCell} addRef={addCellRef} />
+                <CellItem cell={finishCell} />
               </Grid>
             )}
             {index === 9 && (
               <Grid item border={1}>
-                <CellItem cell={startCell} addRef={addCellRef} />
+                <CellItem cell={startCell} />
               </Grid>
             )}
             {index > 0 && index < 9 && <Grid item xs={1} minHeight={cellSize} minWidth={cellSize}></Grid>}
             {row.map((cell) => (
               <Grid item key={cell.id} border={1}>
-                <CellItem cell={cell} addRef={addCellRef} />
+                <CellItem cell={cell} />
               </Grid>
             ))}
           </Grid>

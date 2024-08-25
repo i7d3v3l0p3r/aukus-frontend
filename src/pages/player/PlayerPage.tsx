@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { players } from "pages/players/types";
-import { range, sample } from "lodash";
+import { sample } from "lodash";
 import { Link, useParams } from "react-router-dom";
 import { GameRecord } from "./types";
 import { useState } from "react";

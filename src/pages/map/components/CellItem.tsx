@@ -4,10 +4,9 @@ import { cellSize, MapCell } from "../types";
 
 type Props = {
   cell: MapCell;
-  addRef: (id: number, el: HTMLElement) => void;
 };
 
-export default function CellItem({ cell, addRef }: Props) {
+export default function CellItem({ cell }: Props) {
   const directionIcons = {
     right: <ArrowRightAltSharp sx={{ fontSize: 30, verticalAlign: "middle" }} />,
     left: <ArrowRightAltSharp sx={{ fontSize: 30, verticalAlign: "middle", transform: "rotate(180deg)" }} />,

@@ -24,7 +24,7 @@ export default function PlayerIcon({ player }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player]);
 
-  console.log({ player, cell });
+  // console.log({ player, cell });
   if (!cell) {
     return null;
   }
