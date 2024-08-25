@@ -1,6 +1,7 @@
 {
   "name": "aukus-frontend",
   "version": "0.1.0",
+  "homepage": "https://mapcar.alwaysdata.net/aukus-demo",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.0",

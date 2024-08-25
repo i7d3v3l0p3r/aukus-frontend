@@ -8,48 +8,51 @@ import MapPage from "./pages/map/MapPage";
 import PlayerPage from "./pages/player/PlayerPage";
 import PlayersPage from "./pages/players/PlayersPage";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <MainScreen>
-        <MapPage />
-      </MainScreen>
-    ),
-  },
-  {
-    path: "/players",
-    element: (
-      <MainScreen>
-        <PlayersPage />
-      </MainScreen>
-    ),
-  },
-  {
-    path: "/players/:id",
-    element: (
-      <MainScreen>
-        <PlayerPage />
-      </MainScreen>
-    ),
-  },
-  {
-    path: "/rules",
-    element: (
-      <MainScreen>
-        <RulesPage />
-      </MainScreen>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <MainScreen>
-        <AboutPage />
-      </MainScreen>
-    ),
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: (
+        <MainScreen>
+          <MapPage />
+        </MainScreen>
+      ),
+    },
+    {
+      path: "/players",
+      element: (
+        <MainScreen>
+          <PlayersPage />
+        </MainScreen>
+      ),
+    },
+    {
+      path: "/players/:id",
+      element: (
+        <MainScreen>
+          <PlayerPage />
+        </MainScreen>
+      ),
+    },
+    {
+      path: "/rules",
+      element: (
+        <MainScreen>
+          <RulesPage />
+        </MainScreen>
+      ),
+    },
+    {
+      path: "/about",
+      element: (
+        <MainScreen>
+          <AboutPage />
+        </MainScreen>
+      ),
+    },
+  ],
+  { basename: "/aukus-demo" },
+);
 
 function App() {
   return (

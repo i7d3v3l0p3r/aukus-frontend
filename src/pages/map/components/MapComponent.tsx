@@ -1,6 +1,5 @@
 import { Box, Grid } from "@mui/material";
 import { players } from "pages/players/types";
-import { useRef } from "react";
 import { cellSize, MainMap, MapCell } from "../types";
 import CellItem from "./CellItem";
 import PlayerIcon from "./PlayerIcon";
