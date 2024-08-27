@@ -42,12 +42,12 @@ export default function MapComponent() {
   map.cells[100].direction = "left";
 
   return (
-    <Box>
+    <Box style={{ overflowX: "auto", minWidth: "1500px" }}>
       <Grid container justifyContent={"center"}>
         {rows.map((row, index) => (
           <Grid container item key={index} xs="auto">
             {index === 0 && (
-              <Grid item border={1}>
+              <Grid item borderTop={1} borderRight={1} borderLeft={1}>
                 <CellItem cell={finishCell} />
               </Grid>
             )}
@@ -56,15 +56,25 @@ export default function MapComponent() {
                 <CellItem cell={startCell} />
               </Grid>
             )}
-            {index > 0 && index < 9 && <Grid item xs={1} minHeight={cellSize} minWidth={cellSize}></Grid>}
+            {index > 0 && index < 9 && (
+              <Grid
+                item
+                borderRight={1}
+                style={{ borderLeft: "1px solid transparent" }}
+                borderTop={index === 1 ? 1 : 0}
+              >
+                <div style={{ minHeight: cellSize, minWidth: cellSize }} />
+              </Grid>
+            )}
             {row.map((cell) => (
-              <Grid item key={cell.id} border={1}>
+              <Grid item key={cell.id} borderRight={1} borderTop={1} borderBottom={index === 9 ? 1 : 0}>
                 <CellItem cell={cell} />
               </Grid>
             ))}
           </Grid>
         ))}
       </Grid>
+      <Box minHeight={100} />
       {players.map((player) => (
         <Box key={player.id}>
           <PlayerIcon key={player.id} player={player} />

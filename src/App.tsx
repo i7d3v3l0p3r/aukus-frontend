@@ -1,3 +1,4 @@
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import AboutPage from "pages/about/AboutPage";
 import PlanPage from "pages/plan/PlanPage";
 import RulesPage from "pages/rules/RulesPage";
@@ -63,10 +64,29 @@ const router = createBrowserRouter(
   { basename: "/aukus-demo" },
 );
 
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#a6d4fa",
+    },
+    text: {
+      primary: "#fff",
+      secondary: "#a6d4fa",
+    },
+    background: {
+      default: "#242424",
+    },
+  },
+});
+
 function App() {
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </React.StrictMode>
   );
 }
