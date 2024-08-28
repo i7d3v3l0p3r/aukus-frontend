@@ -6,12 +6,19 @@ import { Link } from "react-router-dom";
 
 type Props = {
   player: Player;
+  closePopup?: boolean;
 };
 
-export default function PlayerIcon({ player }: Props) {
+export default function PlayerIcon({ player, closePopup }: Props) {
   const [cell, setCell] = useState<HTMLElement | null>(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (popupOpen) {
+      setPopupOpen(false);
+    }
+  }, [closePopup]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +44,10 @@ export default function PlayerIcon({ player }: Props) {
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement);
     setPopupOpen(!popupOpen);
+    event.stopPropagation();
   };
+
+  const chipColor = player.isOnline ? "green" : "red";
 
   return (
     <Box position={"absolute"} top={top} left={left}>
@@ -63,7 +73,7 @@ export default function PlayerIcon({ player }: Props) {
               Текущая игра: {player.currentGame}
               <br />
               <Link to={player.streamLink} target="_blank" rel="noopener noreferrer">
-                Стрим
+                Стрим {player.isOnline ? "онлайн" : "оффлайн"}
               </Link>
               <br />
               <br />
@@ -77,7 +87,12 @@ export default function PlayerIcon({ player }: Props) {
         onClick={handleClick}
         label={player.name}
         variant="outlined"
-        style={{ background: player.color, color: "white", textDecoration: "underline" }}
+        style={{
+          background: player.color,
+          color: "white",
+          textDecoration: "underline",
+          border: `2px solid ${chipColor}`,
+        }}
       />
     </Box>
   );

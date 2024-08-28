@@ -7,6 +7,7 @@ export type Player = {
   mapPosition: number;
   color: string;
   currentGame?: string;
+  isOnline?: boolean;
 };
 
 export const playerLasqa: Player = {
@@ -14,8 +15,9 @@ export const playerLasqa: Player = {
   name: "Lasqa",
   streamLink: "https://live.vkplay.ru/lasqa",
   mapPosition: sample(range(1, 99)) as number,
-  color: "red",
+  color: "#283593",
   currentGame: "Балдурс Гейт 3",
+  isOnline: false,
 };
 
 export const playerSegall: Player = {
@@ -25,6 +27,7 @@ export const playerSegall: Player = {
   mapPosition: sample(range(1, 99)) as number,
   color: "blue",
   currentGame: "Соник",
+  isOnline: true,
 };
 
 export const playerRoadhouse: Player = {
@@ -32,8 +35,9 @@ export const playerRoadhouse: Player = {
   name: "Roadhouse",
   streamLink: "https://www.twitch.tv/roadhouse",
   mapPosition: sample(range(1, 99)) as number,
-  color: "green",
+  color: "#455A64",
   currentGame: "Готика",
+  isOnline: true,
 };
 
 export const players = [playerLasqa, playerSegall, playerRoadhouse].sort((a, b) => {

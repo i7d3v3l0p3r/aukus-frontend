@@ -4,9 +4,20 @@ export type MapCell = {
 };
 
 export type MainMap = {
+  cellRows: Array<Array<MapCell>>;
   cells: Array<MapCell>;
-  start: 0;
-  finish: 101;
+  startCell: MapCell;
+  finishCell: MapCell;
 };
 
 export const cellSize = 120;
+
+type Ladder = {
+  cellFrom: number;
+  cellTo: number;
+};
+
+type Snake = {
+  cellFrom: number;
+  cellTo: number;
+};
