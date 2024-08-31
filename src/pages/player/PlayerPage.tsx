@@ -35,7 +35,7 @@ export default function PlayerPage(props: Props) {
         status,
         diceRoll,
         nextPosition: currentPosition,
-        review: sample(["норм", "топ", "агуша", "кал"]),
+        review: sample(["норм", "топ", "ахуенно", "лучшая игра"]),
         vodLink: "link",
       });
     }
