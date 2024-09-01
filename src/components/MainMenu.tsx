@@ -14,7 +14,7 @@ export default function MainMenu() {
         <Link to="/rules">Правила</Link>
       </Grid>
       <Grid item padding={2}>
-        <Link to="/about">О Сауте</Link>
+        <Link to="/about">О Сайте</Link>
       </Grid>
     </Grid>
   );

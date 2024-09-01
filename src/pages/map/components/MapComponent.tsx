@@ -75,6 +75,7 @@ export default function MapComponent() {
         onAnimationEnd={handleAnimationEnd}
       />
       <ActionButton handleClick={handleActionClick} />
+      <Box marginTop={20} />
     </Box>
   );
 }
