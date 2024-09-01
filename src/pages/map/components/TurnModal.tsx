@@ -24,6 +24,8 @@ type Props = {
 export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [rating, setRating] = useState<number | null>(null);
   const [status, setStatus] = useState<"completed" | "drop" | null>(null);
+  const [gameName, setGameName] = useState("");
+  const [review, setReview] = useState("");
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
     setRating(newValue);
@@ -31,6 +33,14 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
 
   const handleStatusChange = (event: React.SyntheticEvent, newValue: "completed" | "drop" | null) => {
     setStatus(newValue);
+  };
+
+  const handleGameNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGameName(event.target.value);
+  };
+
+  const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setReview(event.target.value);
   };
 
   return (
@@ -53,7 +63,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       <DialogContent dividers>
         <Box>
           Игра победитель аука
-          <Input type="text" fullWidth />
+          <Input type="text" fullWidth value={gameName} onChange={handleGameNameChange} />
         </Box>
         <Box marginTop={3}>
           <ToggleButtonGroup
@@ -70,11 +80,11 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         </Box>
         <Box marginTop={3} display="flex">
           Оценка: {rating || 0}
-          <Rating precision={0.5} max={10} sx={{ marginLeft: 2 }} onChange={handleRatingChange} />
+          <Rating precision={0.5} max={10} sx={{ marginLeft: 2 }} onChange={handleRatingChange} value={rating} />
         </Box>
         <Box marginTop={3}>
           Отзыв
-          <TextField multiline fullWidth rows={3} />
+          <TextField multiline fullWidth rows={3} value={review} onChange={handleReviewChange} />
         </Box>
       </DialogContent>
       <DialogActions>
