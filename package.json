@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@react-spring/web": "^9.7.4",
     "@types/lodash": "^4.17.7",
     "lodash": "^4.17.21"
   }

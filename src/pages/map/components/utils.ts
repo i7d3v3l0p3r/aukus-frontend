@@ -32,7 +32,8 @@ function generateMapCells() {
   return rows;
 }
 
-export const mapCells: Array<MapCell> = generateMapCells()
-  .flat()
-  .sort((cell: MapCell) => cell.id);
-export const mapCellRows: Array<Array<MapCell>> = generateMapCells();
+const generatedMapCells = generateMapCells();
+export const mapCellsSorted: Array<MapCell> = generatedMapCells.flat(1).sort((a, b) => a.id - b.id);
+export const mapCellRows: Array<Array<MapCell>> = generatedMapCells;
+
+export const getMapCellById = (id: number) => mapCellsSorted[id - 1];

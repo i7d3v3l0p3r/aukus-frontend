@@ -3,43 +3,111 @@ import { Player } from "pages/players/types";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSpring, animated } from "@react-spring/web";
+import { getMapCellById } from "./utils";
+import { cellSize } from "../types";
 
 type Props = {
   player: Player;
   closePopup?: boolean;
+  moveSteps: number;
+  onAnimationEnd: (player: Player, steps: number) => void;
 };
 
-export default function PlayerIcon({ player, closePopup }: Props) {
-  const [cell, setCell] = useState<HTMLElement | null>(null);
+export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationEnd }: Props) {
+  const [anchorCell, setAnchorCell] = useState<HTMLElement | null>(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null);
+
+  const [springs, api] = useSpring(() => {
+    return {
+      from: {
+        x: 0,
+        y: 0,
+      },
+    };
+  }, []);
 
   useEffect(() => {
     if (popupOpen) {
       setPopupOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closePopup]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (cell) {
-        clearInterval(interval);
-        return;
+  const startChainedAnimation = (moves: number) => {
+    const currentLocation = { x: 0, y: 0 };
+    const animationsList: Array<{ x: number; y: number }> = [];
+    for (let i = 0; i < moves; i++) {
+      const nextCell = getMapCellById(player.mapPosition + i);
+      if (!nextCell) {
+        break;
       }
+
+      const nextLocation = { x: currentLocation.x, y: currentLocation.y };
+
+      // console.log({ nextCell, currentLocation, position: player.mapPosition });
+      switch (nextCell.direction) {
+        case "right":
+          nextLocation.x += cellSize;
+          break;
+        case "left":
+          nextLocation.x -= cellSize;
+          break;
+        case "up":
+          nextLocation.y -= cellSize;
+          break;
+      }
+      animationsList.push(nextLocation);
+      currentLocation.x = nextLocation.x;
+      currentLocation.y = nextLocation.y;
+    }
+
+    // console.log({ animationsList });
+
+    api.start({
+      from: { x: 0, y: 0 },
+      to: async (next, cancel) => {
+        for (let i = 0; i < animationsList.length; i++) {
+          await next(animationsList[i]);
+        }
+        onAnimationEnd(player, moves);
+      },
+      config: { duration: 200 * moves },
+    });
+  };
+
+  useEffect(() => {
+    if (moveSteps > 0 && player.mapPosition <= 100) {
+      startChainedAnimation(moveSteps);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moveSteps]);
+
+  useEffect(() => {
+    if (anchorCell) {
+      api.start({ from: { x: 0, y: 0 }, to: { x: 0, y: 0 } });
+    }
+  }, [anchorCell, api]);
+
+  useEffect(() => {
+    // console.log("updating map position to", player.mapPosition);
+    const interval = setInterval(() => {
       const findCell = document.getElementById(`map-cell-${player.mapPosition}`);
-      setCell(findCell);
+      setAnchorCell(findCell);
+      clearInterval(interval);
     }, 50);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player]);
+  }, [player.mapPosition]);
 
   // console.log({ player, cell });
-  if (!cell) {
+  if (!anchorCell) {
     return null;
   }
 
-  const top = cell.offsetTop + 40;
-  const left = cell.offsetLeft + 10;
+  const top = anchorCell.offsetTop + 40;
+  const left = anchorCell.offsetLeft + 10;
 
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement);
@@ -50,7 +118,7 @@ export default function PlayerIcon({ player, closePopup }: Props) {
   const chipColor = player.isOnline ? "green" : "red";
 
   return (
-    <Box position={"absolute"} top={top} left={left}>
+    <animated.div style={{ position: "absolute", top, left, ...springs }}>
       <Box position="relative">
         <Popper
           open={popupOpen}
@@ -94,6 +162,6 @@ export default function PlayerIcon({ player, closePopup }: Props) {
           border: `2px solid ${chipColor}`,
         }}
       />
-    </Box>
+    </animated.div>
   );
 }

@@ -1,26 +1,38 @@
 import { Box, Grid } from "@mui/material";
-import { players } from "pages/players/types";
+import { Player, players as playersPreset } from "pages/players/types";
 import { useState } from "react";
 import { cellSize, MainMap, MapCell } from "../types";
+import ActionButton from "./ActionButton";
 import CellItem from "./CellItem";
 import PlayerIcon from "./PlayerIcon";
-import { mapCellRows, mapCells } from "./utils";
+import { mapCellRows, mapCellsSorted } from "./utils";
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell;
   const startCell = { id: 0, direction: "right" } as MapCell;
 
   const [closePopups, setClosePopups] = useState(false);
+  const [moveSteps, setMoveSteps] = useState(0);
 
   const map: MainMap = {
     cellRows: mapCellRows,
-    cells: mapCells,
+    cells: mapCellsSorted,
     startCell,
     finishCell,
   };
 
   const handleClick = () => {
     setClosePopups(!closePopups);
+  };
+
+  const handleActionClick = () => {
+    // save player position in API
+    setMoveSteps(5);
+  };
+
+  const handleAnimationEnd = (player: Player, moves: number) => {
+    setMoveSteps(0);
+    player.mapPosition += moves;
   };
 
   return (
@@ -56,12 +68,13 @@ export default function MapComponent() {
           </Grid>
         ))}
       </Grid>
-      <Box minHeight={100} />
-      {players.map((player) => (
-        <Box key={player.id}>
-          <PlayerIcon key={player.id} player={player} closePopup={closePopups} />
-        </Box>
-      ))}
+      <PlayerIcon
+        player={playersPreset[0]}
+        closePopup={closePopups}
+        moveSteps={moveSteps}
+        onAnimationEnd={handleAnimationEnd}
+      />
+      <ActionButton handleClick={handleActionClick} />
     </Box>
   );
 }
