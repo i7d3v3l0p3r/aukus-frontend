@@ -36,4 +36,9 @@ const generatedMapCells = generateMapCells();
 export const mapCellsSorted: Array<MapCell> = generatedMapCells.flat(1).sort((a, b) => a.id - b.id);
 export const mapCellRows: Array<Array<MapCell>> = generatedMapCells;
 
-export const getMapCellById = (id: number) => mapCellsSorted[id - 1];
+export const getMapCellById = (id: number) => {
+  if (id === 0) {
+    return { id: 0, direction: "right" };
+  }
+  return mapCellsSorted[id - 1];
+};

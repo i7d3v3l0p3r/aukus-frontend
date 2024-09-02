@@ -49,8 +49,10 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
     const moveOffset = backward ? -cellSize : cellSize;
 
     const animationsList: Array<{ x: number; y: number }> = [];
-    for (let i = 0; i < Math.abs(moves); i++) {
+    for (let i = 0; i < Math.abs(normalizedMoves); i++) {
       const nextCell = backward ? getMapCellById(player.mapPosition - i - 1) : getMapCellById(player.mapPosition + i);
+      // console.log("next cell", { nextCell }, player.mapPosition, i);
+
       if (!nextCell) {
         continue;
       }
