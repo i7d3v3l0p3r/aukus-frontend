@@ -20,7 +20,7 @@ export default function CellItem({ cell, currentPlayer }: Props) {
   let relativeLocation = null;
   if (currentPlayer) {
     const diff = cell.id - currentPlayer.mapPosition;
-    if (diff >= 1 && diff <= 6) {
+    if (diff >= -6 && diff <= 6 && diff !== 0) {
       relativeLocation = diff;
     }
   }
@@ -43,8 +43,8 @@ export default function CellItem({ cell, currentPlayer }: Props) {
       </Box>
       {relativeLocation && (
         <Box textAlign={"center"}>
-          <Typography variant="h3" fontWeight={100}>
-            {relativeLocation}
+          <Typography variant="h3" fontWeight={100} color={relativeLocation > 0 ? "#546e7a" : "#5d4037"}>
+            {Math.abs(relativeLocation)}
           </Typography>
         </Box>
       )}

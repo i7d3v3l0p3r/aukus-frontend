@@ -100,7 +100,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setDiceRoll(null);
     setDiceStatus("idle");
     if (diceRoll) {
-      onConfirm(diceRoll);
+      onConfirm(status === "completed" ? diceRoll : -diceRoll);
     }
   };
 

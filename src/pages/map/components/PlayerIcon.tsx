@@ -37,11 +37,14 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
 
   const startChainedAnimation = (moves: number) => {
     const currentLocation = { x: 0, y: 0 };
+    const backward = moves < 0;
+    const moveOffset = backward ? -cellSize : cellSize;
+
     const animationsList: Array<{ x: number; y: number }> = [];
-    for (let i = 0; i < moves; i++) {
-      const nextCell = getMapCellById(player.mapPosition + i);
+    for (let i = 0; i < Math.abs(moves); i++) {
+      const nextCell = backward ? getMapCellById(player.mapPosition - i - 1) : getMapCellById(player.mapPosition + i);
       if (!nextCell) {
-        break;
+        continue;
       }
 
       const nextLocation = { x: currentLocation.x, y: currentLocation.y };
@@ -49,15 +52,16 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
       // console.log({ nextCell, currentLocation, position: player.mapPosition });
       switch (nextCell.direction) {
         case "right":
-          nextLocation.x += cellSize;
+          nextLocation.x += moveOffset;
           break;
         case "left":
-          nextLocation.x -= cellSize;
+          nextLocation.x -= moveOffset;
           break;
         case "up":
-          nextLocation.y -= cellSize;
+          nextLocation.y -= moveOffset;
           break;
       }
+
       animationsList.push(nextLocation);
       currentLocation.x = nextLocation.x;
       currentLocation.y = nextLocation.y;
@@ -78,7 +82,13 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
   };
 
   useEffect(() => {
-    if (moveSteps > 0 && player.mapPosition <= 100) {
+    if (moveSteps !== 0 && player.mapPosition <= 100) {
+      if (anchorCell) {
+        window.scrollTo({
+          top: anchorCell.offsetTop - window.innerHeight / 2,
+          behavior: "smooth",
+        });
+      }
       startChainedAnimation(moveSteps);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

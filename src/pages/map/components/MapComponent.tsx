@@ -32,7 +32,7 @@ export default function MapComponent() {
 
   const handleAnimationEnd = (player: Player, moves: number) => {
     setMoveSteps(0);
-    player.mapPosition += moves;
+    player.mapPosition = Math.min(101, player.mapPosition + moves);
   };
 
   return (

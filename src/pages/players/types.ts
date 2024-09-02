@@ -14,7 +14,7 @@ export const playerLasqa: Player = {
   id: "lasqa",
   name: "Lasqa",
   streamLink: "https://live.vkplay.ru/lasqa",
-  mapPosition: sample(range(1, 99)) as number,
+  mapPosition: 0,
   color: "#283593",
   currentGame: "Балдурс Гейт 3",
   isOnline: false,
