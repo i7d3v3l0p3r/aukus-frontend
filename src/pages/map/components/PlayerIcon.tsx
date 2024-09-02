@@ -73,7 +73,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
         }
         onAnimationEnd(player, moves);
       },
-      config: { duration: 200 * moves },
+      config: { duration: 1000 },
     });
   };
 

@@ -13,19 +13,33 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
+
+import DiceBox from "@3d-dice/dice-box";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (diceRoll: number) => void;
 };
+
+type DiceRoll = {
+  value: number;
+};
+
+const DiceBoxContainerId = "dice-box";
+const DiceBoxContainer = "#dice-box";
 
 export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [rating, setRating] = useState<number | null>(null);
   const [status, setStatus] = useState<"completed" | "drop" | null>(null);
   const [gameName, setGameName] = useState("");
   const [review, setReview] = useState("");
+  const [diceRoll, setDiceRoll] = useState<number | null>(null);
+  const [diceStatus, setDiceStatus] = useState<"idle" | "rolling" | "done" | "clear">("idle");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const isTurnComplete = diceRoll !== null;
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
     setRating(newValue);
@@ -43,13 +57,65 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setReview(event.target.value);
   };
 
+  const handleThrowDice = () => {
+    if (diceStatus !== "idle") {
+      return;
+    }
+
+    setDiceStatus("rolling");
+    scrollToDialogBottom();
+    const diceBox = new DiceBox({
+      assetPath: "/aukus-demo/assets/",
+      container: DiceBoxContainer,
+      scale: 15,
+      width: 300,
+      height: 200,
+      themeColor: getRandomHexColor(),
+      gravity: 0.5,
+      restitution: 0.2,
+      mass: 0.7,
+      angularDamping: 0.2,
+      linearDamping: 0.2,
+    });
+    if (diceBox) {
+      if (containerRef.current) {
+        // diceBox.canvas.marginLeft = "10px";
+        diceBox.canvas.width = containerRef.current.clientWidth - 10;
+        diceBox.canvas.height = containerRef.current.clientHeight - 10;
+      }
+      diceBox.init().then(() => {
+        diceBox.roll("1d6").then((result: Array<DiceRoll>) => {
+          setDiceRoll(result[0].value);
+          setDiceStatus("done");
+        });
+      });
+    }
+  };
+
+  const handleConfirmTurn = () => {
+    setRating(null);
+    setStatus(null);
+    setGameName("");
+    setReview("");
+    setDiceRoll(null);
+    setDiceStatus("idle");
+    if (diceRoll) {
+      onConfirm(diceRoll);
+    }
+  };
+
+  const handleClose = () => {
+    setDiceStatus("clear");
+    onClose();
+  };
+
   return (
     <Dialog open={open} onClose={() => {}} fullWidth>
       <DialogTitle>
         Следующий ход
         <IconButton
           aria-label="close"
-          onClick={onClose}
+          onClick={handleClose}
           sx={(theme) => ({
             position: "absolute",
             right: 8,
@@ -72,9 +138,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
             onChange={handleStatusChange}
             color={status === "completed" ? "success" : "error"}
           >
-            <ToggleButton value="completed" sx={{ marginRight: 2 }}>
-              Прошел
-            </ToggleButton>
+            <ToggleButton value="completed">Прошел</ToggleButton>
             <ToggleButton value="drop">Дропнул</ToggleButton>
           </ToggleButtonGroup>
         </Box>
@@ -86,10 +150,57 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           Отзыв
           <TextField multiline fullWidth rows={3} value={review} onChange={handleReviewChange} />
         </Box>
+        <Box marginTop={3}>{diceRoll && <Box>Бросок кубика: {diceRoll}</Box>}</Box>
+        {diceStatus !== "clear" && (
+          <Box marginTop={1}>
+            <div
+              id={DiceBoxContainerId}
+              className={diceStatus === "idle" ? "active" : ""}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                minHeight: "200px",
+                border: "1px solid grey",
+                borderRadius: 5,
+                padding: "5px",
+                cursor: diceStatus === "idle" ? "pointer" : "default",
+              }}
+              ref={containerRef}
+              onClick={handleThrowDice}
+            >
+              {diceStatus === "idle" && <div>Бросить кубик</div>}
+            </div>
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onConfirm}>Ходить</Button>
+        <Button onClick={handleConfirmTurn} disabled={!isTurnComplete}>
+          Ходить
+        </Button>
       </DialogActions>
     </Dialog>
   );
+}
+
+function scrollToDialogBottom() {
+  // Find the dialog content container
+  const dialogContent = document.querySelector(".MuiDialogContent-root");
+  if (!dialogContent) {
+    console.error("Dialog content not found.");
+    return;
+  }
+  dialogContent.scrollTop = dialogContent.scrollHeight;
+}
+
+function getRandomHexColor(): string {
+  // Helper function to convert a number to a two-digit hex string
+  const toHex = (n: number): string => n.toString(16).padStart(2, "0");
+
+  // Generate random numbers for red, green, and blue components
+  const r = Math.floor(Math.random() * 256); // Red component (0-255)
+  const g = Math.floor(Math.random() * 256); // Green component (0-255)
+  const b = Math.floor(Math.random() * 256); // Blue component (0-255)
+
+  // Return the hexadecimal color code as a string
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }

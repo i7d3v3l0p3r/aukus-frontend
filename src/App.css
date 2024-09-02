@@ -51,3 +51,7 @@ a:active {
     text-decoration: none;
     font-weight: normal;
 }
+
+div#dice-box.active:hover {
+    background: #282c34;
+}

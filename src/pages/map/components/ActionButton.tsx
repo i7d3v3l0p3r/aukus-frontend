@@ -3,14 +3,19 @@ import { useState } from "react";
 import TurnModal from "./TurnModal";
 
 type Props = {
-  handleClick: () => void;
+  handleNextTurn: (diceRoll: number) => void;
 };
 
-export default function ActionButton({}: Props) {
+export default function ActionButton({ handleNextTurn }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleClick = () => {
     setModalOpen(true);
+  };
+
+  const handleConfirm = (diceRoll: number) => {
+    setModalOpen(false);
+    handleNextTurn(diceRoll);
   };
 
   return (
@@ -20,7 +25,7 @@ export default function ActionButton({}: Props) {
           Сделать ход
         </Button>
       </Box>
-      <TurnModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={() => setModalOpen(false)} />
+      <TurnModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleConfirm} />
     </>
   );
 }

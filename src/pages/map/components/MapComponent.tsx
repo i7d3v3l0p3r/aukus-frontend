@@ -25,9 +25,9 @@ export default function MapComponent() {
     setClosePopups(!closePopups);
   };
 
-  const handleActionClick = () => {
+  const handleActionClick = (diceRoll: number) => {
     // save player position in API
-    setMoveSteps(5);
+    setMoveSteps(diceRoll);
   };
 
   const handleAnimationEnd = (player: Player, moves: number) => {
@@ -62,7 +62,7 @@ export default function MapComponent() {
             )}
             {row.map((cell) => (
               <Grid item key={cell.id} borderRight={1} borderTop={1} borderBottom={index === 9 ? 1 : 0}>
-                <CellItem cell={cell} />
+                <CellItem cell={cell} currentPlayer={playersPreset[0]} />
               </Grid>
             ))}
           </Grid>
@@ -74,7 +74,7 @@ export default function MapComponent() {
         moveSteps={moveSteps}
         onAnimationEnd={handleAnimationEnd}
       />
-      <ActionButton handleClick={handleActionClick} />
+      <ActionButton handleNextTurn={handleActionClick} />
       <Box marginTop={20} />
     </Box>
   );
