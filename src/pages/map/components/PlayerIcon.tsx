@@ -36,6 +36,14 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
   }, [closePopup]);
 
   const startChainedAnimation = (moves: number) => {
+    let normalizedMoves = moves;
+    if (player.mapPosition + moves > 100) {
+      normalizedMoves = 100 - player.mapPosition;
+    }
+    if (player.mapPosition + moves < 1) {
+      normalizedMoves = -player.mapPosition - 1;
+    }
+
     const currentLocation = { x: 0, y: 0 };
     const backward = moves < 0;
     const moveOffset = backward ? -cellSize : cellSize;
