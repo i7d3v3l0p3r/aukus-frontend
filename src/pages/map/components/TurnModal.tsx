@@ -39,7 +39,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [diceStatus, setDiceStatus] = useState<"idle" | "rolling" | "done" | "clear">("idle");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const isTurnComplete = diceRoll !== null;
+  const isTurnComplete = diceRoll !== null && status !== null;
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
     setRating(newValue);
