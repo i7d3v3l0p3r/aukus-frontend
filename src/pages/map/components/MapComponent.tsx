@@ -49,7 +49,6 @@ export default function MapComponent() {
         justifyContent={"center"}
         style={{
           backgroundImage: "url('map_background.png')",
-          backgroundSize: "88% 100%" /* Cover the entire div */,
           backgroundPosition: "center" /* Center the image */,
           backgroundRepeat: "no-repeat" /* Prevent the image from repeating */,
         }}
