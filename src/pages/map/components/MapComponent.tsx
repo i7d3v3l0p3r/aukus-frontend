@@ -48,7 +48,7 @@ export default function MapComponent() {
         container
         justifyContent={"center"}
         style={{
-          backgroundImage: "url('aukus-demo/map_background.png')",
+          backgroundImage: "url('map_background.png')",
           backgroundSize: "88% 100%" /* Cover the entire div */,
           backgroundPosition: "center" /* Center the image */,
           backgroundRepeat: "no-repeat" /* Prevent the image from repeating */,

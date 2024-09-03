@@ -13,7 +13,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import DiceBox from "@3d-dice/dice-box";
 
@@ -35,7 +35,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [status, setStatus] = useState<"completed" | "drop" | null>(null);
   const [gameName, setGameName] = useState("");
   const [review, setReview] = useState("");
-  const [diceRoll, setDiceRoll] = useState<number | null>(null);
+  const [diceRoll, setDiceRoll] = useState<Array<number> | null>(null);
   const [diceStatus, setDiceStatus] = useState<"idle" | "rolling" | "done" | "clear">("idle");
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +62,8 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const handleGameHoursChange = (event: React.SyntheticEvent, newValue: "short" | "medium" | "long" | null) => {
     setGameHours(newValue);
   };
+
+  const diceRollSum = diceRoll ? diceRoll.reduce((acc, value) => acc + value, 0) : null;
 
   let dice: string | null = null;
   if (status === "drop") {
@@ -112,8 +114,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       }
       diceBox.init().then(() => {
         diceBox.roll(dice).then((result: Array<DiceRoll>) => {
-          const totalRoll = result.reduce((acc, diceRoll) => acc + diceRoll.value, 0);
-          setDiceRoll(totalRoll);
+          setDiceRoll(result.map((diceRoll) => diceRoll.value));
           setDiceStatus("done");
         });
       });
@@ -127,8 +128,8 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setReview("");
     setDiceRoll(null);
     setDiceStatus("idle");
-    if (diceRoll) {
-      onConfirm(status === "completed" ? diceRoll : -diceRoll);
+    if (diceRollSum) {
+      onConfirm(status === "completed" ? diceRollSum : -diceRollSum);
     }
   };
 
@@ -186,7 +187,13 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           Отзыв
           <TextField multiline fullWidth rows={3} value={review} onChange={handleReviewChange} />
         </Box>
-        <Box marginTop={3}>{diceRoll && <Box>Бросок кубика: {diceRoll}</Box>}</Box>
+        <Box marginTop={3}>
+          {diceRoll && (
+            <Box>
+              Бросок кубика: {diceRollSum} {diceRoll.length > 1 ? `(${diceRoll.toString()})` : ""}
+            </Box>
+          )}
+        </Box>
         {diceStatus !== "clear" && (
           <Box marginTop={1}>
             <div
