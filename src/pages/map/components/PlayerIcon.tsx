@@ -46,7 +46,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
 
     const currentLocation = { x: 0, y: 0 };
     const backward = moves < 0;
-    const moveOffset = backward ? -cellSize : cellSize;
+    const moveOffset = backward ? -cellSize - 1 : cellSize + 1;
 
     const animationsList: Array<{ x: number; y: number }> = [];
     for (let i = 0; i < Math.abs(normalizedMoves); i++) {
