@@ -37,8 +37,23 @@ export default function MapComponent() {
   };
 
   return (
-    <Box style={{ overflowX: "auto", minWidth: "1500px" }} onClick={handleClick}>
-      <Grid container justifyContent={"center"}>
+    <Box
+      style={{
+        overflowX: "auto",
+        minWidth: "1500px",
+      }}
+      onClick={handleClick}
+    >
+      <Grid
+        container
+        justifyContent={"center"}
+        style={{
+          backgroundImage: "url('aukus-demo/map_background.png')",
+          backgroundSize: "88% 100%" /* Cover the entire div */,
+          backgroundPosition: "center" /* Center the image */,
+          backgroundRepeat: "no-repeat" /* Prevent the image from repeating */,
+        }}
+      >
         {map.cellRows.map((row, index) => (
           <Grid container item key={index} xs="auto">
             {index === 0 && (
