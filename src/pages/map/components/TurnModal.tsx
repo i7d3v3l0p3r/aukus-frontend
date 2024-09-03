@@ -39,6 +39,8 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [diceStatus, setDiceStatus] = useState<"idle" | "rolling" | "done" | "clear">("idle");
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [gameHours, setGameHours] = useState<"short" | "medium" | "long" | null>(null);
+
   const isTurnComplete = diceRoll !== null && status !== null;
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
@@ -57,8 +59,33 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setReview(event.target.value);
   };
 
+  const handleGameHoursChange = (event: React.SyntheticEvent, newValue: "short" | "medium" | "long" | null) => {
+    setGameHours(newValue);
+  };
+
+  let dice: string | null = null;
+  if (status === "drop") {
+    dice = "1d6";
+  }
+  if (status === "completed" && gameHours) {
+    switch (gameHours) {
+      case "short":
+        dice = "1d6";
+        break;
+      case "medium":
+        dice = "2d6";
+        break;
+      case "long":
+        dice = "3d6";
+        break;
+    }
+  }
+
   const handleThrowDice = () => {
     if (diceStatus !== "idle") {
+      return;
+    }
+    if (!dice) {
       return;
     }
 
@@ -84,8 +111,9 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         diceBox.canvas.height = containerRef.current.clientHeight - 10;
       }
       diceBox.init().then(() => {
-        diceBox.roll("1d6").then((result: Array<DiceRoll>) => {
-          setDiceRoll(result[0].value);
+        diceBox.roll(dice).then((result: Array<DiceRoll>) => {
+          const totalRoll = result.reduce((acc, diceRoll) => acc + diceRoll.value, 0);
+          setDiceRoll(totalRoll);
           setDiceStatus("done");
         });
       });
@@ -141,6 +169,14 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
             <ToggleButton value="completed">Прошел</ToggleButton>
             <ToggleButton value="drop">Дропнул</ToggleButton>
           </ToggleButtonGroup>
+
+          {status === "completed" && (
+            <ToggleButtonGroup exclusive value={gameHours} onChange={handleGameHoursChange} sx={{ marginLeft: 4 }}>
+              <ToggleButton value="short">0-5 часов</ToggleButton>
+              <ToggleButton value="medium">5-15 часов</ToggleButton>
+              <ToggleButton value="long">15+ часов</ToggleButton>
+            </ToggleButtonGroup>
+          )}
         </Box>
         <Box marginTop={3} display="flex">
           Оценка: {rating || 0}
@@ -168,7 +204,8 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
               ref={containerRef}
               onClick={handleThrowDice}
             >
-              {diceStatus === "idle" && <div>Бросить кубик</div>}
+              {diceStatus === "idle" && dice && <div>Бросить кубик {dice}</div>}
+              {diceStatus === "idle" && !dice && <div>Заполни прохождение игры</div>}
             </div>
           </Box>
         )}
