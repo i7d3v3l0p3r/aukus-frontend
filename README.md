@@ -1,5 +1,17 @@
-# aukus-frontend
-Frontend for Aukus website
+# Aukus Frontend
+
+This is the frontend for the Aukus project.
+
+# Todo
+## Features
+- [ ] Add user context
+- [ ] Update data flow
+- [ ] Add snakes & ladders
+- [ ] Update rules for dice amount
+- [ ] Fix moving back to start cell
+- [ ] Add list of previous blocked games for each player
+- [ ] Make relative numbers appear on moving
+- [ ] Add display of multiple players on the same cell
 
 # Getting Started with Create React App
 
