@@ -128,6 +128,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setReview("");
     setDiceRoll(null);
     setDiceStatus("idle");
+    setGameHours(null);
     if (diceRollSum) {
       onConfirm(status === "completed" ? diceRollSum : -diceRollSum);
     }
@@ -211,7 +212,12 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
               ref={containerRef}
               onClick={handleThrowDice}
             >
-              {diceStatus === "idle" && dice && <div>Бросить кубик {dice}</div>}
+              {diceStatus === "idle" && dice && (
+                <div>
+                  Бросить кубик {dice}
+                  <div style={{ color: "red" }}>ПЕРЕБРАСЫВАТЬ НЕЛЬЗЯ!</div>
+                </div>
+              )}
               {diceStatus === "idle" && !dice && <div>Заполни прохождение игры</div>}
             </div>
           </Box>

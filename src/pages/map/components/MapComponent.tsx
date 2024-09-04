@@ -77,7 +77,7 @@ export default function MapComponent() {
             )}
             {row.map((cell) => (
               <Grid item key={cell.id} borderRight={1} borderTop={1} borderBottom={index === 9 ? 1 : 0}>
-                <CellItem cell={cell} currentPlayer={playersPreset[0]} />
+                <CellItem cell={cell} currentPlayer={playersPreset[0]} moveSteps={moveSteps} />
               </Grid>
             ))}
           </Grid>

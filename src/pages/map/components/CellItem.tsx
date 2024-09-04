@@ -6,9 +6,10 @@ import { cellSize, MapCell } from "../types";
 type Props = {
   cell: MapCell;
   currentPlayer?: Player;
+  moveSteps?: number;
 };
 
-export default function CellItem({ cell, currentPlayer }: Props) {
+export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
   const directionIcons = {
     right: <ArrowRightAltSharp sx={{ fontSize: 30, verticalAlign: "middle" }} />,
     left: <ArrowRightAltSharp sx={{ fontSize: 30, verticalAlign: "middle", transform: "rotate(180deg)" }} />,
@@ -18,10 +19,13 @@ export default function CellItem({ cell, currentPlayer }: Props) {
   const label = cell.id === 0 ? "Старт" : cell.id === 101 ? "Финиш" : cell.id;
 
   let relativeLocation = null;
-  if (currentPlayer) {
-    const diff = cell.id - currentPlayer.mapPosition;
-    if (diff >= -6 && diff <= 6 && diff !== 0) {
-      relativeLocation = diff;
+  if (currentPlayer && moveSteps && moveSteps !== 0) {
+    const target = currentPlayer.mapPosition + moveSteps;
+    if (moveSteps > 0 && cell.id > currentPlayer.mapPosition && cell.id <= target) {
+      relativeLocation = cell.id - currentPlayer.mapPosition;
+    }
+    if (moveSteps < 0 && cell.id < currentPlayer.mapPosition && cell.id >= target) {
+      relativeLocation = cell.id - currentPlayer.mapPosition;
     }
   }
 
