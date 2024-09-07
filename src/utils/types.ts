@@ -1,5 +1,5 @@
 export type Player = {
-  id: string;
+  id: number;
   name: string;
   stream_link: string;
   is_online: boolean;

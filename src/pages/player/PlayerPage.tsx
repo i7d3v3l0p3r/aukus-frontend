@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import { players } from "utils/mocks";
+import { playersMock } from "utils/mocks";
 import { sample } from "lodash";
 import { Link, useParams } from "react-router-dom";
 import { PlayerMove } from "utils/types";
@@ -8,7 +8,7 @@ import { useState } from "react";
 type Props = {};
 
 export default function PlayerPage(props: Props) {
-  const { id } = useParams();
+  const { id: playerHandle } = useParams();
 
   const itemsAmount = 10;
   const [playerMoves, setPlayerMoves] = useState<PlayerMove[]>(() => {
@@ -47,7 +47,7 @@ export default function PlayerPage(props: Props) {
     return data;
   });
 
-  const player = players.find((player) => player.id === id);
+  const player = playersMock.find((player) => player.url_handle === playerHandle);
   if (!player) {
     return <h1>Игрок не найден</h1>;
   }
@@ -87,7 +87,7 @@ export default function PlayerPage(props: Props) {
           </Grid>
         </Grid>
         {playerMoves.map((move) => (
-          <Grid container columns={8} paddingTop={1} borderTop={1}>
+          <Grid container columns={8} paddingTop={1} borderTop={1} key={move.id}>
             <Grid item xs={1}>
               {move.created_at}
             </Grid>

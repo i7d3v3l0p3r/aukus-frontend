@@ -1,12 +1,13 @@
 import { Box, Grid } from "@mui/material";
 import { Player } from "utils/types";
-import { players as playersPreset } from "utils/mocks";
 import { useState } from "react";
 import { cellSize, MainMap, MapCell } from "../types";
 import ActionButton from "./ActionButton";
 import CellItem from "./CellItem";
 import PlayerIcon from "./PlayerIcon";
 import { mapCellRows, mapCellsSorted } from "./utils";
+import { fetchPlayers } from "utils/api";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell;
@@ -14,6 +15,10 @@ export default function MapComponent() {
 
   const [closePopups, setClosePopups] = useState(false);
   const [moveSteps, setMoveSteps] = useState(0);
+
+  const { data } = useQuery({ queryKey: ["players"], queryFn: fetchPlayers, refetchInterval: 10000 });
+
+  const players = data?.players;
 
   const map: MainMap = {
     cellRows: mapCellRows,
@@ -78,18 +83,22 @@ export default function MapComponent() {
             )}
             {row.map((cell) => (
               <Grid item key={cell.id} borderRight={1} borderTop={1} borderBottom={index === 9 ? 1 : 0}>
-                <CellItem cell={cell} currentPlayer={playersPreset[0]} moveSteps={moveSteps} />
+                <CellItem cell={cell} currentPlayer={players?.[0]} moveSteps={moveSteps} />
               </Grid>
             ))}
           </Grid>
         ))}
       </Grid>
-      <PlayerIcon
-        player={playersPreset[0]}
-        closePopup={closePopups}
-        moveSteps={moveSteps}
-        onAnimationEnd={handleAnimationEnd}
-      />
+      {players &&
+        players.map((player) => (
+          <PlayerIcon
+            key={player.id}
+            player={player}
+            closePopup={closePopups}
+            moveSteps={moveSteps}
+            onAnimationEnd={handleAnimationEnd}
+          />
+        ))}
       <ActionButton handleNextTurn={handleActionClick} />
       <Box marginTop={20} />
     </Box>

@@ -167,7 +167,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
               </Link>
               <br />
               <br />
-              <Link to={`/players/${player.id}`}>Страница игрока</Link>
+              <Link to={`/players/${player.url_handle}`}>Страница игрока</Link>
               <br />
             </Box>
           </Paper>
