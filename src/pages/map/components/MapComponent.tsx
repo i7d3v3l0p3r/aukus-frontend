@@ -17,7 +17,12 @@ export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false);
   const [moveSteps, setMoveSteps] = useState(0);
 
-  const { data: playersData } = useQuery({ queryKey: ["players"], queryFn: fetchPlayers, refetchInterval: 10000 });
+  const { data: playersData } = useQuery({
+    queryKey: ["players"],
+    queryFn: fetchPlayers,
+    refetchInterval: 10000,
+    enabled: moveSteps === 0,
+  });
   const players = playersData?.players;
 
   const { currentUserId } = useCurrentUser();
