@@ -1,8 +1,8 @@
 import { Box, Grid } from "@mui/material";
-import { players } from "pages/players/types";
+import { players } from "utils/mocks";
 import { sample } from "lodash";
 import { Link, useParams } from "react-router-dom";
-import { GameRecord } from "./types";
+import { PlayerMove } from "utils/types";
 import { useState } from "react";
 
 type Props = {};
@@ -11,12 +11,12 @@ export default function PlayerPage(props: Props) {
   const { id } = useParams();
 
   const itemsAmount = 10;
-  const [gameData, setGameData] = useState<GameRecord[]>(() => {
+  const [playerMoves, setPlayerMoves] = useState<PlayerMove[]>(() => {
     const dates = generateDateRange(new Date("2024-11-01"), new Date("2024-12-01"));
-    const data: GameRecord[] = [];
+    const data: PlayerMove[] = [];
     let currentPosition = 0;
     for (let i = 0; i < itemsAmount; i++) {
-      const status: GameRecord["status"] = sample(["drop", "completed"]);
+      const status: PlayerMove["type"] = sample(["drop", "completed"]);
       const diceRoll = sample([1, 2, 3, 4, 5, 6]);
       if (status === "drop") {
         currentPosition -= diceRoll;
@@ -28,15 +28,20 @@ export default function PlayerPage(props: Props) {
       }
 
       data.push({
-        startDate: dates[i].toDateString(),
-        endDate: dates[i].toDateString(),
-        turn: i + 1,
-        game: sample(["Готика", "Соник", "Ведьмак", "Смута"]),
-        status,
-        diceRoll,
-        nextPosition: currentPosition,
-        review: sample(["норм", "топ", "ахуенно", "лучшая игра"]),
-        vodLink: "link",
+        created_at: dates[i].toDateString(),
+        id: i + 1,
+        item_title: sample(["Готика", "Соник", "Ведьмак", "Смута"]),
+        type: status,
+        dice_roll: diceRoll,
+        cell_to: currentPosition,
+        cell_from: currentPosition - diceRoll,
+        item_review: sample(["норм", "топ", "ахуенно", "лучшая игра"]),
+        item_rating: sample([1, 2, 3, 4, 5]),
+        stair_from: null,
+        stair_to: null,
+        snake_from: null,
+        snake_to: null,
+        item_length: "medium",
       });
     }
     return data;
@@ -50,7 +55,7 @@ export default function PlayerPage(props: Props) {
   return (
     <Box marginLeft={2}>
       <h1>Страница участника {player.name}</h1>
-      <Link to={player.streamLink}>{player.streamLink}</Link>
+      <Link to={player.stream_link}>{player.stream_link}</Link>
 
       <Box marginTop={2} />
       <Grid container>
@@ -81,31 +86,28 @@ export default function PlayerPage(props: Props) {
             Ссылка на вод
           </Grid>
         </Grid>
-        {gameData.map((game) => (
+        {playerMoves.map((move) => (
           <Grid container columns={8} paddingTop={1} borderTop={1}>
             <Grid item xs={1}>
-              {game.startDate}
+              {move.created_at}
             </Grid>
             <Grid item xs={1}>
-              {game.turn}
+              {move.id}
             </Grid>
             <Grid item xs={1}>
-              {game.game}
+              {move.item_title}
             </Grid>
             <Grid item xs={1}>
-              {game.status}
+              {move.type}
             </Grid>
             <Grid item xs={1}>
-              {game.status === "drop" ? -game.diceRoll : game.diceRoll}
+              {move.type === "drop" ? -move.dice_roll : move.dice_roll}
             </Grid>
             <Grid item xs={1}>
-              {game.nextPosition}
+              {move.cell_to}
             </Grid>
             <Grid item xs={1}>
-              {game.review}
-            </Grid>
-            <Grid item xs={1}>
-              <Link to={game.vodLink}>{game.vodLink}</Link>
+              {move.item_review}
             </Grid>
           </Grid>
         ))}

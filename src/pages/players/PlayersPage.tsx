@@ -1,6 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import { players } from "./types";
+import { players } from "utils/mocks";
 
 export default function PlayersPage() {
   return (

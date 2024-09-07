@@ -1,5 +1,5 @@
 import { Box, Chip, Paper, Popper } from "@mui/material";
-import { Player } from "pages/players/types";
+import { Player } from "utils/types";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -37,11 +37,11 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
 
   const startChainedAnimation = (moves: number) => {
     let normalizedMoves = moves;
-    if (player.mapPosition + moves > 100) {
-      normalizedMoves = 100 - player.mapPosition;
+    if (player.map_position + moves > 100) {
+      normalizedMoves = 100 - player.map_position;
     }
-    if (player.mapPosition + moves < 1) {
-      normalizedMoves = -player.mapPosition - 1;
+    if (player.map_position + moves < 1) {
+      normalizedMoves = -player.map_position - 1;
     }
 
     const currentLocation = { x: 0, y: 0 };
@@ -50,7 +50,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
 
     const animationsList: Array<{ x: number; y: number }> = [];
     for (let i = 0; i < Math.abs(normalizedMoves); i++) {
-      const nextCell = backward ? getMapCellById(player.mapPosition - i - 1) : getMapCellById(player.mapPosition + i);
+      const nextCell = backward ? getMapCellById(player.map_position - i - 1) : getMapCellById(player.map_position + i);
       // console.log("next cell", { nextCell }, player.mapPosition, i);
 
       if (!nextCell) {
@@ -92,7 +92,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
   };
 
   useEffect(() => {
-    if (moveSteps !== 0 && player.mapPosition <= 100) {
+    if (moveSteps !== 0 && player.map_position <= 100) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2,
@@ -113,13 +113,13 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
   useEffect(() => {
     // console.log("updating map position to", player.mapPosition);
     const interval = setInterval(() => {
-      const findCell = document.getElementById(`map-cell-${player.mapPosition}`);
+      const findCell = document.getElementById(`map-cell-${player.map_position}`);
       setAnchorCell(findCell);
       clearInterval(interval);
     }, 50);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player.mapPosition]);
+  }, [player.map_position]);
 
   // console.log({ player, cell });
   if (!anchorCell) {
@@ -135,7 +135,9 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
     event.stopPropagation();
   };
 
-  const chipColor = player.isOnline ? "green" : "red";
+  const chipColor = player.is_online ? "green" : "red";
+
+  const playerColor = "blue";
 
   return (
     <animated.div style={{ position: "absolute", top, left, ...springs }}>
@@ -156,12 +158,12 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
           }}
           onClick={() => setPopupOpen(false)}
         >
-          <Paper style={{ borderRadius: "30px", padding: 1, border: `2px solid ${player.color}` }}>
+          <Paper style={{ borderRadius: "30px", padding: 1, border: `2px solid ${playerColor}` }}>
             <Box style={{}} padding={2}>
-              Текущая игра: {player.currentGame}
+              Текущая игра: {player.map_position}
               <br />
-              <Link to={player.streamLink} target="_blank" rel="noopener noreferrer">
-                Стрим {player.isOnline ? "онлайн" : "оффлайн"}
+              <Link to={player.stream_link} target="_blank" rel="noopener noreferrer">
+                Стрим {player.is_online ? "онлайн" : "оффлайн"}
               </Link>
               <br />
               <br />
@@ -176,7 +178,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
         label={player.name}
         variant="outlined"
         style={{
-          background: player.color,
+          background: playerColor,
           color: "white",
           textDecoration: "underline",
           border: `2px solid ${chipColor}`,

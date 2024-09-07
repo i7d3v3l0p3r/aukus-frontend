@@ -1,6 +1,6 @@
 import { ArrowRightAltSharp } from "@mui/icons-material";
 import { Box, Chip, Typography } from "@mui/material";
-import { Player } from "pages/players/types";
+import { Player } from "utils/types";
 import { cellSize, MapCell } from "../types";
 
 type Props = {
@@ -20,12 +20,12 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
 
   let relativeLocation = null;
   if (currentPlayer && moveSteps && moveSteps !== 0) {
-    const target = currentPlayer.mapPosition + moveSteps;
-    if (moveSteps > 0 && cell.id > currentPlayer.mapPosition && cell.id <= target) {
-      relativeLocation = cell.id - currentPlayer.mapPosition;
+    const target = currentPlayer.map_position + moveSteps;
+    if (moveSteps > 0 && cell.id > currentPlayer.map_position && cell.id <= target) {
+      relativeLocation = cell.id - currentPlayer.map_position;
     }
-    if (moveSteps < 0 && cell.id < currentPlayer.mapPosition && cell.id >= target) {
-      relativeLocation = cell.id - currentPlayer.mapPosition;
+    if (moveSteps < 0 && cell.id < currentPlayer.map_position && cell.id >= target) {
+      relativeLocation = cell.id - currentPlayer.map_position;
     }
   }
 

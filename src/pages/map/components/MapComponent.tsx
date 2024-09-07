@@ -1,5 +1,6 @@
 import { Box, Grid } from "@mui/material";
-import { Player, players as playersPreset } from "pages/players/types";
+import { Player } from "utils/types";
+import { players as playersPreset } from "utils/mocks";
 import { useState } from "react";
 import { cellSize, MainMap, MapCell } from "../types";
 import ActionButton from "./ActionButton";
@@ -32,8 +33,8 @@ export default function MapComponent() {
 
   const handleAnimationEnd = (player: Player, moves: number) => {
     setMoveSteps(0);
-    player.mapPosition = Math.min(101, player.mapPosition + moves);
-    player.mapPosition = Math.max(1, player.mapPosition);
+    player.map_position = Math.min(101, player.map_position + moves);
+    player.map_position = Math.max(1, player.map_position);
   };
 
   return (
