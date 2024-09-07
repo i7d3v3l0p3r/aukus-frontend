@@ -6,8 +6,8 @@ import ActionButton from "./ActionButton";
 import CellItem from "./CellItem";
 import PlayerIcon from "./PlayerIcon";
 import { mapCellRows, mapCellsSorted } from "./utils";
-import { fetchPlayers } from "utils/api";
-import { useQuery } from "@tanstack/react-query";
+import { createPlayerMove, fetchPlayers } from "utils/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell;
@@ -16,9 +16,12 @@ export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false);
   const [moveSteps, setMoveSteps] = useState(0);
 
-  const { data } = useQuery({ queryKey: ["players"], queryFn: fetchPlayers, refetchInterval: 10000 });
+  const { data: playersData } = useQuery({ queryKey: ["players"], queryFn: fetchPlayers, refetchInterval: 10000 });
+  const players = playersData?.players;
 
-  const players = data?.players;
+  const makeMove = useMutation({
+    mutationFn: createPlayerMove,
+  });
 
   const map: MainMap = {
     cellRows: mapCellRows,
@@ -33,6 +36,19 @@ export default function MapComponent() {
 
   const handleActionClick = (diceRoll: number) => {
     // save player position in API
+    makeMove.mutate({
+      player_id: players?.[0].id || 0,
+      dice_roll: diceRoll,
+      stair_from: null,
+      stair_to: null,
+      snake_from: null,
+      snake_to: null,
+      type: "completed",
+      item_title: "",
+      item_length: "medium",
+      item_rating: 0,
+      item_review: "",
+    });
     setMoveSteps(diceRoll);
   };
 

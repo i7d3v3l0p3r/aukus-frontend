@@ -1,5 +1,5 @@
 import { playersMock } from "./mocks";
-import { Player, PlayerMove } from "./types";
+import { Player, PlayerMove, PlayerMoveRequest } from "./types";
 
 type PlayerMovesResponse = {
   moves: Array<PlayerMove>;
@@ -13,7 +13,24 @@ type PlayersResponse = {
   players: Array<Player>;
 };
 
+const MOCK_API = true;
+
 export async function fetchPlayers(): Promise<PlayersResponse> {
-  return Promise.resolve({ players: playersMock });
+  if (MOCK_API) {
+    return Promise.resolve({ players: playersMock });
+  }
   return fetch(`/api/players`).then((res) => res.json());
+}
+
+export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
+  if (MOCK_API) {
+    return Promise.resolve();
+  }
+  return fetch(`/api/player_move`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(move),
+  }).then((res) => res.json());
 }

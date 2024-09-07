@@ -28,3 +28,17 @@ export type PlayerMove = {
   item_rating: number;
   item_length: ItemLength | null;
 };
+
+export type PlayerMoveRequest = {
+  player_id: number;
+  dice_roll: number;
+  stair_from: number | null;
+  stair_to: number | null;
+  snake_from: number | null;
+  snake_to: number | null;
+  type: MoveType;
+  item_title: string;
+  item_review: string;
+  item_rating: number;
+  item_length: ItemLength | null;
+};
