@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchCurrentUser } from "utils/api";
 
 export default function useCurrentUser() {
@@ -8,13 +8,15 @@ export default function useCurrentUser() {
   const { data: currentUserData } = useQuery({
     queryKey: ["current_user"],
     queryFn: fetchCurrentUser,
-    enabled: !!currentUserId,
+    enabled: !currentUserId,
     staleTime: 5000,
   });
 
-  if (currentUserData) {
-    setCurrentUserId(currentUserData.user_id);
-  }
+  useEffect(() => {
+    if (currentUserData?.user_id) {
+      setCurrentUserId(currentUserData.user_id);
+    }
+  }, [currentUserData?.user_id]);
 
   return { currentUserId };
 }

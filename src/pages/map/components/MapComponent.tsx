@@ -116,8 +116,8 @@ export default function MapComponent() {
             key={player.id}
             player={player}
             closePopup={closePopups}
-            moveSteps={moveSteps}
-            onAnimationEnd={handleAnimationEnd}
+            moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
+            onAnimationEnd={player.id === currentPlayer?.id ? handleAnimationEnd : () => {}}
           />
         ))}
       {currentPlayer && (
