@@ -97,14 +97,12 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       assetPath: "/static/assets/",
       container: DiceBoxContainer,
       scale: 15,
-      width: 300,
-      height: 200,
       themeColor: getRandomHexColor(),
-      gravity: 0.5,
-      restitution: 0.2,
-      mass: 0.7,
-      angularDamping: 0.2,
-      linearDamping: 0.2,
+      // gravity: 0.5,
+      // restitution: 0.2,
+      // mass: 0.7,
+      // angularDamping: 0.2,
+      // linearDamping: 0.2,
     });
     if (diceBox) {
       if (containerRef.current) {
