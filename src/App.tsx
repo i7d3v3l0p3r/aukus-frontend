@@ -53,7 +53,7 @@ const router = createBrowserRouter(
       ),
     },
   ],
-  { basename: "/aukus-demo" },
+  { basename: "/" },
 );
 
 const darkTheme = createTheme({
@@ -78,8 +78,8 @@ function App() {
   return (
     <React.StrictMode>
       <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <QueryClientProvider client={queryClient}>
-          <CssBaseline />
           <RouterProvider router={router} />
         </QueryClientProvider>
       </ThemeProvider>

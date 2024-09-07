@@ -8,6 +8,7 @@ import PlayerIcon from "./PlayerIcon";
 import { mapCellRows, mapCellsSorted } from "./utils";
 import { createPlayerMove, fetchPlayers } from "utils/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import useCurrentUser from "hooks/useCurrentUser";
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell;
@@ -18,6 +19,10 @@ export default function MapComponent() {
 
   const { data: playersData } = useQuery({ queryKey: ["players"], queryFn: fetchPlayers, refetchInterval: 10000 });
   const players = playersData?.players;
+
+  const { currentUserId } = useCurrentUser();
+
+  const currentPlayer = players?.find((player) => player.id === currentUserId);
 
   const makeMove = useMutation({
     mutationFn: createPlayerMove,
@@ -34,10 +39,10 @@ export default function MapComponent() {
     setClosePopups(!closePopups);
   };
 
-  const handleActionClick = (diceRoll: number) => {
+  const handleActionClick = (player: Player, diceRoll: number) => {
     // save player position in API
     makeMove.mutate({
-      player_id: players?.[0].id || 0,
+      player_id: player.id,
       dice_roll: diceRoll,
       stair_from: null,
       stair_to: null,
@@ -70,7 +75,7 @@ export default function MapComponent() {
         container
         justifyContent={"center"}
         style={{
-          backgroundImage: "url('map_background.png')",
+          backgroundImage: "url('static/map_background.png')",
           backgroundPosition: "center" /* Center the image */,
           backgroundRepeat: "no-repeat" /* Prevent the image from repeating */,
         }}
@@ -99,7 +104,7 @@ export default function MapComponent() {
             )}
             {row.map((cell) => (
               <Grid item key={cell.id} borderRight={1} borderTop={1} borderBottom={index === 9 ? 1 : 0}>
-                <CellItem cell={cell} currentPlayer={players?.[0]} moveSteps={moveSteps} />
+                <CellItem cell={cell} currentPlayer={currentPlayer} moveSteps={moveSteps} />
               </Grid>
             ))}
           </Grid>
@@ -115,7 +120,9 @@ export default function MapComponent() {
             onAnimationEnd={handleAnimationEnd}
           />
         ))}
-      <ActionButton handleNextTurn={handleActionClick} />
+      {currentPlayer && (
+        <ActionButton handleNextTurn={(diceRoll: number) => handleActionClick(currentPlayer, diceRoll)} />
+      )}
       <Box marginTop={20} />
     </Box>
   );

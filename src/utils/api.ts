@@ -24,6 +24,7 @@ export async function fetchPlayers(): Promise<PlayersResponse> {
 
 export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
   if (MOCK_API) {
+    playersMock[move.player_id].map_position += move.dice_roll;
     return Promise.resolve();
   }
   return fetch(`/api/player_move`, {
@@ -33,4 +34,15 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
     },
     body: JSON.stringify(move),
   }).then((res) => res.json());
+}
+
+type CurrentUserIdResponse = {
+  user_id: number;
+};
+
+export async function fetchCurrentUser(): Promise<CurrentUserIdResponse> {
+  if (MOCK_API) {
+    return Promise.resolve({ user_id: playersMock[0].id });
+  }
+  return fetch(`/api/get_current_user_id`).then((res) => res.json());
 }

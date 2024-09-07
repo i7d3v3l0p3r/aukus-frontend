@@ -94,7 +94,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setDiceStatus("rolling");
     scrollToDialogBottom();
     const diceBox = new DiceBox({
-      assetPath: "/aukus-demo/assets/",
+      assetPath: "/assets/",
       container: DiceBoxContainer,
       scale: 15,
       width: 300,
