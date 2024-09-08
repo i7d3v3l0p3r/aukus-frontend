@@ -70,6 +70,9 @@ const darkTheme = createTheme({
       default: "#242424",
     },
   },
+  typography: {
+    fontFamily: '"Golos Text", sans-serif',
+  },
 });
 
 const queryClient = new QueryClient();
