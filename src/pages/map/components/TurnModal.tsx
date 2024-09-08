@@ -168,7 +168,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   return (
     <Dialog open={open} onClose={() => {}} fullWidth keepMounted>
       <DialogTitle>
-        Следующий ход
+        Новый ход
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -184,7 +184,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       </DialogTitle>
       <DialogContent dividers>
         <Box>
-          Игра победитель аука
+          Игра / Фильм
           <Input type="text" fullWidth value={gameName} onChange={handleGameNameChange} />
         </Box>
         <Box marginTop={3}>
@@ -257,8 +257,15 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleConfirmTurn} disabled={!isTurnComplete}>
-          Ходить
+        <Button
+          fullWidth
+          sx={{ textTransform: "none" }}
+          onClick={handleConfirmTurn}
+          disabled={!isTurnComplete}
+          color="secondary"
+          variant="contained"
+        >
+          Перейти к броску
         </Button>
       </DialogActions>
     </Dialog>

@@ -21,10 +21,12 @@ export default function ActionButton({ handleNextTurn }: Props) {
 
   return (
     <>
-      <Box sx={{ position: "fixed", bottom: 100, left: 50, zIndex: 20 }}>
-        <Button variant="contained" color="primary" size="large" onClick={handleClick}>
-          Сделать ход
-        </Button>
+      <Box display={"flex"} justifyContent="center">
+        <Box sx={{ position: "fixed", bottom: 100, zIndex: 20, width: "320px" }}>
+          <Button variant="contained" color="primary" size="large" onClick={handleClick} fullWidth>
+            Сделать ход
+          </Button>
+        </Box>
       </Box>
       <TurnModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleConfirm} />
     </>

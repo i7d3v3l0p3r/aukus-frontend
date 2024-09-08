@@ -16,7 +16,7 @@ export default function PlayerSection({ player }: Props) {
         <Button>VKPlay</Button>
         <Button>Донейшн</Button>
         <Box textAlign="center" marginTop={3} width="100%">
-          <Button variant="contained" color="info" fullWidth>
+          <Button variant="contained" color="secondary" fullWidth>
             <Link to={`/players/${player.url_handle}`}>Страница участника</Link>
           </Button>
         </Box>

@@ -60,7 +60,10 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#a6d4fa",
+      main: "#34C759",
+    },
+    secondary: {
+      main: "#007AFF",
     },
     text: {
       primary: "#fff",
@@ -72,6 +75,7 @@ const darkTheme = createTheme({
   },
   typography: {
     fontFamily: '"Golos Text", sans-serif',
+    fontWeightRegular: 600,
   },
 });
 
