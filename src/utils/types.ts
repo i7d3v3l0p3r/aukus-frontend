@@ -42,3 +42,16 @@ export type PlayerMoveRequest = {
   item_rating: number;
   item_length: ItemLength | null;
 };
+
+export type NextTurnParams = {
+  diceRoll: number;
+  stairFrom: number | null;
+  stairTo: number | null;
+  snakeFrom: number | null;
+  snakeTo: number | null;
+  type: MoveType;
+  itemTitle: string;
+  itemReview: string;
+  itemRating: number;
+  itemLength: ItemLength | null;
+};
