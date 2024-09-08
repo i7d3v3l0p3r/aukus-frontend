@@ -48,10 +48,12 @@ export default function MapComponent() {
     if (!currentPlayer) {
       return;
     }
+    const steps = params.type === "drop" ? -params.diceRoll : params.diceRoll;
+
     // save player position in API
     makeMove.mutate({
       player_id: currentPlayer.id,
-      dice_roll: params.diceRoll,
+      dice_roll: steps,
       stair_from: params.stairFrom,
       stair_to: params.stairTo,
       snake_from: params.snakeFrom,
@@ -62,7 +64,7 @@ export default function MapComponent() {
       item_rating: params.itemRating,
       item_review: params.itemReview,
     });
-    setMoveSteps(params.diceRoll);
+    setMoveSteps(steps);
   };
 
   const handleAnimationEnd = (player: Player, moves: number) => {
