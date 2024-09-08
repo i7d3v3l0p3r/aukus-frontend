@@ -63,9 +63,12 @@ export default function MapComponent() {
   };
 
   const handleAnimationEnd = (player: Player, moves: number) => {
+    if (player.id !== currentPlayer?.id) {
+      return;
+    }
     setMoveSteps(0);
     player.map_position = Math.min(101, player.map_position + moves);
-    player.map_position = Math.max(1, player.map_position);
+    player.map_position = Math.max(0, player.map_position);
   };
 
   return (
@@ -122,7 +125,7 @@ export default function MapComponent() {
             player={player}
             closePopup={closePopups}
             moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
-            onAnimationEnd={player.id === currentPlayer?.id ? handleAnimationEnd : () => {}}
+            onAnimationEnd={handleAnimationEnd}
           />
         ))}
       {currentPlayer && (
