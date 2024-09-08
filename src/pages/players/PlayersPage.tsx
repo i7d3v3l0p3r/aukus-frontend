@@ -1,15 +1,27 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { playersMock } from "utils/mocks";
+import { fetchPlayers } from "utils/api";
+import PlayerSection from "./components/PlayerSection";
 
 export default function PlayersPage() {
+  const { data: playersData } = useQuery({
+    queryKey: ["players"],
+    queryFn: fetchPlayers,
+    staleTime: 1000 * 60 * 5,
+  });
+  const players = playersData?.players;
+
+  if (!players) {
+    return <div>Загрузка...</div>;
+  }
+
   return (
     <Box textAlign={"center"}>
-      <h1>Участники</h1>
       <Grid container columns={1}>
-        {playersMock.map((player) => (
-          <Grid item xs={1} key={player.id} marginTop={1}>
-            <Link to={`/players/${player.url_handle}`}>{player.name}</Link>
+        {players.map((player) => (
+          <Grid item xs={1} key={player.id} marginTop={6}>
+            <PlayerSection player={player} />
           </Grid>
         ))}
       </Grid>
