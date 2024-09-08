@@ -1,6 +1,5 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
 import { fetchPlayers } from "utils/api";
 import PlayerSection from "./components/PlayerSection";
 
