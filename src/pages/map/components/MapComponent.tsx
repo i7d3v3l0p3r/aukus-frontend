@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import { Player } from "utils/types";
+import { NextTurnParams, Player } from "utils/types";
 import { useState } from "react";
 import { cellSize, MainMap, MapCell } from "../types";
 import ActionButton from "./ActionButton";
@@ -44,22 +44,25 @@ export default function MapComponent() {
     setClosePopups(!closePopups);
   };
 
-  const handleActionClick = (player: Player, diceRoll: number) => {
+  const handleNextTurn = (params: NextTurnParams) => {
+    if (!currentPlayer) {
+      return;
+    }
     // save player position in API
     makeMove.mutate({
-      player_id: player.id,
-      dice_roll: diceRoll,
-      stair_from: null,
-      stair_to: null,
-      snake_from: null,
-      snake_to: null,
-      type: "completed",
-      item_title: "",
-      item_length: "medium",
-      item_rating: 0,
-      item_review: "",
+      player_id: currentPlayer.id,
+      dice_roll: params.diceRoll,
+      stair_from: params.stairFrom,
+      stair_to: params.stairTo,
+      snake_from: params.snakeFrom,
+      snake_to: params.snakeTo,
+      type: params.type,
+      item_title: params.itemTitle,
+      item_length: params.itemLength,
+      item_rating: params.itemRating,
+      item_review: params.itemReview,
     });
-    setMoveSteps(diceRoll);
+    setMoveSteps(params.diceRoll);
   };
 
   const handleAnimationEnd = (player: Player, moves: number) => {
@@ -128,9 +131,7 @@ export default function MapComponent() {
             onAnimationEnd={handleAnimationEnd}
           />
         ))}
-      {currentPlayer && (
-        <ActionButton handleNextTurn={(diceRoll: number) => handleActionClick(currentPlayer, diceRoll)} />
-      )}
+      {currentPlayer && <ActionButton handleNextTurn={handleNextTurn} />}
       <Box marginTop={20} />
     </Box>
   );

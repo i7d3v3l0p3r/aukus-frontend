@@ -13,16 +13,16 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import DiceBox from "@3d-dice/dice-box";
-import { useEffect } from "react";
 import { useCallback } from "react";
+import { NextTurnParams } from "utils/types";
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  onConfirm: (diceRoll: number) => void;
+  onConfirm: (params: NextTurnParams) => void;
 };
 
 type DiceRoll = {
@@ -144,8 +144,19 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     if (diceBox) {
       diceBox.clear();
     }
-    if (diceRollSum) {
-      onConfirm(status === "completed" ? diceRollSum : -diceRollSum);
+    if (diceRollSum && rating && status) {
+      onConfirm({
+        type: status,
+        itemLength: gameHours,
+        itemRating: rating,
+        itemReview: review,
+        itemTitle: gameName,
+        snakeFrom: null,
+        snakeTo: null,
+        stairFrom: null,
+        stairTo: null,
+        diceRoll: diceRollSum,
+      });
     }
   };
 

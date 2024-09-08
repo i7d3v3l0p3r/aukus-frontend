@@ -1,9 +1,10 @@
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
+import { NextTurnParams } from "utils/types";
 import TurnModal from "./TurnModal";
 
 type Props = {
-  handleNextTurn: (diceRoll: number) => void;
+  handleNextTurn: (params: NextTurnParams) => void;
 };
 
 export default function ActionButton({ handleNextTurn }: Props) {
@@ -13,9 +14,9 @@ export default function ActionButton({ handleNextTurn }: Props) {
     setModalOpen(true);
   };
 
-  const handleConfirm = (diceRoll: number) => {
+  const handleConfirm = (params: NextTurnParams) => {
     setModalOpen(false);
-    handleNextTurn(diceRoll);
+    handleNextTurn(params);
   };
 
   return (
