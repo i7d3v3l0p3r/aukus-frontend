@@ -13,7 +13,7 @@ type PlayersResponse = {
   players: Array<Player>;
 };
 
-const MOCK_API = true;
+const MOCK_API = process.env.NODE_ENV === "development";
 
 export async function fetchPlayers(): Promise<PlayersResponse> {
   if (MOCK_API) {
