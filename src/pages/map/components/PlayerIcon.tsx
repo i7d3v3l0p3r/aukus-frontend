@@ -160,7 +160,7 @@ export default function PlayerIcon({ player, closePopup, moveSteps, onAnimationE
         >
           <Paper style={{ borderRadius: "30px", padding: 1, border: `2px solid ${playerColor}` }}>
             <Box style={{}} padding={2}>
-              Текущая игра: {player.map_position}
+              Текущая игра: {player.current_game}
               <br />
               <Link to={player.stream_link} target="_blank" rel="noopener noreferrer">
                 Стрим {player.is_online ? "онлайн" : "оффлайн"}
