@@ -16,6 +16,8 @@ import {
 import { useRef, useState } from "react";
 
 import DiceBox from "@3d-dice/dice-box";
+import { useEffect } from "react";
+import { useCallback } from "react";
 
 type Props = {
   open: boolean;
@@ -25,6 +27,13 @@ type Props = {
 
 type DiceRoll = {
   value: number;
+};
+
+type DiceBoxType = {
+  canvas: HTMLCanvasElement;
+  init: () => Promise<void>;
+  roll: (dice: string) => Promise<Array<DiceRoll>>;
+  clear: () => void;
 };
 
 const DiceBoxContainerId = "dice-box";
@@ -37,9 +46,27 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [review, setReview] = useState("");
   const [diceRoll, setDiceRoll] = useState<Array<number> | null>(null);
   const [diceStatus, setDiceStatus] = useState<"idle" | "rolling" | "done" | "clear">("idle");
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const [gameHours, setGameHours] = useState<"short" | "medium" | "long" | null>(null);
+
+  const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null);
+
+  const containerRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (node !== null && (!diceBox || (open && !document.getElementById(diceBox.canvas.id)))) {
+        const diceBox = new DiceBox({
+          assetPath: "/static/assets/",
+          container: DiceBoxContainer,
+          scale: 11,
+          themeColor: getRandomHexColor(),
+          // delay: 100,
+        });
+        diceBox.init().then(() => {
+          setDiceBox(diceBox);
+        });
+      }
+    },
+    [diceBox, open],
+  );
 
   const isTurnComplete = diceRoll !== null && status !== null;
 
@@ -84,39 +111,17 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   }
 
   const handleThrowDice = () => {
-    if (diceStatus !== "idle") {
-      return;
-    }
-    if (!dice) {
+    if (diceStatus !== "idle" || !dice || !diceBox) {
       return;
     }
 
     setDiceStatus("rolling");
     scrollToDialogBottom();
-    const diceBox = new DiceBox({
-      assetPath: "/static/assets/",
-      container: DiceBoxContainer,
-      scale: 15,
-      themeColor: getRandomHexColor(),
-      // gravity: 0.5,
-      // restitution: 0.2,
-      // mass: 0.7,
-      // angularDamping: 0.2,
-      // linearDamping: 0.2,
+
+    diceBox.roll(dice).then((result: Array<DiceRoll>) => {
+      setDiceRoll(result.map((diceRoll) => diceRoll.value));
+      setDiceStatus("done");
     });
-    if (diceBox) {
-      if (containerRef.current) {
-        // diceBox.canvas.marginLeft = "10px";
-        diceBox.canvas.width = containerRef.current.clientWidth - 10;
-        diceBox.canvas.height = containerRef.current.clientHeight - 10;
-      }
-      diceBox.init().then(() => {
-        diceBox.roll(dice).then((result: Array<DiceRoll>) => {
-          setDiceRoll(result.map((diceRoll) => diceRoll.value));
-          setDiceStatus("done");
-        });
-      });
-    }
   };
 
   const handleConfirmTurn = () => {
@@ -127,6 +132,9 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setDiceRoll(null);
     setDiceStatus("idle");
     setGameHours(null);
+    if (diceBox) {
+      diceBox.clear();
+    }
     if (diceRollSum) {
       onConfirm(status === "completed" ? diceRollSum : -diceRollSum);
     }
@@ -138,7 +146,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   };
 
   return (
-    <Dialog open={open} onClose={() => {}} fullWidth>
+    <Dialog open={open} onClose={() => {}} fullWidth keepMounted>
       <DialogTitle>
         Следующий ход
         <IconButton
@@ -200,8 +208,9 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
               className={diceStatus === "idle" ? "active" : ""}
               style={{
                 display: "flex",
+                position: "relative",
                 justifyContent: "center",
-                minHeight: "200px",
+                height: "200px",
                 border: "1px solid grey",
                 borderRadius: 5,
                 padding: "5px",
@@ -211,12 +220,16 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
               onClick={handleThrowDice}
             >
               {diceStatus === "idle" && dice && (
-                <div>
+                <Box position={"absolute"} top={10}>
                   Бросить кубик {dice}
                   <div style={{ color: "red" }}>ПЕРЕБРАСЫВАТЬ НЕЛЬЗЯ!</div>
-                </div>
+                </Box>
               )}
-              {diceStatus === "idle" && !dice && <div>Заполни прохождение игры</div>}
+              {diceStatus === "idle" && !dice && (
+                <Box position={"absolute"} top={10}>
+                  Заполни прохождение игры
+                </Box>
+              )}
             </div>
           </Box>
         )}
