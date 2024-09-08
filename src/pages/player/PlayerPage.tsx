@@ -1,14 +1,22 @@
 import { Box, Grid } from "@mui/material";
-import { playersMock } from "utils/mocks";
 import { sample } from "lodash";
 import { Link, useParams } from "react-router-dom";
 import { PlayerMove } from "utils/types";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPlayers } from "utils/api";
 
 type Props = {};
 
 export default function PlayerPage(props: Props) {
   const { id: playerHandle } = useParams();
+
+  const { data: playersData } = useQuery({
+    queryKey: ["players"],
+    queryFn: fetchPlayers,
+    staleTime: 1000 * 60 * 1,
+  });
+  const players = playersData?.players;
 
   const itemsAmount = 10;
   const [playerMoves, setPlayerMoves] = useState<PlayerMove[]>(() => {
@@ -47,7 +55,7 @@ export default function PlayerPage(props: Props) {
     return data;
   });
 
-  const player = playersMock.find((player) => player.url_handle === playerHandle);
+  const player = players?.find((player) => player.url_handle === playerHandle);
   if (!player) {
     return <h1>Игрок не найден</h1>;
   }
