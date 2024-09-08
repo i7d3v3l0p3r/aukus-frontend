@@ -68,7 +68,13 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     [diceBox, open],
   );
 
-  const isTurnComplete = diceRoll !== null && status !== null;
+  const gameCompleted = gameName !== "" && status === "completed" && gameHours !== null;
+  const gameDropped = gameName !== "" && status === "drop";
+  const gameFieldsCompleted = gameCompleted || gameDropped;
+  const reviewCompleted = review !== "" && rating !== null;
+
+  const canThrowDice = gameFieldsCompleted && reviewCompleted && diceStatus === "idle";
+  const isTurnComplete = diceRoll !== null && diceStatus === "done";
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
     setRating(newValue);
@@ -111,6 +117,9 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   }
 
   const handleThrowDice = () => {
+    if (!canThrowDice) {
+      return;
+    }
     if (diceStatus !== "idle" || !dice || !diceBox) {
       return;
     }
@@ -205,7 +214,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           <Box marginTop={1}>
             <div
               id={DiceBoxContainerId}
-              className={diceStatus === "idle" ? "active" : ""}
+              className={canThrowDice ? "active" : ""}
               style={{
                 display: "flex",
                 position: "relative",
@@ -214,20 +223,22 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
                 border: "1px solid grey",
                 borderRadius: 5,
                 padding: "5px",
-                cursor: diceStatus === "idle" ? "pointer" : "default",
+                cursor: canThrowDice ? "pointer" : "default",
               }}
               ref={containerRef}
               onClick={handleThrowDice}
             >
-              {diceStatus === "idle" && dice && (
+              {canThrowDice && (
                 <Box position={"absolute"} top={10}>
                   Бросить кубик {dice}
                   <div style={{ color: "red" }}>ПЕРЕБРАСЫВАТЬ НЕЛЬЗЯ!</div>
                 </Box>
               )}
-              {diceStatus === "idle" && !dice && (
+              {!canThrowDice && diceStatus === "idle" && (
                 <Box position={"absolute"} top={10}>
                   Заполни прохождение игры
+                  <br />
+                  чтобы кидать кубик
                 </Box>
               )}
             </div>
