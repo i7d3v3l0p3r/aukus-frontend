@@ -12,10 +12,18 @@ export default function PlayerSection({ player }: Props) {
       <Box textAlign={"left"}>
         <h2>Имя {player.name}</h2>
         <Box height={200} width={300} sx={{ backgroundColor: "grey" }} />
-        <Button>Twitch</Button>
-        <Button>VKPlay</Button>
-        <Button>Донейшн</Button>
-        <Box textAlign="center" marginTop={3} width="100%">
+        <Box marginTop={1}>
+          <Button>
+            <p className="purple">Twitch</p>
+          </Button>
+          <Button>
+            <p className="blue">VKPlay</p>
+          </Button>
+          <Button>
+            <p className="orange">Донейшн</p>
+          </Button>
+        </Box>
+        <Box textAlign="center" marginTop={1} width="100%">
           <Button variant="contained" color="secondary" fullWidth>
             <Link to={`/players/${player.url_handle}`}>Страница участника</Link>
           </Button>

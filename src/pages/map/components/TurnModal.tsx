@@ -182,7 +182,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers>
+      <DialogContent>
         <Box>
           Игра / Фильм
           <Input type="text" fullWidth value={gameName} onChange={handleGameNameChange} />

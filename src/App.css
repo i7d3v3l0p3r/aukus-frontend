@@ -26,4 +26,34 @@ div#dice-box canvas {
 button.MuiButton-root {
     text-transform: none;
     border-radius: 15px;
+    color: white;
+}
+
+button.MuiButton-root p {
+    margin: 0;
+    display: inline;
+}
+
+button.MuiButton-root p.orange {
+    border-bottom: 1px solid #ff8200;
+}
+
+button.MuiButton-root p.purple {
+    border-bottom: 1px solid #a970ff;
+}
+
+button.MuiButton-root p.blue {
+    border-bottom: 1px solid #0077ff;
+}
+
+button.MuiButton-root p.green {
+    border-bottom: 1px solid #2fb350;
+}
+
+button.MuiButton-root p.red {
+    border-bottom: 1px solid #ff3b30;
+}
+
+button.MuiButton-root p.brown {
+    border-bottom: 1px solid #a2845e;
 }
