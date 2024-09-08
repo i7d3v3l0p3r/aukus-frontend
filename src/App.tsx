@@ -15,7 +15,7 @@ const router = createBrowserRouter(
     {
       path: "/",
       element: (
-        <MainScreen>
+        <MainScreen currentPage="map">
           <MapPage />
         </MainScreen>
       ),
@@ -23,7 +23,7 @@ const router = createBrowserRouter(
     {
       path: "/players",
       element: (
-        <MainScreen>
+        <MainScreen currentPage="players">
           <PlayersPage />
         </MainScreen>
       ),
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
     {
       path: "/players/:id",
       element: (
-        <MainScreen>
+        <MainScreen currentPage="player">
           <PlayerPage />
         </MainScreen>
       ),
@@ -39,7 +39,7 @@ const router = createBrowserRouter(
     {
       path: "/rules",
       element: (
-        <MainScreen>
+        <MainScreen currentPage="rules">
           <RulesPage />
         </MainScreen>
       ),
@@ -47,7 +47,7 @@ const router = createBrowserRouter(
     {
       path: "/about",
       element: (
-        <MainScreen>
+        <MainScreen currentPage="about">
           <AboutPage />
         </MainScreen>
       ),
@@ -65,12 +65,15 @@ const darkTheme = createTheme({
     secondary: {
       main: "#007AFF",
     },
+    info: {
+      main: "#414141",
+    },
     text: {
       primary: "#fff",
       secondary: "#a6d4fa",
     },
     background: {
-      default: "#242424",
+      default: "#0c0c0c",
     },
   },
   typography: {

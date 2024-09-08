@@ -10,7 +10,7 @@ export default function PlayerSection({ player }: Props) {
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={"left"}>
-        <h2>Имя {player.name}</h2>
+        <h1>Имя {player.name}</h1>
         <Box height={200} width={300} sx={{ backgroundColor: "grey" }} />
         <Box marginTop={1}>
           <Button>

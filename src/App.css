@@ -35,25 +35,25 @@ button.MuiButton-root p {
 }
 
 button.MuiButton-root p.orange {
-    border-bottom: 1px solid #ff8200;
+    border-bottom: 2px solid #ff8200;
 }
 
 button.MuiButton-root p.purple {
-    border-bottom: 1px solid #a970ff;
+    border-bottom: 2px solid #a970ff;
 }
 
 button.MuiButton-root p.blue {
-    border-bottom: 1px solid #0077ff;
+    border-bottom: 2px solid #0077ff;
 }
 
 button.MuiButton-root p.green {
-    border-bottom: 1px solid #2fb350;
+    border-bottom: 2px solid #2fb350;
 }
 
 button.MuiButton-root p.red {
-    border-bottom: 1px solid #ff3b30;
+    border-bottom: 2px solid #ff3b30;
 }
 
 button.MuiButton-root p.brown {
-    border-bottom: 1px solid #a2845e;
+    border-bottom: 2px solid #a2845e;
 }

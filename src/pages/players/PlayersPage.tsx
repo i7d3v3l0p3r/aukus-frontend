@@ -20,7 +20,7 @@ export default function PlayersPage() {
     <Box textAlign={"center"}>
       <Grid container columns={1}>
         {players.map((player) => (
-          <Grid item xs={1} key={player.id} marginTop={6}>
+          <Grid item xs={1} key={player.id} marginBottom={6}>
             <PlayerSection player={player} />
           </Grid>
         ))}

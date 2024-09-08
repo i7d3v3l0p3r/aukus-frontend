@@ -55,3 +55,5 @@ export type NextTurnParams = {
   itemRating: number;
   itemLength: ItemLength | null;
 };
+
+export type Page = "map" | "players" | "player" | "about" | "rules" | "stats";
