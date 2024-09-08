@@ -257,14 +257,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         )}
       </DialogContent>
       <DialogActions>
-        <Button
-          fullWidth
-          sx={{ textTransform: "none" }}
-          onClick={handleConfirmTurn}
-          disabled={!isTurnComplete}
-          color="secondary"
-          variant="contained"
-        >
+        <Button fullWidth onClick={handleConfirmTurn} disabled={!isTurnComplete} color="secondary" variant="contained">
           Перейти к броску
         </Button>
       </DialogActions>
