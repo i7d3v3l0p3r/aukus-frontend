@@ -53,7 +53,7 @@ export default function MapComponent() {
     // save player position in API
     makeMove.mutate({
       player_id: currentPlayer.id,
-      dice_roll: steps,
+      dice_roll: params.diceRoll,
       stair_from: params.stairFrom,
       stair_to: params.stairTo,
       snake_from: params.snakeFrom,
