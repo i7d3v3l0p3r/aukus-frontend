@@ -10,6 +10,8 @@ export type Player = {
 
 export type MoveType = "completed" | "drop" | "sheikh" | "reroll" | "movie";
 
+export type DiceOption = "1d6" | "2d6" | "3d6" | "1d8" | "1d4";
+
 export type ItemLength = "short" | "medium" | "long";
 
 export type PlayerMove = {

@@ -1,6 +1,7 @@
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
-import { NextTurnParams } from "utils/types";
+import { DiceOption, NextTurnParams } from "utils/types";
+import DiceModal from "./DiceModal";
 import TurnModal from "./TurnModal";
 
 type Props = {
@@ -8,15 +9,30 @@ type Props = {
 };
 
 export default function ActionButton({ handleNextTurn }: Props) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [turnModalOpen, setTurnModalOpen] = useState(false);
+  const [diceModalOpen, setDiceModalOpen] = useState(false);
+
+  const [dice, setDice] = useState<DiceOption | null>(null);
+  const [turnParams, setTurnParams] = useState<NextTurnParams | null>(null);
 
   const handleClick = () => {
-    setModalOpen(true);
+    setTurnModalOpen(true);
   };
 
-  const handleConfirm = (params: NextTurnParams) => {
-    setModalOpen(false);
-    handleNextTurn(params);
+  const handleConfirm = (params: NextTurnParams, dice: DiceOption) => {
+    setTurnParams(params);
+    setDice(dice);
+    setTurnModalOpen(false);
+    setDiceModalOpen(true);
+  };
+
+  const handleTurnFinish = (roll: number) => {
+    setDiceModalOpen(false);
+    if (!turnParams) {
+      return;
+    }
+    turnParams.diceRoll = roll;
+    handleNextTurn(turnParams);
   };
 
   return (
@@ -28,7 +44,13 @@ export default function ActionButton({ handleNextTurn }: Props) {
           </Button>
         </Box>
       </Box>
-      <TurnModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleConfirm} />
+      <TurnModal open={turnModalOpen} onClose={() => setTurnModalOpen(false)} onConfirm={handleConfirm} />
+      <DiceModal
+        open={diceModalOpen}
+        dice={dice}
+        onClose={() => setDiceModalOpen(false)}
+        onTurnFinish={handleTurnFinish}
+      />
     </>
   );
 }

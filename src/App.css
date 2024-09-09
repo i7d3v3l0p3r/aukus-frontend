@@ -25,7 +25,7 @@ div#dice-box canvas {
 
 button.MuiButton-root {
     text-transform: none;
-    border-radius: 15px;
+    border-radius: 10px;
     color: white;
 }
 
