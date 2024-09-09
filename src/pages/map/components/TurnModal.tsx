@@ -18,6 +18,7 @@ import { useState } from "react";
 import DiceBox from "@3d-dice/dice-box";
 import { useCallback } from "react";
 import { NextTurnParams } from "utils/types";
+import NumRating from "./NumRating";
 
 type Props = {
   open: boolean;
@@ -41,6 +42,7 @@ const DiceBoxContainer = "#dice-box";
 
 export default function TurnModal({ open, onClose, onConfirm }: Props) {
   const [rating, setRating] = useState<number | null>(null);
+  const [ratingHover, setRatingHover] = useState<number | null>(null);
   const [status, setStatus] = useState<"completed" | "drop" | null>(null);
   const [gameName, setGameName] = useState("");
   const [review, setReview] = useState("");
@@ -78,6 +80,10 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
     setRating(newValue);
+  };
+
+  const handleRatingChangeWhileHovering = (event: React.SyntheticEvent, newValue: number | null) => {
+    setRatingHover(newValue);
   };
 
   const handleStatusChange = (event: React.SyntheticEvent, newValue: "completed" | "drop" | null) => {
@@ -165,6 +171,11 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     onClose();
   };
 
+  let displayRating = rating || 0;
+  if (ratingHover && ratingHover !== -1) {
+    displayRating = ratingHover;
+  }
+
   return (
     <Dialog open={open} onClose={() => {}} fullWidth keepMounted>
       <DialogTitle>
@@ -207,8 +218,15 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           )}
         </Box>
         <Box marginTop={3} display="flex">
-          Оценка: {rating || 0}
-          <Rating precision={0.5} max={10} sx={{ marginLeft: 2 }} onChange={handleRatingChange} value={rating} />
+          <span style={{ width: "100px" }}>Оценка: {displayRating}</span>
+          <NumRating
+            precision={0.1}
+            max={10}
+            sx={{ marginLeft: 2 }}
+            onChange={handleRatingChange}
+            onChangeActive={handleRatingChangeWhileHovering}
+            value={rating}
+          />
         </Box>
         <Box marginTop={3}>
           Отзыв
