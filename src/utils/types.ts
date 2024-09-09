@@ -32,6 +32,7 @@ export type PlayerMove = {
 export type PlayerMoveRequest = {
   player_id: number;
   dice_roll: number;
+  move_to: number;
   stair_from: number | null;
   stair_to: number | null;
   snake_from: number | null;
