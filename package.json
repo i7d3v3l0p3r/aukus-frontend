@@ -2,6 +2,7 @@
   "name": "aukus-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://0.0.0.0:5000",
   "dependencies": {
     "@3d-dice/dice-box": "^1.1.3",
     "@emotion/react": "^11.13.0",
