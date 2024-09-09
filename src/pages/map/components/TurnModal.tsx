@@ -140,7 +140,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       </DialogTitle>
       <DialogContent>
         <FormControl variant="standard" fullWidth>
-          <Select onChange={handleMoveTypeChange} value={moveType ? moveType : undefined}>
+          <Select onChange={handleMoveTypeChange} value={moveType ? moveType : ""}>
             <MenuItem value="completed">Прошел игру</MenuItem>
             <MenuItem value="drop">Дропнул игру</MenuItem>
             <MenuItem value="reroll">Реролл</MenuItem>
