@@ -17,7 +17,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-import { DiceOption, GreyLight, MoveType, NextTurnParams } from 'utils/types'
+import { DiceOption, Color, MoveType, NextTurnParams } from 'utils/types'
 import NumRating from './NumRating'
 
 type Props = {
@@ -177,7 +177,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
             value={gameName}
             onChange={handleGameNameChange}
             sx={{
-              border: `2px solid ${GreyLight}`,
+              border: `2px solid ${Color.greyLight}`,
               padding: '4px',
               marginTop: 1,
               borderRadius: '10px',

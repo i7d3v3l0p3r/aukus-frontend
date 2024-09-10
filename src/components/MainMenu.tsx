@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
 import { Link } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
-import { Green, GreyDark, GreyLight, Page } from 'utils/types'
+import { Color, Page } from 'utils/types'
 
 type Props = {
   currentPage: Page
@@ -53,7 +53,7 @@ export default function MainMenu({ currentPage }: Props) {
       <Box display="flex" justifyContent={'center'} marginBottom={6}>
         <Box
           padding={1.5}
-          sx={{ backgroundColor: GreyDark }}
+          sx={{ backgroundColor: Color.greyDark }}
           borderRadius="15px"
         >
           <Link to="/" style={{ marginRight: 10 }}>
