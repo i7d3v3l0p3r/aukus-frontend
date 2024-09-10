@@ -1,4 +1,4 @@
-import { Close } from '@mui/icons-material'
+import { Close, KeyboardArrowDownSharp } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -153,15 +153,13 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       <DialogContent>
         <FormControl size="small" fullWidth>
           {!moveType && (
-            <InputLabel id="move-label-id" style={{ color: 'grey' }}>
-              Действие
-            </InputLabel>
+            <InputLabel style={{ color: 'grey' }}>Действие</InputLabel>
           )}
           <Select
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
             disableUnderline
-            labelId={'move-label-id'}
+            IconComponent={KeyboardArrowDownSharp}
           >
             <MenuItem value="completed">Прошел игру</MenuItem>
             <MenuItem value="drop">Дропнул игру</MenuItem>
@@ -235,7 +233,7 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
             sx={{ marginTop: 1 }}
             InputProps={{
               style: {
-                borderRadius: '15px',
+                borderRadius: '10px',
                 padding: '10px',
               },
             }}

@@ -79,3 +79,7 @@ div.MuiOutlinedInput-root {
 div.MuiOutlinedInput-root > fieldset {
   border: none;
 }
+
+label.MuiInputLabel-shrink {
+  display: none;
+}
