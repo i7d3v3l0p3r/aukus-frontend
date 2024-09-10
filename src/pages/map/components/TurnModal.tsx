@@ -151,13 +151,16 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <FormControl variant="standard" fullWidth>
-          <InputLabel id="move-label-id" style={{ color: 'grey' }}>
-            Действие
-          </InputLabel>
+        <FormControl size="small" fullWidth>
+          {!moveType && (
+            <InputLabel id="move-label-id" style={{ color: 'grey' }}>
+              Действие
+            </InputLabel>
+          )}
           <Select
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
+            disableUnderline
             labelId={'move-label-id'}
           >
             <MenuItem value="completed">Прошел игру</MenuItem>
@@ -177,9 +180,10 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
             onChange={handleGameNameChange}
             sx={{
               border: `2px solid ${GreyLight}`,
+              padding: '4px',
               marginTop: 1,
               borderRadius: '10px',
-              paddingLeft: 1,
+              paddingLeft: '14px',
             }}
             disableUnderline
           />

@@ -70,3 +70,12 @@ button.MuiButton-root p.brown {
 div.MuiDialog-paper {
   border-radius: 20px;
 }
+
+div.MuiOutlinedInput-root {
+  border: 2px solid #414141;
+  border-radius: 10px;
+}
+
+div.MuiOutlinedInput-root > fieldset {
+  border: none;
+}
