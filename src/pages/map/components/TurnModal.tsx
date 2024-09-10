@@ -9,6 +9,7 @@ import {
   FormControl,
   IconButton,
   Input,
+  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -140,7 +141,10 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
       </DialogTitle>
       <DialogContent>
         <FormControl variant="standard" fullWidth>
-          <Select onChange={handleMoveTypeChange} value={moveType ? moveType : ""}>
+          <InputLabel id="move-label-id" style={{ color: "white" }}>
+            Выбери действие
+          </InputLabel>
+          <Select onChange={handleMoveTypeChange} value={moveType ? moveType : ""} labelId={"move-label-id"}>
             <MenuItem value="completed">Прошел игру</MenuItem>
             <MenuItem value="drop">Дропнул игру</MenuItem>
             <MenuItem value="reroll">Реролл</MenuItem>
