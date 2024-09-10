@@ -61,8 +61,18 @@ export type NextTurnParams = {
 
 export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
 
-export const Green = '#2FB350'
-export const GreyLight = '#414141'
-export const GreyDark = '#222222'
+const Green = '#2FB350'
+const GreyLight = '#414141'
+const GreyDark = '#222222'
+const Red = '#ff3b30'
+const Yellow = '#ff8200'
+const Purple = '#a970ff'
 
-export type Color = typeof Green | typeof GreyLight | typeof GreyDark
+export const Color = {
+  red: Red,
+  green: Green,
+  yellow: Yellow,
+  greyLight: GreyLight,
+  greyDark: GreyDark,
+  purple: Purple,
+}
