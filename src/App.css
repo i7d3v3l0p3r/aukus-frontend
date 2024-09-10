@@ -50,3 +50,23 @@ button.MuiButton-root p.red {
 button.MuiButton-root p.brown {
   border-bottom: 2px solid #a2845e;
 }
+
+.MuiDialogTitle-root {
+  background-color: #222222;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.MuiDialogActions-root {
+  background-color: #222222;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.MuiDialogContent-root {
+  background-color: #222222;
+}
+
+div.MuiDialog-paper {
+  border-radius: 20px;
+}
