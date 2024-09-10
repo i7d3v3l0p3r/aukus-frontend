@@ -54,6 +54,9 @@
   "devDependencies": {
     "@react-spring/web": "^9.7.4",
     "@types/lodash": "^4.17.7",
-    "lodash": "^4.17.21"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "lodash": "^4.17.21",
+    "prettier": "^3.3.3"
   }
 }
