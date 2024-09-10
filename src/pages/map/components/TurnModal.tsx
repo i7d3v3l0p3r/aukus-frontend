@@ -17,7 +17,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-import { DiceOption, MoveType, NextTurnParams } from 'utils/types'
+import { DiceOption, GreyLight, MoveType, NextTurnParams } from 'utils/types'
 import NumRating from './NumRating'
 
 type Props = {
@@ -140,20 +140,20 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         <IconButton
           aria-label="close"
           onClick={handleClose}
-          sx={(theme) => ({
+          sx={{
             position: 'absolute',
             right: 8,
             top: 8,
-            color: theme.palette.grey[500],
-          })}
+            color: 'white',
+          }}
         >
           <Close />
         </IconButton>
       </DialogTitle>
       <DialogContent>
         <FormControl variant="standard" fullWidth>
-          <InputLabel id="move-label-id" style={{ color: 'white' }}>
-            Выбери действие
+          <InputLabel id="move-label-id" style={{ color: 'grey' }}>
+            Действие
           </InputLabel>
           <Select
             onChange={handleMoveTypeChange}
@@ -169,38 +169,45 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
         </FormControl>
 
         <Box marginTop={2}>
-          {moveType === 'movie' ? 'Название фильма' : 'Название игры'}
+          {moveType === 'movie' ? 'Фильм' : 'Игра'}
           <Input
             type="text"
             fullWidth
             value={gameName}
             onChange={handleGameNameChange}
+            sx={{
+              border: `2px solid ${GreyLight}`,
+              marginTop: 1,
+              borderRadius: '10px',
+              paddingLeft: 1,
+            }}
+            disableUnderline
           />
         </Box>
         <Box marginTop={3}>
           {moveType === 'completed' && (
-            <Box>
+            <Box display="flex" justifyContent={'space-between'}>
               <Button
                 onClick={() => handleGameHoursChange('short')}
-                variant="contained"
+                variant={gameHours === 'short' ? 'contained' : 'outlined'}
                 color={gameHours === 'short' ? 'secondary' : 'info'}
-                style={{ width: 150 }}
+                style={{ width: 200 }}
               >
                 0-5 часов
               </Button>
               <Button
                 onClick={() => handleGameHoursChange('medium')}
-                variant="contained"
+                variant={gameHours === 'medium' ? 'contained' : 'outlined'}
                 color={gameHours === 'medium' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 150 }}
+                style={{ marginLeft: 20, width: 200 }}
               >
                 5-15 часов
               </Button>
               <Button
                 onClick={() => handleGameHoursChange('long')}
-                variant="contained"
+                variant={gameHours === 'long' ? 'contained' : 'outlined'}
                 color={gameHours === 'long' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 150 }}
+                style={{ marginLeft: 20, width: 200 }}
               >
                 15+ часов
               </Button>
@@ -222,9 +229,15 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           Отзыв
           <TextField
             sx={{ marginTop: 1 }}
+            InputProps={{
+              style: {
+                borderRadius: '15px',
+                padding: '10px',
+              },
+            }}
             multiline
             fullWidth
-            rows={3}
+            rows={4}
             value={review}
             onChange={handleReviewChange}
           />
@@ -237,6 +250,9 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
           disabled={!canThrowDice}
           color="secondary"
           variant="contained"
+          sx={{
+            margin: 2,
+          }}
         >
           Перейти к броску
         </Button>

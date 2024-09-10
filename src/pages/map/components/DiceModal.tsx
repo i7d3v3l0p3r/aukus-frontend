@@ -123,7 +123,7 @@ export default function DiceModal({
             justifyContent: 'center',
             height: '200px',
             border: '1px solid grey',
-            borderRadius: 5,
+            borderRadius: '10px',
             padding: '5px',
             cursor: canThrowDice ? 'pointer' : 'default',
           }}
@@ -145,6 +145,7 @@ export default function DiceModal({
           disabled={!isTurnComplete}
           color="secondary"
           variant="contained"
+          sx={{ marginBottom: 2, marginLeft: 2, marginRight: 2 }}
         >
           Ходить
         </Button>
