@@ -1,19 +1,19 @@
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AboutPage from "pages/about/AboutPage";
-import RulesPage from "pages/rules/RulesPage";
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./App.css";
-import MainScreen from "./components/MainScreen";
-import MapPage from "./pages/map/MapPage";
-import PlayerPage from "./pages/player/PlayerPage";
-import PlayersPage from "./pages/players/PlayersPage";
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import AboutPage from 'pages/about/AboutPage'
+import RulesPage from 'pages/rules/RulesPage'
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import './App.css'
+import MainScreen from './components/MainScreen'
+import MapPage from './pages/map/MapPage'
+import PlayerPage from './pages/player/PlayerPage'
+import PlayersPage from './pages/players/PlayersPage'
 
 const router = createBrowserRouter(
   [
     {
-      path: "/",
+      path: '/',
       element: (
         <MainScreen currentPage="map">
           <MapPage />
@@ -21,7 +21,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: "/players",
+      path: '/players',
       element: (
         <MainScreen currentPage="players">
           <PlayersPage />
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: "/players/:id",
+      path: '/players/:id',
       element: (
         <MainScreen currentPage="player">
           <PlayerPage />
@@ -37,7 +37,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: "/rules",
+      path: '/rules',
       element: (
         <MainScreen currentPage="rules">
           <RulesPage />
@@ -45,7 +45,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: "/about",
+      path: '/about',
       element: (
         <MainScreen currentPage="about">
           <AboutPage />
@@ -53,36 +53,51 @@ const router = createBrowserRouter(
       ),
     },
   ],
-  { basename: "/" },
-);
+  { basename: '/' }
+)
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
     primary: {
-      main: "#34C759",
+      main: '#34C759',
     },
     secondary: {
-      main: "#007AFF",
+      main: '#007AFF',
     },
     info: {
-      main: "#414141",
+      main: '#414141',
     },
     text: {
-      primary: "#fff",
-      secondary: "#a6d4fa",
+      primary: '#fff',
+      secondary: '#a6d4fa',
     },
     background: {
-      default: "#0c0c0c",
+      default: '#0c0c0c',
     },
   },
   typography: {
     fontFamily: '"Golos Text", sans-serif',
     fontWeightRegular: 600,
   },
-});
+  components: {
+    MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+        color: 'primary',
+        disableElevation: true,
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+  },
+})
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 function App() {
   return (
@@ -94,7 +109,7 @@ function App() {
         </QueryClientProvider>
       </ThemeProvider>
     </React.StrictMode>
-  );
+  )
 }
 
-export default App;
+export default App

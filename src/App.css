@@ -1,59 +1,72 @@
 a:link {
-    color: #ffffff;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 a:visited {
-    color: #ffffff;
-}
-a:hover {
-    color: #ffffff;
-}
-a:active {
-    color: #ff4040;
-    text-decoration: none;
-    font-weight: normal;
+  color: white;
 }
 
 div#dice-box.active:hover {
-    background: #282c34;
+  background: #282c34;
 }
 
 div#dice-box canvas {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 button.MuiButton-root {
-    text-transform: none;
-    border-radius: 10px;
-    color: white;
+  text-transform: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
 }
 
 button.MuiButton-root p {
-    margin: 0;
-    display: inline;
+  margin: 0;
+  display: inline;
 }
 
 button.MuiButton-root p.orange {
-    border-bottom: 2px solid #ff8200;
+  border-bottom: 2px solid #ff8200;
 }
 
 button.MuiButton-root p.purple {
-    border-bottom: 2px solid #a970ff;
+  border-bottom: 2px solid #a970ff;
 }
 
 button.MuiButton-root p.blue {
-    border-bottom: 2px solid #0077ff;
+  border-bottom: 2px solid #0077ff;
 }
 
 button.MuiButton-root p.green {
-    border-bottom: 2px solid #2fb350;
+  border-bottom: 2px solid #2fb350;
 }
 
 button.MuiButton-root p.red {
-    border-bottom: 2px solid #ff3b30;
+  border-bottom: 2px solid #ff3b30;
 }
 
 button.MuiButton-root p.brown {
-    border-bottom: 2px solid #a2845e;
+  border-bottom: 2px solid #a2845e;
+}
+
+.MuiDialogTitle-root {
+  background-color: #222222;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.MuiDialogActions-root {
+  background-color: #222222;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.MuiDialogContent-root {
+  background-color: #222222;
+}
+
+div.MuiDialog-paper {
+  border-radius: 20px;
 }
