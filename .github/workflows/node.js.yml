@@ -37,4 +37,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command_timeout: 5m
-          script: cd ${{ secrets.APP_PATH }} && git pull && npm run build && rm -rf prod_build && cp -rf build prod_build
+          script: cd ${{ secrets.APP_PATH }} && git pull && npm run build && sudo systemctl stop nginx && rm -rf prod_build && cp -rf build prod_build && sudo systemctl start nginx
