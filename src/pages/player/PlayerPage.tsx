@@ -65,8 +65,14 @@ export default function PlayerPage(props: Props) {
         </Link>
       </Box>
 
-      <Box marginTop={6} marginLeft={4} marginRight={4}>
-        <TableContainer>
+      <Box
+        marginTop={6}
+        marginLeft={4}
+        marginRight={4}
+        justifyContent="center"
+        display="flex"
+      >
+        <TableContainer sx={{ width: 'auto' }}>
           <TableHead>
             <TableRow>
               <TableCell>Ход</TableCell>
