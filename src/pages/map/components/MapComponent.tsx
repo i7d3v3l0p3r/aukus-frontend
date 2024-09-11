@@ -1,60 +1,59 @@
-import { Box, Grid } from "@mui/material";
-import { NextTurnParams, Player } from "utils/types";
-import { useState } from "react";
-import { cellSize, MainMap, MapCell } from "../types";
-import ActionButton from "./ActionButton";
-import CellItem from "./CellItem";
-import PlayerIcon from "./PlayerIcon";
-import { mapCellRows, mapCellsSorted } from "./utils";
-import { createPlayerMove, fetchPlayers } from "utils/api";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import useCurrentUser from "hooks/useCurrentUser";
+import { Box, Grid } from '@mui/material'
+import { NextTurnParams, Player } from 'utils/types'
+import { useState } from 'react'
+import { cellSize, MainMap, MapCell } from '../types'
+import ActionButton from './ActionButton'
+import CellItem from './CellItem'
+import PlayerIcon from './PlayerIcon'
+import { mapCellRows, mapCellsSorted } from './utils'
+import { createPlayerMove, fetchPlayers } from 'utils/api'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import useCurrentUser from 'hooks/useCurrentUser'
 
 export default function MapComponent() {
-  const finishCell = { id: 101, direction: null } as MapCell;
-  const startCell = { id: 0, direction: "right" } as MapCell;
+  const finishCell = { id: 101, direction: null } as MapCell
+  const startCell = { id: 0, direction: 'right' } as MapCell
 
-  const [closePopups, setClosePopups] = useState(false);
-  const [moveSteps, setMoveSteps] = useState(0);
+  const [closePopups, setClosePopups] = useState(false)
+  const [moveSteps, setMoveSteps] = useState(0)
 
   const { data: playersData } = useQuery({
-    queryKey: ["players"],
+    queryKey: ['players'],
     queryFn: fetchPlayers,
     refetchInterval: 10000,
     enabled: moveSteps === 0,
-  });
-  const players = playersData?.players;
+  })
+  const players = playersData?.players
 
-  const { currentUserId } = useCurrentUser();
+  const { currentUserId } = useCurrentUser()
 
-  const currentPlayer = players?.find((player) => player.id === currentUserId);
+  const currentPlayer = players?.find((player) => player.id === currentUserId)
 
   const makeMove = useMutation({
     mutationFn: createPlayerMove,
-  });
+  })
 
   const map: MainMap = {
     cellRows: mapCellRows,
     cells: mapCellsSorted,
     startCell,
     finishCell,
-  };
+  }
 
   const handleClick = () => {
-    setClosePopups(!closePopups);
-  };
+    setClosePopups(!closePopups)
+  }
 
   const handleNextTurn = (params: NextTurnParams) => {
     if (!currentPlayer) {
-      return;
+      return
     }
-    const steps = params.type === "drop" ? -params.diceRoll : params.diceRoll;
 
     // save player position in API
     makeMove.mutate({
       player_id: currentPlayer.id,
-      dice_roll: steps,
-      move_to: currentPlayer.map_position + steps,
+      dice_roll: params.diceRoll,
+      move_to: currentPlayer.map_position + params.diceRoll,
       stair_from: params.stairFrom,
       stair_to: params.stairTo,
       snake_from: params.snakeFrom,
@@ -64,34 +63,34 @@ export default function MapComponent() {
       item_length: params.itemLength,
       item_rating: params.itemRating,
       item_review: params.itemReview,
-    });
-    setMoveSteps(steps);
-  };
+    })
+    setMoveSteps(params.diceRoll)
+  }
 
   const handleAnimationEnd = (player: Player, moves: number) => {
     if (player.id !== currentPlayer?.id) {
-      return;
+      return
     }
-    setMoveSteps(0);
-    player.map_position = Math.min(101, player.map_position + moves);
-    player.map_position = Math.max(0, player.map_position);
-  };
+    setMoveSteps(0)
+    player.map_position = Math.min(101, player.map_position + moves)
+    player.map_position = Math.max(0, player.map_position)
+  }
 
   return (
     <Box
       style={{
-        overflowX: "auto",
-        minWidth: "1500px",
+        overflowX: 'auto',
+        minWidth: '1500px',
       }}
       onClick={handleClick}
     >
       <Grid
         container
-        justifyContent={"center"}
+        justifyContent={'center'}
         style={{
           backgroundImage: "url('static/map_background.png')",
-          backgroundPosition: "center" /* Center the image */,
-          backgroundRepeat: "no-repeat" /* Prevent the image from repeating */,
+          backgroundPosition: 'center' /* Center the image */,
+          backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
         }}
       >
         {map.cellRows.map((row, index) => (
@@ -110,15 +109,25 @@ export default function MapComponent() {
               <Grid
                 item
                 borderRight={1}
-                style={{ borderLeft: "1px solid transparent" }}
+                style={{ borderLeft: '1px solid transparent' }}
                 borderTop={index === 1 ? 1 : 0}
               >
                 <div style={{ minHeight: cellSize, minWidth: cellSize }} />
               </Grid>
             )}
             {row.map((cell) => (
-              <Grid item key={cell.id} borderRight={1} borderTop={1} borderBottom={index === 9 ? 1 : 0}>
-                <CellItem cell={cell} currentPlayer={currentPlayer} moveSteps={moveSteps} />
+              <Grid
+                item
+                key={cell.id}
+                borderRight={1}
+                borderTop={1}
+                borderBottom={index === 9 ? 1 : 0}
+              >
+                <CellItem
+                  cell={cell}
+                  currentPlayer={currentPlayer}
+                  moveSteps={moveSteps}
+                />
               </Grid>
             ))}
           </Grid>
@@ -134,8 +143,10 @@ export default function MapComponent() {
             onAnimationEnd={handleAnimationEnd}
           />
         ))}
-      {currentPlayer && <ActionButton handleNextTurn={handleNextTurn} />}
+      {currentPlayer && (
+        <ActionButton handleNextTurn={handleNextTurn} player={currentPlayer} />
+      )}
       <Box marginTop={20} />
     </Box>
-  );
+  )
 }

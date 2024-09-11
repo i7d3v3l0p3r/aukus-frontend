@@ -17,16 +17,23 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-import { DiceOption, Color, MoveType, NextTurnParams } from 'utils/types'
+import {
+  DiceOption,
+  Color,
+  MoveType,
+  NextTurnParams,
+  Player,
+} from 'utils/types'
 import NumRating from './NumRating'
 
 type Props = {
   open: boolean
   onClose: () => void
   onConfirm: (params: NextTurnParams, dice: DiceOption) => void
+  player: Player
 }
 
-export default function TurnModal({ open, onClose, onConfirm }: Props) {
+export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [rating, setRating] = useState<number | null>(null)
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState('')
@@ -47,13 +54,6 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     }
   }, [open])
 
-  const gameCompleted =
-    gameName !== '' && moveType === 'completed' && gameHours !== null
-  const gameDropped = gameName !== '' && moveType === 'drop'
-  const gameFieldsCompleted = gameCompleted || gameDropped
-  const reviewCompleted = review !== '' && rating !== null
-
-  const canThrowDice = gameFieldsCompleted && reviewCompleted
   const handleRatingChange = (
     event: React.SyntheticEvent,
     newValue: number | null
@@ -86,26 +86,19 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
     setMoveType(event.target.value as MoveType)
   }
 
-  let dice: DiceOption | null = null
-  if (moveType === 'drop') {
-    dice = '1d6'
-  }
-  if (moveType === 'completed' && gameHours) {
-    switch (gameHours) {
-      case 'short':
-        dice = '1d6'
-        break
-      case 'medium':
-        dice = '2d6'
-        break
-      case 'long':
-        dice = '3d6'
-        break
-    }
-  }
+  const dice: DiceOption | null = getDiceType({
+    moveType,
+    gameHours,
+    playerPosition: player.map_position,
+  })
+
+  const gameFieldsCompleted = gameName && dice
+  const reviewCompleted = review !== '' && rating !== null
+
+  const canThrowDice = gameFieldsCompleted && reviewCompleted
 
   const handleConfirmTurn = () => {
-    if (rating && moveType && dice) {
+    if (rating && moveType && dice !== null) {
       onConfirm(
         {
           type: moveType,
@@ -131,6 +124,13 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
   let displayRating = rating || 0
   if (ratingHover && ratingHover !== -1) {
     displayRating = ratingHover
+  }
+
+  let buttonText = 'Перейти к броску'
+  if (moveType === 'reroll') {
+    buttonText = 'Рерольнуть игру'
+  } else if (dice) {
+    buttonText = `Перейти к броску ${dice}`
   }
 
   return (
@@ -256,9 +256,51 @@ export default function TurnModal({ open, onClose, onConfirm }: Props) {
             margin: 2,
           }}
         >
-          Перейти к броску
+          {buttonText}
         </Button>
       </DialogActions>
     </Dialog>
   )
+}
+
+type GetDiceTypeProps = {
+  moveType: MoveType | null
+  gameHours: 'short' | 'medium' | 'long' | null
+  playerPosition: number
+}
+
+function getDiceType({
+  moveType,
+  gameHours,
+  playerPosition,
+}: GetDiceTypeProps) {
+  if (!moveType) {
+    return null
+  }
+  if (moveType === 'drop' || moveType === 'sheikh') {
+    if (playerPosition >= 81) {
+      return '2d6'
+    }
+    return '1d6'
+  }
+  if (moveType === 'completed' && gameHours) {
+    if (playerPosition >= 81) {
+      return '1d6'
+    }
+    switch (gameHours) {
+      case 'short':
+        return '1d6'
+      case 'medium':
+        return '2d6'
+      case 'long':
+        return '3d6'
+    }
+  }
+  if (moveType === 'movie') {
+    return '1d4'
+  }
+  if (moveType === 'reroll') {
+    return 'skip'
+  }
+  return null
 }

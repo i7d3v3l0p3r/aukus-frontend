@@ -35,7 +35,7 @@ function IconContainer(props: IconContainerProps) {
 
 function getIconContainerWithColor(value?: number | null) {
   if (!value) {
-    return (props: IconContainerProps) => <IconContainer {...props} />
+    return IconContainer
   }
 
   const color =
@@ -53,7 +53,7 @@ function getIconContainerWithColor(value?: number | null) {
 }
 
 export default function NumRating(props: React.ComponentProps<typeof Rating>) {
-  const [activeValue, setActiveValue] = useState<number>(0)
+  const [activeValue, setActiveValue] = useState<number | null>(null)
 
   const handleChangeActive = (
     event: React.SyntheticEvent,
@@ -63,12 +63,14 @@ export default function NumRating(props: React.ComponentProps<typeof Rating>) {
     props.onChangeActive?.(event, newValue)
   }
 
+  const colorValue = activeValue && activeValue > 0 ? activeValue : props.value
+
   return (
     <Rating
       {...props}
       onChangeActive={handleChangeActive}
       icon={<Circle color="primary" />}
-      IconContainerComponent={getIconContainerWithColor(activeValue)}
+      IconContainerComponent={getIconContainerWithColor(colorValue)}
     />
   )
 }

@@ -1,50 +1,72 @@
-import { Box, Button } from "@mui/material";
-import { useState } from "react";
-import { DiceOption, NextTurnParams } from "utils/types";
-import DiceModal from "./DiceModal";
-import TurnModal from "./TurnModal";
+import { Box, Button } from '@mui/material'
+import { useState } from 'react'
+import { DiceOption, NextTurnParams, Player } from 'utils/types'
+import DiceModal from './DiceModal'
+import TurnModal from './TurnModal'
 
 type Props = {
-  handleNextTurn: (params: NextTurnParams) => void;
-};
+  handleNextTurn: (params: NextTurnParams) => void
+  player: Player
+}
 
-export default function ActionButton({ handleNextTurn }: Props) {
-  const [turnModalOpen, setTurnModalOpen] = useState(false);
-  const [diceModalOpen, setDiceModalOpen] = useState(false);
+export default function ActionButton({ handleNextTurn, player }: Props) {
+  const [turnModalOpen, setTurnModalOpen] = useState(false)
+  const [diceModalOpen, setDiceModalOpen] = useState(false)
 
-  const [dice, setDice] = useState<DiceOption | null>(null);
-  const [turnParams, setTurnParams] = useState<NextTurnParams | null>(null);
+  const [dice, setDice] = useState<DiceOption | null>(null)
+  const [turnParams, setTurnParams] = useState<NextTurnParams | null>(null)
 
   const handleClick = () => {
-    setTurnModalOpen(true);
-  };
+    setTurnModalOpen(true)
+  }
 
   const handleConfirm = (params: NextTurnParams, dice: DiceOption) => {
-    setTurnParams(params);
-    setDice(dice);
-    setTurnModalOpen(false);
-    setDiceModalOpen(true);
-  };
+    setTurnParams(params)
+    setDice(dice)
+    setTurnModalOpen(false)
+    if (dice === 'skip') {
+      handleNextTurn(params)
+    } else {
+      setDiceModalOpen(true)
+    }
+  }
 
   const handleTurnFinish = (roll: number) => {
-    setDiceModalOpen(false);
+    setDiceModalOpen(false)
     if (!turnParams) {
-      return;
+      return
     }
-    turnParams.diceRoll = roll;
-    handleNextTurn(turnParams);
-  };
+    if (turnParams.type === 'drop' || turnParams.type === 'sheikh') {
+      turnParams.diceRoll = -roll
+    } else {
+      turnParams.diceRoll = roll
+    }
+    handleNextTurn(turnParams)
+  }
 
   return (
     <>
-      <Box display={"flex"} justifyContent="center">
-        <Box sx={{ position: "fixed", bottom: 100, zIndex: 20, width: "320px" }}>
-          <Button variant="contained" color="primary" size="large" onClick={handleClick} fullWidth>
+      <Box display={'flex'} justifyContent="center">
+        <Box
+          sx={{ position: 'fixed', bottom: 100, zIndex: 20, width: '320px' }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleClick}
+            fullWidth
+          >
             Сделать ход
           </Button>
         </Box>
       </Box>
-      <TurnModal open={turnModalOpen} onClose={() => setTurnModalOpen(false)} onConfirm={handleConfirm} />
+      <TurnModal
+        open={turnModalOpen}
+        onClose={() => setTurnModalOpen(false)}
+        onConfirm={handleConfirm}
+        player={player}
+      />
       <DiceModal
         open={diceModalOpen}
         dice={dice}
@@ -52,5 +74,5 @@ export default function ActionButton({ handleNextTurn }: Props) {
         onTurnFinish={handleTurnFinish}
       />
     </>
-  );
+  )
 }
