@@ -1,29 +1,32 @@
-import { Box, Grid } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPlayers } from "utils/api";
-import PlayerSection from "./components/PlayerSection";
+import { Box, Grid } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
+import { shuffle } from 'lodash'
+import { fetchPlayers } from 'utils/api'
+import PlayerSection from './components/PlayerSection'
 
 export default function PlayersPage() {
   const { data: playersData } = useQuery({
-    queryKey: ["players"],
+    queryKey: ['players'],
     queryFn: fetchPlayers,
     staleTime: 1000 * 60 * 5,
-  });
-  const players = playersData?.players;
+  })
+  const players = playersData?.players
 
   if (!players) {
-    return <div>Загрузка...</div>;
+    return <div>Загрузка...</div>
   }
 
+  const randomPlayers = shuffle(players)
+
   return (
-    <Box textAlign={"center"}>
+    <Box textAlign={'center'}>
       <Grid container columns={1}>
-        {players.map((player) => (
+        {randomPlayers.map((player) => (
           <Grid item xs={1} key={player.id} marginBottom={6}>
             <PlayerSection player={player} />
           </Grid>
         ))}
       </Grid>
     </Box>
-  );
+  )
 }

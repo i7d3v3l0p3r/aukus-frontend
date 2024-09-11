@@ -14,13 +14,19 @@ export default function PlayerSection({ player }: Props) {
         <Box height={200} width={300} sx={{ backgroundColor: 'grey' }} />
         <Box marginTop={1}>
           <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p className="purple">Twitch</p>
+            <p className="purple" style={{ lineHeight: '1.2' }}>
+              Twitch
+            </p>
           </Button>
           <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p className="blue">VKPlay</p>
+            <p className="blue" style={{ lineHeight: '1.2' }}>
+              VKPlay
+            </p>
           </Button>
           <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p className="orange">Донейшн</p>
+            <p className="orange" style={{ lineHeight: '1.2' }}>
+              Донейшн
+            </p>
           </Button>
         </Box>
         <Box textAlign="center" marginTop={1} width="100%">
