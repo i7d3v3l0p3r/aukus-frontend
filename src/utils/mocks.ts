@@ -41,6 +41,19 @@ export const playersMock = [playerLasqa, playerSegall, playerRoadhouse].sort(
   }
 )
 
+const itemReviews: Array<string> = [
+  'ПРОЙДЕНО: ИГРУШКА-ПРИКОЛЮХА, ЖАЛЬ ПРИШЛОСЬ РАШИТЬ ',
+  'Фильм «Вася не в себе» (2023). Добрая комедия про важность таджиков с Павлом Прилучным. 5/10 ))) ',
+  'ПРОЙДЕНО: игру бы оценил нормально, если бы не мегауебищная камера, которая руинит весь экспириенс от прохождения 4/10',
+  'Супер-дупер игра, музыка кайф, геймплей тоже. Да и сюжет если вчухаться приятный. 10/10 (пройдено за 5 часов)',
+  'Клевая игра. Думал, что будет говно блевотное, но разнообразие геймплея и чувственный сюжет не позволяют поставить этой штуке меньше 8 баллов. 8/10',
+  'Клевая игрушенция, думал что будет душно, а оказалось прикольно. Надо пройти все предыдущие части 7.5/10',
+  'Неплохая задумка, хорошие зарисовки, российские разрабы. 7/10',
+  '10 часов однообразных гонок. В игре минимальный набор гоночной игры, сюжета кот наплакал, миссии начинаются с нихуя (простите меня за мой французский), просто в рандомном месте на карте активируются. При этом до них можно даже не ездить а просто выбирать через мапу. 3/10',
+  'Необычная головоломка с закадками внутри компьютера макинтош, удивила пару раз интересныйми задачами. 6/10',
+  'Шедевральная игра, коих мало. 10/10 ',
+]
+
 export function playerMovesMock() {
   const dates = generateDateRange(
     new Date('2024-11-01'),
@@ -60,8 +73,8 @@ export function playerMovesMock() {
 
     let diceRoll = 0
     if (status === 'drop' || status === 'sheikh') {
-      diceRoll = sample([1, 2, 3, 4, 5, 6])
-      currentPosition -= diceRoll
+      diceRoll = -sample([1, 2, 3, 4, 5, 6])
+      currentPosition += diceRoll
       if (currentPosition < 0) {
         currentPosition = 0
       }
@@ -82,8 +95,8 @@ export function playerMovesMock() {
       dice_roll: diceRoll,
       cell_to: currentPosition,
       cell_from: currentPosition - diceRoll,
-      item_review: sample(['норм', 'топ', 'ахуенно', 'лучшая игра']),
-      item_rating: sample([1, 2, 3, 4, 5]),
+      item_review: sample(itemReviews) as string,
+      item_rating: sample([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
       stair_from: null,
       stair_to: null,
       snake_from: null,
