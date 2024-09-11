@@ -1,145 +1,102 @@
-import { Box, Grid } from "@mui/material";
-import { sample } from "lodash";
-import { Link, useParams } from "react-router-dom";
-import { PlayerMove } from "utils/types";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPlayers } from "utils/api";
+import {
+  Box,
+  Button,
+  Grid,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material'
+import { sample } from 'lodash'
+import { Link, useParams } from 'react-router-dom'
+import { PlayerMove } from 'utils/types'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
+import { OpenInNew } from '@mui/icons-material'
 
-type Props = {};
+type Props = {}
 
 export default function PlayerPage(props: Props) {
-  const { id: playerHandle } = useParams();
+  const { id: playerHandle } = useParams()
 
-  const { data: playersData } = useQuery({
-    queryKey: ["players"],
+  const { data: playersData, isLoading: isPlayerLoading } = useQuery({
+    queryKey: ['players'],
     queryFn: fetchPlayers,
     staleTime: 1000 * 60 * 1,
-  });
-  const players = playersData?.players;
+  })
+  const players = playersData?.players
 
-  const itemsAmount = 10;
-  const [playerMoves, setPlayerMoves] = useState<PlayerMove[]>(() => {
-    const dates = generateDateRange(new Date("2024-11-01"), new Date("2024-12-01"));
-    const data: PlayerMove[] = [];
-    let currentPosition = 0;
-    for (let i = 0; i < itemsAmount; i++) {
-      const status: PlayerMove["type"] = sample(["drop", "completed"]);
-      const diceRoll = sample([1, 2, 3, 4, 5, 6]);
-      if (status === "drop") {
-        currentPosition -= diceRoll;
-        if (currentPosition < 0) {
-          currentPosition = 0;
-        }
-      } else {
-        currentPosition += diceRoll;
-      }
+  const player = players?.find((player) => player.url_handle === playerHandle)
 
-      data.push({
-        created_at: dates[i].toDateString(),
-        id: i + 1,
-        item_title: sample(["Готика", "Соник", "Ведьмак", "Смута"]),
-        type: status,
-        dice_roll: diceRoll,
-        cell_to: currentPosition,
-        cell_from: currentPosition - diceRoll,
-        item_review: sample(["норм", "топ", "ахуенно", "лучшая игра"]),
-        item_rating: sample([1, 2, 3, 4, 5]),
-        stair_from: null,
-        stair_to: null,
-        snake_from: null,
-        snake_to: null,
-        item_length: "medium",
-      });
-    }
-    return data;
-  });
+  const { data: playerMovesData, isLoading: isMovesLoading } = useQuery({
+    queryKey: ['playerMoves', playerHandle],
+    queryFn: () => player && fetchPlayerMoves(player.id),
+    staleTime: 1000 * 60 * 1,
+    enabled: !!player,
+  })
 
-  const player = players?.find((player) => player.url_handle === playerHandle);
-  if (!player) {
-    return <h1>Игрок не найден</h1>;
+  const playerMoves = playerMovesData?.moves
+
+  if (isPlayerLoading || isMovesLoading) {
+    return <h1>Загрузка</h1>
   }
+
+  if (!player || playerMoves === undefined) {
+    return <h1>Игрок не найден</h1>
+  }
+
+  playerMoves.sort((a, b) => {
+    return b.id - a.id
+  })
 
   return (
-    <Box marginLeft={2}>
-      <h1>Страница участника {player.name}</h1>
-      <Link to={player.stream_link}>{player.stream_link}</Link>
+    <Box>
+      <Box textAlign={'center'}>
+        <h1>Страница участника {player.name}</h1>
+        <Link to={player.stream_link} target="_blank" rel="noopener noreferrer">
+          <Button sx={{ paddingLeft: 6, paddingRight: 6 }}>
+            <Box display="flex" alignItems={'center'}>
+              Сейчас играет в: {player.current_game}
+              <OpenInNew sx={{ marginLeft: 1 }} />
+            </Box>
+          </Button>
+        </Link>
+      </Box>
 
-      <Box marginTop={2} />
-      <Grid container>
-        <Grid container columns={8}>
-          {" "}
-          <Grid item xs={1}>
-            Дата
-          </Grid>
-          <Grid item xs={1}>
-            Ход
-          </Grid>
-          <Grid item xs={1}>
-            Игра
-          </Grid>
-          <Grid item xs={1}>
-            Результат
-          </Grid>
-          <Grid item xs={1}>
-            Ролл кубика
-          </Grid>
-          <Grid item xs={1}>
-            Новая позиция
-          </Grid>
-          <Grid item xs={1}>
-            Отзыв
-          </Grid>
-          <Grid item xs={1}>
-            Ссылка на вод
-          </Grid>
-        </Grid>
-        {playerMoves.map((move) => (
-          <Grid container columns={8} paddingTop={1} borderTop={1} key={move.id}>
-            <Grid item xs={1}>
-              {move.created_at}
-            </Grid>
-            <Grid item xs={1}>
-              {move.id}
-            </Grid>
-            <Grid item xs={1}>
-              {move.item_title}
-            </Grid>
-            <Grid item xs={1}>
-              {move.type}
-            </Grid>
-            <Grid item xs={1}>
-              {move.type === "drop" ? -move.dice_roll : move.dice_roll}
-            </Grid>
-            <Grid item xs={1}>
-              {move.cell_to}
-            </Grid>
-            <Grid item xs={1}>
-              {move.item_review}
-            </Grid>
-          </Grid>
-        ))}
-      </Grid>
+      <Box marginTop={6} marginLeft={4} marginRight={4}>
+        <TableContainer>
+          <TableHead>
+            <TableRow>
+              <TableCell>Ход</TableCell>
+              <TableCell>Дата</TableCell>
+              <TableCell>Игра</TableCell>
+              <TableCell>Результат</TableCell>
+              <TableCell>Ролл кубика</TableCell>
+              <TableCell>Новая позиция</TableCell>
+              <TableCell>Отзыв</TableCell>
+              <TableCell>Ссылка на вод</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {playerMoves.map((move) => {
+              return (
+                <TableRow>
+                  <TableCell>{move.id}</TableCell>
+                  <TableCell>{move.created_at}</TableCell>
+                  <TableCell>{move.item_title}</TableCell>
+                  <TableCell>{move.type}</TableCell>
+                  <TableCell>{move.dice_roll}</TableCell>
+                  <TableCell>{move.cell_to}</TableCell>
+                  <TableCell>{move.item_review}</TableCell>
+                  <TableCell>"link"</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </TableContainer>
+      </Box>
     </Box>
-  );
-}
-
-function generateDateRange(startDate: Date, endDate: Date) {
-  // Create an array to store the dates
-  const dateArray = [];
-
-  // Create a new Date object for the start date to avoid modifying the original startDate
-  let currentDate = new Date(startDate);
-
-  // Loop until the current date is greater than the end date
-  while (currentDate <= endDate) {
-    // Add the current date to the array
-    dateArray.push(new Date(currentDate));
-
-    // Increment the current date by one day
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  // Return the array of dates
-  return dateArray;
+  )
 }
