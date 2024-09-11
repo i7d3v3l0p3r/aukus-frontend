@@ -5,10 +5,12 @@ import { cellSize, MainMap, MapCell } from '../types'
 import ActionButton from './ActionButton'
 import CellItem from './CellItem'
 import PlayerIcon from './PlayerIcon'
-import { mapCellRows, mapCellsSorted } from './utils'
+import { ladders, mapCellRows, mapCellsSorted, snakes } from './utils'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
+import LadderComponent from './Ladder'
+import SnakeComponent from './Snake'
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell
@@ -133,6 +135,12 @@ export default function MapComponent() {
           </Grid>
         ))}
       </Grid>
+      {ladders.map((ladder) => (
+        <LadderComponent ladder={ladder} />
+      ))}
+      {snakes.map((snake) => (
+        <SnakeComponent snake={snake} />
+      ))}
       {players &&
         players.map((player) => (
           <PlayerIcon
@@ -146,6 +154,7 @@ export default function MapComponent() {
       {currentPlayer && (
         <ActionButton handleNextTurn={handleNextTurn} player={currentPlayer} />
       )}
+
       <Box marginTop={20} />
     </Box>
   )

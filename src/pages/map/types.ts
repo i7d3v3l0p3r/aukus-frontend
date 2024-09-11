@@ -1,23 +1,23 @@
 export type MapCell = {
-  id: number;
-  direction: "left" | "right" | "up" | null;
-};
+  id: number
+  direction: 'left' | 'right' | 'up' | null
+}
 
 export type MainMap = {
-  cellRows: Array<Array<MapCell>>;
-  cells: Array<MapCell>;
-  startCell: MapCell;
-  finishCell: MapCell;
-};
+  cellRows: Array<Array<MapCell>>
+  cells: Array<MapCell>
+  startCell: MapCell
+  finishCell: MapCell
+}
 
-export const cellSize = 120;
+export const cellSize = 120
 
-type Ladder = {
-  cellFrom: number;
-  cellTo: number;
-};
+export type Ladder = {
+  cellFrom: number
+  cellTo: number
+}
 
-type Snake = {
-  cellFrom: number;
-  cellTo: number;
-};
+export type Snake = {
+  cellFrom: number
+  cellTo: number
+}
