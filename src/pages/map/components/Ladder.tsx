@@ -60,22 +60,9 @@ export default function LadderComponent({ ladder }: Props) {
         y2={toY}
         stroke="white"
         strokeWidth="2"
-        markerStart="url(#arrow-ladder)"
-        markerEnd="url(#arrow-ladder)"
+        markerStart="url(#green-arrow-start)"
+        markerEnd="url(#green-arrow-end)"
       />
-      <defs>
-        <marker
-          id="arrow-ladder"
-          markerWidth="10"
-          markerHeight="7"
-          refX="2"
-          refY="3.5"
-          orient="auto"
-          stroke="white"
-        >
-          <polygon points="0 0, 10 3.5, 0 7" fill="green" />
-        </marker>
-      </defs>
     </svg>
   )
 }

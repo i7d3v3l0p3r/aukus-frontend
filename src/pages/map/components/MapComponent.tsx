@@ -18,6 +18,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
 import LadderComponent from './Ladder'
 import SnakeComponent from './Snake'
+import SVGMarkers from './SVGMarkers'
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell
@@ -97,6 +98,7 @@ export default function MapComponent() {
       }}
       onClick={handleClick}
     >
+      <SVGMarkers />
       <Grid
         container
         justifyContent={'center'}

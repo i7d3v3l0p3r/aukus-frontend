@@ -60,33 +60,9 @@ export default function SnakeComponent({ snake }: Props) {
         y2={toY}
         stroke="white"
         strokeWidth="2"
-        markerStart="url(#start-arrow-snake)"
-        markerEnd="url(#end-arrow-snake)"
+        markerStart="url(#red-arrow-start)"
+        markerEnd="url(#red-arrow-end)"
       />
-      <defs>
-        <marker
-          id="start-arrow-snake"
-          markerWidth="10"
-          markerHeight="7"
-          refX="2"
-          refY="3.5"
-          orient="auto"
-          stroke="white"
-        >
-          <polygon points="0 0, 10 3.5, 0 7" fill="red" />
-        </marker>
-        <marker
-          id="end-arrow-snake"
-          markerWidth="10"
-          markerHeight="7"
-          refX="0"
-          refY="3.5"
-          orient="auto"
-          stroke="white"
-        >
-          <polygon points="0 0, 10 3.5, 0 7" fill="red" />
-        </marker>
-      </defs>
     </svg>
   )
 }
