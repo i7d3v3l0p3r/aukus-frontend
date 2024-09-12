@@ -1,5 +1,5 @@
-import { Box, Chip, Paper, Popper } from '@mui/material'
-import { Player } from 'utils/types'
+import { Box, Button, Chip, Paper, Popper } from '@mui/material'
+import { Color, Player } from 'utils/types'
 import { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -185,23 +185,29 @@ export default function PlayerIcon({
             style={{
               borderRadius: '30px',
               padding: 1,
-              border: `2px solid ${playerColor}`,
+              background: Color.greyLight,
             }}
           >
-            <Box style={{}} padding={2}>
-              Текущая игра: {player.current_game}
-              <br />
-              <Link
-                to={player.stream_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Стрим {player.is_online ? 'онлайн' : 'оффлайн'}
+            <Box padding={2}>
+              <Link to={`/players/${player.url_handle}`}>
+                <span className="purple">
+                  <strong>{player.name}</strong>
+                </span>
               </Link>
               <br />
+              <Box marginTop={1}>Игра: {player.current_game}</Box>
               <br />
-              <Link to={`/players/${player.url_handle}`}>Страница игрока</Link>
-              <br />
+              {player.is_online ? (
+                <Link
+                  to={player.stream_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="green">Смотреть</span>
+                </Link>
+              ) : (
+                'Офлайн'
+              )}
             </Box>
           </Paper>
         </Popper>

@@ -12,24 +12,32 @@ export default function PlayerSection({ player }: Props) {
       <Box textAlign={'left'}>
         <h1>Имя {player.name}</h1>
         <Box height={200} width={300} sx={{ backgroundColor: 'grey' }} />
-        <Box marginTop={1}>
-          <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p className="purple" style={{ lineHeight: '1.2' }}>
-              Twitch
-            </p>
-          </Button>
-          <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p className="blue" style={{ lineHeight: '1.2' }}>
-              VKPlay
-            </p>
-          </Button>
-          <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p className="orange" style={{ lineHeight: '1.2' }}>
-              Донейшн
-            </p>
-          </Button>
+        <Box marginTop={1} marginLeft={1}>
+          <Link
+            to={player.stream_link}
+            target="_blank"
+            rel="noopener nereferrer"
+            style={{ marginRight: 20 }}
+          >
+            <span className="purple">Twitch</span>
+          </Link>
+          <Link
+            to={player.stream_link}
+            target="_blank"
+            rel="noopener nereferrer"
+            style={{ marginRight: 20 }}
+          >
+            <span className="blue">VKPlay</span>
+          </Link>
+          <Link
+            to={player.stream_link}
+            target="_blank"
+            rel="noopener nereferrer"
+          >
+            <span className="orange">Донейшн</span>
+          </Link>
         </Box>
-        <Box textAlign="center" marginTop={1} width="100%">
+        <Box textAlign="center" marginTop={2} width="100%">
           <Link to={`/players/${player.url_handle}`}>
             <Button variant="contained" color="secondary" fullWidth>
               Страница участника

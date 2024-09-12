@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { sample } from 'lodash'
 import { Link, useParams } from 'react-router-dom'
-import { PlayerMove } from 'utils/types'
+import { MoveType, PlayerMove } from 'utils/types'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
@@ -72,7 +72,7 @@ export default function PlayerPage(props: Props) {
         justifyContent="center"
         display="flex"
       >
-        <TableContainer sx={{ width: 'auto' }}>
+        <TableContainer sx={{ width: '70%' }}>
           <TableHead>
             <TableRow>
               <TableCell>Ход</TableCell>
@@ -86,13 +86,13 @@ export default function PlayerPage(props: Props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {playerMoves.map((move) => {
+            {playerMoves.map((move, index) => {
               return (
                 <TableRow>
-                  <TableCell>{move.id}</TableCell>
-                  <TableCell>{move.created_at}</TableCell>
+                  <TableCell>{playerMoves.length - index}</TableCell>
+                  <TableCell>{formatDate(move.created_at)}</TableCell>
                   <TableCell>{move.item_title}</TableCell>
-                  <TableCell>{move.type}</TableCell>
+                  <TableCell>{formatMoveType(move.type)}</TableCell>
                   <TableCell>{move.dice_roll}</TableCell>
                   <TableCell>{move.cell_to}</TableCell>
                   <TableCell>{move.item_review}</TableCell>
@@ -105,4 +105,33 @@ export default function PlayerPage(props: Props) {
       </Box>
     </Box>
   )
+}
+
+function formatDate(dateString: string) {
+  // Create a new Date object
+  const date = new Date(dateString)
+
+  // Extract the day, month, and year
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
+  const year = String(date.getFullYear()).slice(-2) // Get last two digits of the year
+
+  // Format the date as dd.mm.yy
+  return `${day}.${month}.${year}`
+}
+
+function formatMoveType(move: MoveType) {
+  switch (move) {
+    case 'completed':
+      return 'Пройдено'
+    case 'drop':
+      return 'Дроп'
+    case 'reroll':
+      return 'Реролл'
+    case 'movie':
+      return 'Фильм'
+    case 'sheikh':
+      return 'Шейх-момент'
+  }
+  return ''
 }
