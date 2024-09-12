@@ -1,6 +1,6 @@
 export default function SVGMarkers() {
   return (
-    <svg>
+    <svg style={{ height: 0 }}>
       <defs>
         <marker
           id="green-arrow-start"
