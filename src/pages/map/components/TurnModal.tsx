@@ -158,7 +158,6 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           <Select
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
-            disableUnderline
             IconComponent={KeyboardArrowDownSharp}
           >
             <MenuItem value="completed">Прошел игру</MenuItem>

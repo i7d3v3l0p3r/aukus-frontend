@@ -34,10 +34,12 @@ export default function MainMenu({ currentPage }: Props) {
                 lineHeight: '1.2',
               }}
             >
-              <Box
-                display="flex"
-                justifyContent={'center'}
-                alignItems={'center'}
+              <span
+                style={{
+                  display: 'inline-flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
               >
                 <img
                   src="/static/logo.png"
@@ -45,7 +47,7 @@ export default function MainMenu({ currentPage }: Props) {
                   style={{ width: '15px', marginRight: '8px' }}
                 />
                 АУКУС 2024 {currentPlayer && `// ${currentPlayer.name}`}
-              </Box>
+              </span>
             </p>
           </Button>
         </Link>
