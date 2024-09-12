@@ -72,7 +72,7 @@ export default function PlayerPage(props: Props) {
         justifyContent="center"
         display="flex"
       >
-        <TableContainer sx={{ width: 'auto' }}>
+        <TableContainer sx={{ width: '70%' }}>
           <TableHead>
             <TableRow>
               <TableCell>Ход</TableCell>
