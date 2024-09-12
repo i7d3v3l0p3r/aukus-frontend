@@ -59,9 +59,9 @@ export default function SnakeComponent({ snake }: Props) {
         x2={toX}
         y2={toY}
         stroke="white"
-        stroke-width="2"
-        marker-start="url(#start-arrow-snake)"
-        marker-end="url(#end-arrow-snake)"
+        strokeWidth="2"
+        markerStart="url(#start-arrow-snake)"
+        markerEnd="url(#end-arrow-snake)"
       />
       <defs>
         <marker

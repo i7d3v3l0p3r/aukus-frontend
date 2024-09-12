@@ -57,6 +57,14 @@ export const ladders: Array<Ladder> = [
   { cellFrom: 74, cellTo: 92 },
 ]
 
+export const laddersByCell = ladders.reduce(
+  (acc, ladder) => {
+    acc[ladder.cellFrom] = ladder
+    return acc
+  },
+  {} as Record<number, Ladder>
+)
+
 export const snakes: Array<Snake> = [
   { cellFrom: 21, cellTo: 3 },
   { cellFrom: 27, cellTo: 5 },
@@ -69,4 +77,13 @@ export const snakes: Array<Snake> = [
   { cellFrom: 94, cellTo: 67 },
   { cellFrom: 96, cellTo: 84 },
   { cellFrom: 97, cellTo: 85 },
+  { cellFrom: 99, cellTo: 41 },
 ]
+
+export const snakesByCell = snakes.reduce(
+  (acc, snake) => {
+    acc[snake.cellFrom] = snake
+    return acc
+  },
+  {} as Record<number, Snake>
+)
