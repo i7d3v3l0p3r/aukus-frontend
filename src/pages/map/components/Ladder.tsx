@@ -24,6 +24,22 @@ export default function LadderComponent({ ladder }: Props) {
     cellFrom.offsetLeft + cellFrom.offsetWidth
   )
 
+  const arrowGoesToRight = cellTo.offsetLeft > cellFrom.offsetLeft
+  const arrowGoesStraight = cellTo.offsetLeft === cellFrom.offsetLeft
+
+  const fromX = cellFrom.offsetLeft - leftPoint + cellFrom.offsetWidth / 2
+  const fromY = cellFrom.offsetTop - topPoint + cellFrom.offsetHeight / 2
+
+  const toX =
+    cellTo.offsetLeft -
+    leftPoint +
+    (arrowGoesToRight
+      ? 10
+      : arrowGoesStraight
+        ? cellTo.offsetWidth / 2
+        : cellTo.offsetWidth - 10)
+  const toY = cellTo.offsetTop - topPoint + cellTo.offsetHeight - 10
+
   return (
     <svg
       id="svg"
@@ -38,32 +54,21 @@ export default function LadderComponent({ ladder }: Props) {
     >
       <line
         id="arrow"
-        x1={cellFrom.offsetLeft - leftPoint + cellFrom.offsetWidth / 2}
-        y1={cellFrom.offsetTop - topPoint + cellFrom.offsetHeight / 2}
-        x2={cellTo.offsetLeft - leftPoint + cellTo.offsetWidth / 2}
-        y2={cellTo.offsetTop - topPoint + cellTo.offsetHeight / 2}
+        x1={fromX}
+        y1={fromY}
+        x2={toX}
+        y2={toY}
         stroke="white"
         stroke-width="2"
-        marker-start="url(#start-arrow-ladder)"
-        marker-end="url(#end-arrow-ladder)"
+        marker-start="url(#arrow-ladder)"
+        marker-end="url(#arrow-ladder)"
       />
       <defs>
         <marker
-          id="start-arrow-ladder"
+          id="arrow-ladder"
           markerWidth="10"
           markerHeight="7"
           refX="2"
-          refY="3.5"
-          orient="auto"
-          stroke="white"
-        >
-          <polygon points="0 0, 10 3.5, 0 7" fill="green" />
-        </marker>
-        <marker
-          id="end-arrow-ladder"
-          markerWidth="10"
-          markerHeight="7"
-          refX="0"
           refY="3.5"
           orient="auto"
           stroke="white"
