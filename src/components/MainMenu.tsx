@@ -23,33 +23,26 @@ export default function MainMenu({ currentPage }: Props) {
 
   return (
     <Box>
-      <Box display="block" textAlign={'center'} marginTop={2} marginBottom={2}>
+      <Box display="block" textAlign={'center'} marginTop={3} marginBottom={2}>
         <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
-          <Button variant="text" style={{ backgroundColor: 'transparent' }}>
-            <p
-              className="purple"
-              style={{
-                fontWeight: 'bold',
-                paddingBottom: 0,
-                lineHeight: '1.2',
-              }}
-            >
-              <span
-                style={{
-                  display: 'inline-flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <img
-                  src="/static/logo.png"
-                  alt="logo"
-                  style={{ width: '15px', marginRight: '8px' }}
-                />
-                АУКУС 2024 {currentPlayer && `// ${currentPlayer.name}`}
-              </span>
-            </p>
-          </Button>
+          <span
+            className="purple"
+            style={{
+              fontWeight: 'bold',
+              paddingBottom: 0,
+              lineHeight: '1.2',
+              display: 'inline-flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <img
+              src="/static/logo.png"
+              alt="logo"
+              style={{ width: '15px', marginRight: '8px' }}
+            />
+            АУКУС 2024 {currentPlayer && `// ${currentPlayer.name}`}
+          </span>
         </Link>
       </Box>
       <Box display="flex" justifyContent={'center'} marginBottom={6}>

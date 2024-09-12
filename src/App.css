@@ -27,30 +27,6 @@ button.MuiButton-root p {
   display: inline;
 }
 
-button.MuiButton-root p.orange {
-  border-bottom: 2px solid #ff8200;
-}
-
-button.MuiButton-root p.purple {
-  border-bottom: 2px solid #a970ff;
-}
-
-button.MuiButton-root p.blue {
-  border-bottom: 2px solid #0077ff;
-}
-
-button.MuiButton-root p.green {
-  border-bottom: 2px solid #2fb350;
-}
-
-button.MuiButton-root p.red {
-  border-bottom: 2px solid #ff3b30;
-}
-
-button.MuiButton-root p.brown {
-  border-bottom: 2px solid #a2845e;
-}
-
 .MuiDialogTitle-root {
   background-color: #222222;
   border-top-left-radius: 20px;
@@ -82,4 +58,28 @@ div.MuiOutlinedInput-root > fieldset {
 
 label.MuiInputLabel-shrink {
   display: none;
+}
+
+a span.purple {
+  border-bottom: 2px solid #a970ff;
+}
+
+a span.blue {
+  border-bottom: 2px solid #0077ff;
+}
+
+a span.green {
+  border-bottom: 2px solid #2fb350;
+}
+
+a span.orange {
+  border-bottom: 2px solid #ff8200;
+}
+
+a span.red {
+  border-bottom: 2px solid #ff3b30;
+}
+
+a span.brown {
+  border-bottom: 2px solid #a2845e;
 }
