@@ -63,11 +63,13 @@ export default function MapComponent() {
       // win condition
     }
 
+    const newPosition = getNextPlayerPosition(currentPlayer, params.diceRoll)
+
     // save player position in API
     makeMove.mutate({
       player_id: currentPlayer.id,
       dice_roll: params.diceRoll,
-      move_to: currentPlayer.map_position + params.diceRoll,
+      move_to: newPosition,
       stair_from: params.stairFrom,
       stair_to: params.stairTo,
       snake_from: params.snakeFrom,
