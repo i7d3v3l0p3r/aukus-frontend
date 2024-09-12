@@ -1,11 +1,18 @@
 import { Box, Grid } from '@mui/material'
 import { NextTurnParams, Player } from 'utils/types'
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { cellSize, MainMap, MapCell } from '../types'
 import ActionButton from './ActionButton'
 import CellItem from './CellItem'
 import PlayerIcon from './PlayerIcon'
-import { ladders, mapCellRows, mapCellsSorted, snakes } from './utils'
+import {
+  ladders,
+  laddersByCell,
+  mapCellRows,
+  mapCellsSorted,
+  snakes,
+  snakesByCell,
+} from './utils'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
@@ -51,6 +58,10 @@ export default function MapComponent() {
       return
     }
 
+    if (currentPlayer.map_position === 101 && params.diceRoll > 0) {
+      // win condition
+    }
+
     // save player position in API
     makeMove.mutate({
       player_id: currentPlayer.id,
@@ -74,8 +85,8 @@ export default function MapComponent() {
       return
     }
     setMoveSteps(0)
-    player.map_position = Math.min(101, player.map_position + moves)
-    player.map_position = Math.max(0, player.map_position)
+    const newPosition = getNextPlayerPosition(player, moves)
+    player.map_position = newPosition
   }
 
   return (
@@ -136,10 +147,14 @@ export default function MapComponent() {
         ))}
       </Grid>
       {ladders.map((ladder) => (
-        <LadderComponent ladder={ladder} />
+        <Fragment key={ladder.cellFrom}>
+          <LadderComponent ladder={ladder} />
+        </Fragment>
       ))}
       {snakes.map((snake) => (
-        <SnakeComponent snake={snake} />
+        <Fragment key={snake.cellFrom}>
+          <SnakeComponent snake={snake} />
+        </Fragment>
       ))}
       {players &&
         players.map((player) => (
@@ -158,4 +173,26 @@ export default function MapComponent() {
       <Box marginTop={20} />
     </Box>
   )
+}
+
+function getNextPlayerPosition(player: Player, moves: number) {
+  const newPosition = player.map_position + moves
+  if (player.map_position < 101 && newPosition > 101) {
+    return 101
+  }
+
+  if (newPosition < 0) {
+    return 0
+  }
+
+  const ladder = laddersByCell[newPosition]
+  const snake = snakesByCell[newPosition]
+
+  if (ladder) {
+    return ladder.cellTo
+  }
+  if (snake) {
+    return snake.cellTo
+  }
+  return newPosition
 }

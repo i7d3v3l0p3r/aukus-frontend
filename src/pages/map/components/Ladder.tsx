@@ -59,9 +59,9 @@ export default function LadderComponent({ ladder }: Props) {
         x2={toX}
         y2={toY}
         stroke="white"
-        stroke-width="2"
-        marker-start="url(#arrow-ladder)"
-        marker-end="url(#arrow-ladder)"
+        strokeWidth="2"
+        markerStart="url(#arrow-ladder)"
+        markerEnd="url(#arrow-ladder)"
       />
       <defs>
         <marker
