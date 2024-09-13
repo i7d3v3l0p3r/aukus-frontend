@@ -1,4 +1,4 @@
-import { range, sample } from 'lodash'
+import { range, sample, random } from 'lodash'
 import { Player, PlayerMove } from './types'
 
 const playerLasqa: Player = {
@@ -125,4 +125,19 @@ function generateDateRange(startDate: Date, endDate: Date) {
 
   // Return the array of dates
   return dateArray
+}
+
+export function playerStatsMock() {
+  return playersMock.map((player) => ({
+    id: player.id,
+    map_position: random(1, 101),
+    total_moves: random(1, 100),
+    games_completed: random(1, 30),
+    games_dropped: random(1, 20),
+    sheikh_moments: random(1, 20),
+    rerolls: random(1, 20),
+    movies: random(1, 10),
+    ladders: random(1, 20),
+    snakes: random(1, 20),
+  }))
 }

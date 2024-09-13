@@ -2,6 +2,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import AboutPage from 'pages/about/AboutPage'
 import RulesPage from 'pages/rules/RulesPage'
+import StatsPage from 'pages/stats/StatsPage'
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
@@ -49,6 +50,14 @@ const router = createBrowserRouter(
       element: (
         <MainScreen currentPage="about">
           <AboutPage />
+        </MainScreen>
+      ),
+    },
+    {
+      path: '/stats',
+      element: (
+        <MainScreen currentPage="stats">
+          <StatsPage />
         </MainScreen>
       ),
     },
