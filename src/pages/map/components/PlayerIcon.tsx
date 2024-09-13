@@ -129,7 +129,7 @@ export default function PlayerIcon({
     if (anchorCell) {
       api.start({ from: { x: 0, y: 0 }, to: { x: 0, y: 0 } })
     }
-  }, [anchorCell, api])
+  }, [anchorCell, api, player.map_position])
 
   useEffect(() => {
     // console.log("updating map position to", player.mapPosition);

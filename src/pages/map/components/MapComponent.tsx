@@ -19,6 +19,7 @@ import useCurrentUser from 'hooks/useCurrentUser'
 import LadderComponent from './Ladder'
 import SnakeComponent from './Snake'
 import SVGMarkers from './SVGMarkers'
+import TesterButton from './TesterButton'
 
 export default function MapComponent() {
   const finishCell = { id: 101, direction: null } as MapCell
@@ -26,6 +27,8 @@ export default function MapComponent() {
 
   const [closePopups, setClosePopups] = useState(false)
   const [moveSteps, setMoveSteps] = useState(0)
+
+  const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -59,28 +62,42 @@ export default function MapComponent() {
       return
     }
 
-    if (currentPlayer.map_position === 101 && params.diceRoll > 0) {
+    const diceRoll = frozenDice || params.diceRoll
+
+    if (currentPlayer.map_position === 101 && diceRoll > 0) {
       // win condition
     }
 
-    const newPosition = getNextPlayerPosition(currentPlayer, params.diceRoll)
+    const currentPosition = currentPlayer.map_position
+
+    const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
 
     // save player position in API
-    makeMove.mutate({
-      player_id: currentPlayer.id,
-      dice_roll: params.diceRoll,
-      move_to: newPosition,
-      stair_from: params.stairFrom,
-      stair_to: params.stairTo,
-      snake_from: params.snakeFrom,
-      snake_to: params.snakeTo,
-      type: params.type,
-      item_title: params.itemTitle,
-      item_length: params.itemLength,
-      item_rating: params.itemRating,
-      item_review: params.itemReview,
-    })
-    setMoveSteps(params.diceRoll)
+    makeMove.mutate(
+      {
+        player_id: currentPlayer.id,
+        dice_roll: diceRoll,
+        move_to: newPosition,
+        stair_from: params.stairFrom,
+        stair_to: params.stairTo,
+        snake_from: params.snakeFrom,
+        snake_to: params.snakeTo,
+        type: params.type,
+        item_title: params.itemTitle,
+        item_length: params.itemLength,
+        item_rating: params.itemRating,
+        item_review: params.itemReview,
+      },
+      {
+        onSuccess: () => {
+          if (frozenDice) {
+            currentPlayer.map_position = currentPosition
+          }
+        },
+      }
+    )
+
+    setMoveSteps(diceRoll)
   }
 
   const handleAnimationEnd = (player: Player, moves: number) => {
@@ -174,7 +191,11 @@ export default function MapComponent() {
         <ActionButton handleNextTurn={handleNextTurn} player={currentPlayer} />
       )}
 
-      <Box marginTop={20} />
+      {currentPlayer && (
+        <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+      )}
+
+      <Box marginTop={30} />
     </Box>
   )
 }

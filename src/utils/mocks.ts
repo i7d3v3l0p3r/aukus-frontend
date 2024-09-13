@@ -41,6 +41,14 @@ export const playersMock = [playerLasqa, playerSegall, playerRoadhouse].sort(
   }
 )
 
+export const playersMockById = playersMock.reduce(
+  (acc, player) => {
+    acc[player.id] = player
+    return acc
+  },
+  {} as Record<number, Player>
+)
+
 const itemReviews: Array<string> = [
   'ПРОЙДЕНО: ИГРУШКА-ПРИКОЛЮХА, ЖАЛЬ ПРИШЛОСЬ РАШИТЬ ',
   'Фильм «Вася не в себе» (2023). Добрая комедия про важность таджиков с Павлом Прилучным. 5/10 ))) ',
