@@ -60,7 +60,8 @@ export default function StatsPage() {
               <TableCell>Участник</TableCell>
               <TableCell>Позиция на карте</TableCell>
               <TableCell>Очки</TableCell>
-              <TableCell>Пройдено игр</TableCell>
+              <TableCell>Пройдено</TableCell>
+              <TableCell>Дропов</TableCell>
               <TableCell>Реролов</TableCell>
               <TableCell>Просмотрено фильмов</TableCell>
               <TableCell>Шейх-моментов</TableCell>
@@ -74,6 +75,7 @@ export default function StatsPage() {
                 <TableCell>{playerStat.map_position}</TableCell>
                 <TableCell>{0}</TableCell>
                 <TableCell>{playerStat.games_completed}</TableCell>
+                <TableCell>{playerStat.games_dropped}</TableCell>
                 <TableCell>{playerStat.rerolls}</TableCell>
                 <TableCell>{playerStat.movies}</TableCell>
                 <TableCell>{playerStat.sheikh_moments}</TableCell>
