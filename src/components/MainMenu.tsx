@@ -78,7 +78,7 @@ export default function MainMenu({ currentPage }: Props) {
             </Button>
           </Link>
 
-          <Link to="#" style={{ marginRight: 10, textDecoration: 'none' }}>
+          <Link to="/stats" style={{ marginRight: 10, textDecoration: 'none' }}>
             <Button
               color={currentPage === 'stats' ? 'primary' : 'info'}
               sx={{ width: '150px' }}
