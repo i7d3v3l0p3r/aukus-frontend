@@ -69,21 +69,21 @@ export default function MainMenu({ currentPage }: Props) {
             </Button>
           </Link>
 
-          <Link to="/rules" style={{ marginRight: 10 }}>
-            <Button
-              color={currentPage === 'rules' ? 'primary' : 'info'}
-              sx={{ width: '150px' }}
-            >
-              Правила
-            </Button>
-          </Link>
-
           <Link to="/stats" style={{ marginRight: 10, textDecoration: 'none' }}>
             <Button
               color={currentPage === 'stats' ? 'primary' : 'info'}
               sx={{ width: '150px' }}
             >
               Статистика
+            </Button>
+          </Link>
+
+          <Link to="/rules" style={{ marginRight: 10 }}>
+            <Button
+              color={currentPage === 'rules' ? 'primary' : 'info'}
+              sx={{ width: '150px' }}
+            >
+              Правила
             </Button>
           </Link>
 

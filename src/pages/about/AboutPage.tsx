@@ -1,47 +1,95 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Divider, Grid, Link, Typography } from '@mui/material'
 
 export default function AboutPage() {
   return (
-    <Box margin={2}>
-      <Typography variant="h3">О Сайте</Typography>
-      <Typography variant="body1">Сайт создан энтузиастами для улучшения ивента Аукус.</Typography>
-      <Typography variant="h4" marginTop={4}>
-        Все кто хочет присоединиться к разработке заходите в дискорд:{" "}
-        <Link href="https://discord.gg/SHsyYTjNb5">https://discord.gg/SHsyYTjNb5</Link>
-      </Typography>
-      <Typography>
-        <h3>Кто нужен</h3>
-        <ul>
-          <li>Мемолог для наполнения ивента мемами</li>
-          <li>Спец по правилам аукуса для тестировани и консультации</li>
-          <li>Кто шарит за настройку домена и хостинга</li>
-          <li>Дизайнер</li>
-          <li>Бекендер (python?)</li>
-          <li>Фронтендер (react)</li>
-        </ul>
-        <h3>План создания сайта Аукуса</h3>
-        <ul>
-          <li>Зарегистрировать домен</li>
-          <li>Найти хостинг</li>
-          <li>
-            Сделать простой бекенд
-            <ul>
-              <li>REST API</li>
-              <li>Логин для участников</li>
-              <li>База данных</li>
-            </ul>
-          </li>
-          <li>Сделать дизайн сайта</li>
-          <li>
-            Допиливать фичи фронтенда
-            <ul>
-              <li>Бросок кубика</li>
-              <li>Перемещение по карте</li>
-              <li>Горки и лестницы</li>
-            </ul>
-          </li>
-        </ul>
-      </Typography>
+    <Box>
+      <Box display="flex" justifyContent="center">
+        <Box textAlign={'center'}>
+          <Typography variant="h4">Специально для ивента АУКУС 2024</Typography>
+          <Box marginTop={6} />
+          <Typography variant="h4">Создатели</Typography>
+          <Box marginTop={4} />
+          <Typography variant="h5">лепус — Дизайн интерфейсов</Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">
+            Wabar (Ваки) — Графический дизайн
+          </Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">
+            CorruptedMushroom — Бекенд сервер
+          </Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">olegsvs — Сайт, домен, хостинг</Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">gawk — Домен, хостинг</Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">
+            madf12 — Фронтенд, канвас картинок
+          </Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">
+            提督_ポイ(ADmiral_POI) — Организация дискорда
+          </Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">
+            pechenka242 — Тестирование, обсуждение
+          </Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">
+            ShiroiKumo — Тестирование, обсуждение
+          </Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">Virtuoz — Обсуждение, идеи</Typography>
+          <Box marginTop={2} />
+          <Typography variant="h5">mapcar — Фронтенд, огранизация</Typography>
+        </Box>
+      </Box>
+
+      <Box display="flex" justifyContent="center" marginTop={20}>
+        <Box width="85%">
+          <Divider
+            variant="fullWidth"
+            sx={{
+              backgroundColor: 'white',
+              opacity: 1.0,
+              textAlign: 'center',
+            }}
+          />
+        </Box>
+      </Box>
+
+      <Box marginTop={2} marginBottom={10}>
+        <Grid container columns={12} sx={{ width: '100%' }}>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={3} textAlign="left">
+            <Typography variant="h6">Контакты</Typography>
+            Дискорд:{' '}
+            <Link
+              href="https://discord.gg/SHsyYTjNb5"
+              rel="noopener nereferrer"
+              target="_blank"
+            >
+              <span className="green">Дискорд</span>
+            </Link>
+          </Grid>
+          <Grid item xs={3.5} textAlign="left">
+            <Typography variant="h6">GitHub</Typography>
+            <Link
+              href="https://github.com/aukus-devs"
+              rel="noopener nereferrer"
+              target="_blank"
+            >
+              <span className="green">https://github.com/aukus-devs</span>
+            </Link>
+          </Grid>
+          <Grid item xs={3} textAlign="left">
+            <Typography variant="h6">Поддержать сайт</Typography>
+            <Link href="#" rel="noopener nereferrer" target="_blank">
+              <span className="green">Ссылка</span>
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
     </Box>
-  );
+  )
 }

@@ -60,11 +60,11 @@ export default function StatsPage() {
               <TableCell>Участник</TableCell>
               <TableCell>Позиция на карте</TableCell>
               <TableCell>Очки</TableCell>
-              <TableCell>Пройдено</TableCell>
-              <TableCell>Дропов</TableCell>
-              <TableCell>Реролов</TableCell>
-              <TableCell>Просмотрено фильмов</TableCell>
-              <TableCell>Шейх-моментов</TableCell>
+              <TableCell>Пройдено игр</TableCell>
+              <TableCell>Дропы</TableCell>
+              <TableCell>Реролы</TableCell>
+              <TableCell>Просмотры фильмов</TableCell>
+              <TableCell>Шейх-моменты</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
