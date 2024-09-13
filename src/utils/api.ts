@@ -1,4 +1,9 @@
-import { playerMovesMock, playersMock, playerStatsMock } from './mocks'
+import {
+  playerMovesMock,
+  playersMock,
+  playersMockById,
+  playerStatsMock,
+} from './mocks'
 import { Player, PlayerMove, PlayerMoveRequest } from './types'
 
 const MOCK_API = process.env.NODE_ENV === 'development'
@@ -11,6 +16,7 @@ export async function fetchPlayerMoves(
   id: number
 ): Promise<PlayerMovesResponse> {
   if (MOCK_API) {
+    console.log('fetching player moves', id)
     return Promise.resolve({ moves: playerMovesMock() })
   }
   return fetch(`/api/players/${id}`).then((res) => res.json())
@@ -22,6 +28,7 @@ type PlayersResponse = {
 
 export async function fetchPlayers(): Promise<PlayersResponse> {
   if (MOCK_API) {
+    console.log('fetching players')
     return Promise.resolve({ players: playersMock })
   }
   return fetch(`/api/players`).then((res) => res.json())
@@ -29,7 +36,8 @@ export async function fetchPlayers(): Promise<PlayersResponse> {
 
 export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
   if (MOCK_API) {
-    playersMock[move.player_id].map_position += move.dice_roll
+    console.log('creating player move', move)
+    playersMockById[move.player_id].map_position = move.move_to
     return Promise.resolve()
   }
   return fetch(`/api/player_move`, {
@@ -47,6 +55,7 @@ type CurrentUserIdResponse = {
 
 export async function fetchCurrentUser(): Promise<CurrentUserIdResponse> {
   if (MOCK_API) {
+    console.log('fetching current user')
     return Promise.resolve({ user_id: playersMock[0].id })
   }
   return fetch(`/api/get_current_user_id`).then((res) => res.json())
@@ -71,6 +80,7 @@ type StatsResponse = {
 
 export async function fetchStats(): Promise<StatsResponse> {
   if (MOCK_API) {
+    console.log('fetching stats')
     return Promise.resolve({
       players: playerStatsMock(),
     })
