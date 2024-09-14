@@ -113,7 +113,7 @@ export default function PlayerIcon({
   }
 
   useEffect(() => {
-    if (moveSteps !== 0 && player.map_position <= 100) {
+    if (moveSteps !== 0 && player.map_position <= 101) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2,
