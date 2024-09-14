@@ -126,11 +126,18 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     displayRating = ratingHover
   }
 
+  const canWatchMovie = player.map_position !== 101
+  const readyToWin = player.map_position === 101 && moveType === 'completed'
+
   let buttonText = 'Перейти к броску'
   if (moveType === 'reroll') {
     buttonText = 'Рерольнуть игру'
   } else if (dice) {
     buttonText = `Перейти к броску ${dice}`
+  }
+
+  if (readyToWin) {
+    buttonText = 'Победить в Аукусе 2024'
   }
 
   return (
@@ -164,7 +171,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             <MenuItem value="drop">Дропнул игру</MenuItem>
             <MenuItem value="reroll">Реролл</MenuItem>
             <MenuItem value="sheikh">Шейх-момент</MenuItem>
-            <MenuItem value="movie">Посмотрел фильм</MenuItem>
+            {canWatchMovie && (
+              <MenuItem value="movie">Посмотрел фильм</MenuItem>
+            )}
           </Select>
         </FormControl>
 

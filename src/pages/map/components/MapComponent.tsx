@@ -63,12 +63,12 @@ export default function MapComponent() {
 
     const diceRoll = frozenDice || params.diceRoll
 
-    if (currentPlayer.map_position === 101 && diceRoll > 0) {
+    if (currentPlayer.map_position === 101 && params.type === 'completed') {
       // win condition
+      return
     }
 
     const currentPosition = currentPlayer.map_position
-
     const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
 
     // save player position in API
@@ -225,5 +225,5 @@ function getNextPlayerPosition(player: Player, moves: number) {
   if (snake) {
     return snake.cellTo
   }
-  return newPosition
+  return Math.min(101, newPosition)
 }

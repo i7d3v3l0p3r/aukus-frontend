@@ -24,6 +24,12 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
     setTurnParams(params)
     setDice(dice)
     setTurnModalOpen(false)
+
+    if (params.type === 'completed' && player.map_position === 101) {
+      handleNextTurn(params)
+      return
+    }
+
     if (dice === 'skip') {
       handleNextTurn(params)
     } else {
