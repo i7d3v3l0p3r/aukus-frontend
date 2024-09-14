@@ -118,25 +118,21 @@ export default function MapComponent() {
     >
       <SVGMarkers />
 
-      <Grid container justifyContent="center" marginBottom={2} columns={12}>
-        <Grid item xs={1}>
-          <Box width={cellSize} />
-        </Grid>
-        <Grid item xs={11}>
-          <Typography variant="h4">ФИНИШ</Typography>
-          <Box width={cellSize * 11} />
-        </Grid>
-      </Grid>
-
       <Grid
         container
         justifyContent={'center'}
+        columns={11}
         style={{
-          backgroundImage: "url('static/map_background.png')",
+          backgroundImage: "url('static/map_background2.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
         }}
       >
+        <Grid container xs={'auto'}>
+          <Grid item border={1}>
+            <Box minWidth={(cellSize + 1) * 11} minHeight={cellSize * 2} />
+          </Grid>
+        </Grid>
         {map.cellRows.map((row, index) => (
           <Grid container key={index} xs="auto">
             {index === 0 && (
