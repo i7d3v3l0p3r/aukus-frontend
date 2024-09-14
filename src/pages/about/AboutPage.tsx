@@ -69,10 +69,10 @@ export default function AboutPage() {
               rel="noopener nereferrer"
               target="_blank"
             >
-              <span className="green">Дискорд</span>
+              <span className="green">Аукус Разработка</span>
             </Link>
           </Grid>
-          <Grid item xs={3.5} textAlign="left">
+          <Grid item xs={3.3} textAlign="left">
             <Typography variant="h6">GitHub</Typography>
             <Link
               href="https://github.com/aukus-devs"

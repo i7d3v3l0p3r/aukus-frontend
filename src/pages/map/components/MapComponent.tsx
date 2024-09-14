@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { NextTurnParams, Player } from 'utils/types'
 import { useState, Fragment } from 'react'
 import { cellSize, MainMap, MapCell } from '../types'
@@ -8,10 +8,12 @@ import PlayerIcon from './PlayerIcon'
 import {
   ladders,
   laddersByCell,
+  lastCell,
   mapCellRows,
   mapCellsSorted,
   snakes,
   snakesByCell,
+  startCell,
 } from './utils'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -22,9 +24,6 @@ import SVGMarkers from './SVGMarkers'
 import TesterButton from './TesterButton'
 
 export default function MapComponent() {
-  const finishCell = { id: 101, direction: null } as MapCell
-  const startCell = { id: 0, direction: 'right' } as MapCell
-
   const [closePopups, setClosePopups] = useState(false)
   const [moveSteps, setMoveSteps] = useState(0)
 
@@ -50,7 +49,7 @@ export default function MapComponent() {
     cellRows: mapCellRows,
     cells: mapCellsSorted,
     startCell,
-    finishCell,
+    finishCell: lastCell,
   }
 
   const handleClick = () => {
@@ -118,20 +117,27 @@ export default function MapComponent() {
       onClick={handleClick}
     >
       <SVGMarkers />
+
       <Grid
         container
         justifyContent={'center'}
+        columns={11}
         style={{
-          backgroundImage: "url('static/map_background.png')",
+          backgroundImage: "url('static/map_background2.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
         }}
       >
+        <Grid container xs={'auto'}>
+          <Grid item border={1}>
+            <Box minWidth={(cellSize + 1) * 11} minHeight={cellSize * 2} />
+          </Grid>
+        </Grid>
         {map.cellRows.map((row, index) => (
-          <Grid container item key={index} xs="auto">
+          <Grid container key={index} xs="auto">
             {index === 0 && (
               <Grid item borderTop={1} borderRight={1} borderLeft={1}>
-                <CellItem cell={finishCell} />
+                <CellItem cell={lastCell} />
               </Grid>
             )}
             {index === 9 && (

@@ -29,6 +29,7 @@ function generateMapCells() {
   }
 
   cells[100].direction = 'left'
+  // cells[101].direction = 'up'
   return rows
 }
 
@@ -38,9 +39,15 @@ export const mapCellsSorted: Array<MapCell> = generatedMapCells
   .sort((a, b) => a.id - b.id)
 export const mapCellRows: Array<Array<MapCell>> = generatedMapCells
 
+export const startCell = { id: 0, direction: 'right' } as MapCell
+export const lastCell = { id: 101, direction: 'up' } as MapCell
+
 export const getMapCellById = (id: number) => {
   if (id === 0) {
-    return { id: 0, direction: 'right' }
+    return startCell
+  }
+  if (id === 101) {
+    return lastCell
   }
   return mapCellsSorted[id - 1]
 }
