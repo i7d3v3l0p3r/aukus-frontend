@@ -48,7 +48,12 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
     <>
       <Box display={'flex'} justifyContent="center">
         <Box
-          sx={{ position: 'fixed', bottom: 100, zIndex: 20, width: '320px' }}
+          sx={{
+            position: 'fixed',
+            bottom: 100,
+            zIndex: 20,
+            width: '320px',
+          }}
         >
           <Button
             variant="contained"
@@ -57,7 +62,7 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
             onClick={handleClick}
             fullWidth
           >
-            Сделать ход
+            <strong>Бросить кубик</strong>
           </Button>
         </Box>
       </Box>
