@@ -59,3 +59,9 @@ div.MuiOutlinedInput-root > fieldset {
 label.MuiInputLabel-shrink {
   display: none;
 }
+
+div.MuiAccordionSummary-root {
+  &:hover {
+    background-color: #2f2f2f;
+  }
+}
