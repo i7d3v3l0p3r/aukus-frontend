@@ -1,6 +1,11 @@
 import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { Player } from 'utils/types'
+import {
+  ColorNameByUrlHandle,
+  getPlayerColor,
+  getPlayerColorName,
+  Player,
+} from 'utils/types'
 
 type Props = {
   player: Player
@@ -11,7 +16,7 @@ export default function PlayerSection({ player }: Props) {
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'}>
         <h1>Имя {player.name}</h1>
-        <Box height={200} width={300} sx={{ backgroundColor: 'grey' }} />
+        <Box height={300} width={550} sx={{ backgroundColor: 'grey' }} />
         <Box marginTop={1} marginLeft={1}>
           <Link
             to={player.stream_link}
@@ -39,7 +44,11 @@ export default function PlayerSection({ player }: Props) {
         </Box>
         <Box textAlign="center" marginTop={2} width="100%">
           <Link to={`/players/${player.url_handle}`}>
-            <Button variant="contained" color="secondary" fullWidth>
+            <Button
+              variant="contained"
+              fullWidth
+              color={getPlayerColorName(player)}
+            >
               Страница участника
             </Button>
           </Link>

@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { OpenInNew } from '@mui/icons-material'
+import BottomSection from 'components/BottomSection'
 
 type Props = {}
 
@@ -103,6 +104,7 @@ export default function PlayerPage(props: Props) {
           </TableBody>
         </TableContainer>
       </Box>
+      <BottomSection />
     </Box>
   )
 }

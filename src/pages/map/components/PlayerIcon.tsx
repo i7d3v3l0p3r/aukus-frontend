@@ -1,5 +1,5 @@
-import { Box, Button, Chip, Paper, Popper } from '@mui/material'
-import { Color, Player } from 'utils/types'
+import { Box, Chip, Paper, Popper } from '@mui/material'
+import { Color, Player, getPlayerColor } from 'utils/types'
 import { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -190,7 +190,11 @@ export default function PlayerIcon({
           >
             <Box padding={2}>
               <Link to={`/players/${player.url_handle}`}>
-                <span className="purple">
+                <span
+                  style={{
+                    borderBottom: `2px solid ${getPlayerColor(player)}`,
+                  }}
+                >
                   <strong>{player.name}</strong>
                 </span>
               </Link>

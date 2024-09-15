@@ -1,118 +1,34 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Typography,
-} from '@mui/material'
-import { Color } from 'utils/types'
+import { Box, Typography } from '@mui/material'
+import BottomSection from 'components/BottomSection'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import DonaterRules from './components/DonaterRules'
+import PlayerRules from './components/PlayerRules'
 
 export default function RulesPage() {
+  const [rulesPage, setRulesPage] = useState<'player' | 'donater'>('player')
+
   return (
-    <Box display="flex" justifyContent={'center'}>
+    <Box marginLeft={20} marginRight={20}>
       <Box>
+        <Box marginBottom={4}>
+          <Link to="#" onClick={() => setRulesPage('player')}>
+            <span className="purple">Для стримеров</span>
+          </Link>
+          <span style={{ marginLeft: 50 }} />
+          <Link to="#" onClick={() => setRulesPage('donater')}>
+            <span className="orange">Для донатеров</span>
+          </Link>
+        </Box>
         <Typography variant="h4">
           Правила проведения описывают все аспекты Аукуса
         </Typography>
 
-        <Box marginTop={4}>
-          <Box>
-            <Accordion
-              sx={{
-                borderRadius: '15px',
-                background: Color.greyDark,
-                boxShadow: 'none',
-              }}
-              square={true}
-            >
-              <AccordionSummary
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="h5">1. Время проведения</Typography>
-              </AccordionSummary>
-              <AccordionDetails
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="body2">
-                  Ивент проводится с 1 ноября по 30 ноября
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-
-          <Box marginTop={2}>
-            <Accordion
-              sx={{
-                borderRadius: '15px',
-                background: Color.greyDark,
-                boxShadow: 'none',
-              }}
-              square={true}
-            >
-              <AccordionSummary
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="h5">2. Правила хода</Typography>
-              </AccordionSummary>
-              <AccordionDetails
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="body2">
-                  Ивент проводится с 1 ноября по 30 ноября
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-
-          <Box marginTop={2}>
-            <Accordion
-              sx={{
-                borderRadius: '15px',
-                background: Color.greyDark,
-                boxShadow: 'none',
-              }}
-              square={true}
-            >
-              <AccordionSummary
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="h5">3. Правила заказа игры</Typography>
-              </AccordionSummary>
-              <AccordionDetails
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="body2">
-                  Ивент проводится с 1 ноября по 30 ноября
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-
-          <Box marginTop={2}>
-            <Accordion
-              sx={{
-                borderRadius: '15px',
-                background: Color.greyDark,
-                boxShadow: 'none',
-              }}
-              square={true}
-            >
-              <AccordionSummary
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="h5">4. Наказание проигравшему</Typography>
-              </AccordionSummary>
-              <AccordionDetails
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
-              >
-                <Typography variant="body2">
-                  Ивент проводится с 1 ноября по 30 ноября
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-        </Box>
+        <Box marginTop={2} />
+        {rulesPage === 'player' && <PlayerRules />}
+        {rulesPage === 'donater' && <DonaterRules />}
       </Box>
+      <BottomSection />
     </Box>
   )
 }

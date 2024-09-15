@@ -7,6 +7,7 @@ import {
   TableRow,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
+import BottomSection from 'components/BottomSection'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Player } from 'utils/types'
 
@@ -84,6 +85,7 @@ export default function StatsPage() {
           </TableBody>
         </TableContainer>
       </Box>
+      <BottomSection />
     </Box>
   )
 }
