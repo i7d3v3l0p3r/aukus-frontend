@@ -5,6 +5,7 @@ import useCurrentUser from 'hooks/useCurrentUser'
 import { Link } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
+import LinkSpan from './LinkSpan'
 
 type Props = {
   currentPage: Page
@@ -29,24 +30,35 @@ export default function MainMenu({ currentPage }: Props) {
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottom: `2px solid ${currentPlayer && getPlayerColor(currentPlayer)}`,
-    ':hover': {
-      color: currentPlayer && getPlayerColor(currentPlayer),
-    },
   })
+
+  const playerColor = currentPlayer && getPlayerColor(currentPlayer)
 
   return (
     <Box>
       <Box display="block" textAlign={'center'} marginTop={3} marginBottom={2}>
         <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
-          <HeaderSpan>
+          <LinkSpan
+            color={playerColor}
+            style={{
+              fontWeight: 'bold',
+              paddingBottom: 0,
+              lineHeight: '1.2',
+              display: 'inline-flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <img
               src="/static/logo.png"
               alt="logo"
-              style={{ width: '15px', marginRight: '8px' }}
+              style={{
+                width: '15px',
+                marginRight: '8px',
+              }}
             />
             АУКУС 2024 {currentPlayer && `// ${currentPlayer.name}`}
-          </HeaderSpan>
+          </LinkSpan>
         </Link>
       </Box>
       <Box display="flex" justifyContent={'center'} marginBottom={6}>

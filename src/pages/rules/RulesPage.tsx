@@ -1,7 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import BottomSection from 'components/BottomSection'
+import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Color } from 'utils/types'
 import DonaterRules from './components/DonaterRules'
 import PlayerRules from './components/PlayerRules'
 
@@ -13,11 +15,11 @@ export default function RulesPage() {
       <Box>
         <Box marginBottom={4}>
           <Link to="#" onClick={() => setRulesPage('player')}>
-            <span className="purple">Для стримеров</span>
+            <LinkSpan color={Color.purple}>Для стримеров</LinkSpan>
           </Link>
           <span style={{ marginLeft: 50 }} />
           <Link to="#" onClick={() => setRulesPage('donater')}>
-            <span className="orange">Для донатеров</span>
+            <LinkSpan color={Color.orange}>Для донатеров</LinkSpan>
           </Link>
         </Box>
         <Typography variant="h4">
