@@ -16,7 +16,7 @@ export default function PlayerSection({ player }: Props) {
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'}>
         <h1>Имя {player.name}</h1>
-        <Box height={200} width={300} sx={{ backgroundColor: 'grey' }} />
+        <Box height={300} width={550} sx={{ backgroundColor: 'grey' }} />
         <Box marginTop={1} marginLeft={1}>
           <Link
             to={player.stream_link}
