@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
 import { Link } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
-import { Color, Page } from 'utils/types'
+import { Color, getPlayerColor, Page } from 'utils/types'
 
 type Props = {
   currentPage: Page
@@ -26,7 +26,6 @@ export default function MainMenu({ currentPage }: Props) {
       <Box display="block" textAlign={'center'} marginTop={3} marginBottom={2}>
         <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
           <span
-            className="purple"
             style={{
               fontWeight: 'bold',
               paddingBottom: 0,
@@ -34,6 +33,7 @@ export default function MainMenu({ currentPage }: Props) {
               display: 'inline-flex',
               justifyContent: 'center',
               alignItems: 'center',
+              borderBottom: `2px solid ${currentPlayer && getPlayerColor(currentPlayer)}`,
             }}
           >
             <img

@@ -1,3 +1,5 @@
+import { ButtonPropsColorOverrides } from '@mui/material'
+
 export type Player = {
   id: number
   name: string
@@ -61,18 +63,49 @@ export type NextTurnParams = {
 
 export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
 
-const Green = '#2FB350'
-const GreyLight = '#414141'
-const GreyDark = '#222222'
-const Red = '#ff3b30'
-const Yellow = '#ff8200'
-const Purple = '#a970ff'
-
 export const Color = {
-  red: Red,
-  green: Green,
-  yellow: Yellow,
-  greyLight: GreyLight,
-  greyDark: GreyDark,
-  purple: Purple,
+  red: '#ff3b30',
+  green: '#2FB350',
+  yellow: '#FFCC00',
+  greyLight: '#414141',
+  greyDark: '#222222',
+  purple: '#a970ff',
+  blue: '#007AFF',
+  brown: '#A2845E',
+  blueDark: '#5856D6',
+  orange: '#ff8200',
+}
+
+type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
+
+export type CustomColorOverrides = {
+  [K in keyof typeof Color as CustomColorNames]: true
+}
+
+export const ColorByUrlHandle: { [key: string]: string } = {
+  lasqa: Color.purple,
+  segall: Color.blue,
+  praden: Color.brown,
+  artur: Color.red,
+  uselessmouth: Color.blueDark,
+  roadhouse: Color.yellow,
+}
+
+export const ColorNameByUrlHandle: {
+  [key: string]: CustomColorNames
+} = {
+  lasqa: 'customPurple',
+  segall: 'customBlue',
+  praden: 'customBrown',
+  artur: 'customRed',
+  uselessmouth: 'customBlueDark',
+  roadhouse: 'customYellow',
+}
+
+export function getPlayerColor(player: Player): string {
+  return ColorByUrlHandle[player.url_handle] || Color.greyDark
+}
+
+export function getPlayerColorName(player: Player): CustomColorNames {
+  return ColorNameByUrlHandle[player.url_handle] || 'customGreyDark'
 }
