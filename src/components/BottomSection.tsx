@@ -1,4 +1,6 @@
 import { Box, Divider, Grid, Link, Typography } from '@mui/material'
+import { Color } from 'utils/types'
+import LinkSpan from './LinkSpan'
 
 export default function BottomSection() {
   return (
@@ -26,7 +28,7 @@ export default function BottomSection() {
               rel="noopener nereferrer"
               target="_blank"
             >
-              <span className="green">Аукус Разработка</span>
+              <LinkSpan color={Color.green}>Аукус Разработка</LinkSpan>
             </Link>
           </Grid>
           <Grid item xs={3.3} textAlign="left">
@@ -36,13 +38,15 @@ export default function BottomSection() {
               rel="noopener nereferrer"
               target="_blank"
             >
-              <span className="green">https://github.com/aukus-devs</span>
+              <LinkSpan color={Color.green}>
+                https://github.com/aukus-devs
+              </LinkSpan>
             </Link>
           </Grid>
           <Grid item xs={3} textAlign="left">
             <Typography variant="h6">Поддержать сайт</Typography>
             <Link href="#" rel="noopener nereferrer" target="_blank">
-              <span className="green">Ссылка</span>
+              <LinkSpan color={Color.green}>Ссылка</LinkSpan>
             </Link>
           </Grid>
         </Grid>

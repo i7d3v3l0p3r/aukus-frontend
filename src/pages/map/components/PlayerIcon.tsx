@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useSpring, animated } from '@react-spring/web'
 import { getMapCellById, laddersByCell, snakesByCell } from './utils'
 import { cellSize } from '../types'
+import LinkSpan from 'components/LinkSpan'
 
 type Props = {
   player: Player
@@ -190,13 +191,9 @@ export default function PlayerIcon({
           >
             <Box padding={2}>
               <Link to={`/players/${player.url_handle}`}>
-                <span
-                  style={{
-                    borderBottom: `2px solid ${getPlayerColor(player)}`,
-                  }}
-                >
+                <LinkSpan color={getPlayerColor(player)}>
                   <strong>{player.name}</strong>
-                </span>
+                </LinkSpan>
               </Link>
               <br />
               <Box marginTop={1}>Игра: {player.current_game}</Box>
@@ -207,7 +204,7 @@ export default function PlayerIcon({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="green">Смотреть</span>
+                  <LinkSpan color={Color.green}>Смотреть</LinkSpan>
                 </Link>
               ) : (
                 'Офлайн'

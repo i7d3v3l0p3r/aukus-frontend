@@ -1,5 +1,3 @@
-import { ButtonPropsColorOverrides } from '@mui/material'
-
 export type Player = {
   id: number
   name: string
