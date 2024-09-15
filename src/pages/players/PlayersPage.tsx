@@ -1,5 +1,6 @@
 import { Box, Grid } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
+import BottomSection from 'components/BottomSection'
 import { shuffle } from 'lodash'
 import { fetchPlayers } from 'utils/api'
 import PlayerSection from './components/PlayerSection'
@@ -27,6 +28,7 @@ export default function PlayersPage() {
           </Grid>
         ))}
       </Grid>
+      <BottomSection />
     </Box>
   )
 }

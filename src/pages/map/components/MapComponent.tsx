@@ -200,8 +200,6 @@ export default function MapComponent() {
       {currentPlayer && (
         <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
       )}
-
-      <Box marginTop={30} />
     </Box>
   )
 }

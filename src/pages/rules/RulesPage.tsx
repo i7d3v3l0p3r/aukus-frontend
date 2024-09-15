@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material'
+import BottomSection from 'components/BottomSection'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import DonaterRules from './components/DonaterRules'
@@ -27,6 +28,7 @@ export default function RulesPage() {
         {rulesPage === 'player' && <PlayerRules />}
         {rulesPage === 'donater' && <DonaterRules />}
       </Box>
+      <BottomSection />
     </Box>
   )
 }
