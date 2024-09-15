@@ -1,5 +1,6 @@
 import { Close, KeyboardArrowDownSharp } from '@mui/icons-material'
 import {
+  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -15,11 +16,13 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { fetchGameNames } from 'utils/api'
 
 import {
-  DiceOption,
   Color,
+  DiceOption,
   MoveType,
   NextTurnParams,
   Player,
@@ -53,6 +56,14 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       setMoveType(null)
     }
   }, [open])
+
+  const { data: gameNamesData } = useQuery({
+    queryKey: ['game_names', gameName],
+    queryFn: () => fetchGameNames(gameName),
+    enabled: gameName.length > 4,
+  })
+
+  const gameNameOptions = gameNamesData?.map((game) => game.gameName) || []
 
   const handleRatingChange = (
     event: React.SyntheticEvent,
@@ -179,6 +190,22 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
 
         <Box marginTop={2}>
           {moveType === 'movie' ? 'Фильм' : 'Игра'}
+          <Autocomplete
+            freeSolo
+            options={gameNameOptions}
+            value={gameName}
+            onChange={(event, newValue) => {
+              setGameName(newValue || '')
+            }}
+            renderInput={(params) => (
+              <TextField
+                onChange={(
+                  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                ) => setGameName(event.target.value)}
+                {...params}
+              />
+            )}
+          />
           <Input
             type="text"
             fullWidth

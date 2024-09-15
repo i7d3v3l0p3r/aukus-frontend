@@ -74,3 +74,22 @@ export async function fetchStats(): Promise<StatsResponse> {
   }
   return fetch(`/api/player_stats`).then((res) => res.json())
 }
+
+type GameNamesResponse = {
+  gameName: string
+}
+
+export async function fetchGameNames(
+  name: string
+): Promise<GameNamesResponse[]> {
+  if (MOCK_API) {
+    console.log('fetching game names', name)
+    return Promise.resolve([
+      { gameName: 'mock game' },
+      { gameName: 'mock game 2' },
+    ])
+  }
+  return fetch(`http://5.45.82.118:8444/v1/query?title${name}`).then((res) =>
+    res.json()
+  )
+}
