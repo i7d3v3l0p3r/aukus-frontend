@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Link, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import BottomSection from 'components/BottomSection'
 
 export default function AboutPage() {
