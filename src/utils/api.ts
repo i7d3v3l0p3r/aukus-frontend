@@ -89,7 +89,7 @@ export async function fetchGameNames(
       { gameName: 'mock game 2' },
     ])
   }
-  return fetch(`http://5.45.82.118:8444/v1/query?title${name}`).then((res) =>
+  return fetch(`http://5.45.82.118:8444/v1/query?${name}`).then((res) =>
     res.json()
   )
 }
