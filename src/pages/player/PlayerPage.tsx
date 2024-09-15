@@ -1,21 +1,22 @@
+import { OpenInNew } from '@mui/icons-material'
 import {
   Box,
   Button,
-  Grid,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material'
-import { sample } from 'lodash'
-import { Link, useParams } from 'react-router-dom'
-import { MoveType, PlayerMove } from 'utils/types'
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { OpenInNew } from '@mui/icons-material'
 import BottomSection from 'components/BottomSection'
+import LinkSpan from 'components/LinkSpan'
+import { Link, useParams } from 'react-router-dom'
+import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
+import { Color, getPlayerColor, MoveType } from 'utils/types'
+import PreviousGamesTable from './components/PeviousGamesTable'
+import { aukus1Games, aukus2Games } from './data'
 
 type Props = {}
 
@@ -51,6 +52,11 @@ export default function PlayerPage(props: Props) {
   playerMoves.sort((a, b) => {
     return b.id - a.id
   })
+
+  const playerColor = getPlayerColor(player)
+
+  const aukus1games = aukus1Games[player.url_handle]
+  const aukus2games = aukus2Games[player.url_handle]
 
   return (
     <Box>
@@ -104,6 +110,37 @@ export default function PlayerPage(props: Props) {
           </TableBody>
         </TableContainer>
       </Box>
+      {aukus2games && (
+        <Box marginTop={10}>
+          <Typography variant="h5" align="center">
+            <Link
+              to={aukus2games.link}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <LinkSpan color={playerColor}>Игры с Аукуса 2</LinkSpan>
+            </Link>
+          </Typography>
+
+          <PreviousGamesTable games={aukus2games.games} />
+        </Box>
+      )}
+
+      {aukus1games && (
+        <Box marginTop={10}>
+          <Typography variant="h5" align="center">
+            <Link
+              to={aukus1games.link}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <LinkSpan color={playerColor}>Игры с Аукуса 1</LinkSpan>
+            </Link>
+          </Typography>
+
+          <PreviousGamesTable games={aukus1games.games} />
+        </Box>
+      )}
       <BottomSection />
     </Box>
   )

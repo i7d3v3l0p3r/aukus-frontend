@@ -3,8 +3,10 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Link,
   Typography,
 } from '@mui/material'
+import LinkSpan from 'components/LinkSpan'
 import { Color } from 'utils/types'
 
 const donaterRules = [
@@ -25,8 +27,9 @@ const donaterRules = [
       },
       {
         title: 'Продолжительность игры',
+        special: true,
         content: [
-          'Минимальная длительность прохождения заказанной игры должна быть не менее 60 минут. Для проверки времени прохождения можно воспользоваться сайтом howlongtobeat.com',
+          'Минимальная длительность прохождения заказанной игры должна быть не менее 60 минут. Для проверки времени прохождения можно воспользоваться сайтом https://howlongtobeat.com/',
         ],
       },
       {
@@ -69,7 +72,7 @@ const donaterRules = [
         ],
       },
       {
-        title: 'Коррекция заказа',
+        title: 'Корректировка заказа',
         content: [
           'Если донатер случайно заказал неподходящую игру (например, она слишком короткая или уже была у стримера), он может заменить её на другую, если донат был не анонимным и его вариант был единственным предложенным',
         ],
@@ -110,13 +113,34 @@ export default function DonaterRules() {
                         {':'}
                       </Typography>
                       <Box marginTop={1} />
-                      <ul>
-                        {content.content.map((text, index) => (
+                      {content.special ? (
+                        <ul>
                           <li>
-                            <Typography variant="body1">{text}</Typography>
+                            <Typography variant="body1">
+                              Минимальная длительность прохождения заказанной
+                              игры должна быть не менее 60 минут. Для проверки
+                              времени прохождения можно воспользоваться сайтом{' '}
+                              <Link
+                                href="https://howlongtobeat.com/"
+                                rel="noopener nereferrer"
+                                target="_blank"
+                              >
+                                <LinkSpan color={Color.purple}>
+                                  https://howlongtobeat.com/
+                                </LinkSpan>
+                              </Link>
+                            </Typography>
                           </li>
-                        ))}
-                      </ul>
+                        </ul>
+                      ) : (
+                        <ul>
+                          {content.content.map((text, index) => (
+                            <li>
+                              <Typography variant="body1">{text}</Typography>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </Box>
                   ))}
                 </Typography>
