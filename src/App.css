@@ -64,22 +64,46 @@ a span.purple {
   border-bottom: 2px solid #a970ff;
 }
 
+a span.purple:hover {
+  color: #a970ff;
+}
+
 a span.blue {
   border-bottom: 2px solid #0077ff;
+}
+
+a span.blue:hover {
+  color: #0077ff;
 }
 
 a span.green {
   border-bottom: 2px solid #2fb350;
 }
 
+a span.green:hover {
+  color: #2fb350;
+}
+
 a span.orange {
   border-bottom: 2px solid #ff8200;
+}
+
+a span.orange:hover {
+  color: #ff8200;
 }
 
 a span.red {
   border-bottom: 2px solid #ff3b30;
 }
 
+a span.red:hover {
+  color: #ff3b30;
+}
+
 a span.brown {
   border-bottom: 2px solid #a2845e;
+}
+
+a span.brown:hover {
+  color: #a2845e;
 }

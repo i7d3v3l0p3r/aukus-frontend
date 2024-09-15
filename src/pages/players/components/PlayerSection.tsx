@@ -17,12 +17,14 @@ export default function PlayerSection({ player }: Props) {
       <Box textAlign={'left'}>
         <h1>Имя {player.name}</h1>
         <Box height={300} width={550} sx={{ backgroundColor: 'grey' }} />
-        <Box marginTop={1} marginLeft={1}>
+        <Box marginTop={2} marginLeft={1}>
           <Link
             to={player.stream_link}
             target="_blank"
             rel="noopener nereferrer"
-            style={{ marginRight: 20 }}
+            style={{
+              marginRight: 20,
+            }}
           >
             <span className="purple">Twitch</span>
           </Link>
@@ -42,12 +44,13 @@ export default function PlayerSection({ player }: Props) {
             <span className="orange">Донейшн</span>
           </Link>
         </Box>
-        <Box textAlign="center" marginTop={2} width="100%">
+        <Box textAlign="center" marginTop={3} width="100%">
           <Link to={`/players/${player.url_handle}`}>
             <Button
               variant="contained"
               fullWidth
               color={getPlayerColorName(player)}
+              sx={{ height: '50px' }}
             >
               Страница участника
             </Button>

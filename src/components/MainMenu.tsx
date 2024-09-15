@@ -1,3 +1,4 @@
+import { styled } from '@mui/system'
 import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
@@ -21,28 +22,31 @@ export default function MainMenu({ currentPage }: Props) {
 
   const currentPlayer = players?.find((player) => player.id === currentUserId)
 
+  const HeaderSpan = styled('span')({
+    fontWeight: 'bold',
+    paddingBottom: 0,
+    lineHeight: '1.2',
+    display: 'inline-flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottom: `2px solid ${currentPlayer && getPlayerColor(currentPlayer)}`,
+    ':hover': {
+      color: currentPlayer && getPlayerColor(currentPlayer),
+    },
+  })
+
   return (
     <Box>
       <Box display="block" textAlign={'center'} marginTop={3} marginBottom={2}>
         <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
-          <span
-            style={{
-              fontWeight: 'bold',
-              paddingBottom: 0,
-              lineHeight: '1.2',
-              display: 'inline-flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderBottom: `2px solid ${currentPlayer && getPlayerColor(currentPlayer)}`,
-            }}
-          >
+          <HeaderSpan>
             <img
               src="/static/logo.png"
               alt="logo"
               style={{ width: '15px', marginRight: '8px' }}
             />
             АУКУС 2024 {currentPlayer && `// ${currentPlayer.name}`}
-          </span>
+          </HeaderSpan>
         </Link>
       </Box>
       <Box display="flex" justifyContent={'center'} marginBottom={6}>
