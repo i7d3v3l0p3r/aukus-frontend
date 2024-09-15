@@ -4,7 +4,7 @@ import {
   playersMockById,
   playerStatsMock,
 } from './mocks'
-import { Player, PlayerMove, PlayerMoveRequest } from './types'
+import { Player, PlayerMove, PlayerMoveRequest, PlayerStats } from './types'
 
 const MOCK_API = process.env.NODE_ENV === 'development'
 
@@ -59,19 +59,6 @@ export async function fetchCurrentUser(): Promise<CurrentUserIdResponse> {
     return Promise.resolve({ user_id: playersMock[0].id })
   }
   return fetch(`/api/get_current_user_id`).then((res) => res.json())
-}
-
-type PlayerStats = {
-  id: number
-  map_position: number
-  total_moves: number
-  games_completed: number
-  games_dropped: number
-  sheikh_moments: number
-  rerolls: number
-  movies: number
-  ladders: number
-  snakes: number
 }
 
 type StatsResponse = {

@@ -42,7 +42,7 @@ function getIconContainerWithColor(value?: number | null) {
     value <= 4
       ? Color.red
       : value <= 7
-        ? Color.yellow
+        ? Color.orange
         : value > 9
           ? Color.purple
           : Color.green

@@ -9,7 +9,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
 import { fetchPlayers, fetchStats } from 'utils/api'
-import { Player } from 'utils/types'
+import { Player, PlayerStats } from 'utils/types'
 
 export default function StatsPage() {
   const { data: playersData } = useQuery({
@@ -74,7 +74,7 @@ export default function StatsPage() {
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{playersById[playerStat.id].name}</TableCell>
                 <TableCell>{playerStat.map_position}</TableCell>
-                <TableCell>{0}</TableCell>
+                <TableCell>{getPlayerScore(playerStat)}</TableCell>
                 <TableCell>{playerStat.games_completed}</TableCell>
                 <TableCell>{playerStat.games_dropped}</TableCell>
                 <TableCell>{playerStat.rerolls}</TableCell>
@@ -88,4 +88,9 @@ export default function StatsPage() {
       <BottomSection />
     </Box>
   )
+}
+
+function getPlayerScore(player: PlayerStats) {
+  const row = Math.floor(player.map_position / 10) || 1
+  return player.games_completed * row - player.games_dropped
 }

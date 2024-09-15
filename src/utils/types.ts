@@ -8,6 +8,19 @@ export type Player = {
   map_position: number
 }
 
+export type PlayerStats = {
+  id: number
+  map_position: number
+  total_moves: number
+  games_completed: number
+  games_dropped: number
+  sheikh_moments: number
+  rerolls: number
+  movies: number
+  ladders: number
+  snakes: number
+}
+
 export type MoveType = 'completed' | 'drop' | 'sheikh' | 'reroll' | 'movie'
 
 export type DiceOption = '1d6' | '2d6' | '3d6' | '1d8' | '1d4' | 'skip'
