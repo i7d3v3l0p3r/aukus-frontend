@@ -1,4 +1,3 @@
-import { styled } from '@mui/system'
 import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
@@ -22,21 +21,16 @@ export default function MainMenu({ currentPage }: Props) {
   const players = playersData?.players
 
   const currentPlayer = players?.find((player) => player.id === currentUserId)
-
-  const HeaderSpan = styled('span')({
-    fontWeight: 'bold',
-    paddingBottom: 0,
-    lineHeight: '1.2',
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  })
-
   const playerColor = currentPlayer && getPlayerColor(currentPlayer)
 
   return (
     <Box>
-      <Box display="block" textAlign={'center'} marginTop={3} marginBottom={2}>
+      <Box
+        display="block"
+        textAlign={'center'}
+        marginTop={'15px'}
+        marginBottom={'15px'}
+      >
         <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
           <LinkSpan
             color={playerColor}
