@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { fetchGameNames } from 'utils/api'
+import { fetchGameNames, fetchStats } from 'utils/api'
 
 import {
   Color,
@@ -57,11 +57,28 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     }
   }, [open])
 
-  const { data: gameNamesData } = useQuery({
-    queryKey: ['game_names', gameName],
+  const {
+    data: gameNamesData,
+    dataUpdatedAt: updateTs,
+    refetch,
+    fetchStatus,
+    status,
+  } = useQuery({
+    queryKey: ['game_names'],
     queryFn: () => fetchGameNames(gameName),
-    enabled: gameName.length > 4,
+    enabled: gameName.length > 3,
   })
+
+  useEffect(() => {
+    if (
+      status !== 'pending' &&
+      fetchStatus === 'idle' &&
+      gameName.length > 3 &&
+      updateTs + 500 < Date.now()
+    ) {
+      refetch()
+    }
+  }, [gameName.length, status, fetchStatus, updateTs, refetch])
 
   const gameNameOptions = gameNamesData?.map((game) => game.gameName) || []
 
