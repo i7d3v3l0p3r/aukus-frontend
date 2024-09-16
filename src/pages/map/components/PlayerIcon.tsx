@@ -200,7 +200,7 @@ export default function PlayerIcon({
               <br />
               {player.is_online ? (
                 <Link
-                  to={player.stream_link}
+                  to={player.twitch_stream_link || player.vk_stream_link}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

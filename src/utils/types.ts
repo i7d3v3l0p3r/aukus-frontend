@@ -1,7 +1,9 @@
 export type Player = {
   id: number
   name: string
-  stream_link: string
+  twitch_stream_link: string
+  vk_stream_link: string
+  donation_link: string
   is_online: boolean
   current_game: string
   url_handle: string

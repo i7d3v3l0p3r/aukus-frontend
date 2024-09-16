@@ -1,10 +1,17 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid } from '@mui/material'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import useCurrentUser from 'hooks/useCurrentUser'
+import { Fragment, useState } from 'react'
+import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
-import { useState, Fragment } from 'react'
-import { cellSize, MainMap, MapCell } from '../types'
+import { cellSize, MainMap } from '../types'
 import ActionButton from './ActionButton'
 import CellItem from './CellItem'
+import LadderComponent from './Ladder'
 import PlayerIcon from './PlayerIcon'
+import SnakeComponent from './Snake'
+import SVGMarkers from './SVGMarkers'
+import TesterButton from './TesterButton'
 import {
   ladders,
   laddersByCell,
@@ -15,13 +22,6 @@ import {
   snakesByCell,
   startCell,
 } from './utils'
-import { createPlayerMove, fetchPlayers } from 'utils/api'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import useCurrentUser from 'hooks/useCurrentUser'
-import LadderComponent from './Ladder'
-import SnakeComponent from './Snake'
-import SVGMarkers from './SVGMarkers'
-import TesterButton from './TesterButton'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
