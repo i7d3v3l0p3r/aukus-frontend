@@ -12,6 +12,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
 import LinkSpan from 'components/LinkSpan'
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import {
@@ -27,8 +28,9 @@ type Props = {}
 
 export default function PlayerPage(props: Props) {
   const { id: playerHandle } = useParams()
+  const [fetchStart] = useState(Date.now())
 
-  const { data: playersData, isLoading: isPlayerLoading } = useQuery({
+  const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: fetchPlayers,
     staleTime: 1000 * 60 * 1,
@@ -37,7 +39,7 @@ export default function PlayerPage(props: Props) {
 
   const player = players?.find((player) => player.url_handle === playerHandle)
 
-  const { data: playerMovesData, isLoading: isMovesLoading } = useQuery({
+  const { data: playerMovesData } = useQuery({
     queryKey: ['playerMoves', playerHandle],
     queryFn: () => player && fetchPlayerMoves(player.id),
     staleTime: 1000 * 60 * 1,
@@ -46,12 +48,15 @@ export default function PlayerPage(props: Props) {
 
   const playerMoves = playerMovesData?.moves
 
-  if (isPlayerLoading || isMovesLoading) {
-    return <h1>Загрузка</h1>
+  if (!playersData || !playerMovesData) {
+    if (Date.now() - fetchStart > 1000) {
+      return <div>Загрузка</div>
+    }
+    return null
   }
 
   if (!player || playerMoves === undefined) {
-    return <h1>Игрок не найден</h1>
+    return <div>Игрок не найден</div>
   }
 
   playerMoves.sort((a, b) => {

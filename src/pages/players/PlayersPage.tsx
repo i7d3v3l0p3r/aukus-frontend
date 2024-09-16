@@ -2,10 +2,13 @@ import { Box, Grid } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
 import { shuffle } from 'lodash'
+import { useState } from 'react'
 import { fetchPlayers } from 'utils/api'
 import PlayerSection from './components/PlayerSection'
 
 export default function PlayersPage() {
+  const [fetchStart] = useState(Date.now())
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: fetchPlayers,
@@ -14,7 +17,10 @@ export default function PlayersPage() {
   const players = playersData?.players
 
   if (!players) {
-    return <div>Загрузка...</div>
+    if (Date.now() - fetchStart > 1000) {
+      return <div>Загрузка...</div>
+    }
+    return null
   }
 
   const randomPlayers = shuffle(players)
