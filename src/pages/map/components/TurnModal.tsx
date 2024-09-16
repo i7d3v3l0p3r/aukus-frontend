@@ -80,7 +80,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     }
   }, [gameName.length, status, fetchStatus, updateTs, refetch])
 
-  const gameNameOptions = gameNamesData?.map((game) => game.gameName) || []
+  let gameNameOptions = []
+  if (gameName.length > 3 && gameNamesData) {
+    gameNameOptions = gameNamesData.map((game) => game.gameName)
+  }
 
   const handleRatingChange = (
     event: React.SyntheticEvent,
