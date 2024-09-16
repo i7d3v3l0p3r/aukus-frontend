@@ -89,7 +89,5 @@ export async function fetchGameNames(
       { gameName: 'mock game 2' },
     ])
   }
-  return fetch(`https://5.45.82.118:8444/v1/query?title=${name}`).then((res) =>
-    res.json()
-  )
+  return fetch(`/hltb/v1/query?title=${name}`).then((res) => res.json())
 }
