@@ -8,10 +8,13 @@ import {
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
+import { useState } from 'react'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Player, PlayerStats } from 'utils/types'
 
 export default function StatsPage() {
+  const [fetchStart] = useState(Date.now())
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: fetchPlayers,
@@ -27,7 +30,10 @@ export default function StatsPage() {
   const playersStats = data?.players
 
   if (!playersStats || !players) {
-    return <div>Loading...</div>
+    if (Date.now() - fetchStart > 1000) {
+      return <div>Loading...</div>
+    }
+    return null
   }
 
   const playersById = players.reduce(
