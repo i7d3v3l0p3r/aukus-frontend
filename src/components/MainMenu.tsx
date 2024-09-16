@@ -63,14 +63,17 @@ export default function MainMenu({ currentPage }: Props) {
       </Box>
       <Box display="flex" justifyContent={'center'} marginBottom={6}>
         <Box
-          padding={1.5}
+          padding={'10px'}
+          display="flex"
+          alignItems={'center'}
           sx={{ backgroundColor: Color.greyDark }}
           borderRadius="15px"
+          height={'60px'}
         >
           <Link to="/" style={{ marginRight: 10 }}>
             <Button
               color={currentPage === 'map' ? 'primary' : 'info'}
-              sx={{ width: '150px' }}
+              sx={{ width: '150px', height: '40px' }}
             >
               Карта
             </Button>
@@ -79,7 +82,7 @@ export default function MainMenu({ currentPage }: Props) {
           <Link to="/players" style={{ marginRight: 10 }}>
             <Button
               color={currentPage === 'players' ? 'primary' : 'info'}
-              sx={{ width: '150px' }}
+              sx={{ width: '150px', height: '40px' }}
             >
               Участники
             </Button>
@@ -88,7 +91,7 @@ export default function MainMenu({ currentPage }: Props) {
           <Link to="/stats" style={{ marginRight: 10, textDecoration: 'none' }}>
             <Button
               color={currentPage === 'stats' ? 'primary' : 'info'}
-              sx={{ width: '150px' }}
+              sx={{ width: '150px', height: '40px' }}
             >
               Статистика
             </Button>
@@ -97,7 +100,7 @@ export default function MainMenu({ currentPage }: Props) {
           <Link to="/rules" style={{ marginRight: 10 }}>
             <Button
               color={currentPage === 'rules' ? 'primary' : 'info'}
-              sx={{ width: '150px' }}
+              sx={{ width: '150px', height: '40px' }}
             >
               Правила
             </Button>
@@ -106,7 +109,7 @@ export default function MainMenu({ currentPage }: Props) {
           <Link to="/about">
             <Button
               color={currentPage === 'about' ? 'primary' : 'info'}
-              sx={{ width: '150px' }}
+              sx={{ width: '150px', height: '40px' }}
             >
               О Сайте
             </Button>
