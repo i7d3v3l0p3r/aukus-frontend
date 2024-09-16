@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { fetchGameNames, fetchStats } from 'utils/api'
+import { fetchGameNames } from 'utils/api'
 
 import {
   Color,

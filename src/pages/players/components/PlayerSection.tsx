@@ -1,13 +1,7 @@
 import { Box, Button } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { Link } from 'react-router-dom'
-import {
-  Color,
-  ColorNameByUrlHandle,
-  getPlayerColor,
-  getPlayerColorName,
-  Player,
-} from 'utils/types'
+import { Color, getPlayerColorName, Player } from 'utils/types'
 
 type Props = {
   player: Player
@@ -21,7 +15,7 @@ export default function PlayerSection({ player }: Props) {
         <Box height={300} width={550} sx={{ backgroundColor: 'grey' }} />
         <Box marginTop={2} marginLeft={1}>
           <Link
-            to={player.stream_link}
+            to={player.twitch_stream_link}
             target="_blank"
             rel="noopener nereferrer"
             style={{
@@ -31,7 +25,7 @@ export default function PlayerSection({ player }: Props) {
             <LinkSpan color={Color.purple}>Twitch</LinkSpan>
           </Link>
           <Link
-            to={player.stream_link}
+            to={player.vk_stream_link}
             target="_blank"
             rel="noopener nereferrer"
             style={{ marginRight: 20 }}
@@ -39,7 +33,7 @@ export default function PlayerSection({ player }: Props) {
             <LinkSpan color={Color.blue}>VKPlay</LinkSpan>
           </Link>
           <Link
-            to={player.stream_link}
+            to={player.donation_link}
             target="_blank"
             rel="noopener nereferrer"
           >

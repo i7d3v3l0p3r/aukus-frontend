@@ -4,7 +4,9 @@ import { Player, PlayerMove } from './types'
 const playerLasqa: Player = {
   id: 1,
   name: 'Lasqa',
-  stream_link: 'https://live.vkplay.ru/lasqa',
+  twitch_stream_link: '',
+  vk_stream_link: 'https://live.vkplay.ru/lasqa',
+  donation_link: 'https://www.donationalerts.com/r/lasqa',
   map_position: 0,
   current_game: 'Балдурс Гейт 3',
   is_online: false,
@@ -14,7 +16,9 @@ const playerLasqa: Player = {
 const playerSegall: Player = {
   id: 2,
   name: 'Segall',
-  stream_link: 'https://www.twitch.tv/segall',
+  twitch_stream_link: 'https://www.twitch.tv/segall',
+  vk_stream_link: 'https://live.vkplay.ru/segall',
+  donation_link: 'https://www.donationalerts.com/r/segall',
   map_position: sample(range(1, 99)) as number,
   current_game: 'Соник',
   is_online: true,
@@ -24,7 +28,9 @@ const playerSegall: Player = {
 const playerRoadhouse: Player = {
   id: 3,
   name: 'Roadhouse',
-  stream_link: 'https://www.twitch.tv/roadhouse',
+  twitch_stream_link: 'https://www.twitch.tv/roadhouse',
+  vk_stream_link: 'https://live.vkplay.ru/roadhouse',
+  donation_link: 'https://www.donationalerts.com/r/roadhouse',
   map_position: sample(range(1, 99)) as number,
   current_game: 'Готика',
   is_online: true,

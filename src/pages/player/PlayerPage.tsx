@@ -15,12 +15,7 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import {
-  Color,
-  getPlayerColor,
-  getPlayerColorName,
-  MoveType,
-} from 'utils/types'
+import { getPlayerColor, getPlayerColorName, MoveType } from 'utils/types'
 import PreviousGamesTable from './components/PeviousGamesTable'
 import { aukus1Games, aukus2Games } from './data'
 
@@ -72,7 +67,11 @@ export default function PlayerPage(props: Props) {
     <Box>
       <Box textAlign={'center'}>
         <h1>Страница участника {player.name}</h1>
-        <Link to={player.stream_link} target="_blank" rel="noopener noreferrer">
+        <Link
+          to={player.twitch_stream_link || player.vk_stream_link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Button
             sx={{ paddingLeft: 6, paddingRight: 6 }}
             color={getPlayerColorName(player)}
