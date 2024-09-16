@@ -14,7 +14,12 @@ import BottomSection from 'components/BottomSection'
 import LinkSpan from 'components/LinkSpan'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { Color, getPlayerColor, MoveType } from 'utils/types'
+import {
+  Color,
+  getPlayerColor,
+  getPlayerColorName,
+  MoveType,
+} from 'utils/types'
 import PreviousGamesTable from './components/PeviousGamesTable'
 import { aukus1Games, aukus2Games } from './data'
 
@@ -63,7 +68,10 @@ export default function PlayerPage(props: Props) {
       <Box textAlign={'center'}>
         <h1>Страница участника {player.name}</h1>
         <Link to={player.stream_link} target="_blank" rel="noopener noreferrer">
-          <Button sx={{ paddingLeft: 6, paddingRight: 6 }}>
+          <Button
+            sx={{ paddingLeft: 6, paddingRight: 6 }}
+            color={getPlayerColorName(player)}
+          >
             <Box display="flex" alignItems={'center'}>
               Сейчас играет в: {player.current_game}
               <OpenInNew sx={{ marginLeft: 1 }} />
