@@ -11,24 +11,26 @@ export default function RulesPage() {
   const [rulesPage, setRulesPage] = useState<'player' | 'donater'>('player')
 
   return (
-    <Box marginLeft={20} marginRight={20}>
-      <Box>
-        <Box marginBottom={4}>
-          <Link to="#" onClick={() => setRulesPage('player')}>
-            <LinkSpan color={Color.purple}>Для стримеров</LinkSpan>
-          </Link>
-          <span style={{ marginLeft: 50 }} />
-          <Link to="#" onClick={() => setRulesPage('donater')}>
-            <LinkSpan color={Color.orange}>Для донатеров</LinkSpan>
-          </Link>
-        </Box>
-        <Typography variant="h4">
-          Правила проведения описывают все аспекты Аукуса
-        </Typography>
+    <Box>
+      <Box display={'flex'} justifyContent="center">
+        <Box width={'740px'}>
+          <Box marginBottom={4}>
+            <Link to="#" onClick={() => setRulesPage('player')}>
+              <LinkSpan color={Color.purple}>Для стримеров</LinkSpan>
+            </Link>
+            <span style={{ marginLeft: '50px' }} />
+            <Link to="#" onClick={() => setRulesPage('donater')}>
+              <LinkSpan color={Color.orange}>Для донатеров</LinkSpan>
+            </Link>
+          </Box>
+          <Typography variant="h4">
+            Правила проведения описывают все аспекты Аукуса
+          </Typography>
 
-        <Box marginTop={2} />
-        {rulesPage === 'player' && <PlayerRules />}
-        {rulesPage === 'donater' && <DonaterRules />}
+          <Box marginTop={2} />
+          {rulesPage === 'player' && <PlayerRules />}
+          {rulesPage === 'donater' && <DonaterRules />}
+        </Box>
       </Box>
       <BottomSection />
     </Box>

@@ -85,7 +85,7 @@ export default function DonaterRules() {
   return (
     <Box>
       {donaterRules.map((rule, index) => (
-        <Box marginTop={2}>
+        <Box marginTop={'30px'}>
           <Box>
             <Accordion
               sx={{
