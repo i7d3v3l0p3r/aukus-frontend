@@ -14,6 +14,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  styled,
   TextField,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
@@ -171,6 +172,25 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     buttonText = 'Победить в Аукусе 2024'
   }
 
+  let selectedItemColor = Color.green
+  switch (moveType) {
+    case 'completed':
+      selectedItemColor = Color.green
+      break
+    case 'drop':
+      selectedItemColor = Color.red
+      break
+    case 'reroll':
+      selectedItemColor = Color.blue
+      break
+    case 'sheikh':
+      selectedItemColor = Color.orange
+      break
+    case 'movie':
+      selectedItemColor = Color.purple
+      break
+  }
+
   return (
     <Dialog open={open} onClose={() => {}} fullWidth keepMounted>
       <DialogTitle>
@@ -197,13 +217,28 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
             IconComponent={KeyboardArrowDownSharp}
+            MenuProps={{
+              sx: {
+                '&& .Mui-selected': { backgroundColor: selectedItemColor },
+              },
+            }}
           >
-            <MenuItem value="completed">Прошел игру</MenuItem>
-            <MenuItem value="drop">Дропнул игру</MenuItem>
-            <MenuItem value="reroll">Реролл</MenuItem>
-            <MenuItem value="sheikh">Шейх-момент</MenuItem>
+            <MenuItemStyled value="completed" color={Color.green}>
+              Прошел игру
+            </MenuItemStyled>
+            <MenuItemStyled value="drop" color={Color.red}>
+              Дропнул игру
+            </MenuItemStyled>
+            <MenuItemStyled value="reroll" color={Color.blue}>
+              Реролл
+            </MenuItemStyled>
+            <MenuItemStyled value="sheikh" color={Color.orange}>
+              Шейх-момент
+            </MenuItemStyled>
             {canWatchMovie && (
-              <MenuItem value="movie">Посмотрел фильм</MenuItem>
+              <MenuItemStyled value="movie" color={Color.purple}>
+                Посмотрел фильм
+              </MenuItemStyled>
             )}
           </Select>
         </FormControl>
@@ -359,3 +394,9 @@ function getDiceType({
   }
   return null
 }
+
+const MenuItemStyled = styled(MenuItem)(({ color }) => ({
+  ':hover': {
+    backgroundColor: `${color} !important`,
+  },
+}))
