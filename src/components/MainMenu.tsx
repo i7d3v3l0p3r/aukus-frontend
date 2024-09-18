@@ -29,7 +29,7 @@ export default function MainMenu({ currentPage }: Props) {
         display="block"
         textAlign={'center'}
         marginTop={'15px'}
-        marginBottom={'15px'}
+        marginBottom={'13px'}
       >
         <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
           <LinkSpan
