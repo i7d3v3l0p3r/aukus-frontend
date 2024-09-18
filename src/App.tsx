@@ -80,13 +80,13 @@ let darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#34C759',
+      main: Color.blue,
     },
     secondary: {
       main: '#007AFF',
     },
     info: {
-      main: '#414141',
+      main: Color.greyLight,
     },
     text: {
       primary: '#fff',
