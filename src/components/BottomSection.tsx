@@ -17,37 +17,43 @@ export default function BottomSection() {
           />
         </Box>
       </Box>
-      <Box marginTop={2} marginBottom={5}>
+      <Box marginTop={'30px'} marginBottom={5}>
         <Grid container columns={12} sx={{ width: '100%' }}>
           <Grid item xs={2}></Grid>
           <Grid item xs={3} textAlign="left">
             <Typography variant="h6">Контакты</Typography>
-            Дискорд:{' '}
-            <Link
-              href="https://discord.gg/SHsyYTjNb5"
-              rel="noopener nereferrer"
-              target="_blank"
-            >
-              <LinkSpan color={Color.green}>Аукус Разработка</LinkSpan>
-            </Link>
+            <Box marginTop={'15px'}>
+              Дискорд:{' '}
+              <Link
+                href="https://discord.gg/SHsyYTjNb5"
+                rel="noopener nereferrer"
+                target="_blank"
+              >
+                <LinkSpan color={Color.blue}>Аукус Разработка</LinkSpan>
+              </Link>
+            </Box>
           </Grid>
           <Grid item xs={3.3} textAlign="left">
             <Typography variant="h6">GitHub</Typography>
-            <Link
-              href="https://github.com/aukus-devs"
-              rel="noopener nereferrer"
-              target="_blank"
-            >
-              <LinkSpan color={Color.green}>
-                https://github.com/aukus-devs
-              </LinkSpan>
-            </Link>
+            <Box marginTop={'15px'}>
+              <Link
+                href="https://github.com/aukus-devs"
+                rel="noopener nereferrer"
+                target="_blank"
+              >
+                <LinkSpan color={Color.blue}>
+                  https://github.com/aukus-devs
+                </LinkSpan>
+              </Link>
+            </Box>
           </Grid>
           <Grid item xs={3} textAlign="left">
             <Typography variant="h6">Поддержать сайт</Typography>
-            <Link href="#" rel="noopener nereferrer" target="_blank">
-              <LinkSpan color={Color.green}>Ссылка</LinkSpan>
-            </Link>
+            <Box marginTop={'15px'}>
+              <Link href="#" rel="noopener nereferrer" target="_blank">
+                <LinkSpan color={Color.blue}>Ссылка</LinkSpan>
+              </Link>
+            </Box>
           </Grid>
         </Grid>
       </Box>

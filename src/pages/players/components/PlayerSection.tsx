@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { Link } from 'react-router-dom'
 import { Color, getPlayerColorName, Player } from 'utils/types'
@@ -11,15 +11,20 @@ export default function PlayerSection({ player }: Props) {
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'}>
-        <h1>Имя {player.name}</h1>
-        <Box height={300} width={550} sx={{ backgroundColor: 'grey' }} />
-        <Box marginTop={2} marginLeft={1}>
+        <Typography variant="h3">Имя {player.name}</Typography>
+        <Box
+          height={300}
+          width={550}
+          marginTop={'30px'}
+          sx={{ backgroundColor: 'grey' }}
+        />
+        <Box marginTop={'20px'} marginLeft={'20px'}>
           <Link
             to={player.twitch_stream_link}
             target="_blank"
             rel="noopener nereferrer"
             style={{
-              marginRight: 20,
+              marginRight: '30px',
             }}
           >
             <LinkSpan color={Color.purple}>Twitch</LinkSpan>
@@ -28,7 +33,7 @@ export default function PlayerSection({ player }: Props) {
             to={player.vk_stream_link}
             target="_blank"
             rel="noopener nereferrer"
-            style={{ marginRight: 20 }}
+            style={{ marginRight: '30px' }}
           >
             <LinkSpan color={Color.blue}>VKPlay</LinkSpan>
           </Link>
@@ -40,7 +45,7 @@ export default function PlayerSection({ player }: Props) {
             <LinkSpan color={Color.orange}>Донейшн</LinkSpan>
           </Link>
         </Box>
-        <Box textAlign="center" marginTop={3} width="100%">
+        <Box textAlign="center" marginTop={'30px'} width="100%">
           <Link to={`/players/${player.url_handle}`}>
             <Button
               variant="contained"
