@@ -15,7 +15,12 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { getPlayerColor, getPlayerColorName, MoveType } from 'utils/types'
+import {
+  Color,
+  getPlayerColor,
+  getPlayerColorName,
+  MoveType,
+} from 'utils/types'
 import PreviousGamesTable from './components/PeviousGamesTable'
 import { aukus1Games, aukus2Games } from './data'
 
@@ -91,31 +96,79 @@ export default function PlayerPage(props: Props) {
         justifyContent="center"
         display="flex"
       >
-        <TableContainer sx={{ width: '70%' }}>
+        <TableContainer sx={{ width: 'auto', border: 'none' }}>
           <TableHead>
             <TableRow>
-              <TableCell>Ход</TableCell>
-              <TableCell>Дата</TableCell>
-              <TableCell>Игра</TableCell>
-              <TableCell>Результат</TableCell>
-              <TableCell>Ролл кубика</TableCell>
-              <TableCell>Новая позиция</TableCell>
-              <TableCell>Отзыв</TableCell>
-              <TableCell>Ссылка на вод</TableCell>
+              <TableCell
+                width={'60px'}
+                sx={{
+                  borderBottom: `2px solid ${playerColor}`,
+                }}
+              >
+                Ход
+              </TableCell>
+              <TableCell
+                width={'60px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Дата
+              </TableCell>
+              <TableCell
+                width={'200px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Игра
+              </TableCell>
+              <TableCell
+                width={'160px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Результат
+              </TableCell>
+              <TableCell
+                width={'80px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Ролл
+              </TableCell>
+              <TableCell
+                width={'140px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Позиция
+              </TableCell>
+              <TableCell
+                width={'400px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Отзыв
+              </TableCell>
+              <TableCell
+                width={'130px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Смотреть
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {playerMoves.map((move, index) => {
               return (
-                <TableRow>
-                  <TableCell>{playerMoves.length - index}</TableCell>
-                  <TableCell>{formatDate(move.created_at)}</TableCell>
-                  <TableCell>{move.item_title}</TableCell>
-                  <TableCell>{formatMoveType(move.type)}</TableCell>
-                  <TableCell>{move.dice_roll}</TableCell>
-                  <TableCell>{move.cell_to}</TableCell>
-                  <TableCell>{move.item_review}</TableCell>
-                  <TableCell>"link"</TableCell>
+                <TableRow sx={{ border: 0 }}>
+                  <TableCell sx={{ border: 0 }}>
+                    {playerMoves.length - index}
+                  </TableCell>
+                  <TableCell sx={{ border: 0 }}>
+                    {formatDate(move.created_at)}
+                  </TableCell>
+                  <TableCell sx={{ border: 0 }}>{move.item_title}</TableCell>
+                  <TableCell sx={{ border: 0 }}>
+                    <MoveTypeItem move={move.type} />
+                  </TableCell>
+                  <TableCell sx={{ border: 0 }}>{move.dice_roll}</TableCell>
+                  <TableCell sx={{ border: 0 }}>{move.cell_to}</TableCell>
+                  <TableCell sx={{ border: 0 }}>{move.item_review}</TableCell>
+                  <TableCell sx={{ border: 0 }}>"link"</TableCell>
                 </TableRow>
               )
             })}
@@ -168,7 +221,31 @@ function formatDate(dateString: string) {
   const year = String(date.getFullYear()).slice(-2) // Get last two digits of the year
 
   // Format the date as dd.mm.yy
-  return `${day}.${month}.${year}`
+  return `${day}.${month}`
+}
+
+function MoveTypeItem({ move }: { move: MoveType }) {
+  const colorMap = {
+    completed: Color.green,
+    drop: Color.red,
+    reroll: Color.blue,
+    movie: Color.purple,
+    sheikh: Color.orange,
+  }
+  return (
+    <span
+      style={{
+        border: `1px solid ${colorMap[move]}`,
+        paddingTop: '3px',
+        paddingBottom: '3px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        borderRadius: '5px',
+      }}
+    >
+      {formatMoveType(move)}
+    </span>
+  )
 }
 
 function formatMoveType(move: MoveType) {
