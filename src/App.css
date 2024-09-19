@@ -69,12 +69,14 @@ div.MuiAccordionSummary-root {
 th.MuiTableCell-head {
   padding-bottom: 10px;
   line-height: 1;
+  font-size: 16px;
 }
 
 td.MuiTableCell-root {
   padding-top: 0;
   padding-bottom: 25px;
   line-height: 1;
+  font-size: 16px;
 }
 
 tbody > tr.MuiTableRow-root:nth-of-type(1) > td {

@@ -95,6 +95,7 @@ export default function PlayerPage(props: Props) {
         marginRight={4}
         justifyContent="center"
         display="flex"
+        sx={{ fontSize: '16px' }}
       >
         <TableContainer sx={{ width: 'auto', border: 'none' }}>
           <TableHead>
@@ -241,6 +242,7 @@ function MoveTypeItem({ move }: { move: MoveType }) {
         paddingLeft: '10px',
         paddingRight: '10px',
         borderRadius: '5px',
+        fontSize: '13px',
       }}
     >
       {formatMoveType(move)}
