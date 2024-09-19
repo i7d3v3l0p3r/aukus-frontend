@@ -122,19 +122,20 @@ export default function MapComponent() {
         container
         justifyContent={'center'}
         columns={11}
+        width={'auto'}
         style={{
           backgroundImage: "url('static/map_background2.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
         }}
       >
-        <Grid container xs={'auto'}>
+        <Grid container columns={11} width={'auto'}>
           <Grid item border={1}>
             <Box minWidth={(cellSize + 1) * 11} minHeight={cellSize * 2} />
           </Grid>
         </Grid>
         {map.cellRows.map((row, index) => (
-          <Grid container key={index} xs="auto">
+          <Grid container key={index} columns={11} width={'auto'}>
             {index === 0 && (
               <Grid item borderTop={1} borderRight={1} borderLeft={1}>
                 <CellItem cell={lastCell} />
