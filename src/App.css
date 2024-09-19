@@ -65,3 +65,22 @@ div.MuiAccordionSummary-root {
     background-color: #2f2f2f;
   }
 }
+
+th.MuiTableCell-head {
+  padding-bottom: 10px;
+  line-height: 1;
+}
+
+td.MuiTableCell-root {
+  padding-top: 0;
+  padding-bottom: 25px;
+  line-height: 1;
+}
+
+tbody > tr.MuiTableRow-root:nth-of-type(1) > td {
+  padding-top: 15px;
+}
+
+tr.MuiTableRow-root {
+  vertical-align: top;
+}
