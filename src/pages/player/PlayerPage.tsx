@@ -21,6 +21,7 @@ import {
   getPlayerColorName,
   MoveType,
 } from 'utils/types'
+import MoveTypeItem from './components/MoveTypeItem'
 import PreviousGamesTable from './components/PeviousGamesTable'
 import { aukus1Games, aukus2Games } from './data'
 
@@ -96,7 +97,7 @@ export default function PlayerPage(props: Props) {
         justifyContent="center"
         display="flex"
       >
-        <TableContainer sx={{ width: 'auto', border: 'none' }}>
+        <TableContainer sx={{ width: 'auto' }}>
           <TableHead>
             <TableRow>
               <TableCell
@@ -154,21 +155,17 @@ export default function PlayerPage(props: Props) {
           <TableBody>
             {playerMoves.map((move, index) => {
               return (
-                <TableRow sx={{ border: 0 }}>
-                  <TableCell sx={{ border: 0 }}>
-                    {playerMoves.length - index}
-                  </TableCell>
-                  <TableCell sx={{ border: 0 }}>
-                    {formatDate(move.created_at)}
-                  </TableCell>
-                  <TableCell sx={{ border: 0 }}>{move.item_title}</TableCell>
-                  <TableCell sx={{ border: 0 }}>
+                <TableRow>
+                  <TableCell>{playerMoves.length - index}</TableCell>
+                  <TableCell>{formatDate(move.created_at)}</TableCell>
+                  <TableCell>{move.item_title}</TableCell>
+                  <TableCell>
                     <MoveTypeItem move={move.type} />
                   </TableCell>
-                  <TableCell sx={{ border: 0 }}>{move.dice_roll}</TableCell>
-                  <TableCell sx={{ border: 0 }}>{move.cell_to}</TableCell>
-                  <TableCell sx={{ border: 0 }}>{move.item_review}</TableCell>
-                  <TableCell sx={{ border: 0 }}>"link"</TableCell>
+                  <TableCell>{move.dice_roll}</TableCell>
+                  <TableCell>{move.cell_to}</TableCell>
+                  <TableCell>{move.item_review}</TableCell>
+                  <TableCell>"link"</TableCell>
                 </TableRow>
               )
             })}
@@ -187,7 +184,10 @@ export default function PlayerPage(props: Props) {
             </Link>
           </Typography>
 
-          <PreviousGamesTable games={aukus2games.games} />
+          <PreviousGamesTable
+            games={aukus2games.games}
+            playerColor={playerColor}
+          />
         </Box>
       )}
 
@@ -203,7 +203,12 @@ export default function PlayerPage(props: Props) {
             </Link>
           </Typography>
 
-          <PreviousGamesTable games={aukus1games.games} />
+          <Box marginBottom={4} />
+
+          <PreviousGamesTable
+            games={aukus1games.games}
+            playerColor={playerColor}
+          />
         </Box>
       )}
       <BottomSection />
@@ -222,44 +227,4 @@ function formatDate(dateString: string) {
 
   // Format the date as dd.mm.yy
   return `${day}.${month}`
-}
-
-function MoveTypeItem({ move }: { move: MoveType }) {
-  const colorMap = {
-    completed: Color.green,
-    drop: Color.red,
-    reroll: Color.blue,
-    movie: Color.purple,
-    sheikh: Color.orange,
-  }
-  return (
-    <span
-      style={{
-        border: `1px solid ${colorMap[move]}`,
-        paddingTop: '3px',
-        paddingBottom: '3px',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-        borderRadius: '5px',
-      }}
-    >
-      {formatMoveType(move)}
-    </span>
-  )
-}
-
-function formatMoveType(move: MoveType) {
-  switch (move) {
-    case 'completed':
-      return 'Пройдено'
-    case 'drop':
-      return 'Дроп'
-    case 'reroll':
-      return 'Реролл'
-    case 'movie':
-      return 'Фильм'
-    case 'sheikh':
-      return 'Шейх-момент'
-  }
-  return ''
 }
