@@ -5,31 +5,64 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from '@mui/material'
 import { PreviousGame } from '../data'
+import MoveTypeItem from './MoveTypeItem'
 
 type Props = {
   games: PreviousGame[]
+  playerColor: string
 }
 
-export default function PreviousGamesTable({ games }: Props) {
+export default function PreviousGamesTable({ games, playerColor }: Props) {
   return (
-    <Box justifyContent="center" display="flex">
-      <TableContainer sx={{ width: '70%' }}>
+    <Box justifyContent="center" display="flex" marginLeft={6} marginRight={6}>
+      <TableContainer sx={{ width: 'auto' }}>
         <TableHead>
           <TableRow>
-            <TableCell>Игра</TableCell>
-            <TableCell>Статус</TableCell>
-            <TableCell>Оценка</TableCell>
-            <TableCell>Отзыв</TableCell>
+            <TableCell
+              width={'200px'}
+              sx={{
+                borderBottom: `2px solid ${playerColor}`,
+              }}
+            >
+              Игра
+            </TableCell>
+            <TableCell
+              sx={{
+                borderBottom: `2px solid ${playerColor}`,
+              }}
+            >
+              Статус
+            </TableCell>
+            <TableCell
+              sx={{
+                borderBottom: `2px solid ${playerColor}`,
+              }}
+            >
+              Оценка
+            </TableCell>
+            <TableCell
+              width={'400px'}
+              sx={{
+                borderBottom: `2px solid ${playerColor}`,
+              }}
+            >
+              Отзыв
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {games.map((game, index) => (
             <TableRow key={index}>
               <TableCell>{game.game_title}</TableCell>
-              <TableCell>{game.dropped ? 'Дропнул' : 'Прошел'}</TableCell>
+              <TableCell>
+                {game.dropped ? (
+                  <MoveTypeItem move="drop" />
+                ) : (
+                  <MoveTypeItem move="completed" />
+                )}
+              </TableCell>
               <TableCell>{game.rating}</TableCell>
               <TableCell>{game.review}</TableCell>
             </TableRow>
