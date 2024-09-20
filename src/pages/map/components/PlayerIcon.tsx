@@ -1,12 +1,10 @@
-import { Box, Chip, Paper, Popper } from '@mui/material'
-import { Color, Player, getPlayerColor } from 'utils/types'
-import { useEffect, useRef } from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useSpring, animated } from '@react-spring/web'
-import { getMapCellById, laddersByCell, snakesByCell } from './utils'
+import { Box, Chip } from '@mui/material'
+import { animated, useSpring } from '@react-spring/web'
+import { useEffect, useRef, useState } from 'react'
+import { Player } from 'utils/types'
 import { cellSize } from '../types'
-import LinkSpan from 'components/LinkSpan'
+import PlayerPopup from './PlayerPopup'
+import { getMapCellById, laddersByCell, snakesByCell } from './utils'
 
 type Props = {
   player: Player
@@ -160,71 +158,30 @@ export default function PlayerIcon({
   }
 
   const chipColor = player.is_online ? 'green' : 'red'
-
   const playerColor = 'blue'
 
   return (
     <animated.div style={{ position: 'absolute', top, left, ...springs }}>
       <Box position="relative">
-        <Popper
+        <PlayerPopup
           open={popupOpen}
+          player={player}
           anchorEl={popupAnchor}
-          placement="right"
-          transition
+          close={() => setPopupOpen(false)}
+        />
+        <Chip
+          ref={playerElement}
+          onClick={handleClick}
+          label={player.name}
+          variant="outlined"
           style={{
-            position: 'absolute',
-            top: top - 30,
-            // top: "0%",
-            left: left + (popupAnchor?.offsetWidth || 0) + 10,
-
-            // left: "70%",
-            // transform: "translateX(-50%)",
+            background: playerColor,
+            color: 'white',
+            textDecoration: 'underline',
+            border: `2px solid ${chipColor}`,
           }}
-          onClick={() => setPopupOpen(false)}
-        >
-          <Paper
-            style={{
-              borderRadius: '30px',
-              padding: 1,
-              background: Color.greyLight,
-            }}
-          >
-            <Box padding={2}>
-              <Link to={`/players/${player.url_handle}`}>
-                <LinkSpan color={getPlayerColor(player)}>
-                  <strong>{player.name}</strong>
-                </LinkSpan>
-              </Link>
-              <br />
-              <Box marginTop={1}>Игра: {player.current_game}</Box>
-              <br />
-              {player.is_online ? (
-                <Link
-                  to={player.twitch_stream_link || player.vk_stream_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <LinkSpan color={Color.green}>Смотреть</LinkSpan>
-                </Link>
-              ) : (
-                'Офлайн'
-              )}
-            </Box>
-          </Paper>
-        </Popper>
+        />
       </Box>
-      <Chip
-        ref={playerElement}
-        onClick={handleClick}
-        label={player.name}
-        variant="outlined"
-        style={{
-          background: playerColor,
-          color: 'white',
-          textDecoration: 'underline',
-          border: `2px solid ${chipColor}`,
-        }}
-      />
     </animated.div>
   )
 }
