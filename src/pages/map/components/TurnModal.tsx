@@ -59,6 +59,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     }
   }, [open])
 
+  useEffect(() => {
+    if (player.current_game) {
+      setGameName(player.current_game)
+    }
+  }, [player.current_game])
+
   const {
     data: gameNamesData,
     dataUpdatedAt: updateTs,
