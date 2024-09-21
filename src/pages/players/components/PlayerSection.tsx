@@ -13,8 +13,8 @@ export default function PlayerSection({ player }: Props) {
       <Box textAlign={'left'}>
         <Typography variant="h3">Имя {player.name}</Typography>
         <Box
-          height={300}
-          width={550}
+          height={'300px'}
+          width={'550px'}
           marginTop={'30px'}
           sx={{ backgroundColor: 'grey' }}
         />
@@ -57,7 +57,11 @@ export default function PlayerSection({ player }: Props) {
               variant="contained"
               fullWidth
               color={getPlayerColorName(player)}
-              sx={{ height: '50px' }}
+              sx={{
+                height: '50px',
+                width: '550px',
+              }}
+              style={{ borderRadius: '15px' }}
             >
               Страница участника
             </Button>
