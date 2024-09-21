@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
 import { useState } from 'react'
 import { fetchPlayers, fetchStats } from 'utils/api'
-import { Player, PlayerStats } from 'utils/types'
+import { getPlayerColor, Player, PlayerStats } from 'utils/types'
 
 export default function StatsPage() {
   const [fetchStart] = useState(Date.now())
@@ -48,6 +48,10 @@ export default function StatsPage() {
     (a, b) => b.map_position - a.map_position
   )
 
+  const leader = playersStatsByPosition[0]
+  const leaderPlayer = playersById[leader.id]
+  const leaderColor = getPlayerColor(leaderPlayer)
+
   return (
     <Box>
       <Box textAlign={'center'}>
@@ -63,15 +67,33 @@ export default function StatsPage() {
         <TableContainer sx={{ width: 'auto' }}>
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Участник</TableCell>
-              <TableCell>Позиция на карте</TableCell>
-              <TableCell>Очки</TableCell>
-              <TableCell>Пройдено игр</TableCell>
-              <TableCell>Дропы</TableCell>
-              <TableCell>Реролы</TableCell>
-              <TableCell>Просмотры фильмов</TableCell>
-              <TableCell>Шейх-моменты</TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                #
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Участник
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Позиция на карте
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Очки
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Пройдено игр
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Дропы
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Реролы
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Просмотры фильмов
+              </TableCell>
+              <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                Шейх-моменты
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
