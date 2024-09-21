@@ -88,7 +88,7 @@ export const Color = {
   blueDark: '#5856D6',
   blueLight: '#32ADE6',
   brown: '#A2845E',
-  orange: '#FF9500',
+  orange: '#E58600',
   pink: '#FF2D55',
   pinkLight: '#ECA3D4',
 }
