@@ -15,12 +15,7 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import {
-  Color,
-  getPlayerColor,
-  getPlayerColorName,
-  MoveType,
-} from 'utils/types'
+import { getPlayerColor, getPlayerColorName } from 'utils/types'
 import MoveTypeItem from './components/MoveTypeItem'
 import PreviousGamesTable from './components/PeviousGamesTable'
 import { aukus1Games, aukus2Games } from './data'
@@ -133,13 +128,19 @@ export default function PlayerPage(props: Props) {
                 Ролл
               </TableCell>
               <TableCell
-                width={'140px'}
+                width={'100px'}
                 sx={{ borderBottom: `2px solid ${playerColor}` }}
               >
                 Позиция
               </TableCell>
               <TableCell
-                width={'400px'}
+                width={'80px'}
+                sx={{ borderBottom: `2px solid ${playerColor}` }}
+              >
+                Оценка
+              </TableCell>
+              <TableCell
+                width={'360px'}
                 sx={{ borderBottom: `2px solid ${playerColor}` }}
               >
                 Отзыв
@@ -164,6 +165,7 @@ export default function PlayerPage(props: Props) {
                   </TableCell>
                   <TableCell>{move.dice_roll}</TableCell>
                   <TableCell>{move.cell_to}</TableCell>
+                  <TableCell>{move.item_rating}/10</TableCell>
                   <TableCell>{move.item_review}</TableCell>
                   <TableCell>"link"</TableCell>
                 </TableRow>
