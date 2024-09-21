@@ -78,16 +78,19 @@ export type NextTurnParams = {
 export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
 
 export const Color = {
-  red: '#ff3b30',
-  green: '#2FB350',
-  yellow: '#FFCC00',
   greyLight: '#414141',
   greyDark: '#222222',
-  purple: '#a970ff',
+  red: '#ff3b30',
+  green: '#34C759',
+  greenLight: '#00B88C',
+  purple: '#AF52DE',
   blue: '#007AFF',
-  brown: '#A2845E',
   blueDark: '#5856D6',
-  orange: '#ff8200',
+  blueLight: '#32ADE6',
+  brown: '#A2845E',
+  orange: '#FF9500',
+  pink: '#FF2D55',
+  pinkLight: '#ECA3D4',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
@@ -101,8 +104,12 @@ export const ColorByUrlHandle: { [key: string]: string } = {
   segall: Color.blue,
   praden: Color.brown,
   artur: Color.red,
-  uselessmouth: Color.blueDark,
-  roadhouse: Color.yellow,
+  uselessmouth: Color.pink,
+  roadhouse: Color.orange,
+  unclobjorn: Color.blueDark,
+  melharucos: Color.blueLight,
+  browjey: Color.greenLight,
+  flashko: Color.green,
 }
 
 export const ColorNameByUrlHandle: {
@@ -113,7 +120,11 @@ export const ColorNameByUrlHandle: {
   praden: 'customBrown',
   artur: 'customRed',
   uselessmouth: 'customBlueDark',
-  roadhouse: 'customYellow',
+  roadhouse: 'customOrange',
+  unclobjorn: 'customBlueDark',
+  melharucos: 'customBlueLight',
+  browjey: 'customGreenLight',
+  flashko: 'customGreen',
 }
 
 export function getPlayerColor(player: Player): string {
