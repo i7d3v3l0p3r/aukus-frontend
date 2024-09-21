@@ -4,6 +4,7 @@ import useCurrentUser from 'hooks/useCurrentUser'
 import { Link } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
+import { ReactComponent as SnowflakeIcon } from 'static/snowflake.svg'
 import LinkSpan from './LinkSpan'
 
 type Props = {
@@ -43,13 +44,10 @@ export default function MainMenu({ currentPage }: Props) {
               alignItems: 'center',
             }}
           >
-            <img
-              src="/static/logo.png"
-              alt="logo"
-              style={{
-                width: '15px',
-                marginRight: '8px',
-              }}
+            <SnowflakeIcon
+              width={'15px'}
+              height={'15px'}
+              style={{ marginRight: '8px' }}
             />
             АУКУС Сезон 3 {currentPlayer && `// ${currentPlayer.name}`}
           </LinkSpan>
