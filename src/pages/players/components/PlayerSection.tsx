@@ -19,31 +19,37 @@ export default function PlayerSection({ player }: Props) {
           sx={{ backgroundColor: 'grey' }}
         />
         <Box marginTop={'20px'} marginLeft={'20px'}>
-          <Link
-            to={player.twitch_stream_link}
-            target="_blank"
-            rel="noopener nereferrer"
-            style={{
-              marginRight: '30px',
-            }}
-          >
-            <LinkSpan color={Color.purple}>Twitch</LinkSpan>
-          </Link>
-          <Link
-            to={player.vk_stream_link}
-            target="_blank"
-            rel="noopener nereferrer"
-            style={{ marginRight: '30px' }}
-          >
-            <LinkSpan color={Color.blue}>VKPlay</LinkSpan>
-          </Link>
-          <Link
-            to={player.donation_link}
-            target="_blank"
-            rel="noopener nereferrer"
-          >
-            <LinkSpan color={Color.orange}>Донейшн</LinkSpan>
-          </Link>
+          {player.twitch_stream_link && (
+            <Link
+              to={player.twitch_stream_link}
+              target="_blank"
+              rel="noopener nereferrer"
+              style={{
+                marginRight: '30px',
+              }}
+            >
+              <LinkSpan color={Color.purple}>Twitch</LinkSpan>
+            </Link>
+          )}
+          {player.vk_stream_link && (
+            <Link
+              to={player.vk_stream_link}
+              target="_blank"
+              rel="noopener nereferrer"
+              style={{ marginRight: '30px' }}
+            >
+              <LinkSpan color={Color.blue}>VKPlay</LinkSpan>
+            </Link>
+          )}
+          {player.donation_link && (
+            <Link
+              to={player.donation_link}
+              target="_blank"
+              rel="noopener nereferrer"
+            >
+              <LinkSpan color={Color.orange}>Донейшн</LinkSpan>
+            </Link>
+          )}
         </Box>
         <Box textAlign="center" marginTop={'30px'} width="100%">
           <Link to={`/players/${player.url_handle}`}>
