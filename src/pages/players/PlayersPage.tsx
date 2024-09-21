@@ -29,7 +29,7 @@ export default function PlayersPage() {
     <Box textAlign={'center'}>
       <Grid container columns={1}>
         {randomPlayers.map((player) => (
-          <Grid item xs={1} key={player.id} marginBottom={6}>
+          <Grid item xs={1} key={player.id} marginBottom={'150px'}>
             <PlayerSection player={player} />
           </Grid>
         ))}
