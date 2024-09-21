@@ -1,7 +1,5 @@
-import { OpenInNew } from '@mui/icons-material'
 import {
   Box,
-  Button,
   TableBody,
   TableCell,
   TableContainer,
@@ -15,9 +13,10 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { getPlayerColor, getPlayerColorName } from 'utils/types'
+import { getPlayerColor } from 'utils/types'
 import MoveTypeItem from './components/MoveTypeItem'
 import PreviousGamesTable from './components/PeviousGamesTable'
+import StreamLink from './components/StreamLink'
 import { aukus1Games, aukus2Games } from './data'
 
 type Props = {}
@@ -67,22 +66,10 @@ export default function PlayerPage(props: Props) {
   return (
     <Box>
       <Box textAlign={'center'}>
-        <h1>Страница участника {player.name}</h1>
-        <Link
-          to={player.twitch_stream_link || player.vk_stream_link}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            sx={{ width: '300px', height: '34px' }}
-            color={getPlayerColorName(player)}
-          >
-            <Box display="flex" alignItems={'center'}>
-              Сейчас играет в: {player.stream_last_category}
-              <OpenInNew sx={{ marginLeft: 1 }} />
-            </Box>
-          </Button>
-        </Link>
+        <Typography variant="h3">Страница участника {player.name}</Typography>
+        <Box marginTop={'30px'}>
+          <StreamLink player={player} />
+        </Box>
       </Box>
 
       <Box
