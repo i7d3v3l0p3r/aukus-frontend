@@ -31,6 +31,7 @@ function OnlineButton({ player }: Props) {
         paddingBottom: '8px',
         paddingLeft: '50px',
         paddingRight: '50px',
+        lineHeight: '1',
       }}
       color={getPlayerColorName(player)}
     >
@@ -54,6 +55,7 @@ function OfflineButton({ player }: Props) {
         paddingBottom: '8px',
         paddingLeft: '50px',
         paddingRight: '50px',
+        lineHeight: '1',
       }}
       color={getPlayerColorName(player)}
       variant="outlined"
