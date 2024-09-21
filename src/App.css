@@ -20,7 +20,6 @@ button.MuiButton-root {
   border-radius: 10px;
   color: white;
   font-size: 16px;
-  line-height: 1;
 }
 
 button.MuiButton-root p {
@@ -87,4 +86,23 @@ tbody > tr.MuiTableRow-root:nth-of-type(1) > td {
 
 tr.MuiTableRow-root {
   vertical-align: top;
+}
+
+div.MuiAutocomplete-inputRoot {
+  padding: 0px !important;
+}
+
+div.MuiAutocomplete-root > div.MuiTextField-root {
+  padding: 0px !important;
+}
+
+div.MuiAutocomplete-inputRoot > input {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  padding-left: 14px !important;
+  font-size: 20px !important;
+}
+
+span.MuiRating-root {
+  align-self: center;
 }

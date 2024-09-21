@@ -31,11 +31,12 @@ function OnlineButton({ player }: Props) {
         paddingBottom: '8px',
         paddingLeft: '50px',
         paddingRight: '50px',
+        lineHeight: '1',
       }}
       color={getPlayerColorName(player)}
     >
       <Box display="flex" alignItems={'center'} fontSize={'14px'}>
-        Сейчас играет в: {player.stream_last_category}
+        Сейчас на стриме: {player.stream_last_category}
         <img
           src={OpenIcon}
           alt=""
@@ -54,6 +55,7 @@ function OfflineButton({ player }: Props) {
         paddingBottom: '8px',
         paddingLeft: '50px',
         paddingRight: '50px',
+        lineHeight: '1',
       }}
       color={getPlayerColorName(player)}
       variant="outlined"

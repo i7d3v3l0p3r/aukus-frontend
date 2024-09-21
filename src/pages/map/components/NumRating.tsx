@@ -10,10 +10,14 @@ function IconContainer(props: IconContainerProps) {
   const isExact = value % 1 === 0
 
   const active = other.className?.includes('MuiRating-iconFilled')
-  const style = { fontSize: 24, ...(active && color ? { color } : {}) }
+  const style = {
+    width: '24px',
+    height: '24px',
+    ...(active && color ? { color } : {}),
+  }
 
   return (
-    <span {...other}>
+    <span {...other} style={{ alignSelf: 'center' }}>
       <Circle style={style} />
       {isExact && (
         <span
@@ -22,8 +26,9 @@ function IconContainer(props: IconContainerProps) {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            fontSize: 15,
+            fontSize: '13px',
             color: 'white',
+            alignSelf: 'center',
           }}
         >
           {round}

@@ -16,6 +16,7 @@ import {
   SelectChangeEvent,
   styled,
   TextField,
+  Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { ChangeEvent, useEffect, useState } from 'react'
@@ -57,6 +58,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       setMoveType(null)
     }
   }, [open])
+
+  useEffect(() => {
+    if (player.current_game) {
+      setGameName(player.current_game)
+    }
+  }, [player.current_game])
 
   const {
     data: gameNamesData,
@@ -193,8 +200,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
 
   return (
     <Dialog open={open} onClose={() => {}} fullWidth keepMounted>
-      <DialogTitle>
-        Новый ход
+      <DialogTitle
+        sx={{ paddingTop: '30px', paddingBottom: '30px', paddingLeft: '30px' }}
+      >
+        <Typography fontSize={'32px'} lineHeight={1}>
+          Новый ход
+        </Typography>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -208,7 +219,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent
+        sx={{ paddingLeft: '30px', paddingRight: '30px', paddingBottom: 0 }}
+      >
         <FormControl size="small" fullWidth>
           {!moveType && (
             <InputLabel style={{ color: 'grey' }}>Действие</InputLabel>
@@ -217,9 +230,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
             IconComponent={KeyboardArrowDownSharp}
+            sx={{ fontSize: '20px' }}
             MenuProps={{
               sx: {
                 '&& .Mui-selected': { backgroundColor: selectedItemColor },
+                fontSize: '20px',
               },
             }}
           >
@@ -243,8 +258,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           </Select>
         </FormControl>
 
-        <Box marginTop={2}>
-          {moveType === 'movie' ? 'Фильм' : 'Игра'}
+        <Box marginTop={'30px'} lineHeight={1}>
+          <span style={{ marginLeft: '15px', fontSize: '20px' }}>
+            {moveType === 'movie' ? 'Фильм' : 'Игра'}
+          </span>
           <Autocomplete
             freeSolo
             options={gameNameOptions}
@@ -258,32 +275,26 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                   event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
                 ) => setGameName(event.target.value)}
                 {...params}
+                style={{
+                  paddingTop: '10px',
+                  paddingBottom: '10px',
+                  fontSize: '20px important!',
+                }}
               />
             )}
-          />
-          <Input
-            type="text"
-            fullWidth
-            value={gameName}
-            onChange={handleGameNameChange}
             sx={{
-              border: `2px solid ${Color.greyLight}`,
-              padding: '4px',
-              marginTop: 1,
-              borderRadius: '10px',
-              paddingLeft: '14px',
+              marginTop: '10px',
             }}
-            disableUnderline
           />
         </Box>
-        <Box marginTop={3}>
+        <Box marginTop={'30px'}>
           {moveType === 'completed' && (
             <Box display="flex" justifyContent={'space-between'}>
               <Button
                 onClick={() => handleGameHoursChange('short')}
                 variant={gameHours === 'short' ? 'contained' : 'outlined'}
                 color={gameHours === 'short' ? 'secondary' : 'info'}
-                style={{ width: 200 }}
+                style={{ width: 200, fontSize: '20px' }}
               >
                 0-5 часов
               </Button>
@@ -291,7 +302,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('medium')}
                 variant={gameHours === 'medium' ? 'contained' : 'outlined'}
                 color={gameHours === 'medium' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200 }}
+                style={{ marginLeft: 20, width: 200, fontSize: '20px' }}
               >
                 5-15 часов
               </Button>
@@ -299,32 +310,40 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('long')}
                 variant={gameHours === 'long' ? 'contained' : 'outlined'}
                 color={gameHours === 'long' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200 }}
+                style={{ marginLeft: 20, width: 200, fontSize: '20px' }}
               >
                 15+ часов
               </Button>
             </Box>
           )}
         </Box>
-        <Box marginTop={3} display="flex">
-          <span style={{ width: '100px' }}>Оценка: {displayRating}</span>
+        <Box marginTop={'28px'} display="flex">
+          <span
+            style={{ width: '150px', marginLeft: '15px', fontSize: '20px' }}
+          >
+            Оценка: {displayRating}
+          </span>
           <NumRating
             precision={0.1}
             max={10}
-            sx={{ marginLeft: 2 }}
+            sx={{ marginLeft: '0px' }}
             onChange={handleRatingChange}
             onChangeActive={handleRatingChangeWhileHovering}
             value={rating}
           />
         </Box>
-        <Box marginTop={3}>
-          Отзыв
+        <Box marginTop={'28px'}>
+          <span style={{ marginLeft: '15px', fontSize: '20px' }}>Отзыв</span>
           <TextField
             sx={{ marginTop: 1 }}
             InputProps={{
               style: {
                 borderRadius: '10px',
-                padding: '10px',
+                paddingTop: '10px',
+                paddingLeft: '15px',
+                paddingBottom: '10px',
+                lineHeight: '1.2',
+                fontSize: '20px',
               },
             }}
             multiline
@@ -335,16 +354,21 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           />
         </Box>
       </DialogContent>
-      <DialogActions>
+      <DialogActions
+        sx={{
+          paddingTop: '50px',
+          paddingLeft: '30px',
+          paddingRight: '30px',
+          paddingBottom: '30px',
+        }}
+      >
         <Button
           fullWidth
           onClick={handleConfirmTurn}
           disabled={!canThrowDice}
           color="secondary"
           variant="contained"
-          sx={{
-            margin: 2,
-          }}
+          sx={{ fontSize: '16px' }}
         >
           {buttonText}
         </Button>
@@ -396,6 +420,7 @@ function getDiceType({
 }
 
 const MenuItemStyled = styled(MenuItem)(({ color }) => ({
+  fontSize: '20px',
   ':hover': {
     backgroundColor: `${color} !important`,
   },
