@@ -1,7 +1,7 @@
 import { Box, Chip } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { Player } from 'utils/types'
+import { getPlayerColor, Player } from 'utils/types'
 import { cellSize } from '../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from './utils'
@@ -158,7 +158,7 @@ export default function PlayerIcon({
   }
 
   const chipColor = player.is_online ? 'green' : 'red'
-  const playerColor = 'blue'
+  const playerColor = getPlayerColor(player)
 
   return (
     <animated.div style={{ position: 'absolute', top, left, ...springs }}>
@@ -175,7 +175,7 @@ export default function PlayerIcon({
           label={player.name}
           variant="outlined"
           style={{
-            background: playerColor,
+            backgroundColor: playerColor,
             color: 'white',
             textDecoration: 'underline',
             border: `2px solid ${chipColor}`,
