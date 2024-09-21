@@ -109,11 +109,25 @@ export default function DiceModal({
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth keepMounted>
-      <DialogTitle>
+      <DialogTitle
+        fontSize={'32px'}
+        style={{
+          paddingTop: '30px',
+          paddingLeft: '30px',
+          lineHeight: '1',
+          paddingBottom: '30px',
+        }}
+      >
         Бросок кубика {diceRollSum && `: ${diceRollSum}`}{' '}
         {showAllDices && `(${diceRoll})`}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent
+        style={{
+          paddingLeft: '30px',
+          paddingRight: '30px',
+          paddingBottom: '30px',
+        }}
+      >
         <div
           id={DiceBoxContainerId}
           className={canThrowDice ? 'active' : ''}
@@ -138,14 +152,20 @@ export default function DiceModal({
           )}
         </div>
       </DialogContent>
-      <DialogActions>
+      <DialogActions
+        style={{
+          paddingTop: 0,
+          paddingLeft: '30px',
+          paddingRight: '30px',
+          paddingBottom: '30px',
+        }}
+      >
         <Button
           fullWidth
           onClick={handleFinishTurn}
           disabled={!isTurnComplete}
           color="secondary"
           variant="contained"
-          sx={{ marginBottom: 2, marginLeft: 2, marginRight: 2 }}
         >
           Ходить
         </Button>
