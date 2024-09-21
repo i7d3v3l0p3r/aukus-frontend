@@ -74,7 +74,7 @@ export default function PlayerPage(props: Props) {
           rel="noopener noreferrer"
         >
           <Button
-            sx={{ paddingLeft: 6, paddingRight: 6 }}
+            sx={{ width: '300px', height: '34px' }}
             color={getPlayerColorName(player)}
           >
             <Box display="flex" alignItems={'center'}>
