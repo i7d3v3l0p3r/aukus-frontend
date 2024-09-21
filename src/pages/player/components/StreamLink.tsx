@@ -1,7 +1,7 @@
-import { OpenInNew } from '@mui/icons-material'
 import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { getPlayerColorName, Player } from 'utils/types'
+import OpenIcon from 'static/open_icon.svg'
 
 type Props = {
   player: Player
@@ -36,7 +36,11 @@ function OnlineButton({ player }: Props) {
     >
       <Box display="flex" alignItems={'center'} fontSize={'14px'}>
         Сейчас играет в: {player.stream_last_category}
-        <OpenInNew sx={{ marginLeft: 1, width: '17px', height: '17px' }} />
+        <img
+          src={OpenIcon}
+          alt=""
+          style={{ marginLeft: '10px', width: '17px', height: '17px' }}
+        />
       </Box>
     </Button>
   )
