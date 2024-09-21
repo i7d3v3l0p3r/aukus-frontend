@@ -83,7 +83,7 @@ export default function PlayerPage(props: Props) {
             color={getPlayerColorName(player)}
           >
             <Box display="flex" alignItems={'center'}>
-              Сейчас играет в: {player.current_game}
+              Сейчас играет в: {player.stream_last_category}
               <OpenInNew sx={{ marginLeft: 1 }} />
             </Box>
           </Button>

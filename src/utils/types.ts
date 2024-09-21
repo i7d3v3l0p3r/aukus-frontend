@@ -8,6 +8,7 @@ export type Player = {
   current_game: string
   url_handle: string
   map_position: number
+  stream_last_category: string
 }
 
 export type PlayerStats = {

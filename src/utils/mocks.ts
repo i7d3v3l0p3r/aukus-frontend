@@ -7,10 +7,11 @@ const playerLasqa: Player = {
   twitch_stream_link: '',
   vk_stream_link: 'https://live.vkplay.ru/lasqa',
   donation_link: 'https://www.donationalerts.com/r/lasqa',
-  map_position: 0,
-  current_game: 'Балдурс Гейт 3',
+  map_position: 50,
+  current_game: 'Балдурс Гейт 3 Game of the year edition',
   is_online: false,
   url_handle: 'lasqa',
+  stream_last_category: 'Gothic',
 }
 
 const playerSegall: Player = {
@@ -23,6 +24,7 @@ const playerSegall: Player = {
   current_game: 'Соник',
   is_online: true,
   url_handle: 'segall',
+  stream_last_category: 'Just Chatting',
 }
 
 const playerRoadhouse: Player = {
@@ -35,6 +37,7 @@ const playerRoadhouse: Player = {
   current_game: 'Готика',
   is_online: true,
   url_handle: 'roadhouse',
+  stream_last_category: 'Witcher',
 }
 
 export const playersMock = [playerLasqa, playerSegall, playerRoadhouse].sort(
