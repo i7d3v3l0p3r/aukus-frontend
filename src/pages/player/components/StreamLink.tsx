@@ -36,7 +36,7 @@ function OnlineButton({ player }: Props) {
     >
       <Box display="flex" alignItems={'center'} fontSize={'14px'}>
         Сейчас играет в: {player.stream_last_category}
-        <OpenInNew sx={{ marginLeft: 1 }} />
+        <OpenInNew sx={{ marginLeft: 1, width: '17px', height: '17px' }} />
       </Box>
     </Button>
   )
