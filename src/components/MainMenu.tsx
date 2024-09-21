@@ -51,7 +51,7 @@ export default function MainMenu({ currentPage }: Props) {
                 marginRight: '8px',
               }}
             />
-            АУКУС 2024 {currentPlayer && `// ${currentPlayer.name}`}
+            АУКУС Сезон 3 {currentPlayer && `// ${currentPlayer.name}`}
           </LinkSpan>
         </Link>
       </Box>
