@@ -45,10 +45,14 @@ export default function DiceModal({
 
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
 
-  const isTurnComplete = diceRoll !== null && diceStatus === 'done'
   const diceRollSum = diceRoll
     ? diceRoll.reduce((acc, value) => acc + value, 0)
     : null
+
+  const isTurnComplete =
+    diceRoll !== null && diceStatus === 'done' && diceRollSum
+
+  const canThrowDice = diceStatus === 'idle' && diceRoll === null
 
   useEffect(() => {
     if (!open) {
@@ -60,11 +64,12 @@ export default function DiceModal({
     }
   }, [open, diceBox])
 
-  const handleFinishTurn = () => {
-    if (!diceRollSum) {
-      return
+  const handleActionClick = () => {
+    if (canThrowDice) {
+      throwDice()
+    } else if (isTurnComplete) {
+      onTurnFinish(diceRollSum)
     }
-    onTurnFinish(diceRollSum)
   }
 
   const containerRef = useCallback(
@@ -88,7 +93,7 @@ export default function DiceModal({
     [diceBox, open]
   )
 
-  const handleThrowDice = () => {
+  const throwDice = () => {
     if (diceStatus !== 'idle' || !dice || !diceBox) {
       return
     }
@@ -104,13 +109,15 @@ export default function DiceModal({
     onClose()
   }
 
-  const canThrowDice = diceStatus === 'idle' && diceRoll === null
   const showAllDices = diceRoll !== null && diceRoll.length > 1
+  const diceRollDisplay = showAllDices
+    ? ` — ${diceRollSum} (${diceRoll})`
+    : ` — ${diceRollSum}`
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth keepMounted>
       <DialogTitle
-        fontSize={'32px'}
+        fontSize={'24px'}
         style={{
           paddingTop: '30px',
           paddingLeft: '30px',
@@ -118,8 +125,8 @@ export default function DiceModal({
           paddingBottom: '30px',
         }}
       >
-        Бросок кубика {diceRollSum && `: ${diceRollSum}`}{' '}
-        {showAllDices && `(${diceRoll})`}
+        Бросок кубика
+        {diceRollSum ? diceRollDisplay : ', перебрасывать нельзя'}
       </DialogTitle>
       <DialogContent
         style={{
@@ -130,7 +137,6 @@ export default function DiceModal({
       >
         <div
           id={DiceBoxContainerId}
-          className={canThrowDice ? 'active' : ''}
           style={{
             display: 'flex',
             position: 'relative',
@@ -139,18 +145,9 @@ export default function DiceModal({
             border: '1px solid grey',
             borderRadius: '10px',
             padding: '5px',
-            cursor: canThrowDice ? 'pointer' : 'default',
           }}
           ref={containerRef}
-          onClick={handleThrowDice}
-        >
-          {canThrowDice && (
-            <Box position={'absolute'} top={10}>
-              Бросить кубик {dice}
-              <div style={{ color: 'red' }}>ПЕРЕБРАСЫВАТЬ НЕЛЬЗЯ!</div>
-            </Box>
-          )}
-        </div>
+        ></div>
       </DialogContent>
       <DialogActions
         style={{
@@ -162,12 +159,12 @@ export default function DiceModal({
       >
         <Button
           fullWidth
-          onClick={handleFinishTurn}
-          disabled={!isTurnComplete}
+          onClick={handleActionClick}
+          disabled={!(diceStatus === 'idle' || diceStatus === 'done')}
           color="secondary"
           variant="contained"
         >
-          Ходить
+          {diceStatus === 'idle' ? `Бросить кубик — ${dice}` : 'Ходить'}
         </Button>
       </DialogActions>
     </Dialog>

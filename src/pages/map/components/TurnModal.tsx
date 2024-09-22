@@ -203,7 +203,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       <DialogTitle
         sx={{ paddingTop: '30px', paddingBottom: '30px', paddingLeft: '30px' }}
       >
-        <Typography fontSize={'32px'} lineHeight={1}>
+        <Typography fontSize={'24px'} lineHeight={1}>
           Новый ход
         </Typography>
         <IconButton
@@ -230,11 +230,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
             IconComponent={KeyboardArrowDownSharp}
-            sx={{ fontSize: '20px' }}
+            sx={{ fontSize: '16px' }}
             MenuProps={{
               sx: {
                 '&& .Mui-selected': { backgroundColor: selectedItemColor },
-                fontSize: '20px',
+                fontSize: '16px',
               },
             }}
           >
@@ -278,7 +278,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 style={{
                   paddingTop: '10px',
                   paddingBottom: '10px',
-                  fontSize: '20px important!',
+                  fontSize: '16px important!',
                 }}
               />
             )}
@@ -287,14 +287,14 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             }}
           />
         </Box>
-        <Box marginTop={'30px'}>
+        <Box marginTop={'20px'}>
           {moveType === 'completed' && (
             <Box display="flex" justifyContent={'space-between'}>
               <Button
                 onClick={() => handleGameHoursChange('short')}
                 variant={gameHours === 'short' ? 'contained' : 'outlined'}
                 color={gameHours === 'short' ? 'secondary' : 'info'}
-                style={{ width: 200, fontSize: '20px' }}
+                style={{ width: 200, fontSize: '16px' }}
               >
                 0-5 часов
               </Button>
@@ -302,7 +302,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('medium')}
                 variant={gameHours === 'medium' ? 'contained' : 'outlined'}
                 color={gameHours === 'medium' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200, fontSize: '20px' }}
+                style={{ marginLeft: 20, width: 200, fontSize: '16px' }}
               >
                 5-15 часов
               </Button>
@@ -310,7 +310,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('long')}
                 variant={gameHours === 'long' ? 'contained' : 'outlined'}
                 color={gameHours === 'long' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200, fontSize: '20px' }}
+                style={{ marginLeft: 20, width: 200, fontSize: '16px' }}
               >
                 15+ часов
               </Button>
@@ -319,7 +319,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         </Box>
         <Box marginTop={'28px'} display="flex">
           <span
-            style={{ width: '150px', marginLeft: '15px', fontSize: '20px' }}
+            style={{ width: '150px', marginLeft: '15px', fontSize: '16px' }}
           >
             Оценка: {displayRating}
           </span>
@@ -338,12 +338,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             sx={{ marginTop: 1 }}
             InputProps={{
               style: {
-                borderRadius: '10px',
                 paddingTop: '10px',
                 paddingLeft: '15px',
                 paddingBottom: '10px',
                 lineHeight: '1.2',
-                fontSize: '20px',
+                fontSize: '16px',
               },
             }}
             multiline
@@ -420,7 +419,7 @@ function getDiceType({
 }
 
 const MenuItemStyled = styled(MenuItem)(({ color }) => ({
-  fontSize: '20px',
+  fontSize: '16px',
   ':hover': {
     backgroundColor: `${color} !important`,
   },
