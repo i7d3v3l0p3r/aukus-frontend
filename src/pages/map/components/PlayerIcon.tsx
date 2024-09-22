@@ -132,14 +132,20 @@ export default function PlayerIcon({
 
   useEffect(() => {
     // console.log("updating map position to", player.mapPosition);
-    const interval = setInterval(() => {
-      const findCell = document.getElementById(
-        `map-cell-${player.map_position}`
-      )
+
+    const findCell = document.getElementById(`map-cell-${player.map_position}`)
+    if (findCell) {
       setAnchorCell(findCell)
-      clearInterval(interval)
-    }, 50)
-    return () => clearInterval(interval)
+    } else {
+      const interval = setInterval(() => {
+        const findCell = document.getElementById(
+          `map-cell-${player.map_position}`
+        )
+        setAnchorCell(findCell)
+        clearInterval(interval)
+      }, 50)
+      return () => clearInterval(interval)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.map_position])
 
