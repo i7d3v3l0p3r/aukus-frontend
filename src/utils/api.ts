@@ -37,7 +37,6 @@ export async function fetchPlayers(): Promise<PlayersResponse> {
 export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
   if (MOCK_API) {
     console.log('creating player move', move)
-    playersMockById[move.player_id].map_position = move.move_to
     return Promise.resolve()
   }
   return fetch(`/api/player_move`, {

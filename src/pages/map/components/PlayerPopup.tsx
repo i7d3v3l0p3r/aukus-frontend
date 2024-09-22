@@ -28,7 +28,7 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
         top = top - 150
       }
 
-      console.log(top, topPosition)
+      // console.log(top, topPosition)
 
       if (topPosition > top || topPosition === 0) {
         setTopPosition(top)

@@ -103,9 +103,9 @@ export default function MapComponent() {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    setMoveSteps(0)
     const newPosition = getNextPlayerPosition(player, moves)
     player.map_position = newPosition
+    setMoveSteps(0)
   }
 
   return (
