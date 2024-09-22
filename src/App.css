@@ -106,3 +106,11 @@ div.MuiAutocomplete-inputRoot > input {
 span.MuiRating-root {
   align-self: center;
 }
+
+div.MuiAutocomplete-root {
+  border: none !important;
+}
+
+div.Mui-focused {
+  border: 2px solid #007aff;
+}

@@ -338,7 +338,6 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             sx={{ marginTop: 1 }}
             InputProps={{
               style: {
-                borderRadius: '10px',
                 paddingTop: '10px',
                 paddingLeft: '15px',
                 paddingBottom: '10px',
