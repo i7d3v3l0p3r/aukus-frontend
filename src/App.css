@@ -6,10 +6,6 @@ a:visited {
   color: white;
 }
 
-div#dice-box.active:hover {
-  background: #282c34;
-}
-
 div#dice-box canvas {
   width: 100%;
   height: 100%;
