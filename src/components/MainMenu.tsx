@@ -4,7 +4,7 @@ import useCurrentUser from 'hooks/useCurrentUser'
 import { Link } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
-import { ReactComponent as SnowflakeIcon } from 'static/snowflake.svg'
+import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
 import LinkSpan from './LinkSpan'
 
 type Props = {

@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { getPlayerColorName, Player } from 'utils/types'
-import OpenIcon from 'static/open_icon.svg'
+import OpenIcon from 'assets/open_icon.svg'
 
 type Props = {
   player: Player
