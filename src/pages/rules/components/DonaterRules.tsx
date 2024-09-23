@@ -96,48 +96,55 @@ export default function DonaterRules() {
               square={true}
             >
               <AccordionSummary
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
+                sx={{
+                  background: Color.greyDark,
+                  borderRadius: '15px',
+                  paddingLeft: '20px',
+                  paddingRight: '20px',
+                  paddingBottom: '5px',
+                }}
               >
-                <Typography variant="h5">
+                <Typography fontSize={'24px'} fontWeight={600}>
                   {index + 1}. {rule.title}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails
-                sx={{ background: Color.greyDark, borderRadius: '15px' }}
+                sx={{
+                  background: Color.greyDark,
+                  borderRadius: '15px',
+                  paddingLeft: '20px',
+                  paddingRight: '20px',
+                  paddingTop: 0,
+                }}
               >
-                <Typography variant="body2">
+                <Typography fontWeight={500} fontSize={'16px'}>
                   {rule.content.map((content, index) => (
                     <Box marginLeft={2} marginBottom={2}>
-                      <Typography variant="h6">
-                        {content.title}
-                        {':'}
-                      </Typography>
+                      {content.title}
+                      {':'}
+
                       <Box marginTop={1} />
                       {content.special ? (
                         <ul>
                           <li>
-                            <Typography variant="body1">
-                              Минимальная длительность прохождения заказанной
-                              игры должна быть не менее 60 минут. Для проверки
-                              времени прохождения можно воспользоваться сайтом{' '}
-                              <Link
-                                href="https://howlongtobeat.com/"
-                                rel="noopener nereferrer"
-                                target="_blank"
-                              >
-                                <LinkSpan color={Color.purple}>
-                                  https://howlongtobeat.com/
-                                </LinkSpan>
-                              </Link>
-                            </Typography>
+                            Минимальная длительность прохождения заказанной игры
+                            должна быть не менее 60 минут. Для проверки времени
+                            прохождения можно воспользоваться сайтом{' '}
+                            <Link
+                              href="https://howlongtobeat.com/"
+                              rel="noopener nereferrer"
+                              target="_blank"
+                            >
+                              <LinkSpan color={Color.purple}>
+                                https://howlongtobeat.com/
+                              </LinkSpan>
+                            </Link>
                           </li>
                         </ul>
                       ) : (
                         <ul>
                           {content.content.map((text, index) => (
-                            <li>
-                              <Typography variant="body1">{text}</Typography>
-                            </li>
+                            <li>{text}</li>
                           ))}
                         </ul>
                       )}
