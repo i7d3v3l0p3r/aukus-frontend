@@ -98,7 +98,7 @@ let darkTheme = createTheme({
   },
   typography: {
     fontFamily: '"Golos Text", sans-serif',
-    // fontWeightRegular: 600,
+    fontWeightRegular: 600,
   },
   components: {
     MuiButton: {
@@ -111,6 +111,7 @@ let darkTheme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
+          fontWeight: 600,
         },
       },
     },

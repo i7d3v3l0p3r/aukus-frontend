@@ -36,7 +36,7 @@ export default function MainMenu({ currentPage }: Props) {
           <LinkSpan
             color={playerColor}
             style={{
-              fontWeight: 'bold',
+              fontWeight: 600,
               paddingBottom: 0,
               lineHeight: '1.2',
               display: 'inline-flex',

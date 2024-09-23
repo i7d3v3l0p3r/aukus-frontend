@@ -199,11 +199,17 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }
 
   return (
-    <Dialog open={open} onClose={() => {}} fullWidth keepMounted>
+    <Dialog
+      open={open}
+      onClose={() => {}}
+      fullWidth
+      keepMounted
+      sx={{ fontWeight: 500 }}
+    >
       <DialogTitle
         sx={{ paddingTop: '30px', paddingBottom: '30px', paddingLeft: '30px' }}
       >
-        <Typography fontSize={'24px'} lineHeight={1}>
+        <Typography fontSize={'24px'} fontWeight={700} lineHeight={1}>
           Новый ход
         </Typography>
         <IconButton
@@ -367,7 +373,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           disabled={!canThrowDice}
           color="secondary"
           variant="contained"
-          sx={{ fontSize: '16px' }}
+          sx={{ fontSize: '16px', fontWeight: 700 }}
         >
           {buttonText}
         </Button>

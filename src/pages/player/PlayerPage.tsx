@@ -66,7 +66,9 @@ export default function PlayerPage(props: Props) {
   return (
     <Box>
       <Box textAlign={'center'}>
-        <Typography variant="h3">Страница участника {player.name}</Typography>
+        <Typography fontSize="48px" fontWeight={700}>
+          Страница участника {player.name}
+        </Typography>
         <Box marginTop={'30px'}>
           <StreamLink player={player} />
         </Box>
@@ -182,7 +184,7 @@ export default function PlayerPage(props: Props) {
 
       {aukus1games && (
         <Box marginTop={10}>
-          <Typography variant="h5" align="center">
+          <Typography fontSize={'24px'} fontWeight={600} align="center">
             <Link
               to={aukus1games.link}
               rel="noopener noreferrer"
@@ -212,7 +214,7 @@ function formatDate(dateString: string) {
   // Extract the day, month, and year
   const day = String(date.getDate()).padStart(2, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
-  const year = String(date.getFullYear()).slice(-2) // Get last two digits of the year
+  // const year = String(date.getFullYear()).slice(-2) // Get last two digits of the year
 
   // Format the date as dd.mm.yy
   return `${day}.${month}`
