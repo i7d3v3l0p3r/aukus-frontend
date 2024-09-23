@@ -7,9 +7,8 @@ import { NextTurnParams, Player } from 'utils/types'
 import { cellSize, MainMap } from '../types'
 import ActionButton from './ActionButton'
 import CellItem from './CellItem'
-import LadderComponent from './Ladder'
+import MapArrow from './MapArrow'
 import PlayerIcon from './PlayerIcon'
-import SnakeComponent from './Snake'
 import SVGMarkers from './SVGMarkers'
 import TesterButton from './TesterButton'
 import {
@@ -176,12 +175,12 @@ export default function MapComponent() {
       </Grid>
       {ladders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
-          <LadderComponent ladder={ladder} />
+          <MapArrow from={ladder.cellFrom} to={ladder.cellTo} />
         </Fragment>
       ))}
       {snakes.map((snake) => (
         <Fragment key={snake.cellFrom}>
-          <SnakeComponent snake={snake} />
+          <MapArrow from={snake.cellFrom} to={snake.cellTo} />
         </Fragment>
       ))}
       {players &&
