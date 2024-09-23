@@ -1,4 +1,4 @@
-import { Paper, Popper } from '@mui/material'
+import { Paper, Popper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import LinkSpan from 'components/LinkSpan'
 import { useEffect, useState } from 'react'
@@ -61,30 +61,36 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
     >
       <Paper
         style={{
-          borderRadius: '30px',
-          padding: 1,
+          borderRadius: '15px',
+          padding: '15px',
           background: Color.greyLight,
         }}
       >
-        <Box padding={2}>
-          <Link to={`/players/${player.url_handle}`}>
-            <LinkSpan color={getPlayerColor(player)}>
-              <strong>{player.name}</strong>
-            </LinkSpan>
-          </Link>
-          <br />
-          <Box marginTop={1}>Игра: {player.current_game}</Box>
-          <br />
-          {player.is_online ? (
-            <Link
-              to={player.twitch_stream_link || player.vk_stream_link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <LinkSpan color={Color.green}>Смотреть</LinkSpan>
+        <Box>
+          <Typography fontSize={'16px'} fontWeight={700}>
+            <Link to={`/players/${player.url_handle}`}>
+              <LinkSpan color={getPlayerColor(player)}>{player.name}</LinkSpan>
             </Link>
+          </Typography>
+          <Box marginTop={'8px'} marginBottom={'20px'}>
+            <Typography fontSize={'14px'} fontWeight={500}>
+              Игра: {player.current_game}
+            </Typography>
+          </Box>
+          {player.is_online ? (
+            <Typography fontSize={'14px'} fontWeight={600}>
+              <Link
+                to={player.twitch_stream_link || player.vk_stream_link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkSpan color={Color.green}>Смотреть</LinkSpan>
+              </Link>
+            </Typography>
           ) : (
-            'Офлайн'
+            <Typography fontSize={'14px'} fontWeight={600}>
+              Офлайн
+            </Typography>
           )}
         </Box>
       </Paper>
