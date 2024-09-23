@@ -36,7 +36,7 @@ export default function MainMenu({ currentPage }: Props) {
           <LinkSpan
             color={playerColor}
             style={{
-              fontWeight: 'bold',
+              fontWeight: 600,
               paddingBottom: 0,
               lineHeight: '1.2',
               display: 'inline-flex',
@@ -53,7 +53,7 @@ export default function MainMenu({ currentPage }: Props) {
           </LinkSpan>
         </Link>
       </Box>
-      <Box display="flex" justifyContent={'center'} marginBottom={6}>
+      <Box display="flex" justifyContent={'center'} marginBottom={'100px'}>
         <Box
           padding={'10px'}
           display="flex"

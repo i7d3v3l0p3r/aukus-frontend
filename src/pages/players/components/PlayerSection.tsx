@@ -28,7 +28,9 @@ export default function PlayerSection({ player }: Props) {
                 marginRight: '30px',
               }}
             >
-              <LinkSpan color={Color.purple}>Twitch</LinkSpan>
+              <LinkSpan color={Color.purple} style={{ fontSize: '20px' }}>
+                Twitch
+              </LinkSpan>
             </Link>
           )}
           {player.vk_stream_link && (
@@ -38,7 +40,9 @@ export default function PlayerSection({ player }: Props) {
               rel="noopener nereferrer"
               style={{ marginRight: '30px' }}
             >
-              <LinkSpan color={Color.blue}>VKPlay</LinkSpan>
+              <LinkSpan color={Color.blue} style={{ fontSize: '20px' }}>
+                VKPlay
+              </LinkSpan>
             </Link>
           )}
           {player.donation_link && (
@@ -47,7 +51,9 @@ export default function PlayerSection({ player }: Props) {
               target="_blank"
               rel="noopener nereferrer"
             >
-              <LinkSpan color={Color.orange}>Донейшн</LinkSpan>
+              <LinkSpan color={Color.orange} style={{ fontSize: '20px' }}>
+                Донейшн
+              </LinkSpan>
             </Link>
           )}
         </Box>

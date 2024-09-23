@@ -14,7 +14,7 @@ export default function RulesPage() {
     <Box>
       <Box display={'flex'} justifyContent="center">
         <Box width={'740px'}>
-          <Box marginBottom={4}>
+          <Box marginBottom={'30px'}>
             <Link to="#" onClick={() => setRulesPage('player')}>
               <LinkSpan color={Color.purple}>Для стримеров</LinkSpan>
             </Link>
@@ -23,11 +23,11 @@ export default function RulesPage() {
               <LinkSpan color={Color.orange}>Для донатеров</LinkSpan>
             </Link>
           </Box>
-          <Typography variant="h4">
+          <Typography fontSize={'48px'} fontWeight={700}>
             Правила проведения описывают все аспекты Аукуса
           </Typography>
 
-          <Box marginTop={2} />
+          <Box marginTop={'50px'} />
           {rulesPage === 'player' && <PlayerRules />}
           {rulesPage === 'donater' && <DonaterRules />}
         </Box>
