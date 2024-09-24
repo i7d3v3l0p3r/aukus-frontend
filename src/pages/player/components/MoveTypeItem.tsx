@@ -12,7 +12,12 @@ export default function MoveTypeItem({ move }: { move: MoveType }) {
   return (
     <span style={{ display: 'flex', alignItems: 'center' }}>
       <Circle
-        sx={{ color: colorMap[move], width: '9px', marginRight: '5px' }}
+        sx={{
+          color: colorMap[move],
+          width: '9px',
+          height: '9px',
+          marginRight: '5px',
+        }}
       />
       {formatMoveType(move)}
     </span>
