@@ -111,7 +111,7 @@ export default function MapComponent() {
     <Box
       style={{
         overflowX: 'auto',
-        minWidth: '1500px',
+        width: '1500px',
       }}
       onClick={handleClick}
     >
@@ -123,45 +123,56 @@ export default function MapComponent() {
         columns={11}
         width={'auto'}
         style={{
-          backgroundImage: "url('static/map_background2.png')",
+          backgroundImage: "url('static/map_background3.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
         }}
       >
         <Grid container columns={11} width={'auto'}>
-          <Grid item border={1}>
-            <Box minWidth={(cellSize + 1) * 11} minHeight={cellSize * 2} />
+          <Grid item>
+            <Box width={(cellSize + 1) * 11} height={cellSize * 2} />
           </Grid>
         </Grid>
         {map.cellRows.map((row, index) => (
           <Grid container key={index} columns={11} width={'auto'}>
             {index === 0 && (
-              <Grid item borderTop={1} borderRight={1} borderLeft={1}>
+              <Grid
+                item
+                sx={{
+                  borderRight: '1px solid transparent',
+                  borderTop: '1px solid transparent',
+                  borderLeft: '1px solid transparent',
+                }}
+              >
                 <CellItem cell={lastCell} />
               </Grid>
             )}
             {index === 9 && (
-              <Grid item border={1}>
+              <Grid item sx={{ border: '1px solid transparent' }}>
                 <CellItem cell={startCell} />
               </Grid>
             )}
             {index > 0 && index < 9 && (
               <Grid
                 item
-                borderRight={1}
-                style={{ borderLeft: '1px solid transparent' }}
-                borderTop={index === 1 ? 1 : 0}
+                sx={{
+                  borderRight: '1px solid transparent',
+                  borderLeft: '1px solid transparent',
+                  borderTop: index === 1 ? '1px solid transparent' : 0,
+                }}
               >
-                <div style={{ minHeight: cellSize, minWidth: cellSize }} />
+                <div style={{ height: cellSize, width: cellSize }} />
               </Grid>
             )}
             {row.map((cell) => (
               <Grid
                 item
                 key={cell.id}
-                borderRight={1}
-                borderTop={1}
-                borderBottom={index === 9 ? 1 : 0}
+                sx={{
+                  borderRight: '1px solid transparent',
+                  borderBottom: index === 9 ? '1px solid transparent' : 0,
+                  borderTop: '1px solid transparent',
+                }}
               >
                 <CellItem
                   cell={cell}
@@ -172,6 +183,11 @@ export default function MapComponent() {
             ))}
           </Grid>
         ))}
+        <Grid container columns={11} width={'auto'}>
+          <Grid item>
+            <Box width={(cellSize + 1) * 11} height={cellSize} />
+          </Grid>
+        </Grid>
       </Grid>
       {ladders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
