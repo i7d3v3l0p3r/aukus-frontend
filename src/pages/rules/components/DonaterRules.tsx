@@ -88,6 +88,8 @@ export default function DonaterRules() {
         <Box marginTop={'25px'}>
           <Box>
             <Accordion
+              disableGutters
+              elevation={0}
               sx={{
                 borderRadius: '15px',
                 background: Color.greyDark,
@@ -105,7 +107,7 @@ export default function DonaterRules() {
                 }}
               >
                 <Typography fontSize={'24px'} fontWeight={600}>
-                  {index + 1}. {rule.title}
+                  {rule.title}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails

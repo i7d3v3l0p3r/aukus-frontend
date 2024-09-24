@@ -201,6 +201,8 @@ export default function PlayerRules() {
         <Box marginTop={'25px'}>
           <Box>
             <Accordion
+              disableGutters
+              elevation={0}
               sx={{
                 borderRadius: '15px',
                 background: Color.greyDark,
@@ -214,11 +216,12 @@ export default function PlayerRules() {
                   borderRadius: '15px',
                   paddingLeft: '20px',
                   paddingRight: '20px',
-                  paddingBottom: '5px',
+                  paddingTop: '8px',
+                  paddingBottom: '8px',
                 }}
               >
-                <Typography fontSize={'24px'} fontWeight={600}>
-                  {index + 1}. {rule.title}
+                <Typography fontSize={'24px'} fontWeight={600} lineHeight={1.2}>
+                  {rule.title}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails
