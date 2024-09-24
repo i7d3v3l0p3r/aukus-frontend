@@ -172,7 +172,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   if (moveType === 'reroll') {
     buttonText = 'Рерольнуть игру'
   } else if (dice) {
-    buttonText = `Перейти к броску ${dice}`
+    buttonText = `Перейти к броску — ${dice}`
   }
 
   if (readyToWin) {
