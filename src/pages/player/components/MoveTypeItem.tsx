@@ -1,3 +1,4 @@
+import { Circle } from '@mui/icons-material'
 import { Color, MoveType } from 'utils/types'
 
 export default function MoveTypeItem({ move }: { move: MoveType }) {
@@ -9,17 +10,10 @@ export default function MoveTypeItem({ move }: { move: MoveType }) {
     sheikh: Color.orange,
   }
   return (
-    <span
-      style={{
-        border: `1px solid ${colorMap[move]}`,
-        paddingTop: '3px',
-        paddingBottom: '3px',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-        borderRadius: '5px',
-        fontSize: '13px',
-      }}
-    >
+    <span style={{ display: 'flex', alignItems: 'center' }}>
+      <Circle
+        sx={{ color: colorMap[move], width: '9px', marginRight: '5px' }}
+      />
       {formatMoveType(move)}
     </span>
   )
