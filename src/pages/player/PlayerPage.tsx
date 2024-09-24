@@ -63,6 +63,8 @@ export default function PlayerPage(props: Props) {
   const aukus1games = aukus1Games[player.url_handle]
   const aukus2games = aukus2Games[player.url_handle]
 
+  const greyColor = '#CECECE'
+
   return (
     <Box>
       <Box textAlign={'center'}>
@@ -146,14 +148,22 @@ export default function PlayerPage(props: Props) {
             {playerMoves.map((move, index) => {
               return (
                 <TableRow>
-                  <TableCell>{playerMoves.length - index}</TableCell>
-                  <TableCell>{formatDate(move.created_at)}</TableCell>
+                  <TableCell style={{ color: greyColor }}>
+                    {playerMoves.length - index}
+                  </TableCell>
+                  <TableCell style={{ color: greyColor }}>
+                    {formatDate(move.created_at)}
+                  </TableCell>
                   <TableCell>{move.item_title}</TableCell>
                   <TableCell>
                     <MoveTypeItem move={move.type} />
                   </TableCell>
-                  <TableCell>{move.dice_roll}</TableCell>
-                  <TableCell>{move.cell_to}</TableCell>
+                  <TableCell style={{ color: greyColor }}>
+                    {move.dice_roll}
+                  </TableCell>
+                  <TableCell style={{ color: greyColor }}>
+                    {move.cell_to}
+                  </TableCell>
                   <TableCell>{move.item_rating}/10</TableCell>
                   <TableCell>{move.item_review}</TableCell>
                   <TableCell>
