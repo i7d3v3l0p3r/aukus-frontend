@@ -4,6 +4,7 @@ const LinkSpan = styled('span')(({ color }) => ({
   borderBottom: `2px solid ${color}`,
   ':hover': {
     color: color,
+    cursor: 'pointer',
   },
 }))
 

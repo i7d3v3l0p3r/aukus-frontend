@@ -85,7 +85,7 @@ export default function DonaterRules() {
   return (
     <Box>
       {donaterRules.map((rule, index) => (
-        <Box marginTop={'30px'}>
+        <Box marginTop={'25px'}>
           <Box>
             <Accordion
               sx={{
@@ -117,7 +117,7 @@ export default function DonaterRules() {
                   paddingTop: 0,
                 }}
               >
-                <Typography fontWeight={500} fontSize={'16px'}>
+                <Typography fontWeight={400} fontSize={'16px'}>
                   {rule.content.map((content, index) => (
                     <Box marginLeft={2} marginBottom={2}>
                       {content.title}

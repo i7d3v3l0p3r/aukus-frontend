@@ -23,7 +23,7 @@ export default function RulesPage() {
               <LinkSpan color={Color.orange}>Для донатеров</LinkSpan>
             </Link>
           </Box>
-          <Typography fontSize={'48px'} fontWeight={700}>
+          <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
             Правила проведения описывают все аспекты Аукуса
           </Typography>
 

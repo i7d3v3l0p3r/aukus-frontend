@@ -13,7 +13,7 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { getPlayerColor } from 'utils/types'
+import { Color, getPlayerColor } from 'utils/types'
 import MoveTypeItem from './components/MoveTypeItem'
 import PreviousGamesTable from './components/PeviousGamesTable'
 import StreamLink from './components/StreamLink'
@@ -156,7 +156,9 @@ export default function PlayerPage(props: Props) {
                   <TableCell>{move.cell_to}</TableCell>
                   <TableCell>{move.item_rating}/10</TableCell>
                   <TableCell>{move.item_review}</TableCell>
-                  <TableCell>"link"</TableCell>
+                  <TableCell>
+                    <LinkSpan color={Color.blue}>Ссылки</LinkSpan>
+                  </TableCell>
                 </TableRow>
               )
             })}
