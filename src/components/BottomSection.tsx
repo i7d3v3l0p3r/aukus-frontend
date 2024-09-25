@@ -51,13 +51,11 @@ export default function BottomSection() {
             <Typography variant="h6">Поддержать сайт</Typography>
             <Box marginTop={'15px'}>
               <Link
-                href="https://boosty.to/aukus/donate"
+                href="https://boosty.to/aukus"
                 rel="noopener nereferrer"
                 target="_blank"
               >
-                <LinkSpan color={Color.blue}>
-                  https://boosty.to/aukus/donate
-                </LinkSpan>
+                <LinkSpan color={Color.blue}>https://boosty.to/aukus</LinkSpan>
               </Link>
             </Box>
           </Grid>
