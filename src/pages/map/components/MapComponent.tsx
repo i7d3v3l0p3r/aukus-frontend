@@ -112,6 +112,8 @@ export default function MapComponent() {
       style={{
         overflowX: 'auto',
         width: '1500px',
+        minWidth: '1500px',
+        maxWidth: '1500px',
       }}
       onClick={handleClick}
     >

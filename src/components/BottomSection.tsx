@@ -50,8 +50,14 @@ export default function BottomSection() {
           <Grid item xs={3} textAlign="left">
             <Typography variant="h6">Поддержать сайт</Typography>
             <Box marginTop={'15px'}>
-              <Link href="#" rel="noopener nereferrer" target="_blank">
-                <LinkSpan color={Color.blue}>Ссылка</LinkSpan>
+              <Link
+                href="https://boosty.to/aukus/donate"
+                rel="noopener nereferrer"
+                target="_blank"
+              >
+                <LinkSpan color={Color.blue}>
+                  https://boosty.to/aukus/donate
+                </LinkSpan>
               </Link>
             </Box>
           </Grid>
