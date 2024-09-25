@@ -8,7 +8,9 @@ import {
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
+import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { getPlayerColor, Player, PlayerStats } from 'utils/types'
 
@@ -100,7 +102,17 @@ export default function StatsPage() {
             {playersStatsByPosition.map((playerStat, index) => (
               <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{playersById[playerStat.id].name}</TableCell>
+                <TableCell>
+                  <Link
+                    to={`/players/${playersById[playerStat.id].url_handle}`}
+                  >
+                    <LinkSpan
+                      color={getPlayerColor(playersById[playerStat.id])}
+                    >
+                      {playersById[playerStat.id].name}
+                    </LinkSpan>
+                  </Link>
+                </TableCell>
                 <TableCell>{playerStat.map_position}</TableCell>
                 <TableCell>{getPlayerScore(playerStat)}</TableCell>
                 <TableCell>{playerStat.games_completed}</TableCell>
