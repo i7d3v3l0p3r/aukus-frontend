@@ -16,11 +16,15 @@ export default function RulesPage() {
         <Box width={'740px'}>
           <Box marginBottom={'30px'}>
             <Link to="#" onClick={() => setRulesPage('player')}>
-              <LinkSpan color={Color.purple}>Для стримеров</LinkSpan>
+              <LinkSpan color={Color.purple} active={rulesPage === 'player'}>
+                Для стримеров
+              </LinkSpan>
             </Link>
             <span style={{ marginLeft: '50px' }} />
             <Link to="#" onClick={() => setRulesPage('donater')}>
-              <LinkSpan color={Color.orange}>Для донатеров</LinkSpan>
+              <LinkSpan color={Color.orange} active={rulesPage === 'donater'}>
+                Для донатеров
+              </LinkSpan>
             </Link>
           </Box>
           <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
