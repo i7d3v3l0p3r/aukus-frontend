@@ -1,10 +1,32 @@
-import { Box, Chip } from '@mui/material'
+import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
 import { getPlayerColor, Player } from 'utils/types'
+import FigureCopper from 'assets/map/Figure_Copper.png'
+import FigureBlue from 'assets/map/Figure_Blue.png'
+import FigureGreen from 'assets/map/Figure_Green.png'
+import FigureRed from 'assets/map/Figure_Red.png'
+import FigurePink from 'assets/map/Figure_Pink.png'
+import FigurePurple from 'assets/map/Figure_Purple.png'
+import FigureLightGreen from 'assets/map/Figure_LightGreen.png'
+import FigureSalad from 'assets/map/Figure_Salad.png'
+import FigureLightSalad from 'assets/map/Figure_LightSalad.png'
+
 import { cellSize } from '../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from './utils'
+
+const playerIcons: { [key: string]: string } = {
+  lasqa: FigurePurple,
+  roadhouse: FigureCopper,
+  segall: FigureBlue,
+  artur: FigureRed,
+  uselessmouth: FigurePink,
+  unclobjorn: FigureSalad,
+  melharucos: FigureLightSalad,
+  browjey: FigureLightGreen,
+  flashko: FigureGreen,
+}
 
 type Props = {
   player: Player
@@ -165,6 +187,7 @@ export default function PlayerIcon({
 
   const chipColor = player.is_online ? 'green' : 'red'
   const playerColor = getPlayerColor(player)
+  const playerIcon = playerIcons[player.url_handle] || FigureCopper
 
   return (
     <animated.div style={{ position: 'absolute', top, left, ...springs }}>
@@ -175,18 +198,25 @@ export default function PlayerIcon({
           anchorEl={popupAnchor}
           close={() => setPopupOpen(false)}
         />
-        <Chip
-          ref={playerElement}
+        <Box
           onClick={handleClick}
-          label={player.name}
-          variant="outlined"
-          style={{
-            backgroundColor: playerColor,
-            color: 'white',
-            textDecoration: 'underline',
-            border: `2px solid ${chipColor}`,
-          }}
-        />
+          style={{ cursor: 'pointer', display: 'grid' }}
+          ref={playerElement}
+        >
+          <img src={playerIcon} width={'40px'} alt="" />
+          <span
+            style={{
+              fontSize: '12px',
+              color: 'white',
+              lineHeight: 1,
+              backgroundColor: playerColor,
+              paddingLeft: '5px',
+              paddingRight: '5px',
+            }}
+          >
+            {player.name}
+          </span>
+        </Box>
       </Box>
     </animated.div>
   )
