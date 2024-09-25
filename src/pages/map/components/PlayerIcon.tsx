@@ -30,6 +30,7 @@ const playerIcons: { [key: string]: string } = {
 
 type Props = {
   player: Player
+  players: Player[]
   closePopup?: boolean
   moveSteps: number
   onAnimationEnd: (player: Player, steps: number) => void
@@ -37,6 +38,7 @@ type Props = {
 
 export default function PlayerIcon({
   player,
+  players,
   closePopup,
   moveSteps,
   onAnimationEnd,
@@ -45,6 +47,10 @@ export default function PlayerIcon({
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const playerElement = useRef<HTMLDivElement>(null)
+
+  const playersOnSamePosition = players.filter(
+    (p) => p.map_position === player.map_position && p.id !== player.id
+  )
 
   const [springs, api] = useSpring(() => {
     return {
@@ -176,8 +182,12 @@ export default function PlayerIcon({
     return null
   }
 
-  const top = anchorCell.offsetTop + 40
-  const left = anchorCell.offsetLeft + 10
+  const originTop = anchorCell.offsetTop + 40
+  const originLeft = anchorCell.offsetLeft + 10
+
+  const { x: relativeX, y: relativeY } = getRelativePosition(player, players)
+  const positionTop = originTop + relativeY
+  const positionLeft = originLeft + relativeX
 
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement)
@@ -185,12 +195,19 @@ export default function PlayerIcon({
     event.stopPropagation()
   }
 
-  const chipColor = player.is_online ? 'green' : 'red'
+  const onlineColor = player.is_online ? 'green' : 'red'
   const playerColor = getPlayerColor(player)
   const playerIcon = playerIcons[player.url_handle] || FigureCopper
 
   return (
-    <animated.div style={{ position: 'absolute', top, left, ...springs }}>
+    <animated.div
+      style={{
+        position: 'absolute',
+        top: positionTop,
+        left: positionLeft,
+        ...springs,
+      }}
+    >
       <Box position="relative">
         <PlayerPopup
           open={popupOpen}
@@ -241,4 +258,14 @@ function calculateAnimation(mapPosition: number, cellTo: number) {
     x: (targetColumn - originColumn) * moveOffset,
     y: -(targetRow - originRow) * moveOffset,
   }
+}
+
+function getRelativePosition(player: Player, otherPlayers: Player[]) {
+  if (otherPlayers.length === 0) {
+    return { x: 0, y: 0 }
+  }
+
+  const sortedPlayers = [player, ...otherPlayers].sort((a, b) => a.id - b.id)
+  const playerIndex = sortedPlayers.findIndex((p) => p.id === player.id)
+  return { x: playerIndex * 35, y: -playerIndex * 10 }
 }

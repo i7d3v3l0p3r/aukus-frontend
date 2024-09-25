@@ -206,6 +206,7 @@ export default function MapComponent() {
           <PlayerIcon
             key={player.id}
             player={player}
+            players={players}
             closePopup={closePopups}
             moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
             onAnimationEnd={handleAnimationEnd}
