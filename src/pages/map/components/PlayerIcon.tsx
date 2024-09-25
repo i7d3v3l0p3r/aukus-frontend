@@ -48,10 +48,6 @@ export default function PlayerIcon({
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const playerElement = useRef<HTMLDivElement>(null)
 
-  const playersOnSamePosition = players.filter(
-    (p) => p.map_position === player.map_position && p.id !== player.id
-  )
-
   const [springs, api] = useSpring(() => {
     return {
       from: {
@@ -69,23 +65,15 @@ export default function PlayerIcon({
   }, [closePopup])
 
   const startChainedAnimation = (moves: number) => {
-    let normalizedMoves = moves
-    if (player.map_position < 101 && player.map_position + moves > 101) {
-      normalizedMoves = 101 - player.map_position
-    }
-    if (player.map_position + moves < 1) {
-      normalizedMoves = -player.map_position - 1
-    }
-
     const currentLocation = { x: 0, y: 0 }
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
 
-    const ladder = laddersByCell[player.map_position + normalizedMoves]
-    const snake = snakesByCell[player.map_position + normalizedMoves]
+    const ladder = laddersByCell[player.map_position + moves]
+    const snake = snakesByCell[player.map_position + moves]
 
     const animationsList: Array<{ x: number; y: number }> = []
-    for (let i = 0; i < Math.abs(normalizedMoves); i++) {
+    for (let i = 0; i < Math.abs(moves); i++) {
       const nextCell = backward
         ? getMapCellById(player.map_position - i - 1)
         : getMapCellById(player.map_position + i)
@@ -260,12 +248,17 @@ function calculateAnimation(mapPosition: number, cellTo: number) {
   }
 }
 
-function getRelativePosition(player: Player, otherPlayers: Player[]) {
-  if (otherPlayers.length === 0) {
+function getRelativePosition(player: Player, players: Player[]) {
+  const playersOnSamePosition = players.filter(
+    (p) => p.map_position === player.map_position && p.id !== player.id
+  )
+  if (playersOnSamePosition.length === 0) {
     return { x: 0, y: 0 }
   }
 
-  const sortedPlayers = [player, ...otherPlayers].sort((a, b) => a.id - b.id)
+  const sortedPlayers = [player, ...playersOnSamePosition].sort(
+    (a, b) => a.id - b.id
+  )
   const playerIndex = sortedPlayers.findIndex((p) => p.id === player.id)
   return { x: playerIndex * 35, y: -playerIndex * 10 }
 }

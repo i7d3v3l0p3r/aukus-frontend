@@ -15,7 +15,7 @@ type Props = {
   open: boolean
   dice: DiceOption | null
   onTurnFinish: (diceRoll: number) => void
-  onClose: () => void
+  onDiceRoll: (diceRoll: number) => void
 }
 
 const DiceBoxContainerId = 'dice-box'
@@ -36,7 +36,7 @@ export default function DiceModal({
   open,
   dice,
   onTurnFinish,
-  onClose,
+  onDiceRoll,
 }: Props) {
   const [diceRoll, setDiceRoll] = useState<Array<number> | null>(null)
   const [diceStatus, setDiceStatus] = useState<
@@ -102,11 +102,9 @@ export default function DiceModal({
     diceBox.roll(dice).then((result: Array<DiceRoll>) => {
       setDiceRoll(result.map((diceRoll) => diceRoll.value))
       setDiceStatus('done')
+      const diceSum = result.reduce((acc, value) => acc + value.value, 0)
+      onDiceRoll(diceSum)
     })
-  }
-
-  const handleClose = () => {
-    onClose()
   }
 
   const showAllDices = diceRoll !== null && diceRoll.length > 1

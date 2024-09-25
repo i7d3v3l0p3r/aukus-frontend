@@ -43,6 +43,7 @@ export default function TesterButton({ player, freezeDice }: Props) {
       item_length: 'short',
     })
     await queryClient.invalidateQueries()
+    player.map_position = position
   }
 
   const handleDiceFreze = () => {
