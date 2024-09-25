@@ -115,7 +115,7 @@ export default function DiceModal({
     : ` — ${diceRollSum}`
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth keepMounted>
+    <Dialog open={open} fullWidth keepMounted>
       <DialogTitle
         fontSize={'24px'}
         style={{

@@ -5,6 +5,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import BottomSection from 'components/BottomSection'
@@ -57,7 +58,9 @@ export default function StatsPage() {
   return (
     <Box>
       <Box textAlign={'center'}>
-        <h2>Лидерборд</h2>
+        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
+          Лидерборд
+        </Typography>
       </Box>
       <Box
         marginTop={2}
