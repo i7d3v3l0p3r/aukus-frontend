@@ -26,51 +26,27 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: (
-        <MainScreen currentPage="map">
-          <MapPage />
-        </MainScreen>
-      ),
+      element: <MapPage />,
     },
     {
       path: '/players',
-      element: (
-        <MainScreen currentPage="players">
-          <PlayersPage />
-        </MainScreen>
-      ),
+      element: <PlayersPage />,
     },
     {
       path: '/players/:id',
-      element: (
-        <MainScreen currentPage="player">
-          <PlayerPage />
-        </MainScreen>
-      ),
+      element: <PlayerPage />,
     },
     {
       path: '/rules',
-      element: (
-        <MainScreen currentPage="rules">
-          <RulesPage />
-        </MainScreen>
-      ),
+      element: <RulesPage />,
     },
     {
       path: '/about',
-      element: (
-        <MainScreen currentPage="about">
-          <AboutPage />
-        </MainScreen>
-      ),
+      element: <AboutPage />,
     },
     {
       path: '/stats',
-      element: (
-        <MainScreen currentPage="stats">
-          <StatsPage />
-        </MainScreen>
-      ),
+      element: <StatsPage />,
     },
   ],
   { basename: '/' }
@@ -137,9 +113,8 @@ darkTheme = createTheme(darkTheme, {
   palette: makeCustomColors(Color),
 })
 
-const queryClient = new QueryClient()
-
 function App() {
+  const queryClient = new QueryClient()
   return (
     <React.StrictMode>
       <ThemeProvider theme={darkTheme}>
