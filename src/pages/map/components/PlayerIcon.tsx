@@ -222,22 +222,29 @@ export default function PlayerIcon({
         />
         <Box
           onClick={handleClick}
-          style={{ cursor: 'pointer', display: 'grid' }}
+          style={{ cursor: 'pointer', display: 'block', textAlign: 'center' }}
           ref={playerElement}
         >
-          <img src={playerIcon} width={'40px'} alt="" />
-          <span
-            style={{
-              fontSize: '12px',
-              color: 'white',
-              lineHeight: 1,
-              backgroundColor: playerColor,
-              paddingLeft: '5px',
-              paddingRight: '5px',
-            }}
-          >
-            {player.name}
-          </span>
+          <img
+            src={playerIcon}
+            width={'40px'}
+            alt=""
+            style={{ verticalAlign: 'middle' }}
+          />
+          <p style={{ padding: 0, margin: 0, lineHeight: 1 }}>
+            <span
+              style={{
+                fontSize: '12px',
+                color: 'white',
+                lineHeight: 1,
+                backgroundColor: playerColor,
+                paddingLeft: '5px',
+                paddingRight: '5px',
+              }}
+            >
+              {player.name}
+            </span>
+          </p>
         </Box>
       </Box>
     </animated.div>
