@@ -2,7 +2,7 @@ name: Rollup
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: [ "test" ]
 
 jobs:
   build:
@@ -35,4 +35,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command_timeout: 5m
-          script: cd ${{ secrets.APP_PATH }} && git pull && npm run build && sudo systemctl stop nginx && rm -rf prod_build && cp -rf build prod_build && sudo systemctl start nginx
+          script: cd ${{ secrets.TEST_APP_PATH }} && git pull && npm run build && sudo systemctl stop nginx && rm -rf test_build && cp -rf build test_build && sudo systemctl start nginx
