@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CanvasImage } from './context';
 
-const MOCK_API = process.env.NODE_ENV !== 'development';
+const MOCK_API = process.env.NODE_ENV === 'development';
 
 let MOCK_IMAGES: CanvasImage[] = [
   {
