@@ -109,9 +109,19 @@ export default function PlayerIcon({
     }
 
     if (ladder) {
-      animationsList.push(
-        calculateAnimation(player.map_position, ladder.cellTo)
+      const ladderAnimation = calculateAnimation(
+        player.map_position,
+        ladder.cellTo
       )
+      if (player.map_position === 0) {
+        const adjustedForStart = {
+          x: ladderAnimation.x - relativeX,
+          y: ladderAnimation.y - moveOffset,
+        }
+        animationsList.push(adjustedForStart)
+      } else {
+        animationsList.push(ladderAnimation)
+      }
     }
 
     if (snake) {
