@@ -72,6 +72,14 @@ export default function MapComponent() {
     }
 
     const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
+    // console.log(
+    //   'current position',
+    //   currentPlayer.map_position,
+    //   'to',
+    //   newPosition,
+    //   'dice roll',
+    //   diceRoll
+    // )
 
     // save player position in API
     makeMove.mutate({
@@ -197,7 +205,11 @@ export default function MapComponent() {
         ))}
         <Grid container columns={11} width={'auto'}>
           <Grid item>
-            <Box width={(cellSize + 1) * 11} height={cellSize} />
+            <Box
+              width={(cellSize + 1) * 11}
+              height={cellSize}
+              id={'map-cell-start'}
+            />
           </Grid>
         </Grid>
       </Grid>
