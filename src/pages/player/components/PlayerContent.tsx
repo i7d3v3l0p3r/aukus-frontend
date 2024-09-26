@@ -1,5 +1,6 @@
 import {
   Box,
+  Table,
   TableBody,
   TableCell,
   TableContainer,
@@ -83,95 +84,97 @@ export default function PlayerContent(props: Props) {
         display="flex"
       >
         <TableContainer sx={{ width: 'auto' }}>
-          <TableHead>
-            <TableRow>
-              <TableCell
-                width={'60px'}
-                sx={{
-                  borderBottom: `2px solid ${playerColor}`,
-                }}
-              >
-                Ход
-              </TableCell>
-              <TableCell
-                width={'60px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Дата
-              </TableCell>
-              <TableCell
-                width={'200px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Игра
-              </TableCell>
-              <TableCell
-                width={'160px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Результат
-              </TableCell>
-              <TableCell
-                width={'80px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Ролл
-              </TableCell>
-              <TableCell
-                width={'100px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Позиция
-              </TableCell>
-              <TableCell
-                width={'80px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Оценка
-              </TableCell>
-              <TableCell
-                width={'360px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Отзыв
-              </TableCell>
-              <TableCell
-                width={'130px'}
-                sx={{ borderBottom: `2px solid ${playerColor}` }}
-              >
-                Смотреть
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {playerMoves.map((move, index) => {
-              return (
-                <TableRow>
-                  <TableCell style={{ color: greyColor }}>
-                    {playerMoves.length - index}
-                  </TableCell>
-                  <TableCell style={{ color: greyColor }}>
-                    {formatDate(move.created_at)}
-                  </TableCell>
-                  <TableCell>{move.item_title}</TableCell>
-                  <TableCell>
-                    <MoveTypeItem move={move.type} />
-                  </TableCell>
-                  <TableCell style={{ color: greyColor }}>
-                    {move.dice_roll}
-                  </TableCell>
-                  <TableCell style={{ color: greyColor }}>
-                    {move.cell_to}
-                  </TableCell>
-                  <TableCell>{move.item_rating}/10</TableCell>
-                  <TableCell>{move.item_review}</TableCell>
-                  <TableCell>
-                    <LinkSpan color={Color.blue}>Ссылки</LinkSpan>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  width={'60px'}
+                  sx={{
+                    borderBottom: `2px solid ${playerColor}`,
+                  }}
+                >
+                  Ход
+                </TableCell>
+                <TableCell
+                  width={'60px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Дата
+                </TableCell>
+                <TableCell
+                  width={'200px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Игра
+                </TableCell>
+                <TableCell
+                  width={'160px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Результат
+                </TableCell>
+                <TableCell
+                  width={'80px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Ролл
+                </TableCell>
+                <TableCell
+                  width={'100px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Позиция
+                </TableCell>
+                <TableCell
+                  width={'80px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Оценка
+                </TableCell>
+                <TableCell
+                  width={'360px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Отзыв
+                </TableCell>
+                <TableCell
+                  width={'130px'}
+                  sx={{ borderBottom: `2px solid ${playerColor}` }}
+                >
+                  Смотреть
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {playerMoves.map((move, index) => {
+                return (
+                  <TableRow key={index}>
+                    <TableCell style={{ color: greyColor }}>
+                      {playerMoves.length - index}
+                    </TableCell>
+                    <TableCell style={{ color: greyColor }}>
+                      {formatDate(move.created_at)}
+                    </TableCell>
+                    <TableCell>{move.item_title}</TableCell>
+                    <TableCell>
+                      <MoveTypeItem move={move.type} />
+                    </TableCell>
+                    <TableCell style={{ color: greyColor }}>
+                      {move.dice_roll}
+                    </TableCell>
+                    <TableCell style={{ color: greyColor }}>
+                      {move.cell_to}
+                    </TableCell>
+                    <TableCell>{move.item_rating}/10</TableCell>
+                    <TableCell>{move.item_review}</TableCell>
+                    <TableCell>
+                      <LinkSpan color={Color.blue}>Ссылки</LinkSpan>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
         </TableContainer>
       </Box>
       {aukus2games && (
