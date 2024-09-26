@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import useCurrentUser from 'hooks/useCurrentUser'
+import { useUser } from 'context/UserProvider'
 import { Link } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function MainMenu({ currentPage }: Props) {
-  const { currentUserId } = useCurrentUser()
+  const { userId } = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -21,7 +21,7 @@ export default function MainMenu({ currentPage }: Props) {
   })
   const players = playersData?.players
 
-  const currentPlayer = players?.find((player) => player.id === currentUserId)
+  const currentPlayer = players?.find((player) => player.id === userId)
   const playerColor = currentPlayer && getPlayerColor(currentPlayer)
 
   return (

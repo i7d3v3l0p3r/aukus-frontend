@@ -5,6 +5,7 @@ import {
   ThemeProvider,
 } from '@mui/material'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { UserProvider } from 'context/UserProvider'
 import AboutPage from 'pages/about/AboutPage'
 import RulesPage from 'pages/rules/RulesPage'
 import StatsPage from 'pages/stats/StatsPage'
@@ -120,7 +121,9 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <UserProvider>
+            <RouterProvider router={router} />
+          </UserProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </React.StrictMode>

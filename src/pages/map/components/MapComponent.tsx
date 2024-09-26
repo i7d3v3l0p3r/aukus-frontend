@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import useCurrentUser from 'hooks/useCurrentUser'
+import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
@@ -37,9 +37,9 @@ export default function MapComponent() {
   })
   const players = playersData?.players
 
-  const { currentUserId } = useCurrentUser()
+  const { userId } = useUser()
 
-  const currentPlayer = players?.find((player) => player.id === currentUserId)
+  const currentPlayer = players?.find((player) => player.id === userId)
 
   const makeMove = useMutation({
     mutationFn: createPlayerMove,
