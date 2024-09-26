@@ -25,7 +25,7 @@ export default function MainMenu({ currentPage }: Props) {
   const playerColor = currentPlayer && getPlayerColor(currentPlayer)
 
   return (
-    <Box>
+    <Box marginBottom={'100px'}>
       <Box
         display="block"
         textAlign={'center'}
@@ -53,7 +53,7 @@ export default function MainMenu({ currentPage }: Props) {
           </LinkSpan>
         </Link>
       </Box>
-      <Box display="flex" justifyContent={'center'} marginBottom={'100px'}>
+      <Box display="flex" justifyContent={'center'}>
         <Box
           padding={'10px'}
           display="flex"
