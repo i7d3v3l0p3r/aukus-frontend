@@ -112,3 +112,23 @@ div.MuiAutocomplete-root {
 div.Mui-focused {
   border: 2px solid #007aff;
 }
+
+::-webkit-scrollbar {
+  width: 12px; /* for vertical scrollbar */
+  height: 12px; /* for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0c0c; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #007aff; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 3px solid #0c0c0c; /* creates padding around scroll thumb */
+}
+
+* {
+  scrollbar-width: auto; /* Makes the scrollbar thinner */
+  scrollbar-color: #007aff #0c0c0c; /* Scroll thumb color and track color */
+}
