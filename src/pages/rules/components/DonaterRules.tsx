@@ -103,10 +103,11 @@ export default function DonaterRules() {
                   borderRadius: '15px',
                   paddingLeft: '20px',
                   paddingRight: '20px',
-                  paddingBottom: '5px',
+                  paddingTop: '8px',
+                  paddingBottom: '8px',
                 }}
               >
-                <Typography fontSize={'24px'} fontWeight={600}>
+                <Typography fontSize={'24px'} fontWeight={600} lineHeight={1.2}>
                   {rule.title}
                 </Typography>
               </AccordionSummary>
@@ -124,7 +125,6 @@ export default function DonaterRules() {
                     <Box marginLeft={2} marginBottom={2}>
                       {content.title}
                       {':'}
-
                       <Box marginTop={1} />
                       {content.special ? (
                         <ul>
