@@ -72,6 +72,14 @@ export default function MapComponent() {
     }
 
     const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
+    // console.log(
+    //   'current position',
+    //   currentPlayer.map_position,
+    //   'to',
+    //   newPosition,
+    //   'dice roll',
+    //   diceRoll
+    // )
 
     // save player position in API
     makeMove.mutate({
@@ -102,9 +110,8 @@ export default function MapComponent() {
       return
     }
 
-    const currentPosition = currentPlayer.map_position
-    const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
-    setMoveSteps(newPosition - currentPosition)
+    const steps = getMoveSteps(currentPlayer, diceRoll)
+    setMoveSteps(steps)
   }
 
   const handleAnimationEnd = (player: Player, moves: number) => {
@@ -197,7 +204,11 @@ export default function MapComponent() {
         ))}
         <Grid container columns={11} width={'auto'}>
           <Grid item>
-            <Box width={(cellSize + 1) * 11} height={cellSize} />
+            <Box
+              width={(cellSize + 1) * 11}
+              height={cellSize}
+              id={'map-cell-start'}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -239,14 +250,8 @@ export default function MapComponent() {
 }
 
 function getNextPlayerPosition(player: Player, moves: number) {
-  const newPosition = player.map_position + moves
-  if (player.map_position < 101 && newPosition > 101) {
-    return 101
-  }
-
-  if (newPosition < 0) {
-    return 0
-  }
+  const steps = getMoveSteps(player, moves)
+  const newPosition = player.map_position + steps
 
   const ladder = laddersByCell[newPosition]
   const snake = snakesByCell[newPosition]
@@ -258,4 +263,18 @@ function getNextPlayerPosition(player: Player, moves: number) {
     return snake.cellTo
   }
   return Math.min(102, newPosition)
+}
+
+function getMoveSteps(player: Player, moves: number) {
+  const newPosition = player.map_position + moves
+  if (player.map_position < 101 && newPosition > 101) {
+    return 101 - player.map_position
+  }
+  if (player.map_position === 101 && newPosition > 101) {
+    return 1
+  }
+  if (newPosition < 0) {
+    return -player.map_position
+  }
+  return moves
 }

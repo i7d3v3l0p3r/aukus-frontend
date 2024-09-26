@@ -48,6 +48,8 @@ export default function PlayerIcon({
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const playerElement = useRef<HTMLDivElement>(null)
 
+  const { x: relativeX, y: relativeY } = getRelativePosition(player, players)
+
   const [springs, api] = useSpring(() => {
     return {
       from: {
@@ -65,7 +67,6 @@ export default function PlayerIcon({
   }, [closePopup])
 
   const startChainedAnimation = (moves: number) => {
-    const currentLocation = { x: 0, y: 0 }
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
 
@@ -73,6 +74,11 @@ export default function PlayerIcon({
     const snake = snakesByCell[player.map_position + moves]
 
     const animationsList: Array<{ x: number; y: number }> = []
+    if (player.map_position === 0) {
+      animationsList.push({ x: -relativeX, y: -relativeY })
+      animationsList.push({ x: -relativeX, y: -moveOffset })
+    }
+
     for (let i = 0; i < Math.abs(moves); i++) {
       const nextCell = backward
         ? getMapCellById(player.map_position - i - 1)
@@ -83,24 +89,23 @@ export default function PlayerIcon({
         continue
       }
 
-      const nextLocation = { x: currentLocation.x, y: currentLocation.y }
+      let nextX = animationsList[animationsList.length - 1]?.x || 0
+      let nextY = animationsList[animationsList.length - 1]?.y || 0
 
       // console.log({ nextCell, currentLocation, position: player.mapPosition });
       switch (nextCell.direction) {
         case 'right':
-          nextLocation.x += moveOffset
+          nextX += moveOffset
           break
         case 'left':
-          nextLocation.x -= moveOffset
+          nextX -= moveOffset
           break
         case 'up':
-          nextLocation.y -= moveOffset
+          nextY -= moveOffset
           break
       }
 
-      animationsList.push(nextLocation)
-      currentLocation.x = nextLocation.x
-      currentLocation.y = nextLocation.y
+      animationsList.push({ x: nextX, y: nextY })
     }
 
     if (ladder) {
@@ -149,14 +154,17 @@ export default function PlayerIcon({
   useEffect(() => {
     // console.log("updating map position to", player.mapPosition);
 
-    const findCell = document.getElementById(`map-cell-${player.map_position}`)
+    const cellId =
+      player.map_position > 0
+        ? `map-cell-${player.map_position}`
+        : 'map-cell-start'
+
+    const findCell = document.getElementById(cellId)
     if (findCell) {
       setAnchorCell(findCell)
     } else {
       const interval = setInterval(() => {
-        const findCell = document.getElementById(
-          `map-cell-${player.map_position}`
-        )
+        const findCell = document.getElementById(cellId)
         setAnchorCell(findCell)
         clearInterval(interval)
       }, 50)
@@ -173,7 +181,6 @@ export default function PlayerIcon({
   const originTop = anchorCell.offsetTop + 40
   const originLeft = anchorCell.offsetLeft + 10
 
-  const { x: relativeX, y: relativeY } = getRelativePosition(player, players)
   const positionTop = originTop + relativeY
   const positionLeft = originLeft + relativeX
 
@@ -252,6 +259,7 @@ function getRelativePosition(player: Player, players: Player[]) {
   const playersOnSamePosition = players.filter(
     (p) => p.map_position === player.map_position && p.id !== player.id
   )
+
   if (playersOnSamePosition.length === 0) {
     return { x: 0, y: 0 }
   }
@@ -260,5 +268,9 @@ function getRelativePosition(player: Player, players: Player[]) {
     (a, b) => a.id - b.id
   )
   const playerIndex = sortedPlayers.findIndex((p) => p.id === player.id)
+
+  if (player.map_position === 0) {
+    return { x: playerIndex * 80, y: 0 }
+  }
   return { x: playerIndex * 35, y: -playerIndex * 10 }
 }
