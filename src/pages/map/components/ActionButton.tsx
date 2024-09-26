@@ -7,9 +7,16 @@ import TurnModal from './TurnModal'
 type Props = {
   handleNextTurn: (params: NextTurnParams) => void
   player: Player
+  onMakingTurn: (open: boolean) => void
+  onDiceRoll: (params: NextTurnParams) => void
 }
 
-export default function ActionButton({ handleNextTurn, player }: Props) {
+export default function ActionButton({
+  handleNextTurn,
+  player,
+  onMakingTurn,
+  onDiceRoll,
+}: Props) {
   const [turnModalOpen, setTurnModalOpen] = useState(false)
   const [diceModalOpen, setDiceModalOpen] = useState(false)
 
@@ -36,21 +43,8 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
   const mapBottom = document.getElementById('map-cell-0')
 
   if (buttonBoxRef.current && mapBottom) {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-
-    // console.log(buttonBoxTop)
-    // console.log('map bot', mapBottom.getBoundingClientRect().bottom)
-    // console.log(
-    //   'bot pos',
-    //   window.innerHeight - mapBottom.getBoundingClientRect().bottom
-    // )
-
     const makeFixed =
       window.innerHeight - mapBottom.getBoundingClientRect().bottom < 170
-
-    // console.log('scroll', scrollPosition)
-    // console.log(buttonFixed)
-    // console.log(buttonBoxTop, threshold)
 
     if (!makeFixed && buttonFixed) {
       setButtonFixed(false)
@@ -63,6 +57,12 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
 
   const handleClick = () => {
     setTurnModalOpen(true)
+    onMakingTurn(true)
+  }
+
+  const handleClose = () => {
+    setTurnModalOpen(false)
+    onMakingTurn(false)
   }
 
   const handleConfirm = (params: NextTurnParams, dice: DiceOption) => {
@@ -83,7 +83,14 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
   }
 
   const handleTurnFinish = (roll: number) => {
+    if (!turnParams) {
+      return
+    }
     setDiceModalOpen(false)
+    handleNextTurn(turnParams)
+  }
+
+  const handleDiceRoll = (roll: number) => {
     if (!turnParams) {
       return
     }
@@ -92,7 +99,8 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
     } else {
       turnParams.diceRoll = roll
     }
-    handleNextTurn(turnParams)
+    setTurnParams({ ...turnParams })
+    onDiceRoll(turnParams)
   }
 
   return (
@@ -120,15 +128,15 @@ export default function ActionButton({ handleNextTurn, player }: Props) {
       </Box>
       <TurnModal
         open={turnModalOpen}
-        onClose={() => setTurnModalOpen(false)}
+        onClose={handleClose}
         onConfirm={handleConfirm}
         player={player}
       />
       <DiceModal
         open={diceModalOpen}
         dice={dice}
-        onClose={() => setDiceModalOpen(false)}
         onTurnFinish={handleTurnFinish}
+        onDiceRoll={handleDiceRoll}
       />
     </>
   )

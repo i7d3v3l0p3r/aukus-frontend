@@ -25,6 +25,7 @@ import {
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
   const [moveSteps, setMoveSteps] = useState(0)
+  const [makingTurn, setMakingTurn] = useState(false)
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
@@ -32,7 +33,7 @@ export default function MapComponent() {
     queryKey: ['players'],
     queryFn: fetchPlayers,
     refetchInterval: 10000,
-    enabled: moveSteps === 0,
+    enabled: !makingTurn,
   })
   const players = playersData?.players
 
@@ -55,6 +56,48 @@ export default function MapComponent() {
     setClosePopups(!closePopups)
   }
 
+  const handleMakingTurn = (value: boolean) => {
+    setMakingTurn(value)
+  }
+
+  const handleDiceRoll = (params: NextTurnParams) => {
+    if (!currentPlayer) {
+      return
+    }
+
+    const diceRoll = frozenDice || params.diceRoll
+    if (currentPlayer.map_position === 101 && params.type === 'completed') {
+      // win condition
+      return
+    }
+
+    const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
+    // console.log(
+    //   'current position',
+    //   currentPlayer.map_position,
+    //   'to',
+    //   newPosition,
+    //   'dice roll',
+    //   diceRoll
+    // )
+
+    // save player position in API
+    makeMove.mutate({
+      player_id: currentPlayer.id,
+      dice_roll: diceRoll,
+      move_to: newPosition,
+      stair_from: params.stairFrom,
+      stair_to: params.stairTo,
+      snake_from: params.snakeFrom,
+      snake_to: params.snakeTo,
+      type: params.type,
+      item_title: params.itemTitle,
+      item_length: params.itemLength,
+      item_rating: params.itemRating,
+      item_review: params.itemReview,
+    })
+  }
+
   const handleNextTurn = (params: NextTurnParams) => {
     if (!currentPlayer) {
       return
@@ -67,35 +110,8 @@ export default function MapComponent() {
       return
     }
 
-    const currentPosition = currentPlayer.map_position
-    const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
-
-    // save player position in API
-    makeMove.mutate(
-      {
-        player_id: currentPlayer.id,
-        dice_roll: diceRoll,
-        move_to: newPosition,
-        stair_from: params.stairFrom,
-        stair_to: params.stairTo,
-        snake_from: params.snakeFrom,
-        snake_to: params.snakeTo,
-        type: params.type,
-        item_title: params.itemTitle,
-        item_length: params.itemLength,
-        item_rating: params.itemRating,
-        item_review: params.itemReview,
-      },
-      {
-        onSuccess: () => {
-          if (frozenDice) {
-            currentPlayer.map_position = currentPosition
-          }
-        },
-      }
-    )
-
-    setMoveSteps(diceRoll)
+    const steps = getMoveSteps(currentPlayer, diceRoll)
+    setMoveSteps(steps)
   }
 
   const handleAnimationEnd = (player: Player, moves: number) => {
@@ -105,6 +121,7 @@ export default function MapComponent() {
     const newPosition = getNextPlayerPosition(player, moves)
     player.map_position = newPosition
     setMoveSteps(0)
+    setMakingTurn(false)
   }
 
   return (
@@ -187,7 +204,11 @@ export default function MapComponent() {
         ))}
         <Grid container columns={11} width={'auto'}>
           <Grid item>
-            <Box width={(cellSize + 1) * 11} height={cellSize} />
+            <Box
+              width={(cellSize + 1) * 11}
+              height={cellSize}
+              id={'map-cell-start'}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -206,13 +227,19 @@ export default function MapComponent() {
           <PlayerIcon
             key={player.id}
             player={player}
+            players={players}
             closePopup={closePopups}
             moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
             onAnimationEnd={handleAnimationEnd}
           />
         ))}
       {currentPlayer && (
-        <ActionButton handleNextTurn={handleNextTurn} player={currentPlayer} />
+        <ActionButton
+          handleNextTurn={handleNextTurn}
+          player={currentPlayer}
+          onMakingTurn={handleMakingTurn}
+          onDiceRoll={handleDiceRoll}
+        />
       )}
 
       {currentPlayer && (
@@ -223,14 +250,8 @@ export default function MapComponent() {
 }
 
 function getNextPlayerPosition(player: Player, moves: number) {
-  const newPosition = player.map_position + moves
-  if (player.map_position < 101 && newPosition > 101) {
-    return 101
-  }
-
-  if (newPosition < 0) {
-    return 0
-  }
+  const steps = getMoveSteps(player, moves)
+  const newPosition = player.map_position + steps
 
   const ladder = laddersByCell[newPosition]
   const snake = snakesByCell[newPosition]
@@ -241,5 +262,19 @@ function getNextPlayerPosition(player: Player, moves: number) {
   if (snake) {
     return snake.cellTo
   }
-  return Math.min(101, newPosition)
+  return Math.min(102, newPosition)
+}
+
+function getMoveSteps(player: Player, moves: number) {
+  const newPosition = player.map_position + moves
+  if (player.map_position < 101 && newPosition > 101) {
+    return 101 - player.map_position
+  }
+  if (player.map_position === 101 && newPosition > 101) {
+    return 1
+  }
+  if (newPosition < 0) {
+    return -player.map_position
+  }
+  return moves
 }
