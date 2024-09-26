@@ -85,7 +85,7 @@ export default function DonaterRules() {
   return (
     <Box>
       {donaterRules.map((rule, index) => (
-        <Box marginTop={'25px'}>
+        <Box marginTop={'25px'} key={index}>
           <Box>
             <Accordion
               disableGutters
@@ -120,15 +120,17 @@ export default function DonaterRules() {
                   paddingTop: 0,
                 }}
               >
-                <Typography fontWeight={400} fontSize={'16px'}>
-                  {rule.content.map((content, index) => (
-                    <Box marginLeft={2} marginBottom={2}>
+                {rule.content.map((content, index) => (
+                  <Box marginLeft={2} marginBottom={2} key={index}>
+                    <Typography fontWeight={400} fontSize={'16px'}>
                       {content.title}
                       {':'}
-                      <Box marginTop={1} />
-                      {content.special ? (
-                        <ul>
-                          <li>
+                    </Typography>
+                    <Box marginTop={1} />
+                    {content.special ? (
+                      <ul>
+                        <li>
+                          <Typography fontWeight={400} fontSize={'16px'}>
                             Минимальная длительность прохождения заказанной игры
                             должна быть не менее 60 минут. Для проверки времени
                             прохождения можно воспользоваться сайтом{' '}
@@ -141,18 +143,22 @@ export default function DonaterRules() {
                                 https://howlongtobeat.com/
                               </LinkSpan>
                             </Link>
+                          </Typography>
+                        </li>
+                      </ul>
+                    ) : (
+                      <ul>
+                        {content.content.map((text, index) => (
+                          <li key={index}>
+                            <Typography fontWeight={400} fontSize={'16px'}>
+                              {text}
+                            </Typography>
                           </li>
-                        </ul>
-                      ) : (
-                        <ul>
-                          {content.content.map((text, index) => (
-                            <li>{text}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </Box>
-                  ))}
-                </Typography>
+                        ))}
+                      </ul>
+                    )}
+                  </Box>
+                ))}
               </AccordionDetails>
             </Accordion>
           </Box>

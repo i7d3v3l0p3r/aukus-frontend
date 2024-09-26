@@ -3,8 +3,10 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Link,
   Typography,
 } from '@mui/material'
+import LinkSpan from 'components/LinkSpan'
 import { Color } from 'utils/types'
 
 const playerRules = [
@@ -13,6 +15,7 @@ const playerRules = [
     content: [
       {
         title: 'Аукцион',
+        special: true,
         content: [
           'Стример запускает аукцион на сайте pointauc.com с таймером 20 минут и минимальной ставкой 100 рублей',
           'Время на таймере можно увеличивать за донат только если остаётся менее двух минут (по минуте за донат)',
@@ -198,7 +201,7 @@ export default function PlayerRules() {
   return (
     <Box>
       {playerRules.map((rule, index) => (
-        <Box marginTop={'25px'}>
+        <Box marginTop={'25px'} key={index}>
           <Box>
             <Accordion
               disableGutters
@@ -233,20 +236,41 @@ export default function PlayerRules() {
                   paddingTop: 0,
                 }}
               >
-                <Typography fontWeight={400} fontSize={'16px'}>
-                  {rule.content.map((content, index) => (
-                    <Box marginLeft={2} marginBottom={2}>
+                {rule.content.map((content, index) => (
+                  <Box marginLeft={2} marginBottom={2} key={index}>
+                    <Typography fontWeight={400} fontSize={'16px'}>
                       {content.title}
                       {':'}
-                      <Box marginTop={1} />
-                      <ul>
-                        {content.content.map((text, index) => (
-                          <li>{text}</li>
-                        ))}
-                      </ul>
-                    </Box>
-                  ))}
-                </Typography>
+                    </Typography>
+                    <Box marginTop={1} />
+                    <ul>
+                      {content.content.map((text, index) => (
+                        <li key={index}>
+                          {content.special && index === 0 ? (
+                            <Typography fontWeight={400} fontSize={'16px'}>
+                              Стример запускает аукцион на сайте{' '}
+                              <Link
+                                href={'https://pointauc.com/'}
+                                rel="noopener nereferrer"
+                                target="_blank"
+                              >
+                                <LinkSpan color={Color.purple}>
+                                  pointauc.com
+                                </LinkSpan>
+                              </Link>{' '}
+                              с таймером 20 минут и минимальной ставкой 100
+                              рублей
+                            </Typography>
+                          ) : (
+                            <Typography fontWeight={400} fontSize={'16px'}>
+                              {text}
+                            </Typography>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </Box>
+                ))}
               </AccordionDetails>
             </Accordion>
           </Box>
