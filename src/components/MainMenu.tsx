@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
-import { Link } from 'react-router-dom'
+import { Link, ScrollRestoration } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
 import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
@@ -26,6 +26,7 @@ export default function MainMenu({ currentPage }: Props) {
 
   return (
     <Box marginBottom={'100px'}>
+      <ScrollRestoration />
       <Box
         display="block"
         textAlign={'center'}
