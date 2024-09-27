@@ -1,24 +1,14 @@
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor } from 'utils/types'
-import MoveTypeItem from './MoveTypeItem'
-import PreviousGamesTable from './PeviousGamesTable'
-import StreamLink from './StreamLink'
 import { aukus1Games, aukus2Games } from '../data'
 import MoveCard from './MoveCard'
+import PreviousGamesTable from './PeviousGamesTable'
+import StreamLink from './StreamLink'
 
 type Props = {}
 
@@ -136,19 +126,6 @@ export default function PlayerContent(props: Props) {
   )
 }
 
-function formatDate(dateString: string) {
-  // Create a new Date object
-  const date = new Date(dateString)
-
-  // Extract the day, month, and year
-  const day = String(date.getDate()).padStart(2, '0')
-  const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-indexed
-  // const year = String(date.getFullYear()).slice(-2) // Get last two digits of the year
-
-  // Format the date as dd.mm.yy
-  return `${day}.${month}`
-}
-
 type CurrentMoveProps = {
   id: number
   title: string
@@ -160,7 +137,7 @@ function CurrentMove({ id, title, playerColor }: CurrentMoveProps) {
     <Box display={'flex'} justifyContent={'center'} marginBottom={'50px'}>
       <Box
         borderRadius={'15px'}
-        border={`2px solid ${Color.blue}`}
+        border={`2px solid ${playerColor}`}
         width={'800px'}
         textAlign={'left'}
         padding={'15px'}
