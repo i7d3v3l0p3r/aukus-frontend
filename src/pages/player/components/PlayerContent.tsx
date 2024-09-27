@@ -18,6 +18,7 @@ import MoveTypeItem from './MoveTypeItem'
 import PreviousGamesTable from './PeviousGamesTable'
 import StreamLink from './StreamLink'
 import { aukus1Games, aukus2Games } from '../data'
+import MoveCard from './MoveCard'
 
 type Props = {}
 
@@ -71,112 +72,25 @@ export default function PlayerContent(props: Props) {
         <Typography fontSize="48px" fontWeight={700}>
           Страница участника {player.name}
         </Typography>
-        <Box marginTop={'30px'}>
+        <Box marginTop={'30px'} marginBottom={'50px'}>
           <StreamLink player={player} />
         </Box>
+
+        <CurrentMove
+          id={playerMoves.length + 1}
+          title={player.current_game}
+          playerColor={playerColor}
+        />
+
+        {playerMoves.map((move, index) => {
+          return (
+            <Box key={index}>
+              <MoveCard id={playerMoves.length - index} move={move} />
+            </Box>
+          )
+        })}
       </Box>
 
-      <Box
-        marginTop={6}
-        marginLeft={4}
-        marginRight={4}
-        justifyContent="center"
-        display="flex"
-      >
-        <TableContainer sx={{ width: 'auto' }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  width={'60px'}
-                  sx={{
-                    borderBottom: `2px solid ${playerColor}`,
-                  }}
-                >
-                  Ход
-                </TableCell>
-                <TableCell
-                  width={'60px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Дата
-                </TableCell>
-                <TableCell
-                  width={'200px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Игра
-                </TableCell>
-                <TableCell
-                  width={'160px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Результат
-                </TableCell>
-                <TableCell
-                  width={'80px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Ролл
-                </TableCell>
-                <TableCell
-                  width={'100px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Позиция
-                </TableCell>
-                <TableCell
-                  width={'80px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Оценка
-                </TableCell>
-                <TableCell
-                  width={'360px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Отзыв
-                </TableCell>
-                <TableCell
-                  width={'130px'}
-                  sx={{ borderBottom: `2px solid ${playerColor}` }}
-                >
-                  Смотреть
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {playerMoves.map((move, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell style={{ color: greyColor }}>
-                      {playerMoves.length - index}
-                    </TableCell>
-                    <TableCell style={{ color: greyColor }}>
-                      {formatDate(move.created_at)}
-                    </TableCell>
-                    <TableCell>{move.item_title}</TableCell>
-                    <TableCell>
-                      <MoveTypeItem move={move.type} />
-                    </TableCell>
-                    <TableCell style={{ color: greyColor }}>
-                      {move.dice_roll}
-                    </TableCell>
-                    <TableCell style={{ color: greyColor }}>
-                      {move.cell_to}
-                    </TableCell>
-                    <TableCell>{move.item_rating}/10</TableCell>
-                    <TableCell>{move.item_review}</TableCell>
-                    <TableCell>
-                      <LinkSpan color={Color.blue}>Ссылки</LinkSpan>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
       {aukus2games && (
         <Box marginTop={10}>
           <Typography variant="h5" align="center">
@@ -231,4 +145,50 @@ function formatDate(dateString: string) {
 
   // Format the date as dd.mm.yy
   return `${day}.${month}`
+}
+
+type CurrentMoveProps = {
+  id: number
+  title: string
+  playerColor: string
+}
+
+function CurrentMove({ id, title, playerColor }: CurrentMoveProps) {
+  return (
+    <Box display={'flex'} justifyContent={'center'} marginBottom={'50px'}>
+      <Box
+        borderRadius={'15px'}
+        border={`2px solid ${Color.blue}`}
+        width={'800px'}
+        textAlign={'left'}
+        padding={'15px'}
+        lineHeight={1}
+      >
+        <Box
+          display={'flex'}
+          justifyContent={'space-between'}
+          fontSize={'14px'}
+          fontWeight={400}
+          marginBottom={'15px'}
+        >
+          <Box>Ход — {id}</Box>
+          <Box>Сейчас</Box>
+        </Box>
+        <Box
+          fontSize={'14px'}
+          style={{ backgroundColor: playerColor }}
+          width={'fit-content'}
+          paddingTop={'5px'}
+          paddingBottom={'5px'}
+          paddingLeft={'12px'}
+          paddingRight={'12px'}
+          borderRadius={'5px'}
+          marginBottom={'15px'}
+        >
+          Выпало на ауке
+        </Box>
+        <Box fontSize={'24px'}>{title}</Box>
+      </Box>
+    </Box>
+  )
 }
