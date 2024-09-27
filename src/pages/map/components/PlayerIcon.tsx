@@ -211,7 +211,8 @@ export default function PlayerIcon({
   const playerColor = getPlayerColor(player)
   const playerIcon = playerIcons[player.url_handle] || FigureCopper
 
-  const hideAvatar = playersOnSamePosition.length > 1
+  const hideAvatar =
+    playersOnSamePosition.length > 1 && player.map_position !== 0
 
   return (
     <animated.div
