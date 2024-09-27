@@ -76,11 +76,13 @@ export default function PlayerContent(props: Props) {
           <StreamLink player={player} />
         </Box>
 
-        <CurrentMove
-          id={playerMoves.length + 1}
-          title={player.current_game}
-          playerColor={playerColor}
-        />
+        {player.current_game && (
+          <CurrentMove
+            id={playerMoves.length + 1}
+            title={player.current_game}
+            playerColor={playerColor}
+          />
+        )}
 
         {playerMoves.map((move, index) => {
           return (
