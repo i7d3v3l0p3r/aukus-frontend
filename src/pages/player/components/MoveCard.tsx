@@ -94,7 +94,12 @@ export default function MoveCard({ id, move, player }: Props) {
           <Box fontSize={'14px'} fontWeight={400} marginBottom={'20px'}>
             Ролл кубика — {move.dice_roll}, позиция на карте — {move.cell_to}
           </Box>
-          <Box fontSize={'16px'} fontWeight={400} marginBottom={'25px'}>
+          <Box
+            fontSize={'16px'}
+            fontWeight={400}
+            marginBottom={'25px'}
+            lineHeight={1.2}
+          >
             {move.item_rating}/10 — {move.item_review}
           </Box>
           <Box display={'flex'} justifyContent={'space-between'}>
