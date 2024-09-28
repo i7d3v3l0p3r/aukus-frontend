@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
+import { useState } from 'react'
 import { PlayerMove, Color } from 'utils/types'
 
 type Props = {
@@ -24,6 +25,9 @@ const moveTypeText = {
 }
 
 export default function MoveCard({ id, move }: Props) {
+  const [showVods, setShowVods] = useState(false)
+
+  const greyColor = '#CECECE'
   return (
     <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
       <Box
@@ -58,17 +62,20 @@ export default function MoveCard({ id, move }: Props) {
           {moveTypeText[move.type]}
         </Box>
         <Box fontSize={'24px'} marginBottom={'10px'}>
-          {move.item_title} {move.item_rating}/10
+          {move.item_title}
         </Box>
         <Box fontSize={'14px'} fontWeight={400} marginBottom={'20px'}>
           Ролл кубика — {move.dice_roll}, позиция на карте — {move.cell_to}
         </Box>
         <Box fontSize={'16px'} fontWeight={400} marginBottom={'25px'}>
-          {move.item_review}
+          {move.item_rating}/10 — {move.item_review}
         </Box>
-        <Box>
-          <LinkSpan color={Color.blue}>Показать записи стримов</LinkSpan>
+        <Box onClick={() => setShowVods(!showVods)}>
+          <LinkSpan color={Color.blue} style={{ color: greyColor }}>
+            Показать записи стримов
+          </LinkSpan>
         </Box>
+        {showVods && <Box marginTop={'15px'}>Ссылки на воды</Box>}
       </Box>
     </Box>
   )

@@ -54,8 +54,6 @@ export default function PlayerContent(props: Props) {
   const aukus1games = aukus1Games[player.url_handle]
   const aukus2games = aukus2Games[player.url_handle]
 
-  const greyColor = '#CECECE'
-
   return (
     <Box>
       <Box textAlign={'center'}>

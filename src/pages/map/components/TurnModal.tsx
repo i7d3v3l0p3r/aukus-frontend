@@ -300,7 +300,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('short')}
                 variant={gameHours === 'short' ? 'contained' : 'outlined'}
                 color={gameHours === 'short' ? 'secondary' : 'info'}
-                style={{ width: 200, fontSize: '16px' }}
+                style={{
+                  width: 200,
+                  fontSize: '16px',
+                  border: `2px solid ${Color.greyLight}`,
+                }}
               >
                 0-5 часов
               </Button>
@@ -308,7 +312,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('medium')}
                 variant={gameHours === 'medium' ? 'contained' : 'outlined'}
                 color={gameHours === 'medium' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200, fontSize: '16px' }}
+                style={{
+                  marginLeft: 20,
+                  width: 200,
+                  fontSize: '16px',
+                  border: `2px solid ${Color.greyLight}`,
+                }}
               >
                 5-15 часов
               </Button>
@@ -316,7 +325,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('long')}
                 variant={gameHours === 'long' ? 'contained' : 'outlined'}
                 color={gameHours === 'long' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200, fontSize: '16px' }}
+                style={{
+                  marginLeft: 20,
+                  width: 200,
+                  fontSize: '16px',
+                  border: `2px solid ${Color.greyLight}`,
+                }}
               >
                 15+ часов
               </Button>
