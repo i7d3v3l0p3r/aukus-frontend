@@ -1,6 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
+import useScreenSize from 'context/useScreenSize'
 import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
@@ -38,6 +39,7 @@ export default function MapComponent() {
   const players = playersData?.players
 
   const { userId } = useUser()
+  useScreenSize()
 
   const currentPlayer = players?.find((player) => player.id === userId)
 
