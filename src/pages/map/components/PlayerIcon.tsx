@@ -25,7 +25,7 @@ const playerIcons: { [key: string]: string } = {
   unclobjorn: FigureSalad,
   melharucos: FigureLightSalad,
   browjey: FigureLightGreen,
-  flashko: FigureGreen,
+  f1ashko: FigureGreen,
 }
 
 type Props = {

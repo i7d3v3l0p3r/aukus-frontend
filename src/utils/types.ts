@@ -110,7 +110,7 @@ export const ColorByUrlHandle: { [key: string]: string } = {
   unclobjorn: Color.blueDark,
   melharucos: Color.blueLight,
   browjey: Color.greenLight,
-  flashko: Color.green,
+  f1ashko: Color.green,
 }
 
 export const ColorNameByUrlHandle: {
@@ -125,7 +125,7 @@ export const ColorNameByUrlHandle: {
   unclobjorn: 'customBlueDark',
   melharucos: 'customBlueLight',
   browjey: 'customGreenLight',
-  flashko: 'customGreen',
+  f1ashko: 'customGreen',
 }
 
 export function getPlayerColor(player: Player): string {
