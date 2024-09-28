@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import useCurrentUser from 'hooks/useCurrentUser'
@@ -8,11 +9,13 @@ import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
 import LinkSpan from './LinkSpan'
 
 type Props = {
-  currentPage: Page
+  currentPage: Page;
+  replaceMenuButtons?: React.ReactNode;
+  rightSlot?: React.ReactNode
 }
 
-export default function MainMenu({ currentPage }: Props) {
-  const { currentUserId } = useCurrentUser()
+export default function MainMenu({ currentPage, replaceMenuButtons, rightSlot }: Props) {
+  const { currentUserId } = useCurrentUser();
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -53,6 +56,7 @@ export default function MainMenu({ currentPage }: Props) {
           </LinkSpan>
         </Link>
       </Box>
+
       <Box display="flex" justifyContent={'center'} marginBottom={'100px'}>
         <Box
           padding={'10px'}
@@ -61,53 +65,73 @@ export default function MainMenu({ currentPage }: Props) {
           sx={{ backgroundColor: Color.greyDark }}
           borderRadius="15px"
           height={'60px'}
+          position="relative"
         >
-          <Link to="/" style={{ marginRight: 10 }}>
-            <Button
-              color={currentPage === 'map' ? 'primary' : 'info'}
-              sx={{ width: '150px', height: '40px' }}
-            >
-              Карта
-            </Button>
-          </Link>
+          {replaceMenuButtons || (
+            <>
+              <Link to="/" style={{ marginRight: 10 }}>
+                <Button
+                  color={currentPage === 'map' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  Карта
+                </Button>
+              </Link>
 
-          <Link to="/players" style={{ marginRight: 10 }}>
-            <Button
-              color={currentPage === 'players' ? 'primary' : 'info'}
-              sx={{ width: '150px', height: '40px' }}
-            >
-              Участники
-            </Button>
-          </Link>
+              <Link to="/players" style={{ marginRight: 10 }}>
+                <Button
+                  color={currentPage === 'players' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  Участники
+                </Button>
+              </Link>
 
-          <Link to="/stats" style={{ marginRight: 10, textDecoration: 'none' }}>
-            <Button
-              color={currentPage === 'stats' ? 'primary' : 'info'}
-              sx={{ width: '150px', height: '40px' }}
-            >
-              Статистика
-            </Button>
-          </Link>
+              <Link to="/stats" style={{ marginRight: 10, textDecoration: 'none' }}>
+                <Button
+                  color={currentPage === 'stats' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  Статистика
+                </Button>
+              </Link>
 
-          <Link to="/rules" style={{ marginRight: 10 }}>
-            <Button
-              color={currentPage === 'rules' ? 'primary' : 'info'}
-              sx={{ width: '150px', height: '40px' }}
-            >
-              Правила
-            </Button>
-          </Link>
+              <Link to="/rules" style={{ marginRight: 10 }}>
+                <Button
+                  color={currentPage === 'rules' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  Правила
+                </Button>
+              </Link>
 
-          <Link to="/about">
-            <Button
-              color={currentPage === 'about' ? 'primary' : 'info'}
-              sx={{ width: '150px', height: '40px' }}
+              <Link to="/about">
+                <Button
+                  color={currentPage === 'about' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  О Сайте
+                </Button>
+              </Link>
+            </>
+          )}
+
+          {rightSlot && (
+            <Box
+              marginLeft={2.5}
+              padding={'10px'}
+              borderRadius="15px"
+              sx={{
+                position: 'absolute',
+                left: '100%',
+                backgroundColor: Color.greyDark,
+              }}
             >
-              О Сайте
-            </Button>
-          </Link>
+              {rightSlot}
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
-  )
+  );
 }

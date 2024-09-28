@@ -16,6 +16,8 @@ import MainScreen from './components/MainScreen'
 import MapPage from './pages/map/MapPage'
 import PlayerPage from './pages/player/PlayerPage'
 import PlayersPage from './pages/players/PlayersPage'
+import { SnackbarProvider } from 'notistack';
+import MainMenu from './components/MainMenu'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {
@@ -43,9 +45,15 @@ const router = createBrowserRouter(
     {
       path: '/players/:id',
       element: (
-        <MainScreen currentPage="player">
-          <PlayerPage />
-        </MainScreen>
+        <PlayerPage
+          header={(rightSlot: React.ReactNode, replaceMenuButtons: React.ReactNode) => (
+            <MainMenu
+              currentPage="player"
+              replaceMenuButtons={replaceMenuButtons}
+              rightSlot={rightSlot}
+            />
+          )}
+        />
       ),
     },
     {
@@ -73,8 +81,8 @@ const router = createBrowserRouter(
       ),
     },
   ],
-  { basename: '/' }
-)
+  { basename: '/' },
+);
 
 let darkTheme = createTheme({
   palette: {
@@ -145,11 +153,13 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </React.StrictMode>
-  )
+  );
 }
 
-export default App
+export default App;
