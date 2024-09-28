@@ -135,7 +135,8 @@ export function playerMovesMock() {
       snake_from: null,
       snake_to: null,
       item_length: 'medium',
-      vod_link: 'test link field',
+      vod_link:
+        'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
     })
   }
   return data
