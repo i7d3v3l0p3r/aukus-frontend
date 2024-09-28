@@ -1,14 +1,16 @@
 import { Box } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
+import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { updateVodLink } from 'utils/api'
-import { PlayerMove, Color } from 'utils/types'
+import { PlayerMove, Color, Player } from 'utils/types'
 import EditVodModal from './EditVodModal'
 
 type Props = {
   id: number
   move: PlayerMove
+  player: Player
 }
 
 const moveTypeColor = {
@@ -27,9 +29,14 @@ const moveTypeText = {
   movie: 'Фильм',
 }
 
-export default function MoveCard({ id, move }: Props) {
+export default function MoveCard({ id, move, player }: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
+  const { userId, role, moderFor } = useUser()
+
+  const canEditPage =
+    (role === 'player' && userId === player.id) ||
+    (role === 'moder' && moderFor === player.id)
 
   const updateVod = useMutation({ mutationFn: updateVodLink })
 
@@ -98,16 +105,18 @@ export default function MoveCard({ id, move }: Props) {
             >
               Показать записи стримов
             </LinkSpan>
-            <LinkSpan
-              color={Color.blue}
-              defaultColor={greyColor}
-              style={{ marginLeft: '15px' }}
-              onClick={handleEditVods}
-            >
-              Редактировать записи стримов
-            </LinkSpan>
+            {canEditPage && (
+              <LinkSpan
+                color={Color.blue}
+                defaultColor={greyColor}
+                style={{ marginLeft: '15px' }}
+                onClick={handleEditVods}
+              >
+                Редактировать записи стримов
+              </LinkSpan>
+            )}
           </Box>
-          {showVods && <Box marginTop={'15px'}>Ссылки на воды</Box>}
+          {showVods && <Box marginTop={'15px'}>{move.vod_link}</Box>}
         </Box>
       </Box>
       <EditVodModal

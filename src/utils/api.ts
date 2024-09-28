@@ -51,12 +51,17 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
 type CurrentUserResponse = {
   user_id: number
   role: 'player' | 'moder'
+  moder_for?: number
 }
 
 export async function fetchCurrentUser(): Promise<CurrentUserResponse> {
   if (MOCK_API) {
     console.log('fetching current user')
-    return Promise.resolve({ user_id: playersMock[0].id, role: 'player' })
+    return Promise.resolve({
+      user_id: 10,
+      role: 'moder',
+      moder_for: 1,
+    })
   }
   return fetch(`/api/current_user`).then((res) => res.json())
 }
