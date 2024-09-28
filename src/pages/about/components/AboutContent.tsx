@@ -13,7 +13,7 @@ const creators = [
   'pechenka242 — Тестирование, обсуждение',
   'ShiroiKumo — Тестирование, обсуждение',
   'Virtuoz — Обсуждение, идеи',
-  'mapcar — Фронтенд, огранизация',
+  'mapcar — Фронтенд, организация',
 ]
 
 const sponsors: String[] = []
