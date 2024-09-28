@@ -26,7 +26,7 @@ export default function PlayerContent(props: Props) {
   const player = players?.find((player) => player.url_handle === playerHandle)
 
   const { data: playerMovesData } = useQuery({
-    queryKey: ['playerMoves', playerHandle],
+    queryKey: ['playerMoves', player?.id || 0],
     queryFn: () => player && fetchPlayerMoves(player.id),
     staleTime: 1000 * 60 * 1,
     enabled: !!player,
