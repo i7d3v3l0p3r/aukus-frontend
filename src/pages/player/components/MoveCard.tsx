@@ -1,8 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, Link } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color, Player } from 'utils/types'
 import EditVodModal from './EditVodModal'
@@ -116,7 +116,11 @@ export default function MoveCard({ id, move, player }: Props) {
               </LinkSpan>
             )}
           </Box>
-          {showVods && <Box marginTop={'15px'}>{move.vod_link}</Box>}
+          {showVods && (
+            <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
+              {processText(move.vod_link)}
+            </Box>
+          )}
         </Box>
       </Box>
       <EditVodModal
@@ -139,4 +143,40 @@ function formatDate(dateString: string) {
   const month = date.toLocaleString('ru-RU', { month: 'long' })
   const monthFixed = month.slice(0, -1) + 'я'
   return `${day} ${monthFixed}`
+}
+
+// Function to make URLs clickable and preserve line breaks
+const processText = (text: string) => {
+  // Regex to detect URLs
+  const urlRegex = /(https?:\/\/[^\s]+)/g
+
+  // Split by new lines and process each line
+  return text.split('\n').map((line: string, index: number) => {
+    // Split by URLs within the line
+    const parts = line.split(urlRegex)
+
+    // Render each part
+    return (
+      <Fragment key={index}>
+        {parts.map((part, i) => {
+          // If part matches the URL regex, render it as a link
+          if (urlRegex.test(part)) {
+            return (
+              <Link
+                href={part}
+                key={i}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkSpan color={Color.blue}>{part}</LinkSpan>
+              </Link>
+            )
+          }
+          // Otherwise, render it as text
+          return <span key={i}>{part}</span>
+        })}
+        <br />
+      </Fragment>
+    )
+  })
 }
