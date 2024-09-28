@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { PlayerMove, Color } from 'utils/types'
+import EditVodModal from './EditVodModal'
 
 type Props = {
   id: number
@@ -26,58 +27,91 @@ const moveTypeText = {
 
 export default function MoveCard({ id, move }: Props) {
   const [showVods, setShowVods] = useState(false)
+  const [showVodsModal, setShowVodsModal] = useState(false)
+
+  const handleEditVods = () => {
+    setShowVodsModal(true)
+  }
+
+  const handleModalClose = () => {
+    setShowVodsModal(false)
+  }
+
+  const handleVodSave = (text: string) => {
+    setShowVodsModal(false)
+  }
 
   const greyColor = '#CECECE'
   return (
-    <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
-      <Box
-        borderRadius={'15px'}
-        border={`2px solid ${Color.greyLight}`}
-        width={'800px'}
-        textAlign={'left'}
-        padding={'15px'}
-        lineHeight={1}
-      >
+    <>
+      <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
         <Box
-          display={'flex'}
-          justifyContent={'space-between'}
-          fontSize={'14px'}
-          fontWeight={400}
-          marginBottom={'15px'}
+          borderRadius={'15px'}
+          border={`2px solid ${Color.greyLight}`}
+          width={'800px'}
+          textAlign={'left'}
+          padding={'15px'}
+          lineHeight={1}
         >
-          <Box>Ход — {id}</Box>
-          <Box>{formatDate(move.created_at)}</Box>
+          <Box
+            display={'flex'}
+            justifyContent={'space-between'}
+            fontSize={'14px'}
+            fontWeight={400}
+            marginBottom={'15px'}
+          >
+            <Box>Ход — {id}</Box>
+            <Box>{formatDate(move.created_at)}</Box>
+          </Box>
+          <Box
+            fontSize={'14px'}
+            style={{ backgroundColor: moveTypeColor[move.type] }}
+            width={'fit-content'}
+            paddingTop={'5px'}
+            paddingBottom={'5px'}
+            paddingLeft={'12px'}
+            paddingRight={'12px'}
+            borderRadius={'5px'}
+            marginBottom={'15px'}
+          >
+            {moveTypeText[move.type]}
+          </Box>
+          <Box fontSize={'24px'} marginBottom={'10px'}>
+            {move.item_title}
+          </Box>
+          <Box fontSize={'14px'} fontWeight={400} marginBottom={'20px'}>
+            Ролл кубика — {move.dice_roll}, позиция на карте — {move.cell_to}
+          </Box>
+          <Box fontSize={'16px'} fontWeight={400} marginBottom={'25px'}>
+            {move.item_rating}/10 — {move.item_review}
+          </Box>
+          <Box display={'flex'} justifyContent={'space-between'}>
+            <LinkSpan
+              color={Color.blue}
+              defaultColor={greyColor}
+              onClick={() => setShowVods(!showVods)}
+            >
+              Показать записи стримов
+            </LinkSpan>
+            <LinkSpan
+              color={Color.blue}
+              defaultColor={greyColor}
+              style={{ marginLeft: '15px' }}
+              onClick={handleEditVods}
+            >
+              Редактировать записи стримов
+            </LinkSpan>
+          </Box>
+          {showVods && <Box marginTop={'15px'}>Ссылки на воды</Box>}
         </Box>
-        <Box
-          fontSize={'14px'}
-          style={{ backgroundColor: moveTypeColor[move.type] }}
-          width={'fit-content'}
-          paddingTop={'5px'}
-          paddingBottom={'5px'}
-          paddingLeft={'12px'}
-          paddingRight={'12px'}
-          borderRadius={'5px'}
-          marginBottom={'15px'}
-        >
-          {moveTypeText[move.type]}
-        </Box>
-        <Box fontSize={'24px'} marginBottom={'10px'}>
-          {move.item_title}
-        </Box>
-        <Box fontSize={'14px'} fontWeight={400} marginBottom={'20px'}>
-          Ролл кубика — {move.dice_roll}, позиция на карте — {move.cell_to}
-        </Box>
-        <Box fontSize={'16px'} fontWeight={400} marginBottom={'25px'}>
-          {move.item_rating}/10 — {move.item_review}
-        </Box>
-        <Box onClick={() => setShowVods(!showVods)}>
-          <LinkSpan color={Color.blue} style={{ color: greyColor }}>
-            Показать записи стримов
-          </LinkSpan>
-        </Box>
-        {showVods && <Box marginTop={'15px'}>Ссылки на воды</Box>}
       </Box>
-    </Box>
+      <EditVodModal
+        open={showVodsModal}
+        title={move.item_title}
+        onClose={handleModalClose}
+        onSave={handleVodSave}
+      />
+    </>
   )
 }
 

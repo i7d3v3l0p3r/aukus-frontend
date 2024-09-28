@@ -135,6 +135,7 @@ export function playerMovesMock() {
       snake_from: null,
       snake_to: null,
       item_length: 'medium',
+      vod_link: 'test link field',
     })
   }
   return data
