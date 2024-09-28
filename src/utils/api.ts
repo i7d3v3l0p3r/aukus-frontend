@@ -8,20 +8,6 @@ import { Player, PlayerMove, PlayerMoveRequest, PlayerStats } from './types'
 
 const MOCK_API = process.env.NODE_ENV === 'development'
 
-type PlayerMovesResponse = {
-  moves: Array<PlayerMove>
-}
-
-export async function fetchPlayerMoves(
-  id: number
-): Promise<PlayerMovesResponse> {
-  if (MOCK_API) {
-    console.log('fetching player moves', id)
-    return Promise.resolve({ moves: playerMovesMock() })
-  }
-  return fetch(`/api/players/${id}`).then((res) => res.json())
-}
-
 type PlayersResponse = {
   players: Array<Player>
 }
@@ -104,4 +90,28 @@ export async function setVodLink(move_id: number, link: string): Promise<void> {
     },
     body: JSON.stringify({ move_id, vod_link: link }),
   }).then((res) => res.json())
+}
+
+type PlayerMovesResponse = {
+  moves: Array<PlayerMove>
+}
+
+export async function fetchPlayerMoves(
+  id: number
+): Promise<PlayerMovesResponse> {
+  if (MOCK_API) {
+    console.log('fetching player moves', id)
+    return Promise.resolve({ moves: playerMovesMock() })
+  }
+  return fetch(`/api/moves?player_id=${id}`).then((res) => res.json())
+}
+
+export async function fetchMovesByDate(
+  date: string
+): Promise<PlayerMovesResponse> {
+  if (MOCK_API) {
+    console.log('fetching moves by date', date)
+    return Promise.resolve({ moves: playerMovesMock() })
+  }
+  return fetch(`/api/moves?date=${date}`).then((res) => res.json())
 }
