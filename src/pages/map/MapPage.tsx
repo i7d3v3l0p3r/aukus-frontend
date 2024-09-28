@@ -7,7 +7,12 @@ export default function MapPage() {
   return (
     <Box>
       <MainMenu currentPage={'map'} />
-      <Box alignContent={'center'} display="flex" alignItems="center">
+      <Box
+        alignContent={'center'}
+        display="flex"
+        alignItems="center"
+        justifyContent={'center'}
+      >
         <MapComponent />
       </Box>
       <BottomSection />
