@@ -10,7 +10,6 @@ import EditVodModal from './EditVodModal'
 type Props = {
   id: number
   move: PlayerMove
-  player: Player
 }
 
 const moveTypeColor = {
@@ -29,14 +28,14 @@ const moveTypeText = {
   movie: 'Фильм',
 }
 
-export default function MoveCard({ id, move, player }: Props) {
+export default function MoveCard({ id, move }: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
   const { userId, role, moderFor } = useUser()
 
-  const canEditPage =
-    (role === 'player' && userId === player.id) ||
-    (role === 'moder' && moderFor === player.id)
+  const canEdit =
+    (role === 'player' && userId === move.player_id) ||
+    (role === 'moder' && moderFor === move.player_id)
 
   const updateVod = useMutation({ mutationFn: updateVodLink })
 
@@ -110,7 +109,7 @@ export default function MoveCard({ id, move, player }: Props) {
             >
               Показать записи стримов
             </LinkSpan>
-            {canEditPage && (
+            {canEdit && (
               <LinkSpan
                 color={Color.blue}
                 defaultColor={greyColor}

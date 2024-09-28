@@ -75,11 +75,7 @@ export default function PlayerContent(props: Props) {
         {playerMoves.map((move, index) => {
           return (
             <Box key={index}>
-              <MoveCard
-                id={playerMoves.length - index}
-                move={move}
-                player={player}
-              />
+              <MoveCard id={playerMoves.length - index} move={move} />
             </Box>
           )
         })}

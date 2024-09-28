@@ -12,6 +12,7 @@ import MapArrow from './MapArrow'
 import PlayerIcon from './PlayerIcon'
 import SVGMarkers from './SVGMarkers'
 import TesterButton from './TesterButton'
+import TodaysMoves from './TodaysMoves'
 import {
   ladders,
   laddersByCell,
@@ -33,7 +34,7 @@ export default function MapComponent() {
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: fetchPlayers,
-    refetchInterval: 10000,
+    refetchInterval: 1000 * 30,
     enabled: !makingTurn,
   })
   const players = playersData?.players
@@ -247,6 +248,8 @@ export default function MapComponent() {
       {currentPlayer && (
         <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
       )}
+
+      <TodaysMoves />
     </Box>
   )
 }

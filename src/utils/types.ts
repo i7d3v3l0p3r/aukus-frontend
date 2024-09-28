@@ -32,6 +32,7 @@ export type ItemLength = 'short' | 'medium' | 'long'
 
 export type PlayerMove = {
   id: number
+  player_id: number
   created_at: string
   dice_roll: number
   cell_from: number

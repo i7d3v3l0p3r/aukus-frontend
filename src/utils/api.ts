@@ -118,3 +118,13 @@ export async function updateVodLink({
     body: JSON.stringify({ move_id, vod_link: link }),
   }).then((res) => res.json())
 }
+
+export async function fetchMovesByDate(
+  date: string
+): Promise<PlayerMovesResponse> {
+  if (MOCK_API) {
+    console.log('fetching moves by date', date)
+    return Promise.resolve({ moves: playerMovesMock() })
+  }
+  return fetch(`/api/moves?date=${date}`).then((res) => res.json())
+}

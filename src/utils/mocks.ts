@@ -121,6 +121,7 @@ export function playerMovesMock() {
     }
 
     data.push({
+      player_id: sample([1, 2, 3, 4]),
       created_at: dates[i].toDateString(),
       id: i + 1,
       item_title: sample(['Готика', 'Соник', 'Ведьмак', 'Смута']),
