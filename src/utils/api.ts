@@ -48,16 +48,17 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
   }).then((res) => res.json())
 }
 
-type CurrentUserIdResponse = {
+type CurrentUserResponse = {
   user_id: number
+  role: 'player' | 'moder'
 }
 
-export async function fetchCurrentUser(): Promise<CurrentUserIdResponse> {
+export async function fetchCurrentUser(): Promise<CurrentUserResponse> {
   if (MOCK_API) {
     console.log('fetching current user')
-    return Promise.resolve({ user_id: playersMock[0].id })
+    return Promise.resolve({ user_id: playersMock[0].id, role: 'player' })
   }
-  return fetch(`/api/get_current_user_id`).then((res) => res.json())
+  return fetch(`/api/current_user`).then((res) => res.json())
 }
 
 type StatsResponse = {
@@ -89,4 +90,18 @@ export async function fetchGameNames(
     ])
   }
   return fetch(`/hltb/v1/query?title=${name}`).then((res) => res.json())
+}
+
+export async function setVodLink(move_id: number, link: string): Promise<void> {
+  if (MOCK_API) {
+    console.log('setting vod link', link)
+    return Promise.resolve()
+  }
+  return fetch(`/api/player_move_vod_link`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ move_id, vod_link: link }),
+  }).then((res) => res.json())
 }
