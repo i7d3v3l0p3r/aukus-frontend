@@ -45,6 +45,7 @@ export type PlayerMove = {
   item_review: string
   item_rating: number
   item_length: ItemLength | null
+  vod_link: string
 }
 
 export type PlayerMoveRequest = {
