@@ -1,5 +1,5 @@
 import { Box, Link } from '@mui/material'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'
@@ -38,6 +38,7 @@ export default function MoveCard({ id, move }: Props) {
     (role === 'moder' && moderFor === move.player_id)
 
   const updateVod = useMutation({ mutationFn: updateVodLink })
+  const queryClient = useQueryClient()
 
   const handleEditVods = () => {
     setShowVodsModal(true)
@@ -49,6 +50,8 @@ export default function MoveCard({ id, move }: Props) {
 
   const handleVodSave = (text: string) => {
     updateVod.mutate({ move_id: move.id, link: text })
+    queryClient.invalidateQueries({ queryKey: ['playerMoves', move.player_id] })
+    queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
     setShowVodsModal(false)
   }
 
