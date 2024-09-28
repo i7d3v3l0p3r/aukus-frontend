@@ -16,7 +16,7 @@ type Props = {
   title: string
   onClose: () => void
   onSave: (text: string) => void
-  vodText: string
+  vodText: string | null
 }
 
 export default function EditVodModal({
@@ -99,7 +99,7 @@ export default function EditVodModal({
           variant="contained"
           color="primary"
           fullWidth
-          onClick={() => onSave(vodValue)}
+          onClick={() => onSave(vodValue || '')}
         >
           Сохранить
         </Button>
