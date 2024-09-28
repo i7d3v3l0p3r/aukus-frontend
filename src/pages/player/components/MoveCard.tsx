@@ -118,7 +118,9 @@ export default function MoveCard({ id, move, player }: Props) {
           </Box>
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
-              {processText(move.vod_link)}
+              {move.vod_link
+                ? processText(move.vod_link)
+                : 'Записи стримов еще не добавлены'}
             </Box>
           )}
         </Box>
