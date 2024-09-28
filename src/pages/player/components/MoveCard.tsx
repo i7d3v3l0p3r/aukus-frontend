@@ -1,6 +1,8 @@
 import { Box } from '@mui/material'
+import { useMutation } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
+import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color } from 'utils/types'
 import EditVodModal from './EditVodModal'
 
@@ -29,6 +31,8 @@ export default function MoveCard({ id, move }: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
 
+  const updateVod = useMutation({ mutationFn: updateVodLink })
+
   const handleEditVods = () => {
     setShowVodsModal(true)
   }
@@ -38,6 +42,7 @@ export default function MoveCard({ id, move }: Props) {
   }
 
   const handleVodSave = (text: string) => {
+    updateVod.mutate({ move_id: move.id, link: text })
     setShowVodsModal(false)
   }
 
@@ -110,6 +115,7 @@ export default function MoveCard({ id, move }: Props) {
         title={move.item_title}
         onClose={handleModalClose}
         onSave={handleVodSave}
+        vodText={move.vod_link}
       />
     </>
   )

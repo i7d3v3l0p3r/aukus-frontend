@@ -16,10 +16,17 @@ type Props = {
   title: string
   onClose: () => void
   onSave: (text: string) => void
+  vodText: string
 }
 
-export default function EditVodModal({ open, title, onClose, onSave }: Props) {
-  const [vodValue, setVodValue] = useState('')
+export default function EditVodModal({
+  open,
+  title,
+  onClose,
+  onSave,
+  vodText,
+}: Props) {
+  const [vodValue, setVodValue] = useState(vodText)
 
   const handleVodChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setVodValue(e.target.value)

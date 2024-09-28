@@ -92,7 +92,15 @@ export async function fetchGameNames(
   return fetch(`/hltb/v1/query?title=${name}`).then((res) => res.json())
 }
 
-export async function setVodLink(move_id: number, link: string): Promise<void> {
+type UpdateLinkParams = {
+  move_id: number
+  link: string
+}
+
+export async function updateVodLink({
+  move_id,
+  link,
+}: UpdateLinkParams): Promise<void> {
   if (MOCK_API) {
     console.log('setting vod link', link)
     return Promise.resolve()
