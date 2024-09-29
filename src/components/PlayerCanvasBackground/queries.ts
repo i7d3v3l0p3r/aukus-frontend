@@ -150,10 +150,7 @@ function uploadCanvasImage(playerId: number, file: File, width: number, height: 
 
   return request(`/api/canvas/${playerId}/upload`, {
     method: 'POST',
-    body: formData,
-    headers: {
-      'content-type': 'application/json',
-    },
+    body: formData
   });
 }
 
