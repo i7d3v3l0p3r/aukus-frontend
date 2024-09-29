@@ -1,60 +1,61 @@
-import React, { useEffect, useRef } from 'react';
-import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context';
-import Konva from 'konva';
-import { Image as KonvaImage, Layer, Stage, Transformer } from 'react-konva';
-import useImage from 'use-image';
-import { KonvaEventObject } from 'konva/lib/Node';
+import React, { useEffect, useRef } from 'react'
+import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context'
+import Konva from 'konva'
+import { Image as KonvaImage, Layer, Stage, Transformer } from 'react-konva'
+import useImage from 'use-image'
+import { KonvaEventObject } from 'konva/lib/Node'
 
-const URLImage = ({ image, setImages }: {
-  image: CanvasImage;
-  setImages: React.Dispatch<React.SetStateAction<CanvasImage[]>>;
+const URLImage = ({
+  image,
+  setImages,
+}: {
+  image: CanvasImage
+  setImages: React.Dispatch<React.SetStateAction<CanvasImage[]>>
 }) => {
-  const { url, id, scaleX, scaleY, zIndex, ...restProps } = image;
+  const { url, id, scaleX, scaleY, zIndex, ...restProps } = image
 
-  const { selectedImage, setSelectedImage, setFlipFunction } = usePlayerCanvasBackgroundContext();
+  const { selectedImage, setSelectedImage, setFlipFunction } =
+    usePlayerCanvasBackgroundContext()
 
-  const [img, loadState] = useImage(`${image.url}`);
-  const imageRef = React.useRef<Konva.Image>(null);
-  const trRef = useRef<Konva.Transformer>(null);
+  const [img, loadState] = useImage(`${image.url}`)
+  const imageRef = React.useRef<Konva.Image>(null)
+  const trRef = useRef<Konva.Transformer>(null)
 
   useEffect(() => {
     if (imageRef.current === null) {
-      console.log('imageRef.current is null');
-      return;
+      console.log('imageRef.current is null')
+      return
     }
     if (trRef.current === null) {
-      console.log('trRef.current is null');
-      return;
+      console.log('trRef.current is null')
+      return
     }
 
-    trRef.current?.nodes([imageRef.current]);
-    trRef.current?.getLayer()?.batchDraw();
-  }, [trRef.current, imageRef.current]);
+    trRef.current?.nodes([imageRef.current])
+    trRef.current?.getLayer()?.batchDraw()
+  }, [trRef.current, imageRef.current])
 
   const updateImages = (img: CanvasImage) => {
-    console.log('updateImages()');
-    setImages((prevImages) => ([
-      ...prevImages.filter(i => i.id !== id),
-      img,
-    ]));
-  };
+    console.log('updateImages()')
+    setImages((prevImages) => [...prevImages.filter((i) => i.id !== id), img])
+  }
 
   const flipImage = () => {
-    console.log('flipImage()');
-    const node = imageRef.current;
+    console.log('flipImage()')
+    const node = imageRef.current
     if (node) {
-      const newScaleX = node.scaleX() * -1;
-      let rotation = node.rotation();
+      const newScaleX = node.scaleX() * -1
+      let rotation = node.rotation()
 
-      console.log('old node.scaleX()', node.scaleX());
-      console.log('old node.scaleY()', node.scaleY());
+      console.log('old node.scaleX()', node.scaleX())
+      console.log('old node.scaleY()', node.scaleY())
 
-      node.scaleX(newScaleX);
+      node.scaleX(newScaleX)
 
-      console.log('new node.scaleX()', node.scaleX());
-      console.log('new node.scaleY()', node.scaleY());
+      console.log('new node.scaleX()', node.scaleX())
+      console.log('new node.scaleY()', node.scaleY())
 
-      console.log('old image', selectedImage);
+      console.log('old image', selectedImage)
 
       const updatedImage = {
         ...image,
@@ -65,56 +66,56 @@ const URLImage = ({ image, setImages }: {
         rotation,
         width: node.width(),
         height: node.height(),
-      };
+      }
 
-      console.log('updatedImage', updatedImage);
+      console.log('updatedImage', updatedImage)
 
-      updateImages(updatedImage);
+      updateImages(updatedImage)
     }
-  };
+  }
 
   const selectImage = (img: CanvasImage) => {
-    setFlipFunction(flipImage);
-    setSelectedImage(img);
-  };
+    setFlipFunction(flipImage)
+    setSelectedImage(img)
+  }
 
   const handleDragEnd = (e: KonvaEventObject<DragEvent>) => {
-    console.log('handleDragEnd()');
+    console.log('handleDragEnd()')
     const updatedImage = {
       ...image,
       x: e.target.x(),
       y: e.target.y(),
-    };
+    }
 
-    updateImages(updatedImage);
-    selectImage(updatedImage);
-  };
+    updateImages(updatedImage)
+    selectImage(updatedImage)
+  }
 
   const handleTransformEnd = () => {
-    console.log('handleTransformEnd()');
+    console.log('handleTransformEnd()')
     // transformer is changing scale of the node
     // and NOT its width or height
     // but in the store we have only width and height
     // to match the data better we will reset scale on transform end
-    const node = imageRef.current;
+    const node = imageRef.current
     if (node) {
-      const transformScaleX = node.scaleX();
-      const transformScaleY = node.scaleY();
+      const transformScaleX = node.scaleX()
+      const transformScaleY = node.scaleY()
 
-      console.log('node.scale()', node.scale());
+      console.log('node.scale()', node.scale())
 
-      console.log('old scaleX', transformScaleX);
-      console.log('old scaleY', transformScaleY);
+      console.log('old scaleX', transformScaleX)
+      console.log('old scaleY', transformScaleY)
 
-      const newScaleX = transformScaleX > 0 ? 1 : -1;
-      const newScaleY = transformScaleY > 0 ? 1 : -1;
+      const newScaleX = transformScaleX > 0 ? 1 : -1
+      const newScaleY = transformScaleY > 0 ? 1 : -1
 
       // we will reset it back
-      node.scaleX(newScaleX);
-      node.scaleY(newScaleY);
+      node.scaleX(newScaleX)
+      node.scaleY(newScaleY)
 
-      console.log('new scaleX', node.scaleX());
-      console.log('new scaleY', node.scaleY());
+      console.log('new scaleX', node.scaleX())
+      console.log('new scaleY', node.scaleY())
 
       const updatedImage = {
         ...image,
@@ -125,14 +126,14 @@ const URLImage = ({ image, setImages }: {
         y: node.y(),
         scaleX: newScaleX,
         scaleY: newScaleY,
-      };
+      }
 
-      console.log('updatedImage', updatedImage);
+      console.log('updatedImage', updatedImage)
 
-      updateImages(updatedImage);
-      selectImage(updatedImage);
+      updateImages(updatedImage)
+      selectImage(updatedImage)
     }
-  };
+  }
 
   return (
     <>
@@ -142,8 +143,8 @@ const URLImage = ({ image, setImages }: {
         {...restProps}
         draggable
         onClick={() => {
-          console.log('image clicked', image);
-          selectImage(image);
+          console.log('image clicked', image)
+          selectImage(image)
         }}
         onDragEnd={handleDragEnd}
         onTransformEnd={handleTransformEnd}
@@ -157,9 +158,9 @@ const URLImage = ({ image, setImages }: {
         boundBoxFunc={(oldBox, newBox) => {
           // limit resize
           if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
-            return oldBox;
+            return oldBox
           }
-          return newBox;
+          return newBox
         }}
         borderStroke={selectedImage?.id === id ? 'magenta' : undefined}
         borderStrokeWidth={selectedImage?.id === id ? 2 : 1}
@@ -168,17 +169,23 @@ const URLImage = ({ image, setImages }: {
         anchorCornerRadius={50}
       />
     </>
-  );
-};
+  )
+}
 
-export function CanvasStage({ imageList, setImageList, width, height }: {
-  imageList: CanvasImage[];
-  setImageList: React.Dispatch<React.SetStateAction<CanvasImage[]>>;
-  width: number;
-  height: number;
+export function CanvasStage({
+  imageList,
+  setImageList,
+  width,
+  height,
+}: {
+  imageList: CanvasImage[]
+  setImageList: React.Dispatch<React.SetStateAction<CanvasImage[]>>
+  width: number
+  height: number
 }) {
-  const { setSelectedImage, setFlipFunction } = usePlayerCanvasBackgroundContext();
-  const stageRef = useRef<Konva.Stage>(null);
+  const { setSelectedImage, setFlipFunction } =
+    usePlayerCanvasBackgroundContext()
+  const stageRef = useRef<Konva.Stage>(null)
 
   return (
     <>
@@ -217,24 +224,21 @@ export function CanvasStage({ imageList, setImageList, width, height }: {
           position: 'absolute',
           border: '1px solid cyan',
           overflow: 'hidden',
+          zIndex: 20,
         }}
         onClick={(e) => {
           if (e.target === stageRef.current) {
-            setSelectedImage(null);
-            setFlipFunction(null);
+            setSelectedImage(null)
+            setFlipFunction(null)
           }
         }}
       >
         <Layer>
           {imageList.map((image) => (
-            <URLImage
-              key={image.id}
-              image={image}
-              setImages={setImageList}
-            />
+            <URLImage key={image.id} image={image} setImages={setImageList} />
           ))}
         </Layer>
       </Stage>
     </>
-  );
+  )
 }
