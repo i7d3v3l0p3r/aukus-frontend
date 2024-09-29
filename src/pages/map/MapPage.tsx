@@ -8,6 +8,7 @@ export default function MapPage() {
     <Box>
       <MainMenu currentPage={'map'} />
       <Box
+        marginTop={'100px'}
         alignContent={'center'}
         display="flex"
         alignItems="center"

@@ -7,6 +7,7 @@ export default function StatsPage() {
   return (
     <Box>
       <MainMenu currentPage="stats" />
+      <Box marginTop={'100px'} />
       <Leaderboard />
       <BottomSection />
     </Box>
