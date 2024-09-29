@@ -34,7 +34,7 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
         <Box
           display={'flex'}
           justifyContent={'space-between'}
-          alignItems={'center'}
+          alignItems={'flex-start'}
         >
           Прежде чем привязать поинтаук, скройте свой экран на стриме
           <IconButton
