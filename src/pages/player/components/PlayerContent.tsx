@@ -70,7 +70,7 @@ export default function PlayerContent(props: Props) {
 
   return (
     <PlayerCanvasBackground player={player} canEdit={canEdit}>
-      <Box marginTop={'100px'}>
+      <Box marginTop={'100px'} position={'relative'} zIndex={5}>
         <Box textAlign={'center'}>
           <Typography fontSize="48px" fontWeight={700}>
             Страница участника {player.name}
