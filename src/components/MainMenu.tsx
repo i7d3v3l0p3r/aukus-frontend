@@ -1,22 +1,25 @@
-import React from 'react';
+import React from 'react'
 import { Box, Button } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import useCurrentUser from 'hooks/useCurrentUser'
-import { Link } from 'react-router-dom'
+import { useUser } from 'context/UserProvider'
+import { Link, ScrollRestoration } from 'react-router-dom'
 import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
 import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
 import LinkSpan from './LinkSpan'
 
 type Props = {
-  currentPage: Page;
-  replaceMenuButtons?: React.ReactNode;
+  currentPage: Page
+  replaceMenuButtons?: React.ReactNode
   rightSlot?: React.ReactNode
 }
 
-export default function MainMenu({ currentPage, replaceMenuButtons, rightSlot }: Props) {
-  const { currentUserId } = useCurrentUser();
-
+export default function MainMenu({
+  currentPage,
+  replaceMenuButtons,
+  rightSlot,
+}: Props) {
+  const { userId } = useUser()
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: fetchPlayers,
@@ -24,11 +27,12 @@ export default function MainMenu({ currentPage, replaceMenuButtons, rightSlot }:
   })
   const players = playersData?.players
 
-  const currentPlayer = players?.find((player) => player.id === currentUserId)
+  const currentPlayer = players?.find((player) => player.id === userId)
   const playerColor = currentPlayer && getPlayerColor(currentPlayer)
 
   return (
-    <Box>
+    <Box marginBottom={'100px'}>
+      <ScrollRestoration />
       <Box
         display="block"
         textAlign={'center'}
@@ -56,8 +60,7 @@ export default function MainMenu({ currentPage, replaceMenuButtons, rightSlot }:
           </LinkSpan>
         </Link>
       </Box>
-
-      <Box display="flex" justifyContent={'center'} marginBottom={'100px'}>
+      <Box display="flex" justifyContent={'center'}>
         <Box
           padding={'10px'}
           display="flex"
@@ -87,7 +90,10 @@ export default function MainMenu({ currentPage, replaceMenuButtons, rightSlot }:
                 </Button>
               </Link>
 
-              <Link to="/stats" style={{ marginRight: 10, textDecoration: 'none' }}>
+              <Link
+                to="/stats"
+                style={{ marginRight: 10, textDecoration: 'none' }}
+              >
                 <Button
                   color={currentPage === 'stats' ? 'primary' : 'info'}
                   sx={{ width: '150px', height: '40px' }}
@@ -133,5 +139,5 @@ export default function MainMenu({ currentPage, replaceMenuButtons, rightSlot }:
         </Box>
       </Box>
     </Box>
-  );
+  )
 }

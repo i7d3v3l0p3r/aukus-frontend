@@ -25,7 +25,7 @@ const playerIcons: { [key: string]: string } = {
   unclobjorn: FigureSalad,
   melharucos: FigureLightSalad,
   browjey: FigureLightGreen,
-  flashko: FigureGreen,
+  f1ashko: FigureGreen,
 }
 
 type Props = {
@@ -48,7 +48,14 @@ export default function PlayerIcon({
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const playerElement = useRef<HTMLDivElement>(null)
 
-  const { x: relativeX, y: relativeY } = getRelativePosition(player, players)
+  const playersOnSamePosition = players.filter(
+    (p) => p.map_position === player.map_position && p.id !== player.id
+  )
+
+  const { x: relativeX, y: relativeY } = getRelativePosition(
+    player,
+    playersOnSamePosition
+  )
 
   const [springs, api] = useSpring(() => {
     return {
@@ -109,9 +116,19 @@ export default function PlayerIcon({
     }
 
     if (ladder) {
-      animationsList.push(
-        calculateAnimation(player.map_position, ladder.cellTo)
+      const ladderAnimation = calculateAnimation(
+        player.map_position,
+        ladder.cellTo
       )
+      if (player.map_position === 0) {
+        const adjustedForStart = {
+          x: ladderAnimation.x - relativeX,
+          y: ladderAnimation.y - moveOffset,
+        }
+        animationsList.push(adjustedForStart)
+      } else {
+        animationsList.push(ladderAnimation)
+      }
     }
 
     if (snake) {
@@ -178,7 +195,7 @@ export default function PlayerIcon({
     return null
   }
 
-  const originTop = anchorCell.offsetTop + 40
+  const originTop = anchorCell.offsetTop + 30
   const originLeft = anchorCell.offsetLeft + 10
 
   const positionTop = originTop + relativeY
@@ -193,6 +210,9 @@ export default function PlayerIcon({
   const onlineColor = player.is_online ? 'green' : 'red'
   const playerColor = getPlayerColor(player)
   const playerIcon = playerIcons[player.url_handle] || FigureCopper
+
+  const hideAvatar =
+    playersOnSamePosition.length > 1 && player.map_position !== 0
 
   return (
     <animated.div
@@ -212,22 +232,32 @@ export default function PlayerIcon({
         />
         <Box
           onClick={handleClick}
-          style={{ cursor: 'pointer', display: 'grid' }}
+          style={{ cursor: 'pointer', display: 'block', textAlign: 'center' }}
           ref={playerElement}
         >
-          <img src={playerIcon} width={'40px'} alt="" />
-          <span
-            style={{
-              fontSize: '12px',
-              color: 'white',
-              lineHeight: 1,
-              backgroundColor: playerColor,
-              paddingLeft: '5px',
-              paddingRight: '5px',
-            }}
-          >
-            {player.name}
-          </span>
+          {!hideAvatar && (
+            <img
+              src={playerIcon}
+              width={'40px'}
+              alt=""
+              style={{ verticalAlign: 'middle' }}
+            />
+          )}
+          <p style={{ padding: 0, margin: 0, lineHeight: 1 }}>
+            <span
+              style={{
+                fontSize: '14px',
+                color: 'white',
+                lineHeight: 1,
+                backgroundColor: playerColor,
+                paddingLeft: '5px',
+                paddingRight: '5px',
+                borderRadius: '5px',
+              }}
+            >
+              {player.name}
+            </span>
+          </p>
         </Box>
       </Box>
     </animated.div>
@@ -256,21 +286,21 @@ function calculateAnimation(mapPosition: number, cellTo: number) {
 }
 
 function getRelativePosition(player: Player, players: Player[]) {
-  const playersOnSamePosition = players.filter(
-    (p) => p.map_position === player.map_position && p.id !== player.id
-  )
-
-  if (playersOnSamePosition.length === 0) {
+  if (players.length === 0) {
     return { x: 0, y: 0 }
   }
 
-  const sortedPlayers = [player, ...playersOnSamePosition].sort(
-    (a, b) => a.id - b.id
-  )
+  const sortedPlayers = [player, ...players].sort((a, b) => a.id - b.id)
   const playerIndex = sortedPlayers.findIndex((p) => p.id === player.id)
 
   if (player.map_position === 0) {
     return { x: playerIndex * 80, y: 0 }
   }
-  return { x: playerIndex * 35, y: -playerIndex * 10 }
+  if (sortedPlayers.length === 2) {
+    return { x: playerIndex * 50, y: -playerIndex * 10 }
+  }
+  if (sortedPlayers.length === 3) {
+    return { x: 15, y: playerIndex * 30 - 10 }
+  }
+  return { x: 20, y: playerIndex * 20 - 10 }
 }

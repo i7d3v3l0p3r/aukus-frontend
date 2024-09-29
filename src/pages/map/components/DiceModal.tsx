@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -109,7 +108,7 @@ export default function DiceModal({
 
   const showAllDices = diceRoll !== null && diceRoll.length > 1
   const diceRollDisplay = showAllDices
-    ? ` — ${diceRollSum} (${diceRoll})`
+    ? ` — ${diceRollSum} (${diceRoll.join(', ')})`
     : ` — ${diceRollSum}`
 
   return (

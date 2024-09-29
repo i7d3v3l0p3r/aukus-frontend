@@ -5,6 +5,7 @@ import {
   ThemeProvider,
 } from '@mui/material'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { UserProvider } from 'context/UserProvider'
 import AboutPage from 'pages/about/AboutPage'
 import RulesPage from 'pages/rules/RulesPage'
 import StatsPage from 'pages/stats/StatsPage'
@@ -12,11 +13,10 @@ import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Color, CustomColorOverrides } from 'utils/types'
 import './App.css'
-import MainScreen from './components/MainScreen'
 import MapPage from './pages/map/MapPage'
 import PlayerPage from './pages/player/PlayerPage'
 import PlayersPage from './pages/players/PlayersPage'
-import { SnackbarProvider } from 'notistack';
+import { SnackbarProvider } from 'notistack'
 import MainMenu from './components/MainMenu'
 
 // Update the Button's color options types
@@ -28,61 +28,31 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: (
-        <MainScreen currentPage="map">
-          <MapPage />
-        </MainScreen>
-      ),
+      element: <MapPage />,
     },
     {
       path: '/players',
-      element: (
-        <MainScreen currentPage="players">
-          <PlayersPage />
-        </MainScreen>
-      ),
+      element: <PlayersPage />,
     },
     {
       path: '/players/:id',
-      element: (
-        <PlayerPage
-          header={(rightSlot: React.ReactNode, replaceMenuButtons: React.ReactNode) => (
-            <MainMenu
-              currentPage="player"
-              replaceMenuButtons={replaceMenuButtons}
-              rightSlot={rightSlot}
-            />
-          )}
-        />
-      ),
+      element: <PlayerPage />,
     },
     {
       path: '/rules',
-      element: (
-        <MainScreen currentPage="rules">
-          <RulesPage />
-        </MainScreen>
-      ),
+      element: <RulesPage />,
     },
     {
       path: '/about',
-      element: (
-        <MainScreen currentPage="about">
-          <AboutPage />
-        </MainScreen>
-      ),
+      element: <AboutPage />,
     },
     {
       path: '/stats',
-      element: (
-        <MainScreen currentPage="stats">
-          <StatsPage />
-        </MainScreen>
-      ),
+      element: <StatsPage />,
     },
   ],
-  { basename: '/' },
-);
+  { basename: '/' }
+)
 
 let darkTheme = createTheme({
   palette: {
@@ -145,21 +115,22 @@ darkTheme = createTheme(darkTheme, {
   palette: makeCustomColors(Color),
 })
 
-const queryClient = new QueryClient()
-
 function App() {
+  const queryClient = new QueryClient()
   return (
     <React.StrictMode>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
           <SnackbarProvider>
-            <RouterProvider router={router} />
+            <UserProvider>
+              <RouterProvider router={router} />
+            </UserProvider>
           </SnackbarProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </React.StrictMode>
-  );
+  )
 }
 
-export default App;
+export default App

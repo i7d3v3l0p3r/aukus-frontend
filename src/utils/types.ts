@@ -32,6 +32,7 @@ export type ItemLength = 'short' | 'medium' | 'long'
 
 export type PlayerMove = {
   id: number
+  player_id: number
   created_at: string
   dice_roll: number
   cell_from: number
@@ -45,6 +46,7 @@ export type PlayerMove = {
   item_review: string
   item_rating: number
   item_length: ItemLength | null
+  vod_link: string | null
 }
 
 export type PlayerMoveRequest = {
@@ -109,7 +111,7 @@ export const ColorByUrlHandle: { [key: string]: string } = {
   unclobjorn: Color.blueDark,
   melharucos: Color.blueLight,
   browjey: Color.greenLight,
-  flashko: Color.green,
+  f1ashko: Color.green,
 }
 
 export const ColorNameByUrlHandle: {
@@ -124,7 +126,7 @@ export const ColorNameByUrlHandle: {
   unclobjorn: 'customBlueDark',
   melharucos: 'customBlueLight',
   browjey: 'customGreenLight',
-  flashko: 'customGreen',
+  f1ashko: 'customGreen',
 }
 
 export function getPlayerColor(player: Player): string {

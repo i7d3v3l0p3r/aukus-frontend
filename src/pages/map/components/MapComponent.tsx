@@ -1,6 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import useCurrentUser from 'hooks/useCurrentUser'
+import { useUser } from 'context/UserProvider'
+import useScreenSize from 'context/useScreenSize'
 import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
@@ -11,6 +12,7 @@ import MapArrow from './MapArrow'
 import PlayerIcon from './PlayerIcon'
 import SVGMarkers from './SVGMarkers'
 import TesterButton from './TesterButton'
+import TodaysMoves from './TodaysMoves'
 import {
   ladders,
   laddersByCell,
@@ -32,14 +34,15 @@ export default function MapComponent() {
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: fetchPlayers,
-    refetchInterval: 10000,
+    refetchInterval: 1000 * 30,
     enabled: !makingTurn,
   })
   const players = playersData?.players
 
-  const { currentUserId } = useCurrentUser()
+  const { userId } = useUser()
+  useScreenSize()
 
-  const currentPlayer = players?.find((player) => player.id === currentUserId)
+  const currentPlayer = players?.find((player) => player.id === userId)
 
   const makeMove = useMutation({
     mutationFn: createPlayerMove,
@@ -245,6 +248,8 @@ export default function MapComponent() {
       {currentPlayer && (
         <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
       )}
+
+      <TodaysMoves />
     </Box>
   )
 }

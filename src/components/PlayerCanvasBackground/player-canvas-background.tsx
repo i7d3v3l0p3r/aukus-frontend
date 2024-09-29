@@ -1,16 +1,27 @@
-import React, { SVGProps, useEffect, useRef, useState } from 'react';
-import { Box, IconButton } from '@mui/material';
-import { CanvasImage, PlayerCanvasBackgroundContextProvider, usePlayerCanvasBackgroundContext } from './context';
-import { useRefDimensions } from './use-ref-dimensions';
-import { ControlButtons } from './ui/control-buttons';
-import { CanvasStage } from './ui/canvas-stage';
-import { Player } from '../../utils/types';
-import { StaticCanvas } from './ui/static-canvas';
-
+import React, { SVGProps, useEffect, useRef, useState } from 'react'
+import { Box, IconButton } from '@mui/material'
+import {
+  CanvasImage,
+  PlayerCanvasBackgroundContextProvider,
+  usePlayerCanvasBackgroundContext,
+} from './context'
+import { useRefDimensions } from './use-ref-dimensions'
+import { ControlButtons } from './ui/control-buttons'
+import { CanvasStage } from './ui/canvas-stage'
+import { Player } from '../../utils/types'
+import { StaticCanvas } from './ui/static-canvas'
+import MainMenu from 'components/MainMenu'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <path
         d="M24.4651 1.16666H21.0351C20.0201 1.16666 19.2734 1.58666 18.9351 2.33332C18.7484 2.67166 18.6667 3.06832 18.6667 3.53499V6.96499C18.6667 8.44666 19.5534 9.33332 21.0351 9.33332H24.4651C24.9317 9.33332 25.3284 9.25166 25.6667 9.06499C26.4134 8.72666 26.8334 7.97999 26.8334 6.96499V3.53499C26.8334 2.05332 25.9467 1.16666 24.4651 1.16666ZM25.5617 5.75166C25.4451 5.86832 25.2701 5.94999 25.0834 5.96166H23.4384V6.55666L23.4501 7.58332C23.4384 7.78166 23.3684 7.94499 23.2284 8.08499C23.1117 8.20166 22.9367 8.28332 22.7501 8.28332C22.3651 8.28332 22.0501 7.96832 22.0501 7.58332V5.94999L20.4167 5.96166C20.0317 5.96166 19.7167 5.63499 19.7167 5.24999C19.7167 4.86499 20.0317 4.54999 20.4167 4.54999L21.4434 4.56166H22.0501V2.92832C22.0501 2.54332 22.3651 2.21666 22.7501 2.21666C23.1351 2.21666 23.4501 2.54332 23.4501 2.92832L23.4384 3.75666V4.54999H25.0834C25.4684 4.54999 25.7834 4.86499 25.7834 5.24999C25.7717 5.44832 25.6901 5.61166 25.5617 5.75166Z"
         fill="white"
@@ -24,11 +35,11 @@ function ImageSvg(props: SVGProps<SVGSVGElement>) {
         fill="white"
       />
     </svg>
-  );
+  )
 }
 
 function EditModeButton() {
-  const { setIsEditMode } = usePlayerCanvasBackgroundContext();
+  const { setIsEditMode } = usePlayerCanvasBackgroundContext()
 
   return (
     <IconButton
@@ -38,35 +49,31 @@ function EditModeButton() {
     >
       <ImageSvg />
     </IconButton>
-  );
+  )
 }
 
-function CanvasContainer({ header, ...props }: {
-  width: number;
-  height: number,
-  header: (rightSlot: React.ReactNode, buttons: React.ReactNode) => React.ReactNode;
-}) {
-  const { images, isEditMode } = usePlayerCanvasBackgroundContext();
-  const [imageList, setImageList] = useState<CanvasImage[]>(images);
+function CanvasContainer({ ...props }: { width: number; height: number }) {
+  const { images, isEditMode } = usePlayerCanvasBackgroundContext()
+  const [imageList, setImageList] = useState<CanvasImage[]>(images)
 
   useEffect(() => {
-    setImageList(images);
-  }, [images, isEditMode]);
+    setImageList(images)
+  }, [images, isEditMode])
 
-  const editButton = isEditMode ? null : <EditModeButton />;
+  const editButton = isEditMode ? null : <EditModeButton />
   const controlButtons = isEditMode && (
     <Box sx={{ display: 'flex', gap: 1.5 }}>
-      <ControlButtons
-        imageList={imageList}
-        setImageList={setImageList}
-      />
+      <ControlButtons imageList={imageList} setImageList={setImageList} />
     </Box>
-  );
+  )
 
   return (
     <>
-      {header(editButton, controlButtons)}
-
+      <MainMenu
+        currentPage="player"
+        replaceMenuButtons={controlButtons}
+        rightSlot={editButton}
+      />
       {isEditMode ? (
         <CanvasStage
           {...props}
@@ -77,17 +84,18 @@ function CanvasContainer({ header, ...props }: {
         <StaticCanvas />
       )}
     </>
-  );
+  )
 }
 
-
-export function PlayerCanvasBackground({ children, player, header }: {
-  children: React.ReactNode,
-  player: Player,
-  header: (rightSlot: React.ReactNode, buttons: React.ReactNode) => React.ReactNode
+export function PlayerCanvasBackground({
+  children,
+  player,
+}: {
+  children: React.ReactNode
+  player: Player
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dimensions = useRefDimensions(containerRef);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const dimensions = useRefDimensions(containerRef)
 
   return (
     <Box
@@ -99,13 +107,10 @@ export function PlayerCanvasBackground({ children, player, header }: {
       }}
     >
       <PlayerCanvasBackgroundContextProvider player={player}>
-        <CanvasContainer
-          {...dimensions}
-          header={header}
-        />
+        <CanvasContainer {...dimensions} />
       </PlayerCanvasBackgroundContextProvider>
 
       {children}
     </Box>
-  );
+  )
 }

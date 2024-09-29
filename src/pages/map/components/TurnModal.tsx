@@ -9,7 +9,6 @@ import {
   DialogTitle,
   FormControl,
   IconButton,
-  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -207,23 +206,32 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       sx={{ fontWeight: 500 }}
     >
       <DialogTitle
-        sx={{ paddingTop: '30px', paddingBottom: '30px', paddingLeft: '30px' }}
+        sx={{
+          paddingTop: '30px',
+          paddingBottom: '30px',
+          paddingLeft: '30px',
+          paddingRight: '30px',
+        }}
       >
-        <Typography fontSize={'24px'} fontWeight={700} lineHeight={1}>
-          Новый ход
-        </Typography>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: 'white',
-          }}
+        <Box
+          display={'flex'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
         >
-          <Close />
-        </IconButton>
+          <Typography fontSize={'24px'} fontWeight={600} lineHeight={1}>
+            Новый ход
+          </Typography>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              padding: 0,
+              color: 'white',
+            }}
+          >
+            <Close sx={{ fontSize: '29px' }} />
+          </IconButton>
+        </Box>
       </DialogTitle>
       <DialogContent
         sx={{ paddingLeft: '30px', paddingRight: '30px', paddingBottom: 0 }}
@@ -300,7 +308,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('short')}
                 variant={gameHours === 'short' ? 'contained' : 'outlined'}
                 color={gameHours === 'short' ? 'secondary' : 'info'}
-                style={{ width: 200, fontSize: '16px' }}
+                style={{
+                  width: 200,
+                  fontSize: '16px',
+                  border: `2px solid ${Color.greyLight}`,
+                }}
               >
                 0-5 часов
               </Button>
@@ -308,7 +320,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('medium')}
                 variant={gameHours === 'medium' ? 'contained' : 'outlined'}
                 color={gameHours === 'medium' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200, fontSize: '16px' }}
+                style={{
+                  marginLeft: 20,
+                  width: 200,
+                  fontSize: '16px',
+                  border: `2px solid ${Color.greyLight}`,
+                }}
               >
                 5-15 часов
               </Button>
@@ -316,7 +333,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 onClick={() => handleGameHoursChange('long')}
                 variant={gameHours === 'long' ? 'contained' : 'outlined'}
                 color={gameHours === 'long' ? 'secondary' : 'info'}
-                style={{ marginLeft: 20, width: 200, fontSize: '16px' }}
+                style={{
+                  marginLeft: 20,
+                  width: 200,
+                  fontSize: '16px',
+                  border: `2px solid ${Color.greyLight}`,
+                }}
               >
                 15+ часов
               </Button>
@@ -341,7 +363,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         <Box marginTop={'28px'}>
           <span style={{ marginLeft: '15px', fontSize: '20px' }}>Отзыв</span>
           <TextField
-            sx={{ marginTop: 1 }}
+            sx={{ marginTop: '10px' }}
             InputProps={{
               style: {
                 paddingTop: '10px',
