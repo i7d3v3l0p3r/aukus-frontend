@@ -20,7 +20,7 @@ export default function PlayerContent(props: Props) {
   const [fetchStart] = useState(Date.now())
   const [showPointAucModal, setShowPointAucModal] = useState(false)
 
-  const { userId } = useUser()
+  const { userId, role, moderFor } = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -53,6 +53,7 @@ export default function PlayerContent(props: Props) {
   }
 
   const isOwner = player.id === userId
+  const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
 
   playerMoves.sort((a, b) => {
     return b.id - a.id
@@ -68,7 +69,7 @@ export default function PlayerContent(props: Props) {
   }
 
   return (
-    <PlayerCanvasBackground player={player}>
+    <PlayerCanvasBackground player={player} canEdit={canEdit}>
       <Box marginTop={'100px'}>
         <Box textAlign={'center'}>
           <Typography fontSize="48px" fontWeight={700}>
