@@ -52,7 +52,13 @@ function EditModeButton() {
   )
 }
 
-function CanvasContainer({ ...props }: { width: number; height: number }) {
+type CanvasContainerProps = {
+  width: number
+  height: number
+  canEdit?: boolean
+}
+
+function CanvasContainer({ canEdit, ...props }: CanvasContainerProps) {
   const { images, isEditMode } = usePlayerCanvasBackgroundContext()
   const [imageList, setImageList] = useState<CanvasImage[]>(images)
 
@@ -60,7 +66,11 @@ function CanvasContainer({ ...props }: { width: number; height: number }) {
     setImageList(images)
   }, [images, isEditMode])
 
-  const editButton = isEditMode ? null : <EditModeButton />
+  let editButton = null
+  if (!isEditMode && canEdit) {
+    editButton = <EditModeButton />
+  }
+
   const controlButtons = isEditMode && (
     <Box sx={{ display: 'flex', gap: 1.5 }}>
       <ControlButtons imageList={imageList} setImageList={setImageList} />
@@ -87,13 +97,13 @@ function CanvasContainer({ ...props }: { width: number; height: number }) {
   )
 }
 
-export function PlayerCanvasBackground({
-  children,
-  player,
-}: {
-  children: React.ReactNode
+type Props = {
   player: Player
-}) {
+  children: React.ReactNode
+  canEdit?: boolean
+}
+
+export function PlayerCanvasBackground({ children, player, canEdit }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const dimensions = useRefDimensions(containerRef)
 
@@ -107,7 +117,7 @@ export function PlayerCanvasBackground({
       }}
     >
       <PlayerCanvasBackgroundContextProvider player={player}>
-        <CanvasContainer {...dimensions} />
+        <CanvasContainer {...dimensions} canEdit={canEdit} />
       </PlayerCanvasBackgroundContextProvider>
 
       {children}
