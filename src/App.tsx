@@ -16,6 +16,8 @@ import './App.css'
 import MapPage from './pages/map/MapPage'
 import PlayerPage from './pages/player/PlayerPage'
 import PlayersPage from './pages/players/PlayersPage'
+import { SnackbarProvider } from 'notistack'
+import MainMenu from './components/MainMenu'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {
@@ -120,9 +122,11 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
-          <UserProvider>
-            <RouterProvider router={router} />
-          </UserProvider>
+          <SnackbarProvider>
+            <UserProvider>
+              <RouterProvider router={router} />
+            </UserProvider>
+          </SnackbarProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </React.StrictMode>

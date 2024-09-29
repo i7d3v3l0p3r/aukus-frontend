@@ -44,9 +44,9 @@ export async function fetchCurrentUser(): Promise<CurrentUserResponse> {
   if (MOCK_API) {
     console.log('fetching current user')
     return Promise.resolve({
-      user_id: 10,
-      role: 'moder',
-      moder_for: 1,
+      user_id: 1,
+      role: 'player',
+      moder_for: undefined,
     })
   }
   return fetch(`/api/current_user`).then((res) => res.json())
@@ -127,4 +127,16 @@ export async function fetchMovesByDate(
     return Promise.resolve({ moves: playerMovesMock() })
   }
   return fetch(`/api/moves?date=${date}`).then((res) => res.json())
+}
+
+type ResetPointaucTokenResponse = {
+  token: string
+}
+
+export async function resetPointaucToken(): Promise<ResetPointaucTokenResponse> {
+  if (MOCK_API) {
+    console.log('resetting token')
+    return Promise.resolve({ token: 'xxx' })
+  }
+  return fetch('/api/reset_pointauc_token').then((res) => res.json())
 }
