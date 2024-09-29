@@ -68,6 +68,13 @@ export default function PlayerContent(props: Props) {
     setShowPointAucModal(true)
   }
 
+  const handleConnectPointAuc = async () => {
+    setShowPointAucModal(false)
+    const { token } = await resetToken.mutateAsync()
+    const url = `https://pointauc.com/?aukus_token=${token}`
+    window.open(url, '_blank')
+  }
+
   return (
     <PlayerCanvasBackground player={player} canEdit={canEdit}>
       <Box marginTop={'100px'} position={'relative'} zIndex={5}>
@@ -145,6 +152,7 @@ export default function PlayerContent(props: Props) {
         <PointAucModal
           open={showPointAucModal}
           onClose={() => setShowPointAucModal(false)}
+          onAccept={handleConnectPointAuc}
         />
       </Box>
     </PlayerCanvasBackground>

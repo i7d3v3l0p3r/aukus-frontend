@@ -93,6 +93,7 @@ export const Color = {
   orange: '#E58600',
   pink: '#FF2D55',
   pinkLight: '#ECA3D4',
+  white: '#FFFFFF',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
