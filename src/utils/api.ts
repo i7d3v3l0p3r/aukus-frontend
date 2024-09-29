@@ -138,5 +138,10 @@ export async function resetPointaucToken(): Promise<ResetPointaucTokenResponse> 
     console.log('resetting token')
     return Promise.resolve({ token: 'xxx' })
   }
-  return fetch('/api/reset_pointauc_token').then((res) => res.json())
+  return fetch('/api/reset_pointauc_token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((res) => res.json())
 }
