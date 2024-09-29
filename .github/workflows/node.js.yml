@@ -5,7 +5,7 @@ on:
     branches: [ "prod" ]
 
 jobs:
-  build:
+  build_and_deploy:
 
     runs-on: ubuntu-latest
     strategy:
@@ -19,20 +19,25 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-           # check build is ok
     - run: npm install
     - run: npm run build --if-present
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          command_timeout: 5m
-          script: cd ${{ secrets.APP_PATH }} && git pull && npm install && npm run build && sudo systemctl stop nginx && rm -rf prod_build && cp -rf build prod_build && sudo systemctl start nginx
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "./build/"
+        target: "/home/aukus/deploy/frontend/prod/deploy_build"
+
+    - name: swap build and restart nginx
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        command_timeout: 1m
+        script: cd "/home/aukus/deploy/frontend/prod" && sudo systemctl stop nginx && rm -rf build && mv deploy_build/build ./ && sudo systemctl start nginx
