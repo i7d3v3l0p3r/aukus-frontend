@@ -44,9 +44,9 @@ export async function fetchCurrentUser(): Promise<CurrentUserResponse> {
   if (MOCK_API) {
     console.log('fetching current user')
     return Promise.resolve({
-      user_id: 10,
-      role: 'moder',
-      moder_for: 1,
+      user_id: 1,
+      role: 'player',
+      moder_for: undefined,
     })
   }
   return fetch(`/api/current_user`).then((res) => res.json())

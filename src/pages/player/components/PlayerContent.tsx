@@ -1,13 +1,15 @@
-import { Box, Typography } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
+import { Box, Button, Typography } from '@mui/material'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
+import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { getPlayerColor } from 'utils/types'
+import { fetchPlayerMoves, fetchPlayers, resetPointaucToken } from 'utils/api'
+import { Color, getPlayerColor } from 'utils/types'
 import { aukus1Games, aukus2Games } from '../data'
 import MoveCard from './MoveCard'
 import PreviousGamesTable from './PeviousGamesTable'
+import PointAucModal from './PointAucModal'
 import StreamLink from './StreamLink'
 
 type Props = {}
@@ -15,6 +17,9 @@ type Props = {}
 export default function PlayerContent(props: Props) {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
+  const [showPointAucModal, setShowPointAucModal] = useState(false)
+
+  const { userId } = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -22,8 +27,9 @@ export default function PlayerContent(props: Props) {
     staleTime: 1000 * 60 * 1,
   })
   const players = playersData?.players
-
   const player = players?.find((player) => player.url_handle === playerHandle)
+
+  const resetToken = useMutation({ mutationFn: resetPointaucToken })
 
   const { data: playerMovesData } = useQuery({
     queryKey: ['playerMoves', player?.id || 0],
@@ -45,6 +51,8 @@ export default function PlayerContent(props: Props) {
     return <div>Игрок не найден</div>
   }
 
+  const isOwner = player.id === userId
+
   playerMoves.sort((a, b) => {
     return b.id - a.id
   })
@@ -54,12 +62,23 @@ export default function PlayerContent(props: Props) {
   const aukus1games = aukus1Games[player.url_handle]
   const aukus2games = aukus2Games[player.url_handle]
 
+  const handlePointAucClick = () => {
+    setShowPointAucModal(true)
+  }
+
   return (
     <Box>
       <Box textAlign={'center'}>
         <Typography fontSize="48px" fontWeight={700}>
           Страница участника {player.name}
         </Typography>
+        {isOwner && (
+          <Box marginTop={'30px'}>
+            <Button color="customOrange" onClick={handlePointAucClick}>
+              Привязать PointAuc
+            </Button>
+          </Box>
+        )}
         <Box marginTop={'30px'} marginBottom={'50px'}>
           <StreamLink player={player} />
         </Box>
@@ -120,6 +139,10 @@ export default function PlayerContent(props: Props) {
           />
         </Box>
       )}
+      <PointAucModal
+        open={showPointAucModal}
+        onClose={() => setShowPointAucModal(false)}
+      />
     </Box>
   )
 }
