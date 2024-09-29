@@ -7,6 +7,7 @@ export default function AboutPage() {
   return (
     <Box>
       <MainMenu currentPage={'about'} />
+      <Box marginTop={'100px'} />
       <AboutContent />
       <BottomSection />
     </Box>

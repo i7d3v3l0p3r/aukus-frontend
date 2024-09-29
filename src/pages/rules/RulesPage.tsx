@@ -7,6 +7,7 @@ export default function RulesPage() {
   return (
     <Box>
       <MainMenu currentPage={'rules'} />
+      <Box marginTop={'100px'} />
       <RulesContainer />
       <BottomSection />
     </Box>

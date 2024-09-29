@@ -31,7 +31,7 @@ export default function MainMenu({
   const playerColor = currentPlayer && getPlayerColor(currentPlayer)
 
   return (
-    <Box marginBottom={'100px'}>
+    <Box>
       <ScrollRestoration />
       <Box
         display="block"

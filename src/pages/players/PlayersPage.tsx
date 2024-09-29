@@ -7,6 +7,7 @@ export default function PlayersPage() {
   return (
     <Box>
       <MainMenu currentPage="players" />
+      <Box marginTop={'100px'} />
       <PlayerList />
       <BottomSection />
     </Box>
