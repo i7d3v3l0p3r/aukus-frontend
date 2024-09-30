@@ -164,7 +164,12 @@ function formatDate(dateString: string) {
   const day = date.getDate()
   const month = date.toLocaleString('ru-RU', { month: 'long' })
   const monthFixed = month.slice(0, -1) + 'я'
-  return `${day} ${monthFixed}`
+
+  const hour = date.getHours()
+  const paddedHour = hour.toString().padStart(2, '0')
+  const minute = date.getMinutes()
+  const paddedMinute = minute.toString().padStart(2, '0')
+  return `${day} ${monthFixed} ${paddedHour}:${paddedMinute}`
 }
 
 // Function to make URLs clickable and preserve line breaks
