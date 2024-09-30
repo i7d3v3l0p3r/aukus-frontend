@@ -1,14 +1,17 @@
-import React from 'react';
-import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context';
-import { useSaveCanvasImages, useUploadCanvasImage } from '../queries';
-import { Button, Divider } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import React from 'react'
+import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context'
+import { useSaveCanvasImages, useUploadCanvasImage } from '../queries'
+import { Button, Divider } from '@mui/material'
+import { useSnackbar } from 'notistack'
 
-export function ControlButtons({ imageList, setImageList }: {
-  imageList: CanvasImage[];
-  setImageList: React.Dispatch<React.SetStateAction<CanvasImage[]>>;
+export function ControlButtons({
+  imageList,
+  setImageList,
+}: {
+  imageList: CanvasImage[]
+  setImageList: React.Dispatch<React.SetStateAction<CanvasImage[]>>
 }) {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
   const {
     selectedImage,
@@ -18,102 +21,107 @@ export function ControlButtons({ imageList, setImageList }: {
     images,
     flipFunction,
     setFlipFunction,
-  } = usePlayerCanvasBackgroundContext();
+  } = usePlayerCanvasBackgroundContext()
 
-  const saveMutation = useSaveCanvasImages(player.id);
+  const saveMutation = useSaveCanvasImages(player.id)
 
-  const uploadMutation = useUploadCanvasImage(player.id);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const uploadMutation = useUploadCanvasImage(player.id)
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null;
-    if (!file) return;
+    const file = event.target.files?.[0] ?? null
+    if (!file) return
 
-    const image = new window.Image();
+    const image = new window.Image()
     image.onload = () => {
-      uploadMutation.mutate({
-        file: file,
-        width: image.width,
-        height: image.height,
-      }, {
-        onSuccess: () => {
-          console.log('Image uploaded');
-          enqueueSnackbar('Изображение загружено', {
-            variant: 'success',
-            autoHideDuration: 3000,
-          });
+      uploadMutation.mutate(
+        {
+          file: file,
+          width: image.width,
+          height: image.height,
         },
-        onError: (error) => {
-          console.error('Failed to upload image');
-          console.error(error);
+        {
+          onSuccess: () => {
+            console.log('Image uploaded')
+            enqueueSnackbar('Изображение загружено', {
+              variant: 'success',
+              autoHideDuration: 3000,
+            })
+          },
+          onError: (error) => {
+            console.error('Failed to upload image')
+            console.error(error)
 
-          enqueueSnackbar('Не удалось загрузить изображение', {
-            variant: 'error',
-            autoHideDuration: 6000,
-          });
-        },
-        onSettled: () => {
-          if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-          }
-        },
-      });
-    };
-    image.src = URL.createObjectURL(file);
-  };
+            enqueueSnackbar('Не удалось загрузить изображение', {
+              variant: 'error',
+              autoHideDuration: 6000,
+            })
+          },
+          onSettled: () => {
+            if (fileInputRef.current) {
+              fileInputRef.current.value = ''
+            }
+          },
+        }
+      )
+    }
+    image.src = URL.createObjectURL(file)
+  }
 
-  const onUploadClick = () => fileInputRef.current?.click();
+  const onUploadClick = () => fileInputRef.current?.click()
 
   const handleImageDelete = () => {
-    if (!selectedImage) return;
+    if (!selectedImage) return
 
-    const newList = imageList.filter(i => i.id !== selectedImage.id);
-    setSelectedImage(null);
-    setFlipFunction(null);
+    const newList = imageList.filter((i) => i.id !== selectedImage.id)
+    setSelectedImage(null)
+    setFlipFunction(null)
 
-    handleSave(newList);
-  };
+    handleSave(newList)
+  }
 
   const handleSave = (newList?: CanvasImage[]) => {
     const list = (newList || imageList).map((el, i) => ({
       ...el,
       zIndex: i,
-    }));
+    }))
 
     saveMutation.mutate(list, {
       onSuccess: () => {
-        console.log('Saved');
+        console.log('Saved')
         enqueueSnackbar(newList ? 'Изображение удалено' : 'Сохранено', {
           variant: 'success',
           autoHideDuration: 3000,
-        });
+        })
+        setIsEditMode(false)
       },
       onError: (error) => {
-        console.error('Failed to save images');
-        console.error(error);
-        enqueueSnackbar(newList ? 'Произошла ошибка при удалении' : 'Произошла ошибка при сохранении', {
-          variant: 'error',
-          autoHideDuration: 6000,
-        });
+        console.error('Failed to save images')
+        console.error(error)
+        enqueueSnackbar(
+          newList
+            ? 'Произошла ошибка при удалении'
+            : 'Произошла ошибка при сохранении',
+          {
+            variant: 'error',
+            autoHideDuration: 6000,
+          }
+        )
       },
-    });
-  };
+    })
+  }
 
   const handleChangeEditMode = () => {
-    let disableEditMode = true;
+    let disableEditMode = true
     if (imageList.length !== images.length) {
-      disableEditMode = window.confirm('Вы забыли сохранить изображения');
+      disableEditMode = window.confirm('Вы забыли сохранить изображения')
     }
-    setIsEditMode(!disableEditMode);
-  };
+    setIsEditMode(!disableEditMode)
+  }
 
   return (
     <>
-      <Button
-        variant="contained"
-        color="info"
-        onClick={handleChangeEditMode}
-      >
+      <Button variant="contained" color="info" onClick={handleChangeEditMode}>
         Отмена
       </Button>
 
@@ -142,11 +150,16 @@ export function ControlButtons({ imageList, setImageList }: {
         Сохранить
       </Button>
 
-      <Divider orientation="vertical" color="#414141" flexItem sx={{
-        borderRadius: 10,
-        borderRightWidth: 4,
-        marginY: '7px',
-      }} />
+      <Divider
+        orientation="vertical"
+        color="#414141"
+        flexItem
+        sx={{
+          borderRadius: 10,
+          borderRightWidth: 4,
+          marginY: '7px',
+        }}
+      />
 
       <input
         ref={fileInputRef}
@@ -155,13 +168,9 @@ export function ControlButtons({ imageList, setImageList }: {
         style={{ display: 'none' }}
         onChange={handleFileUpload}
       />
-      <Button
-        variant="contained"
-        color="success"
-        onClick={onUploadClick}
-      >
+      <Button variant="contained" color="success" onClick={onUploadClick}>
         {uploadMutation.isPending ? 'Загрузка...' : 'Загрузить фото'}
       </Button>
     </>
-  );
+  )
 }
