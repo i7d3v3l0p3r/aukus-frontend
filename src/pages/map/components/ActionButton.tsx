@@ -44,7 +44,7 @@ export default function ActionButton({
 
   if (buttonBoxRef.current && mapBottom) {
     const makeFixed =
-      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 290
+      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 295
 
     if (!makeFixed && buttonFixed) {
       setButtonFixed(false)
