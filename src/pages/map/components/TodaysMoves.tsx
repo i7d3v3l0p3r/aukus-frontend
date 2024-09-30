@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import MoveCard from 'pages/player/components/MoveCard'
 import { fetchMovesByDate } from 'utils/api'
@@ -16,7 +16,12 @@ export default function TodaysMoves() {
   if (!todaysMoves) return null
 
   return (
-    <Box marginTop={'100px'}>
+    <Box>
+      <Box marginTop={'80px'} textAlign={'center'} marginBottom={'50px'}>
+        <Typography fontWeight={600} fontSize={'48px'}>
+          История ходов за сегодня
+        </Typography>
+      </Box>
       {todaysMoves.moves.map((move, index) => (
         <Box key={index}>
           <MoveCard move={move} id={move.id} />

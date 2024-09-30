@@ -83,7 +83,11 @@ export default function MainMenu({
 
               <Link to="/players" style={{ marginRight: 10 }}>
                 <Button
-                  color={currentPage === 'players' ? 'primary' : 'info'}
+                  color={
+                    ['players', 'player'].includes(currentPage)
+                      ? 'primary'
+                      : 'info'
+                  }
                   sx={{ width: '150px', height: '40px' }}
                 >
                   Участники
