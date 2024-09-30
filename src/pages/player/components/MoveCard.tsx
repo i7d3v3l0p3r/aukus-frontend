@@ -10,6 +10,7 @@ import EditVodModal from './EditVodModal'
 type Props = {
   id: number
   move: PlayerMove
+  player?: Player
 }
 
 const moveTypeColor = {
@@ -28,7 +29,7 @@ const moveTypeText = {
   movie: 'Фильм',
 }
 
-export default function MoveCard({ id, move }: Props) {
+export default function MoveCard({ id, move, player }: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
   const { userId, role, moderFor } = useUser()
@@ -92,6 +93,7 @@ export default function MoveCard({ id, move }: Props) {
           </Box>
           <Box fontSize={'24px'} marginBottom={'10px'}>
             {move.item_title}
+            {player && ` — ${player.name}`}
           </Box>
           <Box
             fontSize={'14px'}
