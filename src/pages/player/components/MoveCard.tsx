@@ -4,7 +4,7 @@ import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'
 import { updateVodLink } from 'utils/api'
-import { PlayerMove, Color, Player } from 'utils/types'
+import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
 import EditVodModal from './EditVodModal'
 
 type Props = {
@@ -57,12 +57,14 @@ export default function MoveCard({ id, move, player }: Props) {
   }
 
   const greyColor = '#CECECE'
+  const borderColor = player ? getPlayerColor(player) : Color.greyLight
+
   return (
     <>
       <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
         <Box
           borderRadius={'15px'}
-          border={`2px solid ${Color.greyLight}`}
+          border={`2px solid ${borderColor}`}
           width={'800px'}
           textAlign={'left'}
           padding={'15px'}
