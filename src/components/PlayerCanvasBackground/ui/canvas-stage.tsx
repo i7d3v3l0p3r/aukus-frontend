@@ -8,9 +8,11 @@ import { KonvaEventObject } from 'konva/lib/Node'
 const URLImage = ({
   image,
   setImages,
+  centerX,
 }: {
   image: CanvasImage
   setImages: React.Dispatch<React.SetStateAction<CanvasImage[]>>
+  centerX: number
 }) => {
   const { url, id, scaleX, scaleY, zIndex, ...restProps } = image
 
@@ -83,7 +85,7 @@ const URLImage = ({
     console.log('handleDragEnd()')
     const updatedImage = {
       ...image,
-      x: e.target.x(),
+      x: e.target.x() - centerX,
       y: e.target.y(),
     }
 
@@ -117,12 +119,14 @@ const URLImage = ({
       console.log('new scaleX', node.scaleX())
       console.log('new scaleY', node.scaleY())
 
+      const newX = node.x() - centerX
+
       const updatedImage = {
         ...image,
         rotation: node.rotation(),
         width: Math.abs(Math.max(20, node.width() * transformScaleX)),
         height: Math.abs(node.height() * transformScaleY),
-        x: node.x(),
+        x: newX,
         y: node.y(),
         scaleX: newScaleX,
         scaleY: newScaleY,
@@ -141,6 +145,7 @@ const URLImage = ({
         ref={imageRef}
         image={img}
         {...restProps}
+        x={restProps.x + centerX}
         draggable
         onClick={() => {
           console.log('image clicked', image)
@@ -235,7 +240,12 @@ export function CanvasStage({
       >
         <Layer>
           {imageList.map((image) => (
-            <URLImage key={image.id} image={image} setImages={setImageList} />
+            <URLImage
+              key={image.id}
+              image={image}
+              setImages={setImageList}
+              centerX={width / 2}
+            />
           ))}
         </Layer>
       </Stage>
