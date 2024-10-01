@@ -312,6 +312,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                   width: 200,
                   fontSize: '16px',
                   border: `2px solid ${Color.greyLight}`,
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  paddingLeft: '15px',
+                  paddingRight: '15px',
                 }}
               >
                 0-5 часов
@@ -325,6 +329,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                   width: 200,
                   fontSize: '16px',
                   border: `2px solid ${Color.greyLight}`,
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  paddingLeft: '15px',
+                  paddingRight: '15px',
                 }}
               >
                 5-15 часов
@@ -338,6 +346,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                   width: 200,
                   fontSize: '16px',
                   border: `2px solid ${Color.greyLight}`,
+                  paddingTop: '5px',
+                  paddingBottom: '5px',
+                  paddingLeft: '15px',
+                  paddingRight: '15px',
                 }}
               >
                 15+ часов

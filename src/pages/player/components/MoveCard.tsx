@@ -77,11 +77,12 @@ export default function MoveCard({ id, move, player }: Props) {
             fontWeight={400}
             marginBottom={'15px'}
           >
-            <Box>Ход — {id}</Box>
-            <Box>{formatDate(move.created_at)}</Box>
+            <Box color={greyColor}>Ход — {id}</Box>
+            <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
           <Box
             fontSize={'14px'}
+            fontWeight={500}
             style={{ backgroundColor: moveTypeColor[move.type] }}
             width={'fit-content'}
             paddingTop={'5px'}
