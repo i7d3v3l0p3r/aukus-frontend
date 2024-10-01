@@ -53,7 +53,8 @@ export default function PlayerContent(props: Props) {
   }
 
   const isOwner = player.id === userId
-  const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
+  // const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
+  const canEdit = !!userId
 
   playerMoves.sort((a, b) => {
     return b.id - a.id
