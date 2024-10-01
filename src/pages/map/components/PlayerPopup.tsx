@@ -1,4 +1,4 @@
-import { Paper, Popper, Typography } from '@mui/material'
+import { Paper, Popper, Tooltip, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import LinkSpan from 'components/LinkSpan'
 import { useEffect, useState } from 'react'
@@ -84,7 +84,9 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <LinkSpan color={Color.green}>Смотреть</LinkSpan>
+                <Tooltip title={player.stream_last_category}>
+                  <LinkSpan color={Color.green}>Смотреть</LinkSpan>
+                </Tooltip>
               </Link>
             </Typography>
           ) : (

@@ -7,7 +7,7 @@ const playerLasqa: Player = {
   twitch_stream_link: '',
   vk_stream_link: 'https://live.vkplay.ru/lasqa',
   donation_link: 'https://www.donationalerts.com/r/lasqa',
-  map_position: 50,
+  map_position: 6,
   current_game: 'Балдурс Гейт 3 Game of the year edition',
   is_online: false,
   url_handle: 'lasqa',
@@ -20,9 +20,9 @@ const playerSegall: Player = {
   twitch_stream_link: 'https://www.twitch.tv/segall',
   vk_stream_link: 'https://live.vkplay.ru/segall',
   donation_link: 'https://www.donationalerts.com/r/segall',
-  map_position: sample(range(1, 99)) as number,
+  map_position: 6,
   current_game: 'Соник',
-  is_online: true,
+  is_online: false,
   url_handle: 'segall',
   stream_last_category: 'Just Chatting',
 }
@@ -33,22 +33,38 @@ const playerRoadhouse: Player = {
   twitch_stream_link: 'https://www.twitch.tv/roadhouse',
   vk_stream_link: 'https://live.vkplay.ru/roadhouse',
   donation_link: 'https://www.donationalerts.com/r/roadhouse',
-  map_position: sample(range(1, 99)) as number,
+  map_position: 6,
   current_game: 'Готика',
   is_online: true,
   url_handle: 'roadhouse',
   stream_last_category: 'Witcher',
 }
 
-export const playersMock = [playerLasqa, playerSegall, playerRoadhouse].sort(
-  (a, b) => {
-    if (a.name > b.name) {
-      return 1
-    } else {
-      return -1
-    }
+const playerPraden: Player = {
+  id: 4,
+  name: 'Praden',
+  twitch_stream_link: 'https://www.twitch.tv/roadhouse',
+  vk_stream_link: 'https://live.vkplay.ru/roadhouse',
+  donation_link: 'https://www.donationalerts.com/r/roadhouse',
+  map_position: 6,
+  current_game: 'Готика',
+  is_online: true,
+  url_handle: 'praden',
+  stream_last_category: 'Witcher',
+}
+
+export const playersMock = [
+  playerLasqa,
+  playerSegall,
+  playerRoadhouse,
+  playerPraden,
+].sort((a, b) => {
+  if (a.name > b.name) {
+    return 1
+  } else {
+    return -1
   }
-)
+})
 
 export const playersMockById = playersMock.reduce(
   (acc, player) => {
@@ -105,6 +121,7 @@ export function playerMovesMock() {
     }
 
     data.push({
+      player_id: sample([1, 2, 3, 4]),
       created_at: dates[i].toDateString(),
       id: i + 1,
       item_title: sample(['Готика', 'Соник', 'Ведьмак', 'Смута']),
@@ -119,6 +136,8 @@ export function playerMovesMock() {
       snake_from: null,
       snake_to: null,
       item_length: 'medium',
+      vod_link:
+        'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
     })
   }
   return data
