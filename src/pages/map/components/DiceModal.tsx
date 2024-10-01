@@ -47,7 +47,6 @@ export default function DiceModal({
   >('idle')
 
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
-
   const [diceColor, setDiceColor] = useState<string>(getRandomHexColor())
 
   const diceRollSum = diceRoll
@@ -57,7 +56,7 @@ export default function DiceModal({
   const isTurnComplete =
     diceRoll !== null && diceStatus === 'done' && diceRollSum
 
-  const canThrowDice = diceStatus === 'idle' && diceRoll === null
+  const canThrowDice = diceStatus === 'idle'
 
   useEffect(() => {
     if (!open) {
@@ -114,7 +113,10 @@ export default function DiceModal({
 
   const handleTestThrow = () => {
     if (diceBox && dice) {
-      diceBox.roll(dice)
+      setDiceRoll(null)
+      diceBox.roll(dice).then((result: Array<DiceRoll>) => {
+        setDiceRoll(result.map((diceRoll) => diceRoll.value))
+      })
       const newColor = getRandomHexColor()
       setDiceColor(newColor)
       diceBox.config.themeColor = newColor
@@ -147,7 +149,7 @@ export default function DiceModal({
             Бросок кубика
             {diceRollSum && diceRollDisplay}
           </Box>
-          {!diceRollSum && diceStatus === 'idle' && (
+          {diceStatus === 'idle' && (
             <Button
               disableRipple
               onClick={handleTestThrow}
@@ -174,7 +176,7 @@ export default function DiceModal({
             position: 'relative',
             justifyContent: 'center',
             height: '200px',
-            border: '1px solid grey',
+            border: '2px solid #414141',
             borderRadius: '10px',
             padding: '5px',
           }}

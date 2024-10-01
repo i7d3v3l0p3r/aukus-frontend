@@ -212,7 +212,9 @@ export default function PlayerIcon({
   const playerIcon = playerIcons[player.url_handle] || FigureCopper
 
   const hideAvatar =
-    playersOnSamePosition.length > 1 && player.map_position !== 0
+    playersOnSamePosition.length > 1 &&
+    player.map_position !== 0 &&
+    moveSteps === 0
 
   return (
     <animated.div
