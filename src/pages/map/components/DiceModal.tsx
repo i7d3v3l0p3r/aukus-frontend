@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -29,6 +30,9 @@ type DiceBoxType = {
   init: () => Promise<void>
   roll: (dice: string) => Promise<Array<DiceRoll>>
   clear: () => void
+  config: {
+    themeColor: string
+  }
 }
 
 export default function DiceModal({
@@ -43,6 +47,8 @@ export default function DiceModal({
   >('idle')
 
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
+
+  const [diceColor, setDiceColor] = useState<string>(getRandomHexColor())
 
   const diceRollSum = diceRoll
     ? diceRoll.reduce((acc, value) => acc + value, 0)
@@ -81,7 +87,7 @@ export default function DiceModal({
           assetPath: '/static/assets/',
           container: DiceBoxContainer,
           scale: 11,
-          themeColor: getRandomHexColor(),
+          themeColor: diceColor,
           // delay: 100,
         })
         diceBox.init().then(() => {
@@ -106,6 +112,15 @@ export default function DiceModal({
     })
   }
 
+  const handleTestThrow = () => {
+    if (diceBox && dice) {
+      diceBox.roll(dice)
+      const newColor = getRandomHexColor()
+      setDiceColor(newColor)
+      diceBox.config.themeColor = newColor
+    }
+  }
+
   const showAllDices = diceRoll !== null && diceRoll.length > 1
   const diceRollDisplay = showAllDices
     ? ` — ${diceRollSum} (${diceRoll.join(', ')})`
@@ -120,10 +135,30 @@ export default function DiceModal({
           paddingLeft: '30px',
           lineHeight: '1',
           paddingBottom: '30px',
+          paddingRight: '30px',
         }}
       >
-        Бросок кубика
-        {diceRollSum ? diceRollDisplay : ', перебрасывать нельзя'}
+        <Box
+          display={'flex'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+        >
+          <Box>
+            Бросок кубика
+            {diceRollSum && diceRollDisplay}
+          </Box>
+          {!diceRollSum && diceStatus === 'idle' && (
+            <Button
+              disableRipple
+              onClick={handleTestThrow}
+              style={{
+                backgroundColor: diceColor,
+              }}
+            >
+              Тестовый бросок
+            </Button>
+          )}
+        </Box>
       </DialogTitle>
       <DialogContent
         style={{
