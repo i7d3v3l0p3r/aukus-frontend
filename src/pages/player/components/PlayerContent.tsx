@@ -5,13 +5,13 @@ import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers, resetPointaucToken } from 'utils/api'
-import { Color, getPlayerColor } from 'utils/types'
-import { aukus1Games, aukus2Games } from '../data'
+import { getPlayerColor } from 'utils/types'
+import { aukus1Games, aukus2Games } from '../data_aukus1'
 import MoveCard from './MoveCard'
-import PreviousGamesTable from './PeviousGamesTable'
 import PointAucModal from './PointAucModal'
 import StreamLink from './StreamLink'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
+import OldMoveCard from './OldMoveCard'
 
 type Props = {}
 
@@ -76,86 +76,88 @@ export default function PlayerContent(props: Props) {
   }
 
   return (
-    <PlayerCanvasBackground player={player} canEdit={canEdit}>
-      <Box marginTop={'100px'} position={'relative'} zIndex={5}>
-        <Box textAlign={'center'}>
-          <Typography fontSize="48px" fontWeight={700}>
-            Страница участника {player.name}
-          </Typography>
-          {isOwner && (
-            <Box marginTop={'30px'}>
-              <Button color="customOrange" onClick={handlePointAucClick}>
-                Привязать PointAuc
-              </Button>
-            </Box>
-          )}
-          <Box marginTop={'30px'} marginBottom={'50px'}>
-            <StreamLink player={player} />
-          </Box>
-
-          {player.current_game && (
-            <CurrentMove
-              id={playerMoves.length + 1}
-              title={player.current_game}
-              playerColor={playerColor}
-            />
-          )}
-
-          {playerMoves.map((move, index) => {
-            return (
-              <Box key={index}>
-                <MoveCard id={playerMoves.length - index} move={move} />
+    <Box>
+      <PlayerCanvasBackground player={player} canEdit={canEdit}>
+        <Box marginTop={'100px'} position={'relative'} zIndex={5}>
+          <Box textAlign={'center'}>
+            <Typography fontSize="48px" fontWeight={700}>
+              Страница участника {player.name}
+            </Typography>
+            {isOwner && (
+              <Box marginTop={'30px'}>
+                <Button color="customOrange" onClick={handlePointAucClick}>
+                  Привязать PointAuc
+                </Button>
               </Box>
-            )
-          })}
+            )}
+            <Box marginTop={'30px'} marginBottom={'50px'}>
+              <StreamLink player={player} />
+            </Box>
+
+            {player.current_game && (
+              <CurrentMove
+                id={playerMoves.length + 1}
+                title={player.current_game}
+                playerColor={playerColor}
+              />
+            )}
+
+            {playerMoves.map((move, index) => {
+              return (
+                <Box key={index}>
+                  <MoveCard id={playerMoves.length - index} move={move} />
+                </Box>
+              )
+            })}
+          </Box>
         </Box>
+      </PlayerCanvasBackground>
 
-        {aukus2games && (
-          <Box marginTop={10}>
-            <Typography variant="h5" align="center">
-              <Link
-                to={aukus2games.link}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <LinkSpan color={playerColor}>Игры с Аукуса 2</LinkSpan>
-              </Link>
-            </Typography>
+      {aukus2games && (
+        <Box marginTop={10}>
+          <Typography fontSize={'24px'} fontWeight={600} align="center">
+            <Link
+              to={aukus2games.link}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <LinkSpan color={playerColor}>Аукус Сезон 2 (2023)</LinkSpan>
+            </Link>
+          </Typography>
 
-            <PreviousGamesTable
-              games={aukus2games.games}
-              playerColor={playerColor}
-            />
-          </Box>
-        )}
+          <Box marginBottom={'50px'} />
 
-        {aukus1games && (
-          <Box marginTop={10}>
-            <Typography fontSize={'24px'} fontWeight={600} align="center">
-              <Link
-                to={aukus1games.link}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <LinkSpan color={playerColor}>Игры с Аукуса 1</LinkSpan>
-              </Link>
-            </Typography>
+          {aukus1games.games.map((game, index) => (
+            <OldMoveCard id={index + 1} game={game} />
+          ))}
+        </Box>
+      )}
 
-            <Box marginBottom={4} />
+      {aukus1games && (
+        <Box marginTop={'200px'}>
+          <Typography fontSize={'24px'} fontWeight={600} align="center">
+            <Link
+              to={aukus1games.link}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <LinkSpan color={playerColor}>Аукус Сезон 1 (2022)</LinkSpan>
+            </Link>
+          </Typography>
 
-            <PreviousGamesTable
-              games={aukus1games.games}
-              playerColor={playerColor}
-            />
-          </Box>
-        )}
-        <PointAucModal
-          open={showPointAucModal}
-          onClose={() => setShowPointAucModal(false)}
-          onAccept={handleConnectPointAuc}
-        />
-      </Box>
-    </PlayerCanvasBackground>
+          <Box marginBottom={'50px'} />
+
+          {aukus1games.games.map((game, index) => (
+            <OldMoveCard id={index + 1} game={game} />
+          ))}
+        </Box>
+      )}
+      <PointAucModal
+        open={showPointAucModal}
+        onClose={() => setShowPointAucModal(false)}
+        onAccept={handleConnectPointAuc}
+      />
+    </Box>
   )
 }
 
