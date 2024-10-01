@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Box } from '@mui/material'
 import { usePlayerCanvasBackgroundContext } from '../context'
+import { useRefDimensions } from '../use-ref-dimensions'
 
-function rotateImage(
+function adjustCoordinates(
   x: number,
   y: number,
   width: number,
@@ -41,17 +42,13 @@ function rotateImage(
 
 export function StaticCanvas() {
   const { images } = usePlayerCanvasBackgroundContext()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const dimensions = useRefDimensions(containerRef)
 
-  return (
-    <Box
-      sx={{
-        position: 'absolute',
-        backgroundColor: 'yellow',
-        zIndex: 0,
-      }}
-    >
-      {images.map((image) => {
-        const { x, y } = rotateImage(
+  const renderItems = () => {
+    if (dimensions.width > 0) {
+      return images.map((image) => {
+        const { x, y } = adjustCoordinates(
           image.x,
           image.y,
           image.width,
@@ -69,16 +66,32 @@ export function StaticCanvas() {
             sx={{
               position: 'absolute',
               top: y,
-              left: x,
+              left: dimensions.width / 2 + x,
               width: `${Math.abs(image.width)}px`,
               height: `${Math.abs(image.height)}px`,
-              transform: `rotate(${image.rotation}deg) scaleX(${image.scaleX}) scaleY(${image.scaleY})`, //scaleX(${image.scaleX}) //  * image.scaleX
+              transform: `rotate(${image.rotation}deg) scaleX(${image.scaleX}) scaleY(${image.scaleY})`,
               userSelect: 'none',
             }}
             draggable={false}
           />
         )
-      })}
+      })
+    }
+
+    return null
+  }
+
+  return (
+    <Box
+      ref={containerRef}
+      sx={{
+        position: 'absolute',
+        zIndex: 0,
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      {renderItems()}
     </Box>
   )
 }

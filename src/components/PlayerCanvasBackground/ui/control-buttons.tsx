@@ -117,6 +117,8 @@ export function ControlButtons({
       disableEditMode = window.confirm('Вы забыли сохранить изображения')
     }
     setIsEditMode(!disableEditMode)
+    setSelectedImage(null)
+    setFlipFunction(null)
   }
 
   return (
