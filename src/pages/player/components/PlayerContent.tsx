@@ -1,14 +1,13 @@
 import { Box, Button, Typography } from '@mui/material'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { fetchPlayerMoves, fetchPlayers, resetPointaucToken } from 'utils/api'
+import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { getPlayerColor } from 'utils/types'
 import { aukus1Games, aukus2Games } from '../data_aukus1'
 import MoveCard from './MoveCard'
-import PointAucModal from './PointAucModal'
 import StreamLink from './StreamLink'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
 import OldMoveCard from './OldMoveCard'
@@ -18,7 +17,6 @@ type Props = {}
 export default function PlayerContent(props: Props) {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
-  const [showPointAucModal, setShowPointAucModal] = useState(false)
 
   const { userId, role, moderFor } = useUser()
 
@@ -29,8 +27,6 @@ export default function PlayerContent(props: Props) {
   })
   const players = playersData?.players
   const player = players?.find((player) => player.url_handle === playerHandle)
-
-  const resetToken = useMutation({ mutationFn: resetPointaucToken })
 
   const { data: playerMovesData } = useQuery({
     queryKey: ['playerMoves', player?.id || 0],
@@ -65,32 +61,18 @@ export default function PlayerContent(props: Props) {
   const aukus1games = aukus1Games[player.url_handle]
   const aukus2games = aukus2Games[player.url_handle]
 
-  const handlePointAucClick = () => {
-    setShowPointAucModal(true)
-  }
-
-  const handleConnectPointAuc = async () => {
-    setShowPointAucModal(false)
-    const { token } = await resetToken.mutateAsync()
-    const url = `https://pointauc.com/?aukus_token=${token}`
-    window.open(url, '_blank')
-  }
-
   return (
     <Box>
-      <PlayerCanvasBackground player={player} canEdit={canEdit}>
+      <PlayerCanvasBackground
+        player={player}
+        canEdit={canEdit}
+        isOwner={isOwner}
+      >
         <Box marginTop={'100px'} position={'relative'} zIndex={5}>
           <Box textAlign={'center'}>
             <Typography fontSize="48px" fontWeight={700}>
               Страница участника {player.name}
             </Typography>
-            {isOwner && (
-              <Box marginTop={'30px'}>
-                <Button color="customOrange" onClick={handlePointAucClick}>
-                  Привязать PointAuc
-                </Button>
-              </Box>
-            )}
             <Box marginTop={'30px'} marginBottom={'50px'}>
               <StreamLink player={player} />
             </Box>
@@ -129,7 +111,9 @@ export default function PlayerContent(props: Props) {
           <Box marginBottom={'50px'} />
 
           {aukus1games.games.map((game, index) => (
-            <OldMoveCard id={index + 1} game={game} />
+            <Fragment key={index}>
+              <OldMoveCard id={index + 1} game={game} />
+            </Fragment>
           ))}
         </Box>
       )}
@@ -149,15 +133,12 @@ export default function PlayerContent(props: Props) {
           <Box marginBottom={'50px'} />
 
           {aukus1games.games.map((game, index) => (
-            <OldMoveCard id={index + 1} game={game} />
+            <Fragment key={index}>
+              <OldMoveCard id={index + 1} game={game} />
+            </Fragment>
           ))}
         </Box>
       )}
-      <PointAucModal
-        open={showPointAucModal}
-        onClose={() => setShowPointAucModal(false)}
-        onAccept={handleConnectPointAuc}
-      />
     </Box>
   )
 }

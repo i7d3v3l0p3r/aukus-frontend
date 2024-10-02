@@ -12,12 +12,14 @@ type Props = {
   currentPage: Page
   replaceMenuButtons?: React.ReactNode
   rightSlot?: React.ReactNode
+  leftSlot?: React.ReactNode
 }
 
 export default function MainMenu({
   currentPage,
   replaceMenuButtons,
   rightSlot,
+  leftSlot,
 }: Props) {
   const { userId } = useUser()
   const { data: playersData } = useQuery({
@@ -72,6 +74,11 @@ export default function MainMenu({
         >
           {replaceMenuButtons || (
             <>
+              {leftSlot && (
+                <Box marginRight={'55px'} position="absolute" right="100%">
+                  {leftSlot}
+                </Box>
+              )}
               <Link to="/" style={{ marginRight: 10 }}>
                 <Button
                   color={currentPage === 'map' ? 'primary' : 'info'}
@@ -127,16 +134,7 @@ export default function MainMenu({
           )}
 
           {rightSlot && (
-            <Box
-              marginLeft={2.5}
-              padding={'10px'}
-              borderRadius="15px"
-              sx={{
-                position: 'absolute',
-                left: '100%',
-                backgroundColor: Color.greyDark,
-              }}
-            >
+            <Box marginLeft={'55px'} position="absolute" left="100%">
               {rightSlot}
             </Box>
           )}
