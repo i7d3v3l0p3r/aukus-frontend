@@ -65,7 +65,7 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
           fullWidth
           onClick={onAccept}
         >
-          Перейти на проинтаук
+          Перейти на поинтаук
         </Button>
       </DialogActions>
     </Dialog>
