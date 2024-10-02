@@ -123,7 +123,12 @@ export function ControlButtons({
 
   return (
     <>
-      <Button variant="contained" color="info" onClick={handleChangeEditMode}>
+      <Button
+        variant="contained"
+        color="info"
+        onClick={handleChangeEditMode}
+        sx={{ width: '150px' }}
+      >
         Отмена
       </Button>
 
@@ -132,6 +137,7 @@ export function ControlButtons({
         color="secondary"
         disabled={!flipFunction}
         onClick={() => flipFunction?.()}
+        sx={{ width: '150px' }}
       >
         Отразить
       </Button>
@@ -140,6 +146,7 @@ export function ControlButtons({
         color="error"
         onClick={handleImageDelete}
         disabled={!selectedImage}
+        sx={{ width: '150px' }}
       >
         Удалить
       </Button>
@@ -148,6 +155,7 @@ export function ControlButtons({
         variant="contained"
         color="secondary"
         onClick={() => handleSave()}
+        sx={{ width: '150px' }}
       >
         Сохранить
       </Button>
@@ -170,7 +178,12 @@ export function ControlButtons({
         style={{ display: 'none' }}
         onChange={handleFileUpload}
       />
-      <Button variant="contained" color="success" onClick={onUploadClick}>
+      <Button
+        variant="contained"
+        color="success"
+        onClick={onUploadClick}
+        sx={{ width: '200px' }}
+      >
         {uploadMutation.isPending ? 'Загрузка...' : 'Загрузить фото'}
       </Button>
     </>
