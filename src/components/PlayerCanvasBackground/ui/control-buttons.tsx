@@ -32,6 +32,14 @@ export function ControlButtons({
     const file = event.target.files?.[0] ?? null
     if (!file) return
 
+    if (file.size > 1024 * 1024 * 5) {
+      enqueueSnackbar('Файл больше 5MB', {
+        variant: 'error',
+        autoHideDuration: 6000,
+      })
+      return
+    }
+
     const image = new window.Image()
     image.onload = () => {
       uploadMutation.mutate(
@@ -41,13 +49,13 @@ export function ControlButtons({
           height: image.height,
         },
         {
-          onSuccess: () => {
-            console.log('Image uploaded')
-            enqueueSnackbar('Изображение загружено', {
-              variant: 'success',
-              autoHideDuration: 3000,
-            })
-          },
+          // onSuccess: () => {
+          //   console.log('Image uploaded')
+          //   enqueueSnackbar('Изображение загружено', {
+          //     variant: 'success',
+          //     autoHideDuration: 3000,
+          //   })
+          // },
           onError: (error) => {
             console.error('Failed to upload image')
             console.error(error)
@@ -89,10 +97,10 @@ export function ControlButtons({
     saveMutation.mutate(list, {
       onSuccess: () => {
         console.log('Saved')
-        enqueueSnackbar(newList ? 'Изображение удалено' : 'Сохранено', {
-          variant: 'success',
-          autoHideDuration: 3000,
-        })
+        // enqueueSnackbar(newList ? 'Изображение удалено' : 'Сохранено', {
+        //   variant: 'success',
+        //   autoHideDuration: 3000,
+        // })
         setIsEditMode(false)
       },
       onError: (error) => {
@@ -173,7 +181,7 @@ export function ControlButtons({
 
       <input
         ref={fileInputRef}
-        accept="image/*"
+        accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
         type="file"
         style={{ display: 'none' }}
         onChange={handleFileUpload}
