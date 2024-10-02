@@ -1,5 +1,5 @@
 import React, { SVGProps, useEffect, useRef, useState } from 'react'
-import { Box, IconButton } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import {
   CanvasImage,
   PlayerCanvasBackgroundContextProvider,
@@ -8,9 +8,12 @@ import {
 import { useRefDimensions } from './use-ref-dimensions'
 import { ControlButtons } from './ui/control-buttons'
 import { CanvasStage } from './ui/canvas-stage'
-import { Player } from '../../utils/types'
+import { Color, Player } from 'utils/types'
 import { StaticCanvas } from './ui/static-canvas'
 import MainMenu from 'components/MainMenu'
+import PointAucModal from 'pages/player/components/PointAucModal'
+import { useMutation } from '@tanstack/react-query'
+import { resetPointaucToken } from 'utils/api'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (
@@ -42,13 +45,43 @@ function EditModeButton() {
   const { setIsEditMode } = usePlayerCanvasBackgroundContext()
 
   return (
-    <IconButton
-      sx={{ width: 40, height: 40, padding: 0 }}
+    <Button
+      sx={{
+        width: '212px',
+        height: '40px',
+        paddingLeft: '15px',
+        paddingRight: '15px',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        backgroundColor: Color.blue,
+      }}
       color="info"
       onClick={() => setIsEditMode(true)}
     >
       <ImageSvg />
-    </IconButton>
+      <Box marginLeft={'8px'} />
+      Редактировать
+    </Button>
+  )
+}
+
+function PointAucButton({ onClick }: { onClick: () => void }) {
+  return (
+    <Button
+      sx={{
+        width: '212px',
+        height: '40px',
+        paddingLeft: '15px',
+        paddingRight: '15px',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        backgroundColor: Color.blue,
+      }}
+      color="info"
+      onClick={() => onClick()}
+    >
+      Привязать PointAuc
+    </Button>
   )
 }
 
@@ -56,11 +89,26 @@ type CanvasContainerProps = {
   width: number
   height: number
   canEdit?: boolean
+  isOwner?: boolean
 }
 
-function CanvasContainer({ canEdit, ...props }: CanvasContainerProps) {
+function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
   const { images, isEditMode } = usePlayerCanvasBackgroundContext()
   const [imageList, setImageList] = useState<CanvasImage[]>(images)
+
+  const [showPointAucModal, setShowPointAucModal] = useState(false)
+  const resetToken = useMutation({ mutationFn: resetPointaucToken })
+
+  const handleConnectPointAuc = async () => {
+    setShowPointAucModal(false)
+    const { token } = await resetToken.mutateAsync()
+    const url = `https://pointauc.com/?aukus_token=${token}`
+    window.open(url, '_blank')
+  }
+
+  const handlePointAucClick = () => {
+    setShowPointAucModal(true)
+  }
 
   useEffect(() => {
     setImageList(images)
@@ -69,6 +117,11 @@ function CanvasContainer({ canEdit, ...props }: CanvasContainerProps) {
   let editButton = null
   if (!isEditMode && canEdit) {
     editButton = <EditModeButton />
+  }
+
+  let pointAucButton = null
+  if (!isEditMode && isOwner) {
+    pointAucButton = <PointAucButton onClick={handlePointAucClick} />
   }
 
   const controlButtons = isEditMode && (
@@ -82,6 +135,7 @@ function CanvasContainer({ canEdit, ...props }: CanvasContainerProps) {
       <MainMenu
         currentPage="player"
         replaceMenuButtons={controlButtons}
+        leftSlot={pointAucButton}
         rightSlot={editButton}
       />
       {isEditMode ? (
@@ -93,6 +147,11 @@ function CanvasContainer({ canEdit, ...props }: CanvasContainerProps) {
       ) : (
         <StaticCanvas />
       )}
+      <PointAucModal
+        open={showPointAucModal}
+        onClose={() => setShowPointAucModal(false)}
+        onAccept={handleConnectPointAuc}
+      />
     </>
   )
 }
@@ -101,9 +160,15 @@ type Props = {
   player: Player
   children: React.ReactNode
   canEdit?: boolean
+  isOwner?: boolean
 }
 
-export function PlayerCanvasBackground({ children, player, canEdit }: Props) {
+export function PlayerCanvasBackground({
+  children,
+  player,
+  canEdit,
+  isOwner,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const dimensions = useRefDimensions(containerRef)
 
@@ -117,7 +182,7 @@ export function PlayerCanvasBackground({ children, player, canEdit }: Props) {
       }}
     >
       <PlayerCanvasBackgroundContextProvider player={player}>
-        <CanvasContainer {...dimensions} canEdit={canEdit} />
+        <CanvasContainer {...dimensions} canEdit={canEdit} isOwner={isOwner} />
       </PlayerCanvasBackgroundContextProvider>
 
       {children}
