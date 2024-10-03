@@ -53,9 +53,8 @@ function EditModeButton() {
         paddingRight: '15px',
         paddingTop: '10px',
         paddingBottom: '10px',
-        backgroundColor: Color.blue,
       }}
-      color="info"
+      color="customBlue"
       onClick={() => setIsEditMode(true)}
     >
       <ImageSvg />
@@ -75,9 +74,8 @@ function PointAucButton({ onClick }: { onClick: () => void }) {
         paddingRight: '15px',
         paddingTop: '10px',
         paddingBottom: '10px',
-        backgroundColor: Color.blue,
       }}
-      color="info"
+      color="customBlue"
       onClick={() => onClick()}
     >
       Привязать PointAuc
