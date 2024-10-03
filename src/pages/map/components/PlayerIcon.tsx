@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { getPlayerColor, Player } from 'utils/types'
+import { Color, getPlayerColor, Player } from 'utils/types'
 import PlayerGreen from 'assets/map/PlayerGreen.webp'
 import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
 import PlayerRed from 'assets/map/PlayerRed.webp'
@@ -17,6 +17,7 @@ import PlayerPurple from 'assets/map/PlayerPurple.webp'
 import { cellSize } from '../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from './utils'
+import { CircleSharp } from '@mui/icons-material'
 
 const playerIcons: { [key: string]: string } = {
   lasqa: PlayerBlue,
@@ -210,7 +211,7 @@ export default function PlayerIcon({
     event.stopPropagation()
   }
 
-  const onlineColor = player.is_online ? 'green' : 'red'
+  const onlineColor = player.is_online ? Color.green : Color.red
   const playerColor = getPlayerColor(player)
   const playerIcon = playerIcons[player.url_handle] || PlayerBlueLight
 
@@ -258,8 +259,20 @@ export default function PlayerIcon({
                 paddingLeft: '5px',
                 paddingRight: '5px',
                 borderRadius: '5px',
+                display: 'flex',
+                alignItems: 'center',
+                paddingTop: '3px',
+                paddingBottom: '3px',
               }}
             >
+              <CircleSharp
+                style={{
+                  color: onlineColor,
+                  width: '15px',
+                  height: '15px',
+                  marginRight: '5px',
+                }}
+              />
               {player.name}
             </span>
           </p>
@@ -302,7 +315,7 @@ function getRelativePosition(player: Player, players: Player[]) {
     return { x: playerIndex * 80, y: 0 }
   }
   if (sortedPlayers.length === 2) {
-    return { x: playerIndex * 50, y: -playerIndex * 10 }
+    return { x: playerIndex * 50, y: -playerIndex * 20 }
   }
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }
