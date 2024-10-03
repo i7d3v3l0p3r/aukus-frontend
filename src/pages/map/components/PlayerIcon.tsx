@@ -271,6 +271,8 @@ export default function PlayerIcon({
                   width: '15px',
                   height: '15px',
                   marginRight: '5px',
+                  border: '2px solid white',
+                  borderRadius: '8px',
                 }}
               />
               {player.name}
