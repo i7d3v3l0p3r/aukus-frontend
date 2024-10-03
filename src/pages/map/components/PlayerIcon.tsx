@@ -13,6 +13,7 @@ import PlayerPink from 'assets/map/PlayerPink.webp'
 import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
 import PlayerOrange from 'assets/map/PlayerOrange.webp'
 import PlayerPurple from 'assets/map/PlayerPurple.webp'
+import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 
 import { cellSize } from '../types'
 import PlayerPopup from './PlayerPopup'
@@ -51,6 +52,7 @@ export default function PlayerIcon({
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const playerElement = useRef<HTMLDivElement>(null)
+  const iconRef = useRef<HTMLImageElement>(null)
 
   const playersOnSamePosition = players.filter(
     (p) => p.map_position === player.map_position && p.id !== player.id
@@ -60,6 +62,8 @@ export default function PlayerIcon({
     player,
     playersOnSamePosition
   )
+
+  const isMoving = moveSteps !== 0
 
   const [springs, api] = useSpring(() => {
     return {
@@ -154,7 +158,7 @@ export default function PlayerIcon({
   }
 
   useEffect(() => {
-    if (moveSteps !== 0 && player.map_position <= 101) {
+    if (isMoving && player.map_position <= 101) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2,
@@ -164,7 +168,7 @@ export default function PlayerIcon({
       startChainedAnimation(moveSteps)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moveSteps])
+  }, [isMoving, moveSteps])
 
   useEffect(() => {
     if (anchorCell) {
@@ -205,6 +209,12 @@ export default function PlayerIcon({
   const positionTop = originTop + relativeY
   const positionLeft = originLeft + relativeX
 
+  const isStillAnimated = iconRef.current?.src.endsWith('gif')
+
+  const finalPositionTop =
+    isMoving || isStillAnimated ? originTop - 14 : positionTop
+  const finalPositionLeft = isMoving ? originLeft : positionLeft
+
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement)
     setPopupOpen(!popupOpen)
@@ -216,16 +226,14 @@ export default function PlayerIcon({
   const playerIcon = playerIcons[player.url_handle] || PlayerBlueLight
 
   const hideAvatar =
-    playersOnSamePosition.length > 1 &&
-    player.map_position !== 0 &&
-    moveSteps === 0
+    playersOnSamePosition.length > 1 && player.map_position !== 0 && !isMoving
 
   return (
     <animated.div
       style={{
         position: 'absolute',
-        top: positionTop,
-        left: positionLeft,
+        top: finalPositionTop,
+        left: finalPositionLeft,
         ...springs,
       }}
     >
@@ -243,7 +251,8 @@ export default function PlayerIcon({
         >
           {!hideAvatar && (
             <img
-              src={playerIcon}
+              ref={iconRef}
+              src={isMoving ? PlayerPurpleMoving : playerIcon}
               width={'40px'}
               alt=""
               style={{ verticalAlign: 'middle' }}
@@ -265,16 +274,16 @@ export default function PlayerIcon({
                 paddingBottom: '3px',
               }}
             >
-              <CircleSharp
-                style={{
-                  color: onlineColor,
-                  width: '15px',
-                  height: '15px',
-                  marginRight: '5px',
-                  border: '2px solid white',
-                  borderRadius: '8px',
-                }}
-              />
+              {player.is_online && (
+                <CircleSharp
+                  style={{
+                    color: onlineColor,
+                    width: '15px',
+                    height: '15px',
+                    marginRight: '5px',
+                  }}
+                />
+              )}
               {player.name}
             </span>
           </p>
