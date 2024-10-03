@@ -36,7 +36,7 @@ export default function TodaysMoves() {
         <Box key={index}>
           <MoveCard
             move={move}
-            id={move.id}
+            id={move.player_move_id}
             player={find(
               playersData?.players || [],
               (player: Player) => player.id === move.player_id

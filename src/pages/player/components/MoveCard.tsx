@@ -59,6 +59,11 @@ export default function MoveCard({ id, move, player }: Props) {
   const greyColor = '#CECECE'
   const borderColor = player ? getPlayerColor(player) : Color.greyLight
 
+  let moveTitle = `Ход — ${id}`
+  if (player) {
+    moveTitle = `${player.name} ${moveTitle}`
+  }
+
   return (
     <>
       <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
@@ -77,7 +82,7 @@ export default function MoveCard({ id, move, player }: Props) {
             fontWeight={400}
             marginBottom={'15px'}
           >
-            <Box color={greyColor}>Ход — {id}</Box>
+            <Box color={greyColor}>{moveTitle}</Box>
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
           <Box
@@ -96,7 +101,6 @@ export default function MoveCard({ id, move, player }: Props) {
           </Box>
           <Box fontSize={'24px'} marginBottom={'10px'}>
             {move.item_title}
-            {player && ` — ${player.name}`}
           </Box>
           <Box
             fontSize={'14px'}
