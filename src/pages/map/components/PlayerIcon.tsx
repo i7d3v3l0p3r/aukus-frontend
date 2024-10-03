@@ -15,6 +15,18 @@ import PlayerOrange from 'assets/map/PlayerOrange.webp'
 import PlayerPurple from 'assets/map/PlayerPurple.webp'
 import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 
+import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
+import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
+import PlayerPinkMoving from 'assets/map/PlayerPinkMoving.gif'
+import PlayerPinkLightMoving from 'assets/map/PlayerPinkLightMoving.gif'
+import PlayerRedMoving from 'assets/map/PlayerRedMoving.gif'
+import PlayerBlueMoving from 'assets/map/PlayerBlueMoving.gif'
+import PlayerBlueLightMoving from 'assets/map/PlayerBlueLightMoving.gif'
+import PlayerBlueDarkMoving from 'assets/map/PlayerBlueDarkMoving.gif'
+import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
+import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
+import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
+
 import { cellSize } from '../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from './utils'
@@ -31,6 +43,19 @@ const playerIcons: { [key: string]: string } = {
   melharucos: PlayerBlueLight,
   browjey: PlayerGreen,
   f1ashko: PlayerPinkLight,
+}
+
+const playerMovingIcons: { [key: string]: string } = {
+  lasqa: PlayerBlueMoving,
+  praden: PlayerBrownMoving,
+  roadhouse: PlayerPurpleMoving,
+  segall: PlayerOrangeMoving,
+  artur: PlayerRedMoving,
+  uselessmouth: PlayerPinkMoving,
+  unclobjorn: PlayerBlueDarkMoving,
+  melharucos: PlayerBlueLightMoving,
+  browjey: PlayerGreenMoving,
+  f1ashko: PlayerPinkLightMoving,
 }
 
 type Props = {
@@ -223,7 +248,9 @@ export default function PlayerIcon({
 
   const onlineColor = player.is_online ? Color.green : Color.red
   const playerColor = getPlayerColor(player)
-  const playerIcon = playerIcons[player.url_handle] || PlayerBlueLight
+  const playerIcon = isMoving
+    ? playerMovingIcons[player.url_handle] || PlayerBlueLightMoving
+    : playerIcons[player.url_handle] || PlayerBlueLight
 
   const hideAvatar =
     playersOnSamePosition.length > 1 && player.map_position !== 0 && !isMoving
@@ -252,7 +279,7 @@ export default function PlayerIcon({
           {!hideAvatar && (
             <img
               ref={iconRef}
-              src={isMoving ? PlayerPurpleMoving : playerIcon}
+              src={playerIcon}
               width={'40px'}
               alt=""
               style={{ verticalAlign: 'middle' }}
