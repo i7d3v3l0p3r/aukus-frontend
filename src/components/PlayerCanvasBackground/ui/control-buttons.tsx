@@ -32,6 +32,14 @@ export function ControlButtons({
     const file = event.target.files?.[0] ?? null
     if (!file) return
 
+    if (file.size > 1024 * 1024 * 5) {
+      enqueueSnackbar('Файл больше 5MB', {
+        variant: 'error',
+        autoHideDuration: 6000,
+      })
+      return
+    }
+
     const image = new window.Image()
     image.onload = () => {
       uploadMutation.mutate(
@@ -41,13 +49,13 @@ export function ControlButtons({
           height: image.height,
         },
         {
-          onSuccess: () => {
-            console.log('Image uploaded')
-            enqueueSnackbar('Изображение загружено', {
-              variant: 'success',
-              autoHideDuration: 3000,
-            })
-          },
+          // onSuccess: () => {
+          //   console.log('Image uploaded')
+          //   enqueueSnackbar('Изображение загружено', {
+          //     variant: 'success',
+          //     autoHideDuration: 3000,
+          //   })
+          // },
           onError: (error) => {
             console.error('Failed to upload image')
             console.error(error)
@@ -89,10 +97,10 @@ export function ControlButtons({
     saveMutation.mutate(list, {
       onSuccess: () => {
         console.log('Saved')
-        enqueueSnackbar(newList ? 'Изображение удалено' : 'Сохранено', {
-          variant: 'success',
-          autoHideDuration: 3000,
-        })
+        // enqueueSnackbar(newList ? 'Изображение удалено' : 'Сохранено', {
+        //   variant: 'success',
+        //   autoHideDuration: 3000,
+        // })
         setIsEditMode(false)
       },
       onError: (error) => {
@@ -123,7 +131,12 @@ export function ControlButtons({
 
   return (
     <>
-      <Button variant="contained" color="info" onClick={handleChangeEditMode}>
+      <Button
+        variant="contained"
+        color="info"
+        onClick={handleChangeEditMode}
+        sx={{ width: '150px' }}
+      >
         Отмена
       </Button>
 
@@ -132,6 +145,7 @@ export function ControlButtons({
         color="secondary"
         disabled={!flipFunction}
         onClick={() => flipFunction?.()}
+        sx={{ width: '150px' }}
       >
         Отразить
       </Button>
@@ -140,6 +154,7 @@ export function ControlButtons({
         color="error"
         onClick={handleImageDelete}
         disabled={!selectedImage}
+        sx={{ width: '150px' }}
       >
         Удалить
       </Button>
@@ -148,6 +163,7 @@ export function ControlButtons({
         variant="contained"
         color="secondary"
         onClick={() => handleSave()}
+        sx={{ width: '150px' }}
       >
         Сохранить
       </Button>
@@ -165,12 +181,17 @@ export function ControlButtons({
 
       <input
         ref={fileInputRef}
-        accept="image/*"
+        accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
         type="file"
         style={{ display: 'none' }}
         onChange={handleFileUpload}
       />
-      <Button variant="contained" color="success" onClick={onUploadClick}>
+      <Button
+        variant="contained"
+        color="success"
+        onClick={onUploadClick}
+        sx={{ width: '200px' }}
+      >
         {uploadMutation.isPending ? 'Загрузка...' : 'Загрузить фото'}
       </Button>
     </>

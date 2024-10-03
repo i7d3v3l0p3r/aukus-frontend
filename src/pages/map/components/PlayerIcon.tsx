@@ -1,31 +1,36 @@
 import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { getPlayerColor, Player } from 'utils/types'
-import FigureCopper from 'assets/map/Figure_Copper.png'
-import FigureBlue from 'assets/map/Figure_Blue.png'
-import FigureGreen from 'assets/map/Figure_Green.png'
-import FigureRed from 'assets/map/Figure_Red.png'
-import FigurePink from 'assets/map/Figure_Pink.png'
-import FigurePurple from 'assets/map/Figure_Purple.png'
-import FigureLightGreen from 'assets/map/Figure_LightGreen.png'
-import FigureSalad from 'assets/map/Figure_Salad.png'
-import FigureLightSalad from 'assets/map/Figure_LightSalad.png'
+import { Color, getPlayerColor, Player } from 'utils/types'
+import PlayerGreen from 'assets/map/PlayerGreen.webp'
+import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
+import PlayerRed from 'assets/map/PlayerRed.webp'
+import PlayerBlue from 'assets/map/PlayerBlue.webp'
+import PlayerBlueLight from 'assets/map/PlayerBlueLight.webp'
+import PlayerBlueDark from 'assets/map/PlayerBlueDark.webp'
+import PlayerBrown from 'assets/map/PlayerBrown.webp'
+import PlayerPink from 'assets/map/PlayerPink.webp'
+import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
+import PlayerOrange from 'assets/map/PlayerOrange.webp'
+import PlayerPurple from 'assets/map/PlayerPurple.webp'
+import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 
 import { cellSize } from '../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from './utils'
+import { CircleSharp } from '@mui/icons-material'
 
 const playerIcons: { [key: string]: string } = {
-  lasqa: FigurePurple,
-  roadhouse: FigureCopper,
-  segall: FigureBlue,
-  artur: FigureRed,
-  uselessmouth: FigurePink,
-  unclobjorn: FigureSalad,
-  melharucos: FigureLightSalad,
-  browjey: FigureLightGreen,
-  f1ashko: FigureGreen,
+  lasqa: PlayerBlue,
+  praden: PlayerBrown,
+  roadhouse: PlayerPurple,
+  segall: PlayerOrange,
+  artur: PlayerRed,
+  uselessmouth: PlayerPink,
+  unclobjorn: PlayerBlueDark,
+  melharucos: PlayerBlueLight,
+  browjey: PlayerGreen,
+  f1ashko: PlayerPinkLight,
 }
 
 type Props = {
@@ -47,6 +52,7 @@ export default function PlayerIcon({
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const playerElement = useRef<HTMLDivElement>(null)
+  const iconRef = useRef<HTMLImageElement>(null)
 
   const playersOnSamePosition = players.filter(
     (p) => p.map_position === player.map_position && p.id !== player.id
@@ -56,6 +62,8 @@ export default function PlayerIcon({
     player,
     playersOnSamePosition
   )
+
+  const isMoving = moveSteps !== 0
 
   const [springs, api] = useSpring(() => {
     return {
@@ -150,7 +158,7 @@ export default function PlayerIcon({
   }
 
   useEffect(() => {
-    if (moveSteps !== 0 && player.map_position <= 101) {
+    if (isMoving && player.map_position <= 101) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2,
@@ -160,7 +168,7 @@ export default function PlayerIcon({
       startChainedAnimation(moveSteps)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moveSteps])
+  }, [isMoving, moveSteps])
 
   useEffect(() => {
     if (anchorCell) {
@@ -201,27 +209,31 @@ export default function PlayerIcon({
   const positionTop = originTop + relativeY
   const positionLeft = originLeft + relativeX
 
+  const isStillAnimated = iconRef.current?.src.endsWith('gif')
+
+  const finalPositionTop =
+    isMoving || isStillAnimated ? originTop - 14 : positionTop
+  const finalPositionLeft = isMoving ? originLeft : positionLeft
+
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement)
     setPopupOpen(!popupOpen)
     event.stopPropagation()
   }
 
-  const onlineColor = player.is_online ? 'green' : 'red'
+  const onlineColor = player.is_online ? Color.green : Color.red
   const playerColor = getPlayerColor(player)
-  const playerIcon = playerIcons[player.url_handle] || FigureCopper
+  const playerIcon = playerIcons[player.url_handle] || PlayerBlueLight
 
   const hideAvatar =
-    playersOnSamePosition.length > 1 &&
-    player.map_position !== 0 &&
-    moveSteps === 0
+    playersOnSamePosition.length > 1 && player.map_position !== 0 && !isMoving
 
   return (
     <animated.div
       style={{
         position: 'absolute',
-        top: positionTop,
-        left: positionLeft,
+        top: finalPositionTop,
+        left: finalPositionLeft,
         ...springs,
       }}
     >
@@ -239,7 +251,8 @@ export default function PlayerIcon({
         >
           {!hideAvatar && (
             <img
-              src={playerIcon}
+              ref={iconRef}
+              src={isMoving ? PlayerPurpleMoving : playerIcon}
               width={'40px'}
               alt=""
               style={{ verticalAlign: 'middle' }}
@@ -255,8 +268,22 @@ export default function PlayerIcon({
                 paddingLeft: '5px',
                 paddingRight: '5px',
                 borderRadius: '5px',
+                display: 'flex',
+                alignItems: 'center',
+                paddingTop: '3px',
+                paddingBottom: '3px',
               }}
             >
+              {player.is_online && (
+                <CircleSharp
+                  style={{
+                    color: onlineColor,
+                    width: '15px',
+                    height: '15px',
+                    marginRight: '5px',
+                  }}
+                />
+              )}
               {player.name}
             </span>
           </p>
@@ -299,7 +326,7 @@ function getRelativePosition(player: Player, players: Player[]) {
     return { x: playerIndex * 80, y: 0 }
   }
   if (sortedPlayers.length === 2) {
-    return { x: playerIndex * 50, y: -playerIndex * 10 }
+    return { x: playerIndex * 50, y: -playerIndex * 20 }
   }
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }

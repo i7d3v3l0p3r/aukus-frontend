@@ -103,31 +103,31 @@ export type CustomColorOverrides = {
 }
 
 export const ColorByUrlHandle: { [key: string]: string } = {
-  lasqa: Color.purple,
-  segall: Color.blue,
+  lasqa: Color.blue,
+  segall: Color.orange,
   praden: Color.brown,
   artur: Color.red,
   uselessmouth: Color.pink,
-  roadhouse: Color.orange,
+  roadhouse: Color.purple,
   unclobjorn: Color.blueDark,
   melharucos: Color.blueLight,
-  browjey: Color.greenLight,
-  f1ashko: Color.green,
+  browjey: Color.green,
+  f1ashko: Color.pinkLight,
 }
 
 export const ColorNameByUrlHandle: {
   [key: string]: CustomColorNames
 } = {
-  lasqa: 'customPurple',
-  segall: 'customBlue',
+  lasqa: 'customBlue',
   praden: 'customBrown',
+  roadhouse: 'customPurple',
+  segall: 'customOrange',
   artur: 'customRed',
-  uselessmouth: 'customBlueDark',
-  roadhouse: 'customOrange',
+  uselessmouth: 'customPink',
   unclobjorn: 'customBlueDark',
   melharucos: 'customBlueLight',
-  browjey: 'customGreenLight',
-  f1ashko: 'customGreen',
+  browjey: 'customGreen',
+  f1ashko: 'customPinkLight',
 }
 
 export function getPlayerColor(player: Player): string {
