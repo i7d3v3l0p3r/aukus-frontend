@@ -30,7 +30,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         source: "./build/"
-        target: "/home/aukus/deploy/frontend/prod/deploy_build"
+        target: "/home/aukus/deploy/frontend/test/deploy_build"
 
     - name: swap build and restart nginx
       uses: appleboy/ssh-action@v1.0.3
@@ -40,4 +40,4 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         command_timeout: 1m
-        script: cd "/home/aukus/deploy/frontend/prod" && sudo systemctl stop nginx && rm -rf build && mv deploy_build/build ./ && sudo systemctl start nginx
+        script: cd "/home/aukus/deploy/frontend/test" && sudo systemctl stop nginx && rm -rf build && mv deploy_build/build ./ && sudo systemctl start nginx
