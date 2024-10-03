@@ -12,7 +12,7 @@ export default function PlayerSection({ player }: Props) {
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'}>
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
-          Имя {player.name}
+          {player.first_name || ''} {player.name}
         </Typography>
         <Box
           height={'300px'}

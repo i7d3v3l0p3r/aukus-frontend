@@ -9,6 +9,8 @@ export type Player = {
   url_handle: string
   map_position: number
   stream_last_category: string
+  first_name: string
+  last_name: string
 }
 
 export type PlayerStats = {

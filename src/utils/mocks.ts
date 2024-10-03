@@ -12,6 +12,8 @@ const playerLasqa: Player = {
   is_online: false,
   url_handle: 'lasqa',
   stream_last_category: 'Gothic',
+  first_name: 'Богдан',
+  last_name: '',
 }
 
 const playerSegall: Player = {
@@ -25,6 +27,8 @@ const playerSegall: Player = {
   is_online: false,
   url_handle: 'segall',
   stream_last_category: 'Just Chatting',
+  first_name: 'Александр',
+  last_name: '',
 }
 
 const playerRoadhouse: Player = {
@@ -38,6 +42,8 @@ const playerRoadhouse: Player = {
   is_online: true,
   url_handle: 'roadhouse',
   stream_last_category: 'Witcher',
+  first_name: '',
+  last_name: '',
 }
 
 const playerPraden: Player = {
@@ -51,6 +57,8 @@ const playerPraden: Player = {
   is_online: true,
   url_handle: 'praden',
   stream_last_category: 'Witcher',
+  first_name: '',
+  last_name: '',
 }
 
 export const playersMock = [
