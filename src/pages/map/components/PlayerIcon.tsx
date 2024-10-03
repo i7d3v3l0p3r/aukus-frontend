@@ -13,6 +13,7 @@ import PlayerPink from 'assets/map/PlayerPink.webp'
 import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
 import PlayerOrange from 'assets/map/PlayerOrange.webp'
 import PlayerPurple from 'assets/map/PlayerPurple.webp'
+import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 
 import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
