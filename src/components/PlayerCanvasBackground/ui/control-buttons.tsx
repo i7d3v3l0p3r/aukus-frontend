@@ -1,8 +1,10 @@
 import React from 'react'
-import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context'
-import { useSaveCanvasImages, useUploadCanvasImage } from '../queries'
 import { Button, Divider } from '@mui/material'
 import { useSnackbar } from 'notistack'
+import { isEqual } from 'lodash'
+import { CanvasImage, usePlayerCanvasBackgroundContext } from '../context'
+import { useSaveCanvasImages, useUploadCanvasImage } from '../queries'
+import { Color } from '../../../utils/types'
 
 export function ControlButtons({
   imageList,
@@ -81,14 +83,14 @@ export function ControlButtons({
   const handleImageDelete = () => {
     if (!selectedImage) return
 
-    const newList = imageList.filter((i) => i.id !== selectedImage.id)
     setSelectedImage(null)
     setFlipFunction(null)
 
-    handleSave(newList)
+    const newList = imageList.filter((i) => i.id !== selectedImage.id)
+    setImageList(newList)
   }
 
-  const handleSave = (newList?: CanvasImage[]) => {
+  const save = (newList?: CanvasImage[], exitEditMode = true) => {
     const list = (newList || imageList).map((el, i) => ({
       ...el,
       zIndex: i,
@@ -101,7 +103,9 @@ export function ControlButtons({
         //   variant: 'success',
         //   autoHideDuration: 3000,
         // })
-        setIsEditMode(false)
+        if (exitEditMode) {
+          setIsEditMode(false)
+        }
       },
       onError: (error) => {
         console.error('Failed to save images')
@@ -119,10 +123,16 @@ export function ControlButtons({
     })
   }
 
+  const handleSave = () => {
+    setSelectedImage(null)
+    setFlipFunction(null)
+    save()
+  }
+
   const handleChangeEditMode = () => {
     let disableEditMode = true
-    if (imageList.length !== images.length) {
-      disableEditMode = window.confirm('Вы забыли сохранить изображения')
+    if (!isEqual(images, imageList)) {
+      disableEditMode = window.confirm('Вы забыли сохранить изменения')
     }
     setIsEditMode(!disableEditMode)
     setSelectedImage(null)
@@ -142,10 +152,9 @@ export function ControlButtons({
 
       <Button
         variant="contained"
-        color="secondary"
         disabled={!flipFunction}
         onClick={() => flipFunction?.()}
-        sx={{ width: '150px' }}
+        sx={{ width: '150px', backgroundColor: Color.brown }}
       >
         Отразить
       </Button>
@@ -162,7 +171,7 @@ export function ControlButtons({
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => handleSave()}
+        onClick={handleSave}
         sx={{ width: '150px' }}
       >
         Сохранить

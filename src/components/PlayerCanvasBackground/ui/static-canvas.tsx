@@ -32,7 +32,7 @@ function adjustCoordinates(
     newY -= height * Math.sin(theta) // Adjust for height based on rotation
   }
   if (scaleY === -1) {
-    newX += width * Math.sin(theta)
+    newX += (width / 2) * Math.sin(theta)
     newY -= height * Math.cos(theta)
   }
 
