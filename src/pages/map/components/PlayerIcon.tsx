@@ -220,7 +220,7 @@ export default function PlayerIcon({
       return () => clearInterval(interval)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player.map_position])
+  }, [player.map_position, isMoving])
 
   // console.log({ player, cell });
   if (!anchorCell) {
@@ -235,9 +235,13 @@ export default function PlayerIcon({
 
   const isStillAnimated = iconRef.current?.src.endsWith('gif')
 
-  const finalPositionTop =
-    isMoving || isStillAnimated ? originTop - 14 : positionTop
-  const finalPositionLeft = isMoving ? originLeft : positionLeft
+  let finalPositionTop = positionTop
+  let finalPositionLeft = positionLeft
+
+  if (isMoving || isStillAnimated) {
+    // adjust height for animation
+    finalPositionTop = positionTop - 14
+  }
 
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement)

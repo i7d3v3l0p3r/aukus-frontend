@@ -253,8 +253,6 @@ function isBright(hexColor: string): boolean {
   // Calculate luminance
   const luminance = 0.2126 * rNorm + 0.7152 * gNorm + 0.0722 * bNorm
 
-  console.log('lum', luminance)
-
   // Return true if too bright for dark text
   return luminance > 0.45
 }
