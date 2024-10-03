@@ -111,7 +111,19 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
   }
 
   useEffect(() => {
-    setImageList(images)
+    if (isEditMode) {
+      setImageList(
+        images.map((img) => {
+          const localImg = imageList.find((i) => i.id === img.id)
+          if (localImg) {
+            return localImg
+          }
+          return img
+        })
+      )
+    } else {
+      setImageList(images)
+    }
   }, [images, isEditMode])
 
   let editButton = null
