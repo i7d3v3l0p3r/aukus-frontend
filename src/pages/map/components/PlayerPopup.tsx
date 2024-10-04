@@ -69,7 +69,9 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
         <Box>
           <Typography fontSize={'16px'} fontWeight={700}>
             <Link to={`/players/${player.url_handle}`}>
-              <LinkSpan color={getPlayerColor(player)}>{player.name}</LinkSpan>
+              <LinkSpan color={getPlayerColor(player.url_handle)}>
+                {player.name}
+              </LinkSpan>
             </Link>
           </Typography>
           <Box marginTop={'8px'} marginBottom={'20px'}>

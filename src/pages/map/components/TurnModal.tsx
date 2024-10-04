@@ -106,10 +106,6 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setRatingHover(newValue)
   }
 
-  const handleGameNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGameName(event.target.value)
-  }
-
   const handleReviewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setReview(event.target.value)
   }

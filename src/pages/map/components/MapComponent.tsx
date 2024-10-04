@@ -39,10 +39,12 @@ export default function MapComponent() {
   })
   const players = playersData?.players
 
-  const { userId } = useUser()
+  const currentUser = useUser()
   useScreenSize()
 
-  const currentPlayer = players?.find((player) => player.id === userId)
+  const currentPlayer = players?.find(
+    (player) => player.id === currentUser?.user_id
+  )
 
   const makeMove = useMutation({
     mutationFn: createPlayerMove,

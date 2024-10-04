@@ -53,7 +53,7 @@ export default function Leaderboard() {
 
   const leader = playersStatsByPosition[0]
   const leaderPlayer = playersById[leader.id]
-  const leaderColor = getPlayerColor(leaderPlayer)
+  const leaderColor = getPlayerColor(leaderPlayer.url_handle)
 
   return (
     <Box>
@@ -111,7 +111,9 @@ export default function Leaderboard() {
                       to={`/players/${playersById[playerStat.id].url_handle}`}
                     >
                       <LinkSpan
-                        color={getPlayerColor(playersById[playerStat.id])}
+                        color={getPlayerColor(
+                          playersById[playerStat.id].url_handle
+                        )}
                       >
                         {playersById[playerStat.id].name}
                       </LinkSpan>

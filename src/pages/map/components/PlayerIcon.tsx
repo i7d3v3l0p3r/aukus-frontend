@@ -250,7 +250,7 @@ export default function PlayerIcon({
   }
 
   const onlineColor = player.is_online ? Color.green : Color.red
-  const playerColor = getPlayerColor(player)
+  const playerColor = getPlayerColor(player.url_handle)
   const playerIcon = isMoving
     ? playerMovingIcons[player.url_handle] || PlayerBlueLightMoving
     : playerIcons[player.url_handle] || PlayerBlueLight

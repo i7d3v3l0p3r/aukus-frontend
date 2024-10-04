@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
@@ -18,7 +18,7 @@ export default function PlayerContent(props: Props) {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
 
-  const { userId, role, moderFor } = useUser()
+  const currentPlayer = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -48,15 +48,15 @@ export default function PlayerContent(props: Props) {
     return <div>Игрок не найден</div>
   }
 
-  const isOwner = player.id === userId
+  const isOwner = player.id === currentPlayer?.user_id
   // const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
-  const canEdit = !!userId
+  const canEdit = !!currentPlayer
 
   playerMoves.sort((a, b) => {
     return b.id - a.id
   })
 
-  const playerColor = getPlayerColor(player)
+  const playerColor = getPlayerColor(player.url_handle)
 
   const aukus1games = aukus1Games[player.url_handle]
   const aukus2games = aukus2Games[player.url_handle]

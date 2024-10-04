@@ -32,11 +32,12 @@ const moveTypeText = {
 export default function MoveCard({ id, move, player }: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
-  const { userId, role, moderFor } = useUser()
+  const currentUser = useUser()
 
   const canEdit =
-    (role === 'player' && userId === move.player_id) ||
-    (role === 'moder' && moderFor === move.player_id)
+    (currentUser?.role === 'player' &&
+      currentUser?.user_id === move.player_id) ||
+    (currentUser?.role === 'moder' && currentUser?.moder_for === move.player_id)
 
   const updateVod = useMutation({ mutationFn: updateVodLink })
   const queryClient = useQueryClient()
@@ -57,7 +58,9 @@ export default function MoveCard({ id, move, player }: Props) {
   }
 
   const greyColor = '#CECECE'
-  const borderColor = player ? getPlayerColor(player) : Color.greyLight
+  const borderColor = player
+    ? getPlayerColor(player.url_handle)
+    : Color.greyLight
 
   let moveTitle = `Ход — ${id}`
   if (player) {
