@@ -17,7 +17,6 @@ import MapPage from './pages/map/MapPage'
 import PlayerPage from './pages/player/PlayerPage'
 import PlayersPage from './pages/players/PlayersPage'
 import { SnackbarProvider } from 'notistack'
-import MainMenu from './components/MainMenu'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {

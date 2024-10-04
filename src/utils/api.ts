@@ -4,7 +4,13 @@ import {
   playersMockById,
   playerStatsMock,
 } from './mocks'
-import { Player, PlayerMove, PlayerMoveRequest, PlayerStats } from './types'
+import {
+  CurrentUser,
+  Player,
+  PlayerMove,
+  PlayerMoveRequest,
+  PlayerStats,
+} from './types'
 
 const MOCK_API = process.env.NODE_ENV === 'development'
 
@@ -34,19 +40,15 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
   }).then((res) => res.json())
 }
 
-type CurrentUserResponse = {
-  user_id: number
-  role: 'player' | 'moder'
-  moder_for?: number
-}
-
-export async function fetchCurrentUser(): Promise<CurrentUserResponse> {
+export async function fetchCurrentUser(): Promise<CurrentUser> {
   if (MOCK_API) {
     console.log('fetching current user')
     return Promise.resolve({
       user_id: 1,
       role: 'player',
       moder_for: undefined,
+      url_handle: 'lasqa',
+      username: 'Lasqa',
     })
   }
   return fetch(`/api/current_user`).then((res) => res.json())

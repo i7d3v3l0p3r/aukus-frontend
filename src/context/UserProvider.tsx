@@ -1,54 +1,31 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { fetchCurrentUser } from 'utils/api'
+import { CurrentUser } from 'utils/types'
 
-const UserContext = createContext<{
-  userId: number | null
-  role: 'player' | 'moder' | null
-  moderFor: number | null
-}>({
-  userId: null,
-  role: null,
-  moderFor: null,
-})
+const UserContext = createContext<CurrentUser | null>(null)
 
 export function useUser() {
   return useContext(UserContext)
 }
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [currentUserId, setCurrentUserId] = useState<number | null>(null)
-  const [userRole, setUserRole] = useState<'player' | 'moder' | null>(null)
-  const [moderFor, setModerFor] = useState<number | null>(null)
+  const [playerInfo, setPlayerInfo] = useState<CurrentUser | null>(null)
 
   const { data: currentUserData } = useQuery({
     queryKey: ['current_user'],
     queryFn: fetchCurrentUser,
-    enabled: !currentUserId,
+    enabled: !playerInfo,
     staleTime: 1000 * 30,
   })
 
   useEffect(() => {
-    if (currentUserData?.user_id) {
-      setCurrentUserId(currentUserData.user_id)
+    if (currentUserData) {
+      setPlayerInfo(currentUserData)
     }
-    if (currentUserData?.role) {
-      setUserRole(currentUserData.role)
-    }
-    if (currentUserData?.moder_for) {
-      setModerFor(currentUserData.moder_for)
-    }
-  }, [
-    currentUserData?.user_id,
-    currentUserData?.role,
-    currentUserData?.moder_for,
-  ])
+  }, [currentUserData])
 
   return (
-    <UserContext.Provider
-      value={{ userId: currentUserId, role: userRole, moderFor }}
-    >
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={playerInfo}>{children}</UserContext.Provider>
   )
 }

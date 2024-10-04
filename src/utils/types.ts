@@ -135,10 +135,18 @@ export const ColorNameByUrlHandle: {
   f1ashko: 'customPinkLight',
 }
 
-export function getPlayerColor(player: Player): string {
-  return ColorByUrlHandle[player.url_handle] || Color.greyDark
+export function getPlayerColor(urlHandle: string): string {
+  return ColorByUrlHandle[urlHandle] || Color.greyDark
 }
 
 export function getPlayerColorName(player: Player): CustomColorNames {
   return ColorNameByUrlHandle[player.url_handle] || 'customGreyDark'
+}
+
+export type CurrentUser = {
+  user_id: number
+  role: 'player' | 'moder'
+  moder_for?: number
+  url_handle: string
+  username: string
 }
