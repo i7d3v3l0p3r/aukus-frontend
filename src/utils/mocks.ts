@@ -110,7 +110,7 @@ export function playerMovesMock() {
   )
   const data: PlayerMove[] = []
   let currentPosition = 0
-  const itemsAmount = 20
+  const itemsAmount = 5
   for (let i = 0; i < itemsAmount; i++) {
     const status: PlayerMove['type'] = sample([
       'drop',
