@@ -148,5 +148,5 @@ export type CurrentUser = {
   role: 'player' | 'moder'
   moder_for?: number
   url_handle: string
-  username: string
+  name: string
 }

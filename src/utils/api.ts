@@ -48,7 +48,7 @@ export async function fetchCurrentUser(): Promise<CurrentUser> {
       role: 'player',
       moder_for: undefined,
       url_handle: 'lasqa',
-      username: 'Lasqa',
+      name: 'Lasqa',
     })
   }
   return fetch(`/api/current_user`).then((res) => res.json())

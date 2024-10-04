@@ -49,7 +49,7 @@ export default function MainMenu({
               height={'15px'}
               style={{ marginRight: '8px' }}
             />
-            АУКУС Сезон 3 {currentUser && `// ${currentUser.username}`}
+            АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
       </Box>
