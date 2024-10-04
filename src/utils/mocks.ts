@@ -14,6 +14,7 @@ const playerLasqa: Player = {
   stream_last_category: 'Gothic',
   first_name: 'Богдан',
   last_name: '',
+  telegram_link: 'https://t.me/lasqa',
 }
 
 const playerSegall: Player = {
@@ -29,6 +30,7 @@ const playerSegall: Player = {
   stream_last_category: 'Just Chatting',
   first_name: 'Александр',
   last_name: '',
+  telegram_link: 'https://t.me/segall',
 }
 
 const playerRoadhouse: Player = {
@@ -44,6 +46,7 @@ const playerRoadhouse: Player = {
   stream_last_category: 'Witcher',
   first_name: '',
   last_name: '',
+  telegram_link: 'https://t.me/roadhouse',
 }
 
 const playerPraden: Player = {
@@ -59,6 +62,7 @@ const playerPraden: Player = {
   stream_last_category: 'Witcher',
   first_name: '',
   last_name: '',
+  telegram_link: 'https://t.me/roadhouse',
 }
 
 export const playersMock = [

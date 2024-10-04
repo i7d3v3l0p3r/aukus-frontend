@@ -4,6 +4,7 @@ export type Player = {
   twitch_stream_link: string
   vk_stream_link: string
   donation_link: string
+  telegram_link: string
   is_online: boolean
   current_game: string
   url_handle: string
@@ -97,6 +98,7 @@ export const Color = {
   pink: '#FF2D55',
   pinkLight: '#ECA3D4',
   white: '#FFFFFF',
+  blueTg: '#27a7e7',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
