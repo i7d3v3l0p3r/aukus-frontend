@@ -7,7 +7,7 @@ import { Player } from 'utils/types'
 
 export default function TodaysMoves() {
   const today = new Date()
-  const formattedDate = today.toLocaleString().split(',')[0]
+  const formattedDate = today.toISOString().split('T')[0]
 
   const { data: todaysMoves } = useQuery({
     queryKey: ['todaysMoves'],
