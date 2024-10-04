@@ -15,6 +15,7 @@ const playerLasqa: Player = {
   first_name: 'Богдан',
   last_name: '',
   telegram_link: 'https://t.me/lasqa',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 const playerSegall: Player = {
@@ -31,6 +32,7 @@ const playerSegall: Player = {
   first_name: 'Александр',
   last_name: '',
   telegram_link: 'https://t.me/segall',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 const playerRoadhouse: Player = {
@@ -47,6 +49,7 @@ const playerRoadhouse: Player = {
   first_name: '',
   last_name: '',
   telegram_link: 'https://t.me/roadhouse',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 const playerPraden: Player = {
@@ -63,6 +66,7 @@ const playerPraden: Player = {
   first_name: '',
   last_name: '',
   telegram_link: 'https://t.me/roadhouse',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 export const playersMock = [

@@ -164,7 +164,7 @@ export default function MoveCard({ id, move, player }: Props) {
   )
 }
 
-function formatDate(dateString: string) {
+export function formatDate(dateString: string) {
   // Create a new Date object
   const date = new Date(dateString)
 

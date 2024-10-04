@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { getPlayerColor } from 'utils/types'
 import { aukus1Games, aukus2Games } from '../data_aukus1'
-import MoveCard from './MoveCard'
+import MoveCard, { formatDate } from './MoveCard'
 import StreamLink from './StreamLink'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
 import OldMoveCard from './OldMoveCard'
@@ -82,6 +82,7 @@ export default function PlayerContent(props: Props) {
                 id={playerMoves.length + 1}
                 title={player.current_game}
                 playerColor={playerColor}
+                updatedAt={player.current_game_updated_at}
               />
             )}
 
@@ -147,9 +148,10 @@ type CurrentMoveProps = {
   id: number
   title: string
   playerColor: string
+  updatedAt: string
 }
 
-function CurrentMove({ id, title, playerColor }: CurrentMoveProps) {
+function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
   return (
     <Box display={'flex'} justifyContent={'center'} marginBottom={'50px'}>
       <Box
@@ -168,7 +170,7 @@ function CurrentMove({ id, title, playerColor }: CurrentMoveProps) {
           marginBottom={'15px'}
         >
           <Box>Ход — {id}</Box>
-          <Box>Сейчас</Box>
+          <Box>{formatDate(updatedAt)}</Box>
         </Box>
         <Box
           fontSize={'14px'}

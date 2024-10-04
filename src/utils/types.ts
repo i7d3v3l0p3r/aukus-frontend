@@ -7,6 +7,7 @@ export type Player = {
   telegram_link: string
   is_online: boolean
   current_game: string
+  current_game_updated_at: string
   url_handle: string
   map_position: number
   stream_last_category: string
