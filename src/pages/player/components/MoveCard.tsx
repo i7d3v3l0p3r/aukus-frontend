@@ -61,7 +61,7 @@ export default function MoveCard({ id, move, player }: Props) {
 
   let moveTitle = `Ход — ${id}`
   if (player) {
-    moveTitle = `${player.name} ${moveTitle}`
+    moveTitle = `${player.name}, ход — ${id}`
   }
 
   return (
