@@ -6,11 +6,12 @@ import { Fragment, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { getPlayerColor } from 'utils/types'
-import { aukus1Games, aukus2Games } from '../data_aukus1'
+import { aukus1Games } from '../data_aukus1'
 import MoveCard, { formatDate } from './MoveCard'
 import StreamLink from './StreamLink'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
 import OldMoveCard from './OldMoveCard'
+import { aukus2Games } from '../data_aukus2'
 
 type Props = {}
 
@@ -98,7 +99,7 @@ export default function PlayerContent(props: Props) {
       </PlayerCanvasBackground>
 
       {aukus2games && (
-        <Box marginTop={10}>
+        <Box marginTop={'200px'}>
           <Typography fontSize={'24px'} fontWeight={600} align="center">
             <Link
               to={aukus2games.link}
@@ -111,7 +112,7 @@ export default function PlayerContent(props: Props) {
 
           <Box marginBottom={'50px'} />
 
-          {aukus1games.games.map((game, index) => (
+          {aukus2games.games.map((game, index) => (
             <Fragment key={index}>
               <OldMoveCard id={index + 1} game={game} />
             </Fragment>
