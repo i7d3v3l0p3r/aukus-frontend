@@ -2,7 +2,7 @@ export type PreviousGame = {
   title: string
   rating: string
   review: string
-  status: 'completed' | 'drop' | 'movie'
+  status: 'completed' | 'drop' | 'movie' | 'reroll'
 }
 
 const SegallGamesAukus1: PreviousGame[] = [
@@ -499,7 +499,7 @@ const LasqaGamesAukus1: PreviousGame[] = [
   },
 ]
 
-type GamesItem = {
+export type GamesItem = {
   games: PreviousGame[]
   link: string
 }
@@ -514,5 +514,3 @@ export const aukus1Games: { [key: string]: GamesItem } = {
     link: 'https://docs.google.com/spreadsheets/d/1iGjS41dpxbgjtMTGODZ-j3OG9eMDaZh5kBRiWH-FPk0/edit?gid=1235582040#gid=1235582040',
   },
 }
-
-export const aukus2Games: { [key: string]: GamesItem } = {}

@@ -59,12 +59,7 @@ export default function OldMoveCard({ id, game }: Props) {
         <Box fontSize={'24px'} marginBottom={'10px'}>
           {game.title}
         </Box>
-        <Box
-          fontSize={'16px'}
-          fontWeight={400}
-          marginBottom={'25px'}
-          lineHeight={1.2}
-        >
+        <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
           {game.rating ? game.rating : '?/10'} — {game.review}
         </Box>
       </Box>
