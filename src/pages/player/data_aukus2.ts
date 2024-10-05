@@ -1776,6 +1776,749 @@ const KrabikGames: PreviousGame[] = [
   },
 ]
 
+const FlashkoGames: PreviousGame[] = [
+  {
+    title: 'Cyberpunk 2077',
+    rating: '',
+    review: 'Дроп',
+    status: 'drop',
+  },
+  {
+    title: 'Limbo',
+    rating: '',
+    review: 'Хорошая игра, жаль короткая',
+    status: 'completed',
+  },
+  {
+    title: 'Hatoful Boyfriend',
+    rating: '',
+    review: 'Меня трахнул голубь EZ',
+    status: 'completed',
+  },
+  {
+    title: 'Prey Mooncrash',
+    rating: '',
+    review: 'Норм DLC рогалик, но если только зашла основная игра.',
+    status: 'completed',
+  },
+  {
+    title: 'Resident Evil 4 Remake Ada DLC',
+    rating: '',
+    review: 'Адочка MHMM',
+    status: 'completed',
+  },
+  {
+    title: "TMNT Shredder's Revenge",
+    rating: '',
+    review:
+      'Достаточно однообразный и скучноватый битемап, разок пройти из-за ностальгии мб пойдет',
+    status: 'completed',
+  },
+  {
+    title: 'Просмотровый',
+    rating: '',
+    review: 'Jokerge',
+    status: 'movie',
+  },
+  {
+    title: 'Factorio',
+    rating: '',
+    review: 'Дроп. Хорошая игра, жаль долгая.',
+    status: 'drop',
+  },
+  {
+    title: 'Prey 2017',
+    rating: '',
+    review: 'Хорошая игра, жаль духотура.',
+    status: 'completed',
+  },
+  {
+    title: 'MOTHER',
+    rating: '',
+    review: 'Не играйте в это',
+    status: 'completed',
+  },
+  {
+    title: 'Psyhonauts 2',
+    rating: '6',
+    review:
+      'Качественная игра для детей, с сюжетом не для детей. Катсцены 6 часов, геймплея 4 часа.',
+    status: 'completed',
+  },
+  {
+    title: 'Persona 5',
+    rating: '',
+    review: 'Дроп с негативом ))',
+    status: 'drop',
+  },
+  {
+    title: 'Soultice',
+    rating: '',
+    review: 'Крутая драма, невероятный накал...',
+    status: 'completed',
+  },
+  {
+    title: 'Warcraft 3',
+    rating: '',
+    review: 'Не ну игра кайф, че.',
+    status: 'completed',
+  },
+  {
+    title: 'GTA VC Definitive Edition',
+    rating: '',
+    review: 'Дефектив эдишн, но всё не так плохо.',
+    status: 'completed',
+  },
+  {
+    title: 'Split/Second',
+    rating: '',
+    review: 'Кайфик игра, была бы, если б не 30 фпс. Но и так пойдёт',
+    status: 'completed',
+  },
+  {
+    title: 'Doom Eternal',
+    rating: '',
+    review: 'Дудудудудудудуду',
+    status: 'completed',
+  },
+  {
+    title: 'Просмотровый',
+    rating: '',
+    review: '',
+    status: 'movie',
+  },
+  {
+    title: 'midnight club 2',
+    rating: '',
+    review: 'рокстар насрали',
+    status: 'completed',
+  },
+  {
+    title: 'Enter the gungeon',
+    rating: '',
+    review: 'один из лучших рогаликов',
+    status: 'completed',
+  },
+  {
+    title: 'Alien Shooter',
+    rating: '',
+    review: 'Кайфовая олдовая 2д стрелялка',
+    status: 'completed',
+  },
+  {
+    title: 'Tony Hawk Underground 2',
+    rating: '',
+    review: 'Топ игруля детства',
+    status: 'completed',
+  },
+  {
+    title: 'Black Mesa',
+    rating: '',
+    review: 'Первый раз душануло, а тут чет с кайфом пробежал, музыка балдёж',
+    status: 'completed',
+  },
+  {
+    title: 'Ridge Racer Unbounded',
+    rating: '',
+    review: 'Игра НЕ полное дерьмо.',
+    status: 'completed',
+  },
+  {
+    title: 'Tekken 7',
+    rating: '',
+    review: 'Прикольный всеми известный файтинг',
+    status: 'completed',
+  },
+  {
+    title: 'Clustertruck',
+    rating: '',
+    review: 'Прикольная гамза',
+    status: 'completed',
+  },
+  {
+    title: 'Stalker Тень Чернобыля',
+    rating: '',
+    review: 'Не ну игра приколдесная',
+    status: 'completed',
+  },
+  {
+    title: 'Рога и Копыта',
+    rating: '',
+    review: 'Прикол игра на 8 часов.',
+    status: 'completed',
+  },
+  {
+    title: 'Alien vs Predator 2',
+    rating: '',
+    review: 'Приколдесно, приколдесно',
+    status: 'completed',
+  },
+  {
+    title: 'Granblue Fantasy Versus: Rising',
+    rating: '',
+    review:
+      'Дроп. Прикольная игра, диалогов только много, пришлось отказаться от прохождения.',
+    status: 'drop',
+  },
+  {
+    title: 'Portal 2',
+    rating: '',
+    review:
+      'Забыл пиксель и трахал стену 2 часа, спидранил дольше, чем прошёл бы по нормальному EZ Прикол',
+    status: 'completed',
+  },
+  {
+    title: 'Need For Speed III: Hot Pursuit',
+    rating: '',
+    review:
+      'Прикольные олдовые гоночки, где тебя трахают на сложности Новичок )))',
+    status: 'completed',
+  },
+  {
+    title: 'Warstride Challenges',
+    rating: '',
+    review:
+      'Суперприколдесная игруля, где надо ставить рекорды времени на множестве уровней, похоже на дум и квейк, но намного динамичнее, кайф.',
+    status: 'completed',
+  },
+  {
+    title: 'Lada racing club',
+    rating: '',
+    review: 'В детстве не играл, хз че хейтят, игруха приколдес',
+    status: 'completed',
+  },
+  {
+    title: 'Кузька. Путешественник во времени',
+    rating: '',
+    review: 'Прикольная игрулька для детей и фуриёбов',
+    status: 'completed',
+  },
+  {
+    title: 'The witness',
+    rating: '',
+    review:
+      'Приколюшная головоломка со сложными задачками и не очень, за 8,5 часиков пробежали.',
+    status: 'completed',
+  },
+  {
+    title: 'Blasphemous',
+    rating: '',
+    review: 'Прикольная метроидвания по стилистике, но геймплейно слабовато!',
+    status: 'completed',
+  },
+  {
+    title: 'Elden ring',
+    rating: '',
+    review: '',
+    status: 'drop',
+  },
+]
+
+const BrowjeyGames: PreviousGame[] = [
+  {
+    title: "Mirror's Edge (2008)",
+    rating: '',
+    review: 'Короткая и главное. В целом скучновато',
+    status: 'completed',
+  },
+  {
+    title: 'Metal Gear Solid 2',
+    rating: '',
+    review: 'МГС - лучшая серия игр',
+    status: 'completed',
+  },
+  {
+    title: 'Binding of Isaac Rebirth',
+    rating: '',
+    review: 'Айзек энд хис мазер ливд элоун ин зэ смол хаус',
+    status: 'completed',
+  },
+  {
+    title: 'Risk of Rain 2',
+    rating: '',
+    review: 'Кал говна. (На самом деле прикольно)',
+    status: 'completed',
+  },
+  {
+    title: 'Dark Souls Remastered',
+    rating: '10/10',
+    review:
+      'Игра огонь. 10 из 10. Играл в первый раз, очень понравился жанр. Может еще попробую другие части',
+    status: 'completed',
+  },
+  {
+    title: 'Анискин и Фантомас',
+    rating: '',
+    review: 'Пиздец',
+    status: 'movie',
+  },
+  {
+    title: 'Command and Conquer Red Alert 3',
+    rating: '10/10',
+    review: 'Балдежная РТС, которую пропустил в свое время. 10 Наташ из 10',
+    status: 'completed',
+  },
+  {
+    title: 'Another World',
+    rating: '',
+    review: 'Нестареющая классика',
+    status: 'completed',
+  },
+  {
+    title: 'Titanfall 2',
+    rating: '',
+    review: 'Балдежный шутан на 4 часика. Драйвово, бодро',
+    status: 'completed',
+  },
+  {
+    title: 'Unreal Tournament 2004',
+    rating: '',
+    review: 'Долго и душно. ЮТ2004 балдеж конечно, но сингл всратый',
+    status: 'completed',
+  },
+  {
+    title: 'Tekken 7',
+    rating: '',
+    review: 'Люблю Теккен. Теккен хороший',
+    status: 'completed',
+  },
+  {
+    title: 'Warcraft 3',
+    rating: '',
+    review:
+      'Я получил власть, которая и не снилась моему отцу ( еще и два кубика бросил)',
+    status: 'completed',
+  },
+  {
+    title: 'Neon White',
+    rating: '',
+    review:
+      'Балдежная динамичная игра. Была бы. Выкинуь из нее сраные диалоги говна',
+    status: 'completed',
+  },
+  {
+    title: 'Arx Fatalis',
+    rating: '',
+    review:
+      'Есть прикольные задумки и механики. Если балдеть как в песочнице - то прикольно. Но так геймдизайн убивает игру. Душыне поиски ключей, плит и прочего говна. А также постоянный бектрекинг',
+    status: 'completed',
+  },
+  {
+    title: 'Final Fantasy 6',
+    rating: '',
+    review: 'Дроп с негативом',
+    status: 'drop',
+  },
+  {
+    title: 'Everhood',
+    rating: '10/10',
+    review:
+      'Игра отвал башки. Офигенный саундтрек, бодрый гемплей. 10 из 10. Потом заценим другие концовки и файты',
+    status: 'completed',
+  },
+  {
+    title: 'Two Worlds',
+    rating: '',
+    review:
+      'Неплохая порнопародия на готику. Вне ивента с кайфом прошел, спидранить было местами душновато',
+    status: 'completed',
+  },
+  {
+    title: 'Златогорье 2: Холодные небеса',
+    rating: '',
+    review: 'Тех. реролл',
+    status: 'reroll',
+  },
+  {
+    title: 'Cuphead',
+    rating: '10/10',
+    review: '10 из 10 конечно. Обожаю капхед',
+    status: 'completed',
+  },
+  {
+    title: 'Disco Elysium',
+    rating: '',
+    review: 'Дроп без негатива',
+    status: 'drop',
+  },
+  {
+    title: 'Yuppie Psycho',
+    rating: '',
+    review: 'Сюжетно прикольно. Но геймплейно полнейший кал',
+    status: 'completed',
+  },
+  {
+    title: 'Jade Empire',
+    rating: '',
+    review: 'Потраченного времени жаль',
+    status: 'completed',
+  },
+  {
+    title: 'Before Your Eyes',
+    rating: '',
+    review: 'Пиздец',
+    status: 'completed',
+  },
+  {
+    title: 'Star Wars: Jedi Knight II - Jedi Outcast',
+    rating: '',
+    review:
+      'Ужасно состарилась. Два однообразных уровня на игру с бесконечными кнопками и лифтами. Ультра скучно. Но драки на мечах ниче так',
+    status: 'completed',
+  },
+  {
+    title: 'Five Dates',
+    rating: '',
+    review:
+      'Короткий симулятор онлайн свиданий. Быстро заромансили Грейс и пошли роллить дальше',
+    status: 'completed',
+  },
+  {
+    title: 'Turbo Overkill',
+    rating: '',
+    review:
+      'Вся игра кроме последнего уровня - дикий кайф. Но последний уровень кусок говна,нахера они вообще его добавили',
+    status: 'completed',
+  },
+  {
+    title: 'PC buliding simulator',
+    rating: '',
+    review: 'Дроп так как очень долго',
+    status: 'drop',
+  },
+  {
+    title: 'MGS V: Ground Zeroes',
+    rating: '',
+    review: 'Увы',
+    status: 'completed',
+  },
+  {
+    title: 'Quake III Arena',
+    rating: '',
+    review: 'Ультра кайф',
+    status: 'completed',
+  },
+  {
+    title: 'Hades',
+    rating: '',
+    review: 'Супер кайф',
+    status: 'completed',
+  },
+  {
+    title: 'Just Shapes & Beats',
+    rating: '',
+    review:
+      'Балдежная ритм игра. Коротенькая. Треки не особо зашли, но играется бодро',
+    status: 'completed',
+  },
+  {
+    title: 'Diablo III',
+    rating: '',
+    review:
+      'Кайфанули нереально. Чилзон под фонк и убийство ласт босса за 2 секунды',
+    status: 'completed',
+  },
+  {
+    title: 'Black Mesa',
+    rating: '',
+    review: 'Хорошая игра. Первый раз увидел новый Зен - Красиво',
+    status: 'completed',
+  },
+  {
+    title: 'Victor Vran',
+    rating: '',
+    review:
+      'Была бы неплохой игрой, если бы там была хоть какая-то прогрессия. А так вышло скучно',
+    status: 'drop',
+  },
+]
+
+const TimofeyGames: PreviousGame[] = [
+  {
+    title: 'Dishonored 2',
+    review: 'ведьмы сосали яйца и горели',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: 'Batman: Arkham Origins',
+    review:
+      'Игруха кайф, но стелся хуета, но не хуета, но немного поддушил, но на самом деле все нормально.',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Batman: Arkham City',
+    review: 'Лучше чем оригинс и мейн стори короткая.',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Neighbors in Hell Compilation',
+    review: 'Игра детства. 10 нервных срывов из 10',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: 'Arma 2 operation arrowhead',
+    review:
+      'Короче, бойтесь Армы на аукусе, это говно полное. Бегите и спасйтесь, не думайте, что вам юбудет легко. Эту хуету надо покупать полностью со всеми длц, только чтобы эта параша работала и могла загружаться. Остерегайтесь и обходите стороной. Чехи это просто бля ебанутые люди 0/10',
+    status: 'completed',
+    rating: '0/10',
+  },
+  {
+    title: 'Король Говорит! (2010г)',
+    review: ')))))))))))))))',
+    status: 'movie',
+    rating: '',
+  },
+  {
+    title: 'Battlefield 3',
+    review:
+      'Battlefield 3. Мы играем в Battlefield, потому что мы круты и ничего не тормозит –ttlefield 3 А во всякие Team Fortressы и Контры играют только лохи Battlefield 3 Мы – элита спецназа, супер войска, всех убиваем сразу Battlefield, Battlefield',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: 'Scorn',
+    review:
+      'Игра про пенисы, сиси, еблю, анальный секс, минет и куинилнгус. Не знаю что все эти слова значат, но мне рассказали о них в чате. Короче нормально. 10 отдрачиваний из 10',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: 'stay out of the house',
+    review: 'Желаю каждому такую игру на аукусе.',
+    status: 'completed',
+    rating: '7/10',
+  },
+  {
+    title: 'GODS: Lands of Infinity',
+    review:
+      'Можно найти рабочий вариант игры с норм роазрешением, но там пишут что, в какой-то момент можно словить софтлок с мостом, типо на современных видяхах там что-то ломается и мосты непроходимы. Не было варика проверить, ибо эти локи у меня были не открыты и хз скорлько бы я до них шёл. Так что решил дропнуть. ',
+    status: 'drop',
+    rating: '',
+  },
+  {
+    title: 'Year Walk',
+    review:
+      'Нормальная бродилочка с айпада. Пройти на первую концовку можно за полтора часика в целом. Загадки интуитивно понятные, присутствуют скримеры, с которых можно дристунца словить. Визуально игруха приятная.',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'My Friend Pedro',
+    review:
+      'Клевая приколюха. Кайфовые перестрелки, годные механики. Заебать не успела. Ну и музон просто ебейший',
+    status: 'completed',
+    rating: '8/10',
+  },
+  {
+    title: 'Bum Simulator',
+    review:
+      'Ну че сказать, игра начиналась забавно, но послдение несколько миссий хуже чем червь п***р, а хуже ничего почти нет. ГОВНИЩЕ/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Tale of Wuxia:The Pre-Sequel',
+    review: ')))))))))))))))',
+    status: 'drop',
+    rating: '',
+  },
+  {
+    title: 'Sin Episodes: Emergence',
+    review:
+      'Игруха корокая и кайфовая. Тут ест ьвсё сурс, стрельба, сисядры и жирны враги, которые впитывают по пол магазина. Кайф нереальный. ',
+    status: 'completed',
+    rating: '7/10',
+  },
+  {
+    title: 'Syrian Warfare',
+    review:
+      'Это пиздец. Возможно, если вы фанат хуевых РТС, вам это понравится. Хуйого просто всё. Камера говна, юниты движутся очень медленно, тупят и простраивают всратые маршруты через террейн. Выделение юнитов ,которые находятся в здании просто говнище. Нельзя переназначить управление. Самое главное, что когда вы крутите колесо в игре, то у вас крутятся абсолютно все окна на соседнем мониторе. Просто пиздец.',
+    status: 'drop',
+    rating: '',
+  },
+  {
+    title: 'MGS V: Ground Zeroes',
+    review: 'штош))',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Dropsy',
+    review: 'И С ЧИСТОГО ЛИСТА, ВСЕ НАЧИНАТЬ СНАЧАЛА))))))))))))',
+    status: 'drop',
+    rating: '',
+  },
+  {
+    title: 'Fallout New Vegas',
+    review:
+      'Походишь патрулём по Мохаве - поневоле затоскуешь по ядерной зиме.',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: 'MyFriend Peppa Pig',
+    review: 'ДИНОЗАВР',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Half Life 2',
+    review:
+      'COCK AND BALL TORTURE DR. FREEMAN 8/10 (не поиню, чтобы сегмент со страйдерами такой душный был).',
+    status: 'completed',
+    rating: '8/10',
+  },
+  {
+    title: 'Старфилдик)))))))))))))))',
+    review: 'КАЛ',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Far Cry 6',
+    review:
+      'ПОлное уебанство и наверное худший фаркрай, в который я играл. Зумерская революция тиктокер и реперов, против Густаво Фринга. Каждый диалог засталяет клетки мозга просто отмирать. Аванпосты гига скучные, стрельба норм. Опять засунули рпгшность с врагами, в конце начинается душка, если идти в лоб и не качаться, что я и делал, собственно. Короче не играйте в это, обходите стороной как прокаженного. Игра обманом начинается за здравие, а заканчивается за хуй в жопе. КАЛ/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'сериал Опасный Район',
+    review: 'круче, чем вот эти ваши Слово Пацана и Сопрано.',
+    status: 'movie',
+    rating: '',
+  },
+  {
+    title: 'Deus Ex',
+    review:
+      'Игруха высший класс, играется даже сейчас хорошо. Играл с ревижн модом и в настройках врубал ванильные карты. Но единственный минус в том, что все реплики русификации ломаются, если играть с оригинальными мапами, так что играл на инглиша. Эмоций дохуя, думаю что пройду как-нить еще раз, а мб и не раз 100/10',
+    status: 'completed',
+    rating: '100/10',
+  },
+  {
+    title: 'System Shock 2',
+    review: 'Кайф полный, высший класс, перфекто, великолепно, ахуенно.',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: "Red Alert 2: Yuri's Revenge",
+    review:
+      'В магазах игры нет, кроме гога, который хз как пополнять. Скачал с зелени, выдает ошибку, что утерян файл какой-то. + оказалось, что она не стендалоуновая и нужна ориг игра. реролл по причине надо костылить',
+    status: 'reroll',
+    rating: '',
+  },
+  {
+    title: 'Batman: Arkham Knight',
+    review: 'АХАХАХАХАХАХАХАХХА',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Deus Ex: Human Revolution',
+    review:
+      'Крутая игруха конечно, но если играть в директорс кат версию, то там просто архиуебанское длц, которое по своей сути кишка с бектрекингом, но заспидранил за час, мб чуть больше. Короче как обычно кайфанул, хоть и прошел на каловую концовку.',
+    status: 'completed',
+    rating: '8/10',
+  },
+  {
+    title: 'Deus Ex: Mankind Divided',
+    review:
+      'Супер кайфовая игруха, как всегда понравилась, рад, что выпала и рад был пройти. Жаль что обрубок сюжетный, но в целом балдеж. Сперва думал зачилиться в ней до талого, но потом чет подумал, что уже все сайды знаю и не так интересно будет, так что примерно с середины начал рашить сюжетку. 8/10 годнота',
+    status: 'completed',
+    rating: '8/10',
+  },
+  {
+    title: 'Hedon Bloodrite',
+    review:
+      'Игруха класс, начало душноватое, но уже на втором лвле распёрживается, пока не появляются ебаные враги ниндзя ебать их в сраку вонючую. БУБАСТАЯ ОРЧИХА/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Blood',
+    review: 'Годный шутан. I NEED A KEY/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Half Life 2 ep.1',
+    review: 'Гордон ты мой герой/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: "cabela's big game hunter pro",
+    review: 'Тех. реролл, браундмауэр не дает запустить игру.',
+    status: 'reroll',
+    rating: '',
+  },
+  {
+    title: 'Prince of Persia: The Two Thrones',
+    review:
+      'Какая же приколдесная игруха, НО КАКОЙ ЖЕ КРИВОРУКИЙ ГАНДОН ДЕЛАЛ ПОСЛЕДНЕГО БОСА. ЖЕЛАЮ ЕМУ ХОРОШЕГО НОВОГО ГОДА НАХУЙ)) ЛЕВИТИРУЮЩИЙ БУЛЫЖНИК/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Prince of Persia: Warrior Within',
+    review:
+      'Иногда, не стоит проходить игры, которые вы любили в детстве. Они оч разочаровывают, не всегда, но иногда. КУДА НАХУЙ ИДТИ/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'Pajama Sam 4: Life Is Rough When You Lose Your Stuff!',
+    review:
+      'Игра вылетает, и вот какой гайд есть в стиме, чтобы она заработала.',
+    status: 'reroll',
+    rating: '',
+  },
+  {
+    title: 'SWAT 4',
+    review:
+      'СВАТЫ 4 игрушка детства кайф. ИИ конечно полное говно и напарники долбоебы, но все равно прикольно. 8 светошумовых из 10',
+    status: 'completed',
+    rating: '8/10',
+  },
+  {
+    title: "Tom Clancy's Rainbow Six Vegas",
+    review:
+      'Обходите это говно стороной, а если вдруг вам это закажут, забаньте человека навсегда. ХУЙНЯ/10',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'The Stanley Parable',
+    review: 'бля ну и хуйня обузная канеш)',
+    status: 'completed',
+    rating: '',
+  },
+  {
+    title: 'GOHOME',
+    review:
+      'шизуха полная, но интуитивно понятная. Лучше чем Радуга Вегас и Фар срань 6 и веселая довольно. 10/10.',
+    status: 'completed',
+    rating: '10/10',
+  },
+  {
+    title: 'Signalis',
+    review:
+      'Я, как нетакусик и фанат душного говна всякого, полностью одобряю эту игру. Мне очень понравилось 9/10',
+    status: 'completed',
+    rating: '9/10',
+  },
+  {
+    title: 'смотрели историю Сигналиса',
+    review: 'СИСЬКИ',
+    status: 'movie',
+    rating: '',
+  },
+]
+
 export const aukus2Games: { [key: string]: GamesItem } = {
   segall: {
     games: SegallGames,
@@ -1796,5 +2539,17 @@ export const aukus2Games: { [key: string]: GamesItem } = {
   krabik: {
     games: KrabikGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1161158670#gid=1161158670',
+  },
+  f1ashko: {
+    games: FlashkoGames,
+    link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1161773655#gid=1161773655',
+  },
+  browjey: {
+    games: BrowjeyGames,
+    link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=655465497#gid=655465497',
+  },
+  timofey: {
+    games: TimofeyGames,
+    link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1747677026#gid=1747677026',
   },
 }
