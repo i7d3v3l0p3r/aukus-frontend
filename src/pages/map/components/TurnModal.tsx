@@ -240,7 +240,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             onChange={handleMoveTypeChange}
             value={moveType ? moveType : ''}
             IconComponent={KeyboardArrowDownSharp}
-            sx={{ fontSize: '16px' }}
+            sx={{ fontSize: '16px', fontWeight: 500 }}
             MenuProps={{
               sx: {
                 '&& .Mui-selected': { backgroundColor: selectedItemColor },
@@ -360,7 +360,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             Оценка: {displayRating}
           </span>
           <NumRating
-            precision={0.1}
+            precision={0.2}
             max={10}
             sx={{ marginLeft: '0px' }}
             onChange={handleRatingChange}
@@ -379,6 +379,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 paddingBottom: '10px',
                 lineHeight: '1.2',
                 fontSize: '16px',
+                fontWeight: 500,
               },
             }}
             multiline
@@ -456,6 +457,7 @@ function getDiceType({
 
 const MenuItemStyled = styled(MenuItem)(({ color }) => ({
   fontSize: '16px',
+  fontWeight: 500,
   ':hover': {
     backgroundColor: `${color} !important`,
   },
