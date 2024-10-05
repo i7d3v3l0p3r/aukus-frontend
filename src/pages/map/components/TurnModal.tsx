@@ -355,12 +355,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         </Box>
         <Box marginTop={'28px'} display="flex">
           <span
-            style={{ width: '150px', marginLeft: '15px', fontSize: '16px' }}
+            style={{ width: '110px', marginLeft: '15px', fontSize: '16px' }}
           >
             Оценка: {displayRating}
           </span>
           <NumRating
-            precision={0.2}
+            precision={0.5}
             max={10}
             sx={{ marginLeft: '0px' }}
             onChange={handleRatingChange}
