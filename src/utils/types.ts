@@ -137,11 +137,11 @@ export const ColorNameByUrlHandle: {
 }
 
 export function getPlayerColor(urlHandle: string): string {
-  return ColorByUrlHandle[urlHandle] || Color.greyDark
+  return ColorByUrlHandle[urlHandle] || Color.blueLight
 }
 
 export function getPlayerColorName(player: Player): CustomColorNames {
-  return ColorNameByUrlHandle[player.url_handle] || 'customGreyDark'
+  return ColorNameByUrlHandle[player.url_handle] || 'customBlueLight'
 }
 
 export type CurrentUser = {
