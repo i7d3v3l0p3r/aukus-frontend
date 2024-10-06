@@ -40,12 +40,11 @@ export default function StaticPanel({ children }: Props) {
   return (
     <Box display={'flex'} justifyContent="center">
       <Box
-        paddingLeft={'100px'}
-        paddingRight={'100px'}
+        minWidth={'1300px'}
+        width={'1300px'}
         sx={{
           position: isFixed ? 'fixed' : 'absolute',
           zIndex: 20,
-          width: '100%',
           ...(isFixed ? { bottom: 100 } : { marginTop: '30px' }),
         }}
         ref={containerRef}
