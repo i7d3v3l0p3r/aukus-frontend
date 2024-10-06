@@ -6,22 +6,52 @@ import {
   SliderThumb,
 } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
+import { useQuery } from '@tanstack/react-query'
 import { range } from 'lodash'
 import { useState } from 'react'
+import { fetchMovesByDate } from 'utils/api'
 import { Color } from 'utils/types'
 
 type Props = {}
 
 type FormState = 'closed' | 'date' | 'move'
 
-const DateMarks = range(1, 40, 1).map((value) => ({
+const StartDate = new Date('2024-10-01')
+const Today = new Date()
+
+const daysBetween = (date1: Date, date2: Date) => {
+  const diffTime = Math.abs(date2.getTime() - date1.getTime())
+  return Math.abs(diffTime / (1000 * 60 * 60 * 24))
+}
+
+const AmountOfDays = daysBetween(StartDate, Today)
+const StartDateDay = StartDate.getDate()
+
+const DateMarks = range(0, AmountOfDays, 1).map((value) => ({
   value,
-  label: value.toString(),
+  label: (value + StartDateDay).toString(),
 }))
 
 export default function TimelapseButton() {
   const [formState, setFormState] = useState<FormState>('closed')
-  const [date, setDate] = useState<number>(1)
+  const [dateDiff, setDateDiff] = useState<number>(1)
+  const [moveId, setMoveId] = useState<number>(1)
+
+  const currentDate = new Date(StartDate)
+  currentDate.setDate(StartDate.getDate() + dateDiff)
+
+  const dateString = currentDate.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+  })
+
+  const datePart = currentDate.toISOString().split('T')[0]
+
+  const { data: movesByDay } = useQuery({
+    queryKey: ['timelapse', dateDiff],
+    queryFn: () => fetchMovesByDate(datePart),
+    staleTime: 1000 * 60 * 5,
+  })
 
   if (formState === 'closed') {
     return (
@@ -49,8 +79,8 @@ export default function TimelapseButton() {
           }}
         >
           <Slider
-            min={1}
-            max={40}
+            min={0}
+            max={AmountOfDays - 0.5}
             step={1}
             marks={DateMarks}
             slots={{
@@ -62,20 +92,24 @@ export default function TimelapseButton() {
             valueLabelDisplay="off"
             track={false}
             sx={{ margin: 0 }}
-            value={date}
-            onChange={(_, value) => setDate(value as number)}
+            value={dateDiff}
+            onChange={(_, value) => setDateDiff(Math.floor(value as number))}
           />
         </Box>
-        <Box display="flex" justifyContent="center">
+        <Box textAlign="center" display="relative">
           <Button
             onClick={() => setFormState('move')}
-            sx={{ width: '320px', marginRight: '10px' }}
+            sx={{ width: '320px', marginRight: '10px', position: 'relative' }}
           >
-            Выбрать дату - {date}
+            Выбрать дату - {dateString}
           </Button>
           <Button
             onClick={() => setFormState('closed')}
-            sx={{ backgroundColor: 'black' }}
+            sx={{
+              backgroundColor: 'black',
+              position: 'absolute',
+              width: '163px',
+            }}
           >
             Закрыть
           </Button>
@@ -83,6 +117,25 @@ export default function TimelapseButton() {
       </Box>
     )
   }
+
+  const turnMarks = range(0, 20, 1).map((value) => ({
+    value,
+    label: (value + 1).toString(),
+  }))
+
+  const nextDay = new Date(currentDate)
+  nextDay.setDate(currentDate.getDate() + 1)
+  const nextDayString = nextDay.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+  })
+
+  const prevDay = new Date(currentDate)
+  prevDay.setDate(currentDate.getDate() - 1)
+  const prevDayString = prevDay.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+  })
 
   return (
     <Box width={'100%'}>
@@ -102,9 +155,9 @@ export default function TimelapseButton() {
       >
         <Slider
           min={1}
-          max={40}
+          max={turnMarks.length - 0.5}
           step={1}
-          marks={DateMarks}
+          marks={turnMarks}
           slots={{
             markLabel: CustomMark,
             rail: CustomRail,
@@ -114,26 +167,53 @@ export default function TimelapseButton() {
           valueLabelDisplay="off"
           track={false}
           sx={{ margin: 0 }}
-          value={date}
-          onChange={(_, value) => setDate(value as number)}
+          value={moveId}
+          onChange={(_, value) => {
+            setMoveId(Math.floor(value as number))
+          }}
         />
       </Box>
-      <Box display="flex" justifyContent="center">
-        <Button
-          sx={{ width: '204px', marginRight: '10px', backgroundColor: 'black' }}
-        >
-          Пред. день
-        </Button>
+      <Box display={'flex'} justifyContent="center">
+        {!datesEqual(currentDate, StartDate) ? (
+          <Button
+            onClick={() => setDateDiff(dateDiff - 1)}
+            sx={{
+              width: '204px',
+              backgroundColor: 'black',
+
+              left: '0',
+            }}
+          >
+            {'<-'} {prevDayString}
+          </Button>
+        ) : (
+          <Box sx={{ width: '204px' }} />
+        )}
         <Button
           fullWidth
           onClick={() => setFormState('date')}
-          sx={{ width: '163px', marginRight: '10px' }}
+          sx={{
+            width: '163px',
+
+            marginRight: '10px',
+            marginLeft: '10px',
+          }}
         >
           Вернуться
         </Button>
-        <Button sx={{ width: '204px', backgroundColor: 'black' }}>
-          След. день
-        </Button>
+        {!datesEqual(currentDate, Today) ? (
+          <Button
+            onClick={() => setDateDiff(dateDiff + 1)}
+            sx={{
+              width: '204px',
+              backgroundColor: 'black',
+            }}
+          >
+            {nextDayString} {'->'}
+          </Button>
+        ) : (
+          <Box sx={{ width: '204px' }} />
+        )}
       </Box>
     </Box>
   )
@@ -185,7 +265,7 @@ function CustomRail(props: any) {
         position: 'absolute',
         height: '4px',
         top: '10px',
-        width: '100%',
+        width: '1265px',
         backgroundColor: Color.blue,
         borderRadius: '5px',
       }}
@@ -195,17 +275,28 @@ function CustomRail(props: any) {
 
 function CustomThumb(props: any) {
   // return <SliderThumb {...props} />
+  // console.log(props)
+  const className = props.className as string
+  const isActive = className.includes('Mui-active')
+
   return (
     <SliderThumb
       {...props}
       style={{
         ...props.style,
-        height: '18px',
-        width: '12px',
+        height: isActive ? '22px' : '18px',
+        width: isActive ? '14px' : '12px',
+        border: '1px solid white',
         backgroundColor: Color.white,
-        borderRadius: '6px',
-        transform: 'translate(-36%, -84%)',
+        borderRadius: isActive ? '10px' : '6px',
+        transform: isActive ? 'translate(-36%, -78%)' : 'translate(-34%, -84%)',
       }}
     />
   )
+}
+
+function datesEqual(date1: Date, date2: Date) {
+  const date1String = date1.toISOString().slice(0, 10)
+  const date2String = date2.toISOString().slice(0, 10)
+  return date1String === date2String
 }

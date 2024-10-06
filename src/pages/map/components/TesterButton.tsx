@@ -51,7 +51,7 @@ export default function TesterButton({ player, freezeDice }: Props) {
   }
 
   return (
-    <Box marginTop={'20px'}>
+    <Box marginTop={'100px'}>
       <Button color="error" onClick={() => setModalOpen(true)}>
         Для тестов
       </Button>
