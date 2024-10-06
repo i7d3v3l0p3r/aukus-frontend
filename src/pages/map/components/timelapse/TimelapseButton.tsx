@@ -289,12 +289,12 @@ function CustomThumb(props: any) {
       {...props}
       style={{
         ...props.style,
-        height: isActive ? '22px' : '18px',
-        width: isActive ? '14px' : '12px',
+        height: isActive ? '24px' : '18px',
+        width: isActive ? '16px' : '12px',
         border: '1px solid white',
         backgroundColor: Color.white,
         borderRadius: isActive ? '10px' : '6px',
-        transform: isActive ? 'translate(-36%, -78%)' : 'translate(-34%, -84%)',
+        transform: isActive ? 'translate(-36%, -77%)' : 'translate(-34%, -84%)',
       }}
     />
   )

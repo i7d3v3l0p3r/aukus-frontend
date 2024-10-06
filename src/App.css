@@ -141,3 +141,7 @@ div.Mui-focused {
 span.MuiSlider-mark {
   display: none;
 }
+
+span.MuiSlider-thumb:active {
+  box-shadow: none;
+}
