@@ -47,11 +47,10 @@ export default function TimelapseButton() {
 
   const datePart = currentDate.toISOString().split('T')[0]
 
-  const { data: movesByDay } = useQuery({
-    queryKey: ['timelapse', dateDiff],
-    queryFn: () => fetchMovesByDate(datePart),
-    staleTime: 1000 * 60 * 5,
-  })
+  const handleDateDiffChange = (value: number) => {
+    setDateDiff(value)
+    setMoveId(1)
+  }
 
   if (formState === 'closed') {
     return (
@@ -93,7 +92,9 @@ export default function TimelapseButton() {
             track={false}
             sx={{ margin: 0 }}
             value={dateDiff}
-            onChange={(_, value) => setDateDiff(Math.floor(value as number))}
+            onChange={(_, value) =>
+              handleDateDiffChange(Math.floor(value as number))
+            }
           />
         </Box>
         <Box textAlign="center" display="relative">
@@ -118,9 +119,9 @@ export default function TimelapseButton() {
     )
   }
 
-  const turnMarks = range(0, 20, 1).map((value) => ({
+  const turnMarks = range(1, 21, 1).map((value) => ({
     value,
-    label: (value + 1).toString(),
+    label: value.toString(),
   }))
 
   const nextDay = new Date(currentDate)
@@ -155,7 +156,7 @@ export default function TimelapseButton() {
       >
         <Slider
           min={1}
-          max={turnMarks.length - 0.5}
+          max={turnMarks.length + 0.5}
           step={1}
           marks={turnMarks}
           slots={{
@@ -232,10 +233,12 @@ function CustomMark(props: any) {
     height: '24px',
     // width: '50px',
     color: 'white',
-    top: '-24px',
+    top: '0px',
     position: 'absolute',
     // left: `${index * 2}%`,
   }
+
+  const offsetLeft = index > 9 ? '-6px' : '-3px'
 
   return (
     <div
@@ -244,7 +247,9 @@ function CustomMark(props: any) {
         ...baseStyles,
       }}
     >
-      <span>{mark.label}</span>
+      <span style={{ position: 'absolute', top: '-26px', left: offsetLeft }}>
+        {mark.label}
+      </span>
       <div
         style={{
           height: '18px',

@@ -258,7 +258,6 @@ export default function MapComponent() {
           <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
         )}
       </StaticPanel>
-
       <TodaysMoves />
     </Box>
   )
