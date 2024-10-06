@@ -6,12 +6,14 @@ import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
 import { cellSize, MainMap } from '../types'
-import ActionButton from './ActionButton'
+import ActionButton from './action/ActionButton'
 import CellItem from './CellItem'
 import MapArrow from './MapArrow'
-import PlayerIcon from './PlayerIcon'
+import PlayerIcon from './player/PlayerIcon'
+import StaticPanel from './StaticPanel'
 import SVGMarkers from './SVGMarkers'
 import TesterButton from './TesterButton'
+import TimelapseButton from './timelapse/TimelapseButton'
 import TodaysMoves from './TodaysMoves'
 import {
   ladders,
@@ -238,18 +240,24 @@ export default function MapComponent() {
             onAnimationEnd={handleAnimationEnd}
           />
         ))}
-      {currentPlayer && (
-        <ActionButton
-          handleNextTurn={handleNextTurn}
-          player={currentPlayer}
-          onMakingTurn={handleMakingTurn}
-          onDiceRoll={handleDiceRoll}
-        />
-      )}
-
-      {currentPlayer && (
-        <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
-      )}
+      <StaticPanel>
+        {currentPlayer && (
+          <Box marginBottom={'20px'} display="flex" justifyContent="center">
+            <ActionButton
+              handleNextTurn={handleNextTurn}
+              player={currentPlayer}
+              onMakingTurn={handleMakingTurn}
+              onDiceRoll={handleDiceRoll}
+            />
+          </Box>
+        )}
+        <Box display="flex" justifyContent="center">
+          <TimelapseButton />
+        </Box>
+        {currentPlayer && (
+          <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+        )}
+      </StaticPanel>
 
       <TodaysMoves />
     </Box>

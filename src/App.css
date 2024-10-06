@@ -137,3 +137,7 @@ div.Mui-focused {
   scrollbar-width: auto; /* Makes the scrollbar thinner */
   scrollbar-color: #007aff #0c0c0c; /* Scroll thumb color and track color */
 }
+
+span.MuiSlider-mark {
+  display: none;
+}
