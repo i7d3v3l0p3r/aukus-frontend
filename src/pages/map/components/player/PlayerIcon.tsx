@@ -26,9 +26,9 @@ import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
 import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
 import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
 
-import { cellSize } from '../types'
+import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
-import { getMapCellById, laddersByCell, snakesByCell } from './utils'
+import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 import { CircleSharp } from '@mui/icons-material'
 
 const playerIcons: { [key: string]: string } = {

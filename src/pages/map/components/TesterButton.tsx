@@ -51,20 +51,10 @@ export default function TesterButton({ player, freezeDice }: Props) {
   }
 
   return (
-    <>
-      <Box display={'flex'} justifyContent="center">
-        <Box
-          sx={{
-            position: 'fixed',
-            bottom: 150,
-            zIndex: 20,
-          }}
-        >
-          <Button color="error" onClick={() => setModalOpen(true)}>
-            Для тестов
-          </Button>
-        </Box>
-      </Box>
+    <Box marginTop={'20px'}>
+      <Button color="error" onClick={() => setModalOpen(true)}>
+        Для тестов
+      </Button>
       <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
         <DialogContent>
           <Box>
@@ -94,6 +84,6 @@ export default function TesterButton({ player, freezeDice }: Props) {
           <Button onClick={() => setModalOpen(false)}>Закрыть</Button>
         </DialogActions>
       </Dialog>
-    </>
+    </Box>
   )
 }
