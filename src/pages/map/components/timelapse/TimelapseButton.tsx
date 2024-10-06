@@ -247,7 +247,14 @@ function CustomMark(props: any) {
         ...baseStyles,
       }}
     >
-      <span style={{ position: 'absolute', top: '-26px', left: offsetLeft }}>
+      <span
+        style={{
+          position: 'absolute',
+          top: '-26px',
+          left: offsetLeft,
+          userSelect: 'none',
+        }}
+      >
         {mark.label}
       </span>
       <div
