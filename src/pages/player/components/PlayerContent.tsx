@@ -23,7 +23,7 @@ export default function PlayerContent(props: Props) {
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     staleTime: 1000 * 60 * 1,
   })
   const players = playersData?.players

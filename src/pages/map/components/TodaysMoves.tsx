@@ -17,7 +17,7 @@ export default function TodaysMoves() {
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     refetchInterval: 1000 * 60,
   })
 

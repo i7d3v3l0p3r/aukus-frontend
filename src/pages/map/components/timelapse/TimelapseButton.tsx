@@ -1,23 +1,17 @@
-import {
-  Box,
-  Button,
-  Slider,
-  SliderMarkLabel,
-  SliderThumb,
-} from '@mui/material'
+import { Box, Button, Slider, SliderThumb } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
-import { useQuery } from '@tanstack/react-query'
 import { range } from 'lodash'
-import { useState } from 'react'
-import { fetchMovesByDate } from 'utils/api'
+import { useTimelapse } from 'pages/map/hooks/useTimelapse'
+import { useEffect, useState } from 'react'
 import { Color } from 'utils/types'
 
 type Props = {}
 
-type FormState = 'closed' | 'date' | 'move'
-
 const StartDate = new Date('2024-10-01')
+StartDate.setHours(0, 0, 0, 0)
+
 const Today = new Date()
+Today.setHours(0, 0, 0, 0)
 
 const daysBetween = (date1: Date, date2: Date) => {
   const diffTime = Math.abs(date2.getTime() - date1.getTime())
@@ -27,15 +21,17 @@ const daysBetween = (date1: Date, date2: Date) => {
 const AmountOfDays = daysBetween(StartDate, Today)
 const StartDateDay = StartDate.getDate()
 
-const DateMarks = range(0, AmountOfDays, 1).map((value) => ({
+const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => ({
   value,
   label: (value + StartDateDay).toString(),
 }))
 
 export default function TimelapseButton() {
-  const [formState, setFormState] = useState<FormState>('closed')
-  const [dateDiff, setDateDiff] = useState<number>(1)
-  const [moveId, setMoveId] = useState<number>(1)
+  const timelapseState = useTimelapse()
+
+  const [dateDiff, setDateDiff] = useState<number>(
+    daysBetween(StartDate, Today)
+  )
 
   const currentDate = new Date(StartDate)
   currentDate.setDate(StartDate.getDate() + dateDiff)
@@ -47,20 +43,28 @@ export default function TimelapseButton() {
 
   const datePart = currentDate.toISOString().split('T')[0]
 
+  useEffect(() => {
+    timelapseState.setSelectedDate(datePart)
+    timelapseState.setSelectedMoveId(1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datePart])
+
   const handleDateDiffChange = (value: number) => {
     setDateDiff(value)
-    setMoveId(1)
   }
 
-  if (formState === 'closed') {
+  if (timelapseState.state === 'closed') {
     return (
-      <Button onClick={() => setFormState('date')} sx={{ width: '320px' }}>
+      <Button
+        onClick={() => timelapseState.setState('date_selection')}
+        sx={{ width: '320px' }}
+      >
         Timelapse
       </Button>
     )
   }
 
-  if (formState === 'date') {
+  if (timelapseState.state === 'date_selection') {
     return (
       <Box width={'100%'}>
         <Box
@@ -71,15 +75,15 @@ export default function TimelapseButton() {
             backgroundColor: 'black',
             width: '100%',
             height: '63px',
-            paddingLeft: '10px',
-            paddingRight: '10px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
             borderRadius: '10px',
             marginBottom: '10px',
           }}
         >
           <Slider
             min={0}
-            max={AmountOfDays - 0.5}
+            max={AmountOfDays}
             step={1}
             marks={DateMarks}
             slots={{
@@ -99,13 +103,13 @@ export default function TimelapseButton() {
         </Box>
         <Box textAlign="center" display="relative">
           <Button
-            onClick={() => setFormState('move')}
+            onClick={() => timelapseState.setState('move_selection')}
             sx={{ width: '320px', marginRight: '10px', position: 'relative' }}
           >
             Выбрать дату - {dateString}
           </Button>
           <Button
-            onClick={() => setFormState('closed')}
+            onClick={() => timelapseState.setState('closed')}
             sx={{
               backgroundColor: 'black',
               position: 'absolute',
@@ -119,7 +123,9 @@ export default function TimelapseButton() {
     )
   }
 
-  const turnMarks = range(1, 21, 1).map((value) => ({
+  const movesAmount = timelapseState.moves.length || 1
+
+  const turnMarks = range(1, movesAmount + 1, 1).map((value) => ({
     value,
     label: value.toString(),
   }))
@@ -148,15 +154,15 @@ export default function TimelapseButton() {
           backgroundColor: 'black',
           width: '100%',
           height: '63px',
-          paddingLeft: '10px',
-          paddingRight: '10px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
           borderRadius: '10px',
           marginBottom: '10px',
         }}
       >
         <Slider
           min={1}
-          max={turnMarks.length + 0.5}
+          max={movesAmount}
           step={1}
           marks={turnMarks}
           slots={{
@@ -168,20 +174,19 @@ export default function TimelapseButton() {
           valueLabelDisplay="off"
           track={false}
           sx={{ margin: 0 }}
-          value={moveId}
+          value={timelapseState.selectedMoveId}
           onChange={(_, value) => {
-            setMoveId(Math.floor(value as number))
+            timelapseState.setSelectedMoveId(Math.floor(value as number))
           }}
         />
       </Box>
       <Box display={'flex'} justifyContent="center">
         {!datesEqual(currentDate, StartDate) ? (
           <Button
-            onClick={() => setDateDiff(dateDiff - 1)}
+            onClick={() => handleDateDiffChange(dateDiff - 1)}
             sx={{
               width: '204px',
               backgroundColor: 'black',
-
               left: '0',
             }}
           >
@@ -192,10 +197,9 @@ export default function TimelapseButton() {
         )}
         <Button
           fullWidth
-          onClick={() => setFormState('date')}
+          onClick={() => timelapseState.setState('date_selection')}
           sx={{
             width: '163px',
-
             marginRight: '10px',
             marginLeft: '10px',
           }}
@@ -204,7 +208,7 @@ export default function TimelapseButton() {
         </Button>
         {!datesEqual(currentDate, Today) ? (
           <Button
-            onClick={() => setDateDiff(dateDiff + 1)}
+            onClick={() => handleDateDiffChange(dateDiff + 1)}
             sx={{
               width: '204px',
               backgroundColor: 'black',
@@ -277,7 +281,7 @@ function CustomRail(props: any) {
         position: 'absolute',
         height: '4px',
         top: '10px',
-        width: '1265px',
+        width: '1263px',
         backgroundColor: Color.blue,
         borderRadius: '5px',
       }}
