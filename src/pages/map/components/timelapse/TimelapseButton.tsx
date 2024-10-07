@@ -1,9 +1,11 @@
 import { Box, Button, Slider, SliderThumb } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
+import { useQuery } from '@tanstack/react-query'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useState } from 'react'
-import { Color } from 'utils/types'
+import { fetchPlayers } from 'utils/api'
+import { Color, Player, PlayerMove } from 'utils/types'
 
 type Props = {}
 
@@ -28,6 +30,13 @@ const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => ({
 
 export default function TimelapseButton() {
   const timelapseState = useTimelapse()
+
+  const { data: playersData } = useQuery({
+    queryKey: ['players'],
+    queryFn: () => fetchPlayers(),
+    refetchInterval: 1000 * 60,
+    enabled: timelapseState.state !== 'closed',
+  })
 
   const [dateDiff, setDateDiff] = useState<number>(
     daysBetween(StartDate, Today)
@@ -144,8 +153,34 @@ export default function TimelapseButton() {
     month: 'long',
   })
 
+  const currentMove = timelapseState.moves[timelapseState.selectedMoveId - 1]
+  const movePlayer = (playersData?.players || []).find(
+    (player) => player.id === currentMove.player_id
+  )
+
+  let turnText = ''
+  if (movePlayer && currentMove) {
+    turnText = turnDescription(movePlayer, currentMove)
+  }
+
   return (
     <Box width={'100%'}>
+      <Box
+        style={{
+          backgroundColor: Color.blue,
+          color: 'white',
+          height: '38px',
+          borderRadius: '10px',
+          fontSize: '15px',
+          fontWeight: 600,
+          marginBottom: '10px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {turnText}
+      </Box>
       <Box
         style={{
           display: 'flex',
@@ -315,4 +350,18 @@ function datesEqual(date1: Date, date2: Date) {
   const date1String = date1.toISOString().slice(0, 10)
   const date2String = date2.toISOString().slice(0, 10)
   return date1String === date2String
+}
+
+function turnDescription(player: Player, move: PlayerMove) {
+  const actions = {
+    completed: 'прошел',
+    drop: 'дропнул',
+    movie: 'посмотрел',
+    reroll: 'рерольную',
+    sheikh: 'словил шейха на',
+  }
+
+  const action = actions[move.type] || move.type
+
+  return `${player.name} ${action} ${move.item_title}, ходит с ${move.cell_from} на ${move.cell_to}`
 }
