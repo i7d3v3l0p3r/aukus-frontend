@@ -5,6 +5,7 @@ import useScreenSize from 'context/useScreenSize'
 import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
+import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
 import ActionButton from './action/ActionButton'
 import CellItem from './CellItem'
@@ -33,13 +34,20 @@ export default function MapComponent() {
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
+  const timelapseState = useTimelapse()
+  const timelapseEnabled = timelapseState.state !== 'closed'
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     refetchInterval: 1000 * 30,
     enabled: !makingTurn,
   })
-  const players = playersData?.players
+
+  let players = playersData?.players || []
+  if (timelapseEnabled) {
+    players = timelapseState.players
+  }
 
   const currentUser = useUser()
   useScreenSize()
@@ -241,7 +249,7 @@ export default function MapComponent() {
           />
         ))}
       <StaticPanel>
-        {currentPlayer && (
+        {currentPlayer && !timelapseEnabled && (
           <Box marginBottom={'20px'} display="flex" justifyContent="center">
             <ActionButton
               handleNextTurn={handleNextTurn}

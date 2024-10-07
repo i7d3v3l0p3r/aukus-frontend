@@ -18,10 +18,13 @@ type PlayersResponse = {
   players: Array<Player>
 }
 
-export async function fetchPlayers(): Promise<PlayersResponse> {
+export async function fetchPlayers(move_id?: number): Promise<PlayersResponse> {
   if (MOCK_API) {
-    console.log('fetching players')
+    console.log('fetching players', move_id)
     return Promise.resolve({ players: playersMock })
+  }
+  if (move_id) {
+    return fetch(`/api/players?move_id=${move_id}`).then((res) => res.json())
   }
   return fetch(`/api/players`).then((res) => res.json())
 }

@@ -20,7 +20,7 @@ export default function Leaderboard() {
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     staleTime: 1000 * 60 * 1,
   })
   const players = playersData?.players
