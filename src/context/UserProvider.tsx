@@ -17,6 +17,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     queryFn: fetchCurrentUser,
     enabled: !playerInfo,
     staleTime: 1000 * 60,
+    retry: false,
   })
 
   useEffect(() => {
