@@ -46,6 +46,7 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
 export async function fetchCurrentUser(): Promise<CurrentUser> {
   if (MOCK_API) {
     console.log('fetching current user')
+    // return Promise.reject({ error: 'auth required' })
     return Promise.resolve({
       user_id: 1,
       role: 'player',
@@ -54,7 +55,12 @@ export async function fetchCurrentUser(): Promise<CurrentUser> {
       name: 'Lasqa',
     })
   }
-  return fetch(`/api/current_user`).then((res) => res.json())
+  return fetch(`/api/current_user`).then((res) => {
+    if (res.status !== 200) {
+      throw new Error('auth required')
+    }
+    return res.json()
+  })
 }
 
 type StatsResponse = {
