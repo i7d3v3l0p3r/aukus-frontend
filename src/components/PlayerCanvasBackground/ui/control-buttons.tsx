@@ -154,13 +154,14 @@ export function ControlButtons({
         variant="contained"
         disabled={!flipFunction}
         onClick={() => flipFunction?.()}
-        sx={{ width: '150px', backgroundColor: Color.brown }}
+        color="customBrown"
+        sx={{ width: '150px' }}
       >
         Отразить
       </Button>
       <Button
         variant="contained"
-        color="error"
+        color="customRed"
         onClick={handleImageDelete}
         disabled={!selectedImage}
         sx={{ width: '150px' }}
@@ -170,7 +171,7 @@ export function ControlButtons({
 
       <Button
         variant="contained"
-        color="secondary"
+        color="customBlue"
         onClick={handleSave}
         sx={{ width: '150px' }}
       >
@@ -179,7 +180,7 @@ export function ControlButtons({
 
       <Divider
         orientation="vertical"
-        color="#414141"
+        color={Color.greyLight}
         flexItem
         sx={{
           borderRadius: 10,
@@ -197,7 +198,7 @@ export function ControlButtons({
       />
       <Button
         variant="contained"
-        color="success"
+        color="customGreen"
         onClick={onUploadClick}
         sx={{ width: '200px' }}
       >
