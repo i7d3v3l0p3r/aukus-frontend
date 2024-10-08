@@ -249,22 +249,33 @@ export default function MapComponent() {
           />
         ))}
       <StaticPanel>
-        {currentPlayer && !timelapseEnabled && (
-          <Box marginBottom={'20px'} display="flex" justifyContent="center">
+        <Box
+          marginBottom={'20px'}
+          display="flex"
+          flexDirection={'column'}
+          justifyContent="center"
+          flexWrap="wrap"
+          alignContent="center"
+        >
+          {currentPlayer && !timelapseEnabled && (
             <ActionButton
               handleNextTurn={handleNextTurn}
               player={currentPlayer}
               onMakingTurn={handleMakingTurn}
               onDiceRoll={handleDiceRoll}
             />
-          </Box>
-        )}
-        <Box display="flex" justifyContent="center">
+          )}
+
+          <Box marginTop={'20px'} />
           <TimelapseButton />
+
+          {currentPlayer && !timelapseEnabled && (
+            <>
+              <Box marginTop={'20px'} />
+              <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+            </>
+          )}
         </Box>
-        {currentPlayer && !timelapseEnabled && (
-          <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
-        )}
       </StaticPanel>
       <TodaysMoves />
     </Box>
