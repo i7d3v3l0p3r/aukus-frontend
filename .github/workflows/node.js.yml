@@ -2,7 +2,7 @@ name: Rollup
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: [ "test" ]
 
 jobs:
   build_and_deploy:
@@ -40,4 +40,4 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         command_timeout: 1m
-        script: cd "/home/aukus/deploy/frontend/test" && sudo systemctl stop nginx && rm -rf build && mv deploy_build/build ./ && sudo systemctl start nginx
+        script: cd "/home/aukus/deploy/frontend/test" && rm -rf build && mv deploy_build/build ./
