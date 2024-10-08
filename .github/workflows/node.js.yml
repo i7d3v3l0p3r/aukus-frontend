@@ -40,20 +40,20 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         command_timeout: 1m
-        script: cd "/home/aukus/deploy/frontend/prod" && sudo systemctl stop nginx && rm -rf build && mv deploy_build/build ./ && sudo systemctl start nginx
+        script: cd "/home/aukus/deploy/frontend/prod" && rm -rf build && mv deploy_build/build ./
 
-    - name: Aukus frontend build and upload success!
+    - name: Aukus prod frontend build and upload success!
       uses: rjstone/discord-webhook-notify@v1
       if: success()
       with:
         severity: info
-        details: Aukus frontend build and upload success!
+        details: Aukus prod frontend build and upload success!
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-    - name: Aukus frontend build and upload failure!
+    - name: Aukus prod frontend build and upload failure!
       uses: rjstone/discord-webhook-notify@v1
       if: failure()
       with:
         severity: error
-        details: Aukus frontend build and upload failure!
+        details: Aukus prod frontend build and upload failure!
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
