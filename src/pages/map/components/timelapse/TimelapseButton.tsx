@@ -1,10 +1,8 @@
 import { Box, Button, Slider, SliderThumb } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
-import { useQuery } from '@tanstack/react-query'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useState } from 'react'
-import { fetchPlayers } from 'utils/api'
 import { Color, Player, PlayerMove } from 'utils/types'
 
 type Props = {}
@@ -30,13 +28,6 @@ const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => ({
 
 export default function TimelapseButton() {
   const timelapseState = useTimelapse()
-
-  const { data: playersData } = useQuery({
-    queryKey: ['players'],
-    queryFn: () => fetchPlayers(),
-    refetchInterval: 1000 * 60,
-    enabled: timelapseState.state !== 'closed',
-  })
 
   const [dateDiff, setDateDiff] = useState<number>(
     daysBetween(StartDate, Today)
@@ -153,14 +144,17 @@ export default function TimelapseButton() {
     month: 'long',
   })
 
-  const currentMove = timelapseState.moves[timelapseState.selectedMoveId - 1]
-  const movePlayer = (playersData?.players || []).find(
-    (player) => player.id === currentMove.player_id
-  )
-
   let turnText = ''
-  if (movePlayer && currentMove) {
-    turnText = turnDescription(movePlayer, currentMove)
+
+  const currentMove = timelapseState.moves[timelapseState.selectedMoveId - 1]
+  if (currentMove) {
+    const movePlayer = timelapseState.players.find(
+      (player) => player.id === currentMove.player_id
+    )
+
+    if (movePlayer) {
+      turnText = turnDescription(movePlayer, currentMove)
+    }
   }
 
   return (
