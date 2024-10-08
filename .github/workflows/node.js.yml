@@ -41,3 +41,19 @@ jobs:
         port: ${{ secrets.PORT }}
         command_timeout: 1m
         script: cd "/home/aukus/deploy/frontend/test" && rm -rf build && mv deploy_build/build ./
+
+    - name: Aukus test frontend build and upload success!
+      uses: rjstone/discord-webhook-notify@v1
+      if: success()
+      with:
+        severity: info
+        details: Aukus test frontend build and upload success!
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+    - name: Aukus test frontend build and upload failure!
+      uses: rjstone/discord-webhook-notify@v1
+      if: failure()
+      with:
+        severity: error
+        details: Aukus test frontend build and upload failure!
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
