@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { fetchMovesByDate, fetchPlayers } from 'utils/api'
 import { Player, PlayerMove } from 'utils/types'
 
@@ -42,6 +42,7 @@ export default function TimelapseProvider({
   const [openState, setOpenState] = useState<TimelapseState['state']>('closed')
   const [selectedDate, setSelectedDate] = useState<string>(TodayString)
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
+  const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
@@ -50,12 +51,12 @@ export default function TimelapseProvider({
     enabled: openState !== 'closed',
   })
 
-  const moves = movesByDay?.moves || []
+  const moves = useMemo(() => movesByDay?.moves || [], [movesByDay])
 
   const { data: playersData } = useQuery({
-    queryKey: ['players', selectedMoveId],
+    queryKey: ['players_moves', selectedDate, moves],
     queryFn: () => {
-      if (!moves) {
+      if (moves.length === 0) {
         return null
       }
       const selectedMove = moves[selectedMoveId - 1]
@@ -68,7 +69,25 @@ export default function TimelapseProvider({
     enabled: openState !== 'closed',
   })
 
-  const players = playersData?.players || []
+  const players = useMemo(() => playersData?.players || [], [playersData])
+
+  useEffect(() => {
+    const editablePlayers = players.map((player) => ({
+      ...player,
+    }))
+    const movesBefore = moves.slice(0, selectedMoveId)
+    if (movesBefore) {
+      for (const move of movesBefore) {
+        const movePlayer = editablePlayers.find(
+          (player) => player.id === move.player_id
+        )
+        if (movePlayer) {
+          movePlayer.map_position = move.cell_to
+        }
+      }
+      setUpdatedPlayers(editablePlayers)
+    }
+  }, [selectedMoveId, moves, players])
 
   return (
     <TimelapseContext.Provider
@@ -79,7 +98,7 @@ export default function TimelapseProvider({
         setSelectedDate,
         selectedMoveId,
         setSelectedMoveId,
-        players,
+        players: updatedPlayers,
         moves,
       }}
     >
