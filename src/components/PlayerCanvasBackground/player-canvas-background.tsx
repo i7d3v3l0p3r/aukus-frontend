@@ -14,6 +14,7 @@ import MainMenu from 'components/MainMenu'
 import PointAucModal from 'pages/player/components/PointAucModal'
 import { useMutation } from '@tanstack/react-query'
 import { resetPointaucToken } from 'utils/api'
+import { ReactComponent as AddSquareIcon } from 'assets/add-square.svg'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (
@@ -47,7 +48,7 @@ function EditModeButton() {
   return (
     <Button
       sx={{
-        width: '212px',
+        width: '180px',
         height: '40px',
         paddingLeft: '15px',
         paddingRight: '15px',
@@ -57,7 +58,7 @@ function EditModeButton() {
       color="customBlue"
       onClick={() => setIsEditMode(true)}
     >
-      <ImageSvg />
+      <ImageSvg width="19px" height="19px" />
       <Box marginLeft={'8px'} />
       Редактировать
     </Button>
@@ -68,7 +69,7 @@ function PointAucButton({ onClick }: { onClick: () => void }) {
   return (
     <Button
       sx={{
-        width: '212px',
+        width: '220px',
         height: '40px',
         paddingLeft: '15px',
         paddingRight: '15px',
@@ -78,6 +79,8 @@ function PointAucButton({ onClick }: { onClick: () => void }) {
       color="customBlue"
       onClick={() => onClick()}
     >
+      <AddSquareIcon />
+      <Box marginLeft={'8px'} />
       Привязать PointAuc
     </Button>
   )
