@@ -11,6 +11,7 @@ type Props = {
   id: number
   move: PlayerMove
   player?: Player
+  colorType?: 'move_type' | 'player'
 }
 
 const moveTypeColor = {
@@ -29,7 +30,7 @@ const moveTypeText = {
   movie: 'Фильм',
 }
 
-export default function MoveCard({ id, move, player }: Props) {
+export default function MoveCard({ id, move, player, colorType }: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
   const currentUser = useUser()
@@ -58,13 +59,17 @@ export default function MoveCard({ id, move, player }: Props) {
   }
 
   const greyColor = '#CECECE'
-  const borderColor = player
-    ? getPlayerColor(player.url_handle)
-    : Color.greyLight
+  let borderColor = greyColor
+  if (player && colorType === 'player') {
+    borderColor = getPlayerColor(player.url_handle)
+  }
+  if (colorType === 'move_type') {
+    borderColor = moveTypeColor[move.type]
+  }
 
   let moveTitle = `Ход — ${id}`
   if (player) {
-    moveTitle = `${player.name}, ход — ${id}`
+    moveTitle = player.name
   }
 
   return (
@@ -85,7 +90,9 @@ export default function MoveCard({ id, move, player }: Props) {
             fontWeight={400}
             marginBottom={'15px'}
           >
-            <Box color={greyColor}>{moveTitle}</Box>
+            <Box color={player ? getPlayerColor(player.url_handle) : greyColor}>
+              {moveTitle}
+            </Box>
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
           <Box
