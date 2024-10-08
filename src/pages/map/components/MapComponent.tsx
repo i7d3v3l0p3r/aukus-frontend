@@ -262,7 +262,7 @@ export default function MapComponent() {
         <Box display="flex" justifyContent="center">
           <TimelapseButton />
         </Box>
-        {currentPlayer && (
+        {currentPlayer && !timelapseEnabled && (
           <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
         )}
       </StaticPanel>
