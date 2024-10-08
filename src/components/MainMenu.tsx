@@ -1,9 +1,7 @@
 import React from 'react'
 import { Box, Button } from '@mui/material'
-import { useQuery } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
-import { fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor, Page } from 'utils/types'
 import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
 import LinkSpan from './LinkSpan'
@@ -21,16 +19,9 @@ export default function MainMenu({
   rightSlot,
   leftSlot,
 }: Props) {
-  const { userId } = useUser()
-  const { data: playersData } = useQuery({
-    queryKey: ['players'],
-    queryFn: fetchPlayers,
-    staleTime: 1000 * 60 * 1,
-  })
-  const players = playersData?.players
-
-  const currentPlayer = players?.find((player) => player.id === userId)
-  const playerColor = currentPlayer && getPlayerColor(currentPlayer)
+  const currentUser = useUser()
+  const playerColor = getPlayerColor(currentUser?.url_handle || '')
+  const urlHandle = currentUser?.url_handle
 
   return (
     <Box>
@@ -41,7 +32,7 @@ export default function MainMenu({
         marginTop={'15px'}
         marginBottom={'13px'}
       >
-        <Link to={currentPlayer ? `/players/${currentPlayer.url_handle}` : '/'}>
+        <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
           <LinkSpan
             color={playerColor}
             style={{
@@ -58,7 +49,7 @@ export default function MainMenu({
               height={'15px'}
               style={{ marginRight: '8px' }}
             />
-            АУКУС Сезон 3 {currentPlayer && `// ${currentPlayer.name}`}
+            АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
       </Box>

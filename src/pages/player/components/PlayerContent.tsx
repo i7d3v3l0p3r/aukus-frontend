@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
@@ -6,11 +6,12 @@ import { Fragment, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { getPlayerColor } from 'utils/types'
-import { aukus1Games, aukus2Games } from '../data_aukus1'
-import MoveCard from './MoveCard'
+import { aukus1Games } from '../data_aukus1'
+import MoveCard, { formatDate } from './MoveCard'
 import StreamLink from './StreamLink'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
 import OldMoveCard from './OldMoveCard'
+import { aukus2Games } from '../data_aukus2'
 
 type Props = {}
 
@@ -18,11 +19,11 @@ export default function PlayerContent(props: Props) {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
 
-  const { userId, role, moderFor } = useUser()
+  const currentPlayer = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     staleTime: 1000 * 60 * 1,
   })
   const players = playersData?.players
@@ -48,15 +49,15 @@ export default function PlayerContent(props: Props) {
     return <div>Игрок не найден</div>
   }
 
-  const isOwner = player.id === userId
+  const isOwner = player.id === currentPlayer?.user_id
   // const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
-  const canEdit = !!userId
+  const canEdit = !!currentPlayer
 
   playerMoves.sort((a, b) => {
     return b.id - a.id
   })
 
-  const playerColor = getPlayerColor(player)
+  const playerColor = getPlayerColor(player.url_handle)
 
   const aukus1games = aukus1Games[player.url_handle]
   const aukus2games = aukus2Games[player.url_handle]
@@ -82,6 +83,7 @@ export default function PlayerContent(props: Props) {
                 id={playerMoves.length + 1}
                 title={player.current_game}
                 playerColor={playerColor}
+                updatedAt={player.current_game_updated_at}
               />
             )}
 
@@ -97,7 +99,7 @@ export default function PlayerContent(props: Props) {
       </PlayerCanvasBackground>
 
       {aukus2games && (
-        <Box marginTop={10}>
+        <Box marginTop={'200px'}>
           <Typography fontSize={'24px'} fontWeight={600} align="center">
             <Link
               to={aukus2games.link}
@@ -110,7 +112,7 @@ export default function PlayerContent(props: Props) {
 
           <Box marginBottom={'50px'} />
 
-          {aukus1games.games.map((game, index) => (
+          {aukus2games.games.map((game, index) => (
             <Fragment key={index}>
               <OldMoveCard id={index + 1} game={game} />
             </Fragment>
@@ -147,9 +149,10 @@ type CurrentMoveProps = {
   id: number
   title: string
   playerColor: string
+  updatedAt: string
 }
 
-function CurrentMove({ id, title, playerColor }: CurrentMoveProps) {
+function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
   return (
     <Box display={'flex'} justifyContent={'center'} marginBottom={'50px'}>
       <Box
@@ -168,7 +171,7 @@ function CurrentMove({ id, title, playerColor }: CurrentMoveProps) {
           marginBottom={'15px'}
         >
           <Box>Ход — {id}</Box>
-          <Box>Сейчас</Box>
+          <Box>{formatDate(updatedAt)}</Box>
         </Box>
         <Box
           fontSize={'14px'}

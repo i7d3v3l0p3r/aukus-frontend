@@ -36,7 +36,7 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
           justifyContent={'space-between'}
           alignItems={'flex-start'}
         >
-          Прежде чем привязать поинтаук, скройте свой экран на стриме
+          Прежде чем нажать, скрой свой экран на стриме
           <IconButton
             aria-label="close"
             onClick={onClose}
@@ -50,6 +50,16 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
           </IconButton>
         </Box>
       </DialogTitle>
+      <DialogContent
+        style={{
+          paddingLeft: '30px',
+          lineHeight: '1',
+          paddingRight: '30px',
+          backgroundColor: Color.blue,
+        }}
+      >
+        Привязка позволит автоматически обновлять текущую игру после аука
+      </DialogContent>
       <DialogActions
         style={{
           backgroundColor: Color.blue,
@@ -65,7 +75,7 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
           fullWidth
           onClick={onAccept}
         >
-          Перейти на поинтаук
+          Привязать поинтаук
         </Button>
       </DialogActions>
     </Dialog>

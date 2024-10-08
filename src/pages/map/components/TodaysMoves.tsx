@@ -6,7 +6,7 @@ import { fetchMovesByDate, fetchPlayers } from 'utils/api'
 import { Player } from 'utils/types'
 
 export default function TodaysMoves() {
-  const today = new Date()
+  const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
   const formattedDate = today.toISOString().split('T')[0]
 
   const { data: todaysMoves } = useQuery({
@@ -17,7 +17,7 @@ export default function TodaysMoves() {
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     refetchInterval: 1000 * 60,
   })
 
@@ -36,7 +36,7 @@ export default function TodaysMoves() {
         <Box key={index}>
           <MoveCard
             move={move}
-            id={move.id}
+            id={move.player_move_id}
             player={find(
               playersData?.players || [],
               (player: Player) => player.id === move.player_id

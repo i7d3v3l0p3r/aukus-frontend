@@ -10,7 +10,7 @@ export default function PlayerList() {
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     staleTime: 1000 * 60 * 5,
   })
   const players = playersData?.players

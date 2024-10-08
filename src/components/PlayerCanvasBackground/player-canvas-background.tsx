@@ -8,7 +8,7 @@ import {
 import { useRefDimensions } from './use-ref-dimensions'
 import { ControlButtons } from './ui/control-buttons'
 import { CanvasStage } from './ui/canvas-stage'
-import { Color, Player } from 'utils/types'
+import { Player } from 'utils/types'
 import { StaticCanvas } from './ui/static-canvas'
 import MainMenu from 'components/MainMenu'
 import PointAucModal from 'pages/player/components/PointAucModal'

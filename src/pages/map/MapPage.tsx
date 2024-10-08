@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import BottomSection from 'components/BottomSection'
 import MainMenu from 'components/MainMenu'
 import MapComponent from './components/MapComponent'
+import TimelapseProvider from './hooks/useTimelapse'
 
 export default function MapPage() {
   return (
@@ -14,7 +15,9 @@ export default function MapPage() {
         alignItems="center"
         justifyContent={'center'}
       >
-        <MapComponent />
+        <TimelapseProvider>
+          <MapComponent />
+        </TimelapseProvider>
       </Box>
       <BottomSection />
     </Box>

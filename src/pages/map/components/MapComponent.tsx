@@ -5,13 +5,16 @@ import useScreenSize from 'context/useScreenSize'
 import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { NextTurnParams, Player } from 'utils/types'
+import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
-import ActionButton from './ActionButton'
+import ActionButton from './action/ActionButton'
 import CellItem from './CellItem'
 import MapArrow from './MapArrow'
-import PlayerIcon from './PlayerIcon'
+import PlayerIcon from './player/PlayerIcon'
+import StaticPanel from './StaticPanel'
 import SVGMarkers from './SVGMarkers'
 import TesterButton from './TesterButton'
+import TimelapseButton from './timelapse/TimelapseButton'
 import TodaysMoves from './TodaysMoves'
 import {
   ladders,
@@ -31,18 +34,27 @@ export default function MapComponent() {
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
+  const timelapseState = useTimelapse()
+  const timelapseEnabled = timelapseState.state !== 'closed'
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     refetchInterval: 1000 * 30,
     enabled: !makingTurn,
   })
-  const players = playersData?.players
 
-  const { userId } = useUser()
+  let players = playersData?.players || []
+  if (timelapseEnabled) {
+    players = timelapseState.players
+  }
+
+  const currentUser = useUser()
   useScreenSize()
 
-  const currentPlayer = players?.find((player) => player.id === userId)
+  const currentPlayer = players?.find(
+    (player) => player.id === currentUser?.user_id
+  )
 
   const makeMove = useMutation({
     mutationFn: createPlayerMove,
@@ -236,19 +248,24 @@ export default function MapComponent() {
             onAnimationEnd={handleAnimationEnd}
           />
         ))}
-      {currentPlayer && (
-        <ActionButton
-          handleNextTurn={handleNextTurn}
-          player={currentPlayer}
-          onMakingTurn={handleMakingTurn}
-          onDiceRoll={handleDiceRoll}
-        />
-      )}
-
-      {currentPlayer && (
-        <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
-      )}
-
+      <StaticPanel>
+        {currentPlayer && !timelapseEnabled && (
+          <Box marginBottom={'20px'} display="flex" justifyContent="center">
+            <ActionButton
+              handleNextTurn={handleNextTurn}
+              player={currentPlayer}
+              onMakingTurn={handleMakingTurn}
+              onDiceRoll={handleDiceRoll}
+            />
+          </Box>
+        )}
+        <Box display="flex" justifyContent="center">
+          <TimelapseButton />
+        </Box>
+        {currentPlayer && !timelapseEnabled && (
+          <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+        )}
+      </StaticPanel>
       <TodaysMoves />
     </Box>
   )

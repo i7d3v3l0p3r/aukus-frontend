@@ -14,6 +14,8 @@ const playerLasqa: Player = {
   stream_last_category: 'Gothic',
   first_name: 'Богдан',
   last_name: '',
+  telegram_link: 'https://t.me/lasqa',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 const playerSegall: Player = {
@@ -29,6 +31,8 @@ const playerSegall: Player = {
   stream_last_category: 'Just Chatting',
   first_name: 'Александр',
   last_name: '',
+  telegram_link: 'https://t.me/segall',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 const playerRoadhouse: Player = {
@@ -44,6 +48,8 @@ const playerRoadhouse: Player = {
   stream_last_category: 'Witcher',
   first_name: '',
   last_name: '',
+  telegram_link: 'https://t.me/roadhouse',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 const playerPraden: Player = {
@@ -59,6 +65,8 @@ const playerPraden: Player = {
   stream_last_category: 'Witcher',
   first_name: '',
   last_name: '',
+  telegram_link: 'https://t.me/roadhouse',
+  current_game_updated_at: '2024-10-11 12:14:15',
 }
 
 export const playersMock = [
@@ -102,7 +110,7 @@ export function playerMovesMock() {
   )
   const data: PlayerMove[] = []
   let currentPosition = 0
-  const itemsAmount = 20
+  const itemsAmount = 5
   for (let i = 0; i < itemsAmount; i++) {
     const status: PlayerMove['type'] = sample([
       'drop',
@@ -129,6 +137,7 @@ export function playerMovesMock() {
     }
 
     data.push({
+      player_move_id: i + 1,
       player_id: sample([1, 2, 3, 4]),
       created_at: dates[i].toDateString(),
       id: i + 1,

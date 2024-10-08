@@ -26,9 +26,9 @@ import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
 import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
 import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
 
-import { cellSize } from '../types'
+import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
-import { getMapCellById, laddersByCell, snakesByCell } from './utils'
+import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 import { CircleSharp } from '@mui/icons-material'
 
 const playerIcons: { [key: string]: string } = {
@@ -250,7 +250,7 @@ export default function PlayerIcon({
   }
 
   const onlineColor = player.is_online ? Color.green : Color.red
-  const playerColor = getPlayerColor(player)
+  const playerColor = getPlayerColor(player.url_handle)
   const playerIcon = isMoving
     ? playerMovingIcons[player.url_handle] || PlayerBlueLightMoving
     : playerIcons[player.url_handle] || PlayerBlueLight

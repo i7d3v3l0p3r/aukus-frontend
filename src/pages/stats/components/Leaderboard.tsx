@@ -13,14 +13,14 @@ import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchPlayers, fetchStats } from 'utils/api'
-import { getPlayerColor, Player, PlayerStats } from 'utils/types'
+import { Color, getPlayerColor, Player, PlayerStats } from 'utils/types'
 
 export default function Leaderboard() {
   const [fetchStart] = useState(Date.now())
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
-    queryFn: fetchPlayers,
+    queryFn: () => fetchPlayers(),
     staleTime: 1000 * 60 * 1,
   })
   const players = playersData?.players
@@ -51,9 +51,7 @@ export default function Leaderboard() {
     (a, b) => b.map_position - a.map_position
   )
 
-  const leader = playersStatsByPosition[0]
-  const leaderPlayer = playersById[leader.id]
-  const leaderColor = getPlayerColor(leaderPlayer)
+  const leaderColor = Color.blue
 
   return (
     <Box>
@@ -111,7 +109,9 @@ export default function Leaderboard() {
                       to={`/players/${playersById[playerStat.id].url_handle}`}
                     >
                       <LinkSpan
-                        color={getPlayerColor(playersById[playerStat.id])}
+                        color={getPlayerColor(
+                          playersById[playerStat.id].url_handle
+                        )}
                       >
                         {playersById[playerStat.id].name}
                       </LinkSpan>

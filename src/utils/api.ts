@@ -4,7 +4,13 @@ import {
   playersMockById,
   playerStatsMock,
 } from './mocks'
-import { Player, PlayerMove, PlayerMoveRequest, PlayerStats } from './types'
+import {
+  CurrentUser,
+  Player,
+  PlayerMove,
+  PlayerMoveRequest,
+  PlayerStats,
+} from './types'
 
 const MOCK_API = process.env.NODE_ENV === 'development'
 
@@ -12,10 +18,13 @@ type PlayersResponse = {
   players: Array<Player>
 }
 
-export async function fetchPlayers(): Promise<PlayersResponse> {
+export async function fetchPlayers(move_id?: number): Promise<PlayersResponse> {
   if (MOCK_API) {
-    console.log('fetching players')
+    console.log('fetching players', move_id)
     return Promise.resolve({ players: playersMock })
+  }
+  if (move_id) {
+    return fetch(`/api/players?move_id=${move_id}`).then((res) => res.json())
   }
   return fetch(`/api/players`).then((res) => res.json())
 }
@@ -34,22 +43,24 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
   }).then((res) => res.json())
 }
 
-type CurrentUserResponse = {
-  user_id: number
-  role: 'player' | 'moder'
-  moder_for?: number
-}
-
-export async function fetchCurrentUser(): Promise<CurrentUserResponse> {
+export async function fetchCurrentUser(): Promise<CurrentUser> {
   if (MOCK_API) {
     console.log('fetching current user')
+    // return Promise.reject({ error: 'auth required' })
     return Promise.resolve({
       user_id: 1,
       role: 'player',
       moder_for: undefined,
+      url_handle: 'lasqa',
+      name: 'Lasqa',
     })
   }
-  return fetch(`/api/current_user`).then((res) => res.json())
+  return fetch(`/api/current_user`).then((res) => {
+    if (res.status !== 200) {
+      throw new Error('auth required')
+    }
+    return res.json()
+  })
 }
 
 type StatsResponse = {

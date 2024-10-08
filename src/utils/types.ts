@@ -4,8 +4,10 @@ export type Player = {
   twitch_stream_link: string
   vk_stream_link: string
   donation_link: string
+  telegram_link: string
   is_online: boolean
   current_game: string
+  current_game_updated_at: string
   url_handle: string
   map_position: number
   stream_last_category: string
@@ -49,6 +51,7 @@ export type PlayerMove = {
   item_rating: number
   item_length: ItemLength | null
   vod_link: string | null
+  player_move_id: number
 }
 
 export type PlayerMoveRequest = {
@@ -96,6 +99,7 @@ export const Color = {
   pink: '#FF2D55',
   pinkLight: '#ECA3D4',
   white: '#FFFFFF',
+  blueTg: '#27a7e7',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
@@ -132,10 +136,18 @@ export const ColorNameByUrlHandle: {
   f1ashko: 'customPinkLight',
 }
 
-export function getPlayerColor(player: Player): string {
-  return ColorByUrlHandle[player.url_handle] || Color.greyDark
+export function getPlayerColor(urlHandle: string): string {
+  return ColorByUrlHandle[urlHandle] || Color.blueLight
 }
 
 export function getPlayerColorName(player: Player): CustomColorNames {
-  return ColorNameByUrlHandle[player.url_handle] || 'customGreyDark'
+  return ColorNameByUrlHandle[player.url_handle] || 'customBlueLight'
+}
+
+export type CurrentUser = {
+  user_id: number
+  role: 'player' | 'moder'
+  moder_for?: number
+  url_handle: string
+  name: string
 }

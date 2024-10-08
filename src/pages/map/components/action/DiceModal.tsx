@@ -94,6 +94,7 @@ export default function DiceModal({
         })
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [diceBox, open]
   )
 
