@@ -360,7 +360,7 @@ function getRelativePosition(player: Player, players: Player[]) {
     return { x: playerIndex * 80, y: 0 }
   }
   if (sortedPlayers.length === 2) {
-    return { x: playerIndex * 50, y: -(playerIndex * 25 - 10) }
+    return { x: playerIndex * 50 - 10, y: -(playerIndex * 25 - 10) }
   }
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }
