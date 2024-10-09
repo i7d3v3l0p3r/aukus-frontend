@@ -292,29 +292,34 @@ export default function PlayerIcon({
             <span
               style={{
                 fontSize: '14px',
+                fontWeight: 500,
+                height: '23px',
                 color: 'white',
                 lineHeight: 1,
                 backgroundColor: playerColor,
                 paddingLeft: '5px',
                 paddingRight: '5px',
-                borderRadius: '5px',
+                borderRadius: '3px',
                 display: 'flex',
                 alignItems: 'center',
                 paddingTop: '3px',
                 paddingBottom: '3px',
               }}
             >
-              {player.is_online && (
-                <CircleSharp
-                  style={{
-                    color: onlineColor,
-                    width: '15px',
-                    height: '15px',
-                    marginRight: '5px',
-                  }}
-                />
-              )}
               {player.name}
+              {player.is_online && (
+                <span
+                  style={{
+                    fontSize: '8px',
+                    fontWeight: 600,
+                    width: '15px',
+                    marginRight: '2px',
+                    marginBottom: '7px',
+                  }}
+                >
+                  LIVE
+                </span>
+              )}
             </span>
           </p>
         </Box>
@@ -361,5 +366,5 @@ function getRelativePosition(player: Player, players: Player[]) {
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }
   }
-  return { x: 20, y: playerIndex * 20 - 10 }
+  return { x: 20, y: playerIndex * 25 - 10 }
 }
