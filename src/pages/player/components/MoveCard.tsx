@@ -95,7 +95,7 @@ export default function MoveCard({
             display={'flex'}
             justifyContent={'space-between'}
             fontSize={'14px'}
-            fontWeight={400}
+            fontWeight={500}
             marginBottom={'15px'}
           >
             <Box color={player ? getPlayerColor(player.url_handle) : greyColor}>
@@ -144,7 +144,7 @@ export default function MoveCard({
             fontWeight={400}
           >
             <LinkSpan
-              color={Color.blue}
+              color={borderColor}
               defaultColor={greyColor}
               onClick={() => setShowVods(!showVods)}
             >
@@ -152,7 +152,7 @@ export default function MoveCard({
             </LinkSpan>
             {canEdit && (
               <LinkSpan
-                color={Color.blue}
+                color={borderColor}
                 defaultColor={greyColor}
                 style={{ marginLeft: '15px' }}
                 onClick={handleEditVods}
@@ -164,7 +164,7 @@ export default function MoveCard({
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
               {move.vod_link
-                ? processText(move.vod_link)
+                ? processText(move.vod_link, borderColor)
                 : 'Записи стримов еще не добавлены'}
             </Box>
           )}
@@ -198,7 +198,7 @@ export function formatDate(dateString: string) {
 }
 
 // Function to make URLs clickable and preserve line breaks
-const processText = (text: string) => {
+const processText = (text: string, borderColor: string) => {
   // Regex to detect URLs
   const urlRegex = /(https?:\/\/[^\s]+)/g
 
@@ -220,7 +220,7 @@ const processText = (text: string) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <LinkSpan color={Color.blue}>{part}</LinkSpan>
+                <LinkSpan color={borderColor}>{part}</LinkSpan>
               </Link>
             )
           }
