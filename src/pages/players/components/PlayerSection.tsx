@@ -26,6 +26,7 @@ export default function PlayerSection({ player }: Props) {
               to={player.twitch_stream_link}
               target="_blank"
               rel="noopener nereferrer"
+              style={{ marginRight: '30px' }}
             >
               <LinkSpan color={Color.purple} style={{ fontSize: '20px' }}>
                 Twitch
@@ -37,7 +38,7 @@ export default function PlayerSection({ player }: Props) {
               to={player.vk_stream_link}
               target="_blank"
               rel="noopener nereferrer"
-              style={{ marginLeft: '30px' }}
+              style={{ marginRight: '30px' }}
             >
               <LinkSpan color={Color.blue} style={{ fontSize: '20px' }}>
                 VKPlay
@@ -49,7 +50,7 @@ export default function PlayerSection({ player }: Props) {
               to={player.telegram_link}
               target="_blank"
               rel="noopener nereferrer"
-              style={{ marginLeft: '30px' }}
+              style={{ marginRight: '30px' }}
             >
               <LinkSpan color={Color.blueTg} style={{ fontSize: '20px' }}>
                 Телеграм
@@ -61,7 +62,6 @@ export default function PlayerSection({ player }: Props) {
               to={player.donation_link}
               target="_blank"
               rel="noopener nereferrer"
-              style={{ marginLeft: '30px' }}
             >
               <LinkSpan color={Color.orange} style={{ fontSize: '20px' }}>
                 Донейшн

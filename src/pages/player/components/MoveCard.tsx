@@ -121,12 +121,14 @@ export default function MoveCard({
             {move.item_title}
           </Box>
           <Box
-            fontSize={'14px'}
+            fontSize={'13px'}
             fontWeight={400}
             marginBottom={'20px'}
             color={greyColor}
           >
-            Ролл кубика — {move.dice_roll}, позиция на карте — {move.cell_to}
+            Ролл кубика:&nbsp;&nbsp;&nbsp;
+            {formatNumber(move.dice_roll)}, позиция на карте:&nbsp;&nbsp;&nbsp;
+            {move.cell_to}
           </Box>
           <Box
             fontSize={'16px'}
@@ -229,4 +231,12 @@ const processText = (text: string) => {
       </Fragment>
     )
   })
+}
+
+function formatNumber(i: number) {
+  if (i < 0) {
+    return `−${Math.abs(i)}`
+  } else {
+    return `${i}`
+  }
 }
