@@ -72,7 +72,7 @@ export default function PlayerContent(props: Props) {
         <Box marginTop={'100px'} position={'relative'} zIndex={5}>
           <Box textAlign={'center'}>
             <Typography fontSize="48px" fontWeight={700}>
-              Страница участника {player.name}
+              {player.first_name} {player.name}
             </Typography>
             <Box marginTop={'30px'} marginBottom={'50px'}>
               <StreamLink player={player} />

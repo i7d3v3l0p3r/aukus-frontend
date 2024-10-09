@@ -31,6 +31,7 @@ export default function MainMenu({
         textAlign={'center'}
         marginTop={'15px'}
         marginBottom={'13px'}
+        textTransform={'uppercase'}
       >
         <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
           <LinkSpan
@@ -66,7 +67,7 @@ export default function MainMenu({
           {replaceMenuButtons || (
             <>
               {leftSlot && (
-                <Box marginRight={'55px'} position="absolute" right="100%">
+                <Box marginRight={'30px'} position="absolute" right="100%">
                   {leftSlot}
                 </Box>
               )}
@@ -125,7 +126,7 @@ export default function MainMenu({
           )}
 
           {rightSlot && (
-            <Box marginLeft={'55px'} position="absolute" left="100%">
+            <Box marginLeft={'30px'} position="absolute" left="100%">
               {rightSlot}
             </Box>
           )}

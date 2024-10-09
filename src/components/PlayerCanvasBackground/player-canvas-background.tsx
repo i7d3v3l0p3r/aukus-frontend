@@ -48,7 +48,7 @@ function EditModeButton() {
   return (
     <Button
       sx={{
-        width: '180px',
+        width: '215px',
         height: '40px',
         paddingLeft: '15px',
         paddingRight: '15px',
@@ -60,7 +60,7 @@ function EditModeButton() {
     >
       <ImageSvg width="19px" height="19px" />
       <Box marginLeft={'8px'} />
-      Редактировать
+      Изменить страницу
     </Button>
   )
 }
