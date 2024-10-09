@@ -77,7 +77,7 @@ function PointAucButton({ onClick }: { onClick: () => void }) {
         paddingBottom: '10px',
       }}
       color="customBlue"
-      onClick={() => onClick()}
+      onClick={onClick}
     >
       <AddSquareIcon />
       <Box marginLeft={'8px'} />

@@ -54,7 +54,7 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
         style={{
           paddingLeft: '30px',
           lineHeight: '1',
-          paddingRight: '30px',
+          paddingRight: '50px',
           backgroundColor: Color.blue,
         }}
       >

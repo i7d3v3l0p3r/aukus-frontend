@@ -312,7 +312,7 @@ export default function PlayerIcon({
                   style={{
                     fontSize: '8px',
                     fontWeight: 600,
-                    marginLeft: '2px',
+                    marginLeft: '3px',
                     marginBottom: '7px',
                   }}
                 >
