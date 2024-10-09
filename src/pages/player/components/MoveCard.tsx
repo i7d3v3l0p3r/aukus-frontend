@@ -155,7 +155,7 @@ export default function MoveCard({
                 style={{ marginLeft: '15px' }}
                 onClick={handleEditVods}
               >
-                Редактировать записи стримов
+                Редактировать
               </LinkSpan>
             )}
           </Box>
