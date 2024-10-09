@@ -11,7 +11,7 @@ type Props = {
   id: number
   move: PlayerMove
   player?: Player
-  colorType?: 'move_type' | 'player'
+  displayType?: 'map' | 'player'
   onSave?: () => void
 }
 
@@ -35,7 +35,7 @@ export default function MoveCard({
   id,
   move,
   player,
-  colorType,
+  displayType,
   onSave,
 }: Props) {
   const [showVods, setShowVods] = useState(false)
@@ -68,10 +68,10 @@ export default function MoveCard({
 
   const greyColor = '#CECECE'
   let borderColor = greyColor
-  if (player && colorType === 'player') {
+  if (player && displayType === 'map') {
     borderColor = getPlayerColor(player.url_handle)
   }
-  if (colorType === 'move_type') {
+  if (displayType === 'player') {
     borderColor = moveTypeColor[move.type]
   }
 
@@ -130,37 +130,35 @@ export default function MoveCard({
             {formatNumber(move.dice_roll)}, позиция на карте:&nbsp;&nbsp;&nbsp;
             {move.cell_to}
           </Box>
-          <Box
-            fontSize={'16px'}
-            fontWeight={400}
-            marginBottom={'25px'}
-            lineHeight={1.2}
-          >
+          <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
             {move.item_rating}/10 — {move.item_review}
           </Box>
-          <Box
-            display={'flex'}
-            justifyContent={'space-between'}
-            fontWeight={400}
-          >
-            <LinkSpan
-              color={borderColor}
-              defaultColor={greyColor}
-              onClick={() => setShowVods(!showVods)}
+          {displayType === 'player' && (
+            <Box
+              marginTop={'25px'}
+              display={'flex'}
+              justifyContent={'space-between'}
+              fontWeight={400}
             >
-              Показать записи стримов
-            </LinkSpan>
-            {canEdit && (
               <LinkSpan
                 color={borderColor}
                 defaultColor={greyColor}
-                style={{ marginLeft: '15px' }}
-                onClick={handleEditVods}
+                onClick={() => setShowVods(!showVods)}
               >
-                Редактировать
+                Показать записи стримов
               </LinkSpan>
-            )}
-          </Box>
+              {canEdit && (
+                <LinkSpan
+                  color={borderColor}
+                  defaultColor={greyColor}
+                  style={{ marginLeft: '15px' }}
+                  onClick={handleEditVods}
+                >
+                  Редактировать
+                </LinkSpan>
+              )}
+            </Box>
+          )}
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
               {move.vod_link
