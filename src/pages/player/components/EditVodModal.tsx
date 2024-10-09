@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Input,
   TextField,
 } from '@mui/material'
 import { useState } from 'react'
@@ -27,6 +28,7 @@ export default function EditVodModal({
   vodText,
 }: Props) {
   const [vodValue, setVodValue] = useState(vodText)
+  const [itemTitle, setItemTitle] = useState(title)
 
   const handleVodChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setVodValue(e.target.value)
@@ -70,14 +72,35 @@ export default function EditVodModal({
           paddingBottom: '30px',
         }}
       >
+        <Box>Обновить название игры</Box>
+        <TextField
+          fullWidth
+          rows={1}
+          value={itemTitle}
+          onChange={(e) => setItemTitle(e.target.value)}
+          InputProps={{
+            style: {
+              paddingTop: '10px',
+              paddingLeft: '15px',
+              paddingRight: '15px',
+              paddingBottom: '10px',
+              lineHeight: '1.2',
+              fontSize: '16px',
+              fontWeight: 500,
+            },
+          }}
+        />
+        <Box marginTop={'20px'}>Обновить ссылки на воды</Box>
         <TextField
           InputProps={{
             style: {
               paddingTop: '10px',
               paddingLeft: '15px',
+              paddingRight: '15px',
               paddingBottom: '10px',
               lineHeight: '1.2',
               fontSize: '16px',
+              fontWeight: 500,
             },
           }}
           multiline

@@ -376,6 +376,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               style: {
                 paddingTop: '10px',
                 paddingLeft: '15px',
+                paddingRight: '15px',
                 paddingBottom: '10px',
                 lineHeight: '1.2',
                 fontSize: '16px',

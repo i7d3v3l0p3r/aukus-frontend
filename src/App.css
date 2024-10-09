@@ -145,3 +145,7 @@ span.MuiSlider-mark {
 span.MuiSlider-thumb:active {
   box-shadow: none;
 }
+
+div.MuiInputBase-root > input {
+  padding: 0px;
+}
