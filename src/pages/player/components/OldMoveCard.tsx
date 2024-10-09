@@ -28,7 +28,7 @@ export default function OldMoveCard({ id, game }: Props) {
     <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
       <Box
         borderRadius={'15px'}
-        border={`2px solid ${Color.greyLight}`}
+        border={`2px solid ${moveTypeColor[game.status]}`}
         width={'800px'}
         textAlign={'left'}
         padding={'15px'}
