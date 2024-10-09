@@ -12,6 +12,7 @@ type Props = {
   move: PlayerMove
   player?: Player
   colorType?: 'move_type' | 'player'
+  onSave?: () => void
 }
 
 const moveTypeColor = {
@@ -30,7 +31,13 @@ const moveTypeText = {
   movie: 'Фильм',
 }
 
-export default function MoveCard({ id, move, player, colorType }: Props) {
+export default function MoveCard({
+  id,
+  move,
+  player,
+  colorType,
+  onSave,
+}: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
   const currentUser = useUser()
@@ -55,6 +62,7 @@ export default function MoveCard({ id, move, player, colorType }: Props) {
     updateVod.mutate({ move_id: move.id, link: text })
     queryClient.invalidateQueries({ queryKey: ['playerMoves', move.player_id] })
     queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
+    onSave && onSave()
     setShowVodsModal(false)
   }
 

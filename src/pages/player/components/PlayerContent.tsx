@@ -29,7 +29,7 @@ export default function PlayerContent(props: Props) {
   const players = playersData?.players
   const player = players?.find((player) => player.url_handle === playerHandle)
 
-  const { data: playerMovesData } = useQuery({
+  const { data: playerMovesData, refetch: refetchMoves } = useQuery({
     queryKey: ['playerMoves', player?.id || 0],
     queryFn: () => player && fetchPlayerMoves(player.id),
     staleTime: 1000 * 60 * 1,
@@ -94,6 +94,7 @@ export default function PlayerContent(props: Props) {
                     id={playerMoves.length - index}
                     move={move}
                     colorType="move_type"
+                    onSave={refetchMoves}
                   />
                 </Box>
               )
