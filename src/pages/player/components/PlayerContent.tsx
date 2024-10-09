@@ -93,7 +93,7 @@ export default function PlayerContent(props: Props) {
                   <MoveCard
                     id={playerMoves.length - index}
                     move={move}
-                    colorType="move_type"
+                    displayType="player"
                     onSave={refetchMoves}
                   />
                 </Box>

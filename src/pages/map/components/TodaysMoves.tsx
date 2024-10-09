@@ -41,7 +41,7 @@ export default function TodaysMoves() {
               playersData?.players || [],
               (player: Player) => player.id === move.player_id
             )}
-            colorType="player"
+            displayType="map"
             onSave={refetchMoves}
           />
         </Box>
