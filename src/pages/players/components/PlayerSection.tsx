@@ -9,12 +9,13 @@ import FlashkoPhoto from 'assets/photos/flashko.webp'
 import SegallPhoto from 'assets/photos/segall.webp'
 import BrowjeyPhoto from 'assets/photos/browjey.webp'
 import UnclebjornPhoto from 'assets/photos/unclebjorn.webp'
+import UselessmouthPhoto from 'assets/photos/uselessmouth.webp'
 
 type Props = {
   player: Player
 }
 
-const PlayerPhotoMap: { [s: string]: string } = {
+export const PlayerPhotoMap: { [s: string]: string } = {
   roadhouse: RoadhousePhoto,
   lasqa: LasqaPhoto,
   praden: PradenPhoto,
@@ -22,6 +23,7 @@ const PlayerPhotoMap: { [s: string]: string } = {
   segall: SegallPhoto,
   browjey: BrowjeyPhoto,
   unclebjorn: UnclebjornPhoto,
+  uselessmouth: UselessmouthPhoto,
 }
 
 export default function PlayerSection({ player }: Props) {
