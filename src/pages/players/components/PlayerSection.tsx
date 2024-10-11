@@ -2,12 +2,31 @@ import { Box, Button, Typography } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { Link } from 'react-router-dom'
 import { Color, getPlayerColorName, Player } from 'utils/types'
+import RoadhousePhoto from 'assets/photos/roadhouse.webp'
+import LasqaPhoto from 'assets/photos/lasqa.webp'
+import PradenPhoto from 'assets/photos/praden.webp'
+import FlashkoPhoto from 'assets/photos/flashko.webp'
+import SegallPhoto from 'assets/photos/segall.webp'
+import BrowjeyPhoto from 'assets/photos/browjey.webp'
+import UnclebjornPhoto from 'assets/photos/unclebjorn.webp'
 
 type Props = {
   player: Player
 }
 
+const PlayerPhotoMap: { [s: string]: string } = {
+  roadhouse: RoadhousePhoto,
+  lasqa: LasqaPhoto,
+  praden: PradenPhoto,
+  f1ashko: FlashkoPhoto,
+  segall: SegallPhoto,
+  browjey: BrowjeyPhoto,
+  unclebjorn: UnclebjornPhoto,
+}
+
 export default function PlayerSection({ player }: Props) {
+  const photo = PlayerPhotoMap[player.url_handle]
+
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'}>
@@ -15,11 +34,15 @@ export default function PlayerSection({ player }: Props) {
           {player.first_name || ''} {player.name}
         </Typography>
         <Box
-          height={'300px'}
+          height={'340px'}
           width={'550px'}
           marginTop={'30px'}
           sx={{ backgroundColor: 'grey' }}
-        />
+        >
+          {photo && (
+            <img src={photo} height="340px" width="550px" alt="photo" />
+          )}
+        </Box>
         <Box marginTop={'20px'} marginLeft={'20px'}>
           {player.twitch_stream_link && (
             <Link
