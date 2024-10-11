@@ -80,6 +80,18 @@ export default function MainMenu({
                 </Button>
               </Link>
 
+              <Link
+                to="/stats"
+                style={{ marginRight: 10, textDecoration: 'none' }}
+              >
+                <Button
+                  color={currentPage === 'stats' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  Результаты
+                </Button>
+              </Link>
+
               <Link to="/players" style={{ marginRight: 10 }}>
                 <Button
                   color={
@@ -90,18 +102,6 @@ export default function MainMenu({
                   sx={{ width: '150px', height: '40px' }}
                 >
                   Участники
-                </Button>
-              </Link>
-
-              <Link
-                to="/stats"
-                style={{ marginRight: 10, textDecoration: 'none' }}
-              >
-                <Button
-                  color={currentPage === 'stats' ? 'primary' : 'info'}
-                  sx={{ width: '150px', height: '40px' }}
-                >
-                  Статистика
                 </Button>
               </Link>
 
