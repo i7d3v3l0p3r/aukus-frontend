@@ -157,47 +157,26 @@ export default function MapComponent() {
         columns={11}
         width={'auto'}
         style={{
-          backgroundImage: "url('static/map_background3.png')",
+          backgroundImage: "url('static/map_background.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
         }}
       >
-        <Grid container columns={11} width={'auto'}>
+        <Grid container columns={10} width={'auto'}>
           <Grid item>
-            <Box width={(cellSize + 1) * 11} height={cellSize * 2} />
+            <Box width={(cellSize + 1) * 10} height={cellSize} />
+          </Grid>
+        </Grid>
+        <Grid container columns={10} width={'auto'}>
+          <Grid item>
+            <CellItem cell={lastCell} />
+          </Grid>
+          <Grid item>
+            <Box width={(cellSize + 1) * 9} height={cellSize} />
           </Grid>
         </Grid>
         {map.cellRows.map((row, index) => (
-          <Grid container key={index} columns={11} width={'auto'}>
-            {index === 0 && (
-              <Grid
-                item
-                sx={{
-                  borderRight: '1px solid transparent',
-                  borderTop: '1px solid transparent',
-                  borderLeft: '1px solid transparent',
-                }}
-              >
-                <CellItem cell={lastCell} />
-              </Grid>
-            )}
-            {index === 9 && (
-              <Grid item sx={{ border: '1px solid transparent' }}>
-                <CellItem cell={startCell} />
-              </Grid>
-            )}
-            {index > 0 && index < 9 && (
-              <Grid
-                item
-                sx={{
-                  borderRight: '1px solid transparent',
-                  borderLeft: '1px solid transparent',
-                  borderTop: index === 1 ? '1px solid transparent' : 0,
-                }}
-              >
-                <div style={{ height: cellSize, width: cellSize }} />
-              </Grid>
-            )}
+          <Grid container key={index} columns={10} width={'auto'}>
             {row.map((cell) => (
               <Grid
                 item
@@ -217,10 +196,14 @@ export default function MapComponent() {
             ))}
           </Grid>
         ))}
-        <Grid container columns={11} width={'auto'}>
+        <Grid container columns={10} width={'auto'}>
+          <Grid item>
+            <CellItem cell={startCell} />
+          </Grid>
+
           <Grid item>
             <Box
-              width={(cellSize + 1) * 11}
+              width={(cellSize + 1) * 9}
               height={cellSize}
               id={'map-cell-start'}
             />
