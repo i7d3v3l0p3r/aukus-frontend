@@ -41,7 +41,7 @@ export default function TimelapseButton() {
     month: 'long',
   })
 
-  const datePart = currentDate.toISOString().split('T')[0]
+  const datePart = extractDate(currentDate)
 
   useEffect(() => {
     timelapseState.setSelectedDate(datePart)
@@ -358,4 +358,12 @@ function turnDescription(player: Player, move: PlayerMove) {
   const action = actions[move.type] || move.type
 
   return `${player.name} ${action} ${move.item_title}, ходит с ${move.cell_from} на ${move.cell_to}`
+}
+
+function extractDate(date: Date) {
+  // Extract year, month, and day and format them properly
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-based, so add 1
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
