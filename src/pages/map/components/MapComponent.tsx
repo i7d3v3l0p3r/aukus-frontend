@@ -143,9 +143,9 @@ export default function MapComponent() {
     <Box
       style={{
         overflowX: 'auto',
-        width: '1500px',
-        minWidth: '1500px',
-        maxWidth: '1500px',
+        width: '1214px',
+        minWidth: '1214px',
+        maxWidth: '1214px',
       }}
       onClick={handleClick}
     >
@@ -157,9 +157,10 @@ export default function MapComponent() {
         columns={11}
         width={'auto'}
         style={{
-          backgroundImage: "url('static/map_background.png')",
+          backgroundImage: "url('static/map_background_new.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
+          backgroundSize: 'cover',
         }}
       >
         <Grid container columns={10} width={'auto'}>
