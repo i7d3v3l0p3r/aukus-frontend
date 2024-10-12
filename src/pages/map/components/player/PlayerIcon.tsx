@@ -29,7 +29,6 @@ import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
-import { CircleSharp } from '@mui/icons-material'
 
 const playerIcons: { [key: string]: string } = {
   lasqa: PlayerBlue,
@@ -114,8 +113,10 @@ export default function PlayerIcon({
 
     const animationsList: Array<{ x: number; y: number }> = []
     if (player.map_position === 0) {
+      // move to beginning of start area
       animationsList.push({ x: -relativeX, y: -relativeY })
-      animationsList.push({ x: -relativeX, y: -moveOffset })
+      // move to start cell
+      animationsList.push({ x: -relativeX - moveOffset, y: -relativeY })
     }
 
     for (let i = 0; i < Math.abs(moves); i++) {
@@ -154,7 +155,7 @@ export default function PlayerIcon({
       )
       if (player.map_position === 0) {
         const adjustedForStart = {
-          x: ladderAnimation.x - relativeX,
+          x: ladderAnimation.x - relativeX - moveOffset,
           y: ladderAnimation.y - moveOffset,
         }
         animationsList.push(adjustedForStart)
@@ -337,8 +338,11 @@ function calculateAnimation(mapPosition: number, cellTo: number) {
     originRow = 0
   }
 
-  const originColumn =
+  let originColumn =
     originRow % 2 === 0 ? (mapPosition - 1) % 10 : 10 - (mapPosition % 10 || 10)
+  if (originColumn < 0) {
+    originColumn = 0
+  }
 
   const moveOffset = cellSize + 1
 
