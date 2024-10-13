@@ -103,7 +103,7 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
   const handleConnectPointAuc = async () => {
     setShowPointAucModal(false)
     const { token } = await resetToken.mutateAsync()
-    const url = `https://pointauc.com/?aukus_token=${token}`
+    const url = `https://pointauc.com/aukus/redirect?aukus_token=${token}`
     window.open(url, '_blank')
   }
 
