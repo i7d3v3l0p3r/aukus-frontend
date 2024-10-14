@@ -55,9 +55,15 @@ export default function Leaderboard() {
 
   return (
     <Box>
+      <Box textAlign={'center'}>
+        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
+          Таблица лидеров
+        </Typography>
+      </Box>
       <Box
         marginLeft={4}
         marginRight={4}
+        marginTop={'50px'}
         justifyContent="center"
         display="flex"
       >

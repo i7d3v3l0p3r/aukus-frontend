@@ -159,21 +159,24 @@ export default function TimelapseButton() {
 
   return (
     <Box width={'100%'}>
-      <Box
-        style={{
-          backgroundColor: Color.blue,
-          color: 'white',
-          height: '38px',
-          borderRadius: '10px',
-          fontSize: '15px',
-          fontWeight: 600,
-          marginBottom: '10px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {turnText}
+      <Box width={'100%'} display="flex" justifyContent={'center'}>
+        <Box
+          style={{
+            backgroundColor: Color.blue,
+            color: 'white',
+            height: '38px',
+            borderRadius: '10px',
+            fontSize: '15px',
+            fontWeight: 600,
+            marginBottom: '10px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '590px',
+          }}
+        >
+          {turnText}
+        </Box>
       </Box>
       <Box
         style={{
