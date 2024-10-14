@@ -58,8 +58,8 @@ export default function MoveCard({
     setShowVodsModal(false)
   }
 
-  const handleVodSave = (text: string) => {
-    updateVod.mutate({ move_id: move.id, link: text })
+  const handleVodSave = (text: string, title: string) => {
+    updateVod.mutate({ move_id: move.id, link: text, title })
     queryClient.invalidateQueries({ queryKey: ['playerMoves', move.player_id] })
     queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
     onSave && onSave()
