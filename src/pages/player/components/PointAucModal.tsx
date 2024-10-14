@@ -26,7 +26,7 @@ export default function PointAucModal({ open, onClose, onAccept }: Props) {
           paddingTop: '30px',
           paddingLeft: '30px',
           lineHeight: '1',
-          paddingBottom: '30px',
+          paddingBottom: '20px',
           paddingRight: '30px',
           backgroundColor: Color.blue,
         }}
