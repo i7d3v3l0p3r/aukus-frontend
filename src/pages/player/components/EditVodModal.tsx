@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Input,
   TextField,
 } from '@mui/material'
 import { useState } from 'react'
@@ -16,7 +15,7 @@ type Props = {
   open: boolean
   title: string
   onClose: () => void
-  onSave: (text: string) => void
+  onSave: (text: string, title: string) => void
   vodText: string | null
 }
 
@@ -69,10 +68,10 @@ export default function EditVodModal({
         style={{
           paddingLeft: '30px',
           paddingRight: '30px',
-          paddingBottom: '30px',
+          paddingBottom: '50px',
         }}
       >
-        <Box>Обновить название игры</Box>
+        <Box marginBottom="10px">Обновить название игры</Box>
         <TextField
           fullWidth
           rows={1}
@@ -90,7 +89,9 @@ export default function EditVodModal({
             },
           }}
         />
-        <Box marginTop={'20px'}>Обновить ссылки на воды</Box>
+        <Box marginTop={'20px'} marginBottom="10px">
+          Обновить ссылки на воды
+        </Box>
         <TextField
           InputProps={{
             style: {
@@ -122,7 +123,7 @@ export default function EditVodModal({
           variant="contained"
           color="primary"
           fullWidth
-          onClick={() => onSave(vodValue || '')}
+          onClick={() => onSave(vodValue || '', itemTitle || '')}
         >
           Сохранить
         </Button>
