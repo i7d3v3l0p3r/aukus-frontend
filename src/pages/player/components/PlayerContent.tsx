@@ -67,8 +67,28 @@ export default function PlayerContent(props: Props) {
 
   const playerColor = getPlayerColor(player.url_handle)
 
+  let filteredMoves = playerMoves
+  if (filter) {
+    filteredMoves = playerMoves.filter((move) => {
+      return move.item_title.toLowerCase().includes(filter.toLowerCase())
+    })
+  }
+
   const aukus1games = aukus1Games[player.url_handle]
+  let aukus1FilteredGames = aukus1games.games
+  if (filter) {
+    aukus1FilteredGames = aukus1games.games.filter((game) => {
+      return game.title.toLowerCase().includes(filter.toLowerCase())
+    })
+  }
+
   const aukus2games = aukus2Games[player.url_handle]
+  let aukus2FilteredGames = aukus2games.games
+  if (filter) {
+    aukus2FilteredGames = aukus2games.games.filter((game) => {
+      return game.title.toLowerCase().includes(filter.toLowerCase())
+    })
+  }
 
   return (
     <Box>
@@ -110,7 +130,7 @@ export default function PlayerContent(props: Props) {
               />
             </Box>
 
-            {player.current_game && (
+            {player.current_game && !filter && (
               <CurrentMove
                 id={playerMoves.length + 1}
                 title={player.current_game}
@@ -119,7 +139,7 @@ export default function PlayerContent(props: Props) {
               />
             )}
 
-            {playerMoves.map((move, index) => {
+            {filteredMoves.map((move, index) => {
               return (
                 <Box key={index}>
                   <MoveCard
@@ -135,8 +155,8 @@ export default function PlayerContent(props: Props) {
         </Box>
       </PlayerCanvasBackground>
 
-      {aukus2games && (
-        <Box marginTop={'200px'}>
+      {aukus2FilteredGames && (
+        <Box marginTop={filter ? '50px' : '200px'}>
           <Typography fontSize={'24px'} fontWeight={600} align="center">
             <Link
               to={aukus2games.link}
@@ -149,7 +169,7 @@ export default function PlayerContent(props: Props) {
 
           <Box marginBottom={'50px'} />
 
-          {aukus2games.games.map((game, index) => (
+          {aukus2FilteredGames.map((game, index) => (
             <Fragment key={index}>
               <OldMoveCard id={index + 1} game={game} />
             </Fragment>
@@ -157,8 +177,8 @@ export default function PlayerContent(props: Props) {
         </Box>
       )}
 
-      {aukus1games && (
-        <Box marginTop={'200px'}>
+      {aukus1FilteredGames && (
+        <Box marginTop={filter ? '50px' : '200px'}>
           <Typography fontSize={'24px'} fontWeight={600} align="center">
             <Link
               to={aukus1games.link}
@@ -171,7 +191,7 @@ export default function PlayerContent(props: Props) {
 
           <Box marginBottom={'50px'} />
 
-          {aukus1games.games.map((game, index) => (
+          {aukus1FilteredGames.map((game, index) => (
             <Fragment key={index}>
               <OldMoveCard id={index + 1} game={game} />
             </Fragment>
