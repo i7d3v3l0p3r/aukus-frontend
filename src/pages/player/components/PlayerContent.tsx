@@ -97,107 +97,109 @@ export default function PlayerContent(props: Props) {
         canEdit={canEdit}
         isOwner={isOwner}
       >
-        <Box marginTop={'100px'} position={'relative'} zIndex={5}>
-          <Box textAlign={'center'}>
-            <Typography fontSize="48px" fontWeight={700}>
-              {player.first_name} {player.name}
-            </Typography>
-            <Box marginTop={'30px'} marginBottom={'50px'}>
-              <StreamLink player={player} />
-            </Box>
-            <Box marginBottom={'50px'}>
-              <TextField
-                placeholder="Поиск среди всех игр Аукусов"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                  style: {
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    paddingLeft: '10px',
-                    height: '39px',
-                  },
-                }}
-                style={{
-                  width: '800px',
-                  fontSize: '16px important!',
-                }}
-              />
-            </Box>
+        <Box zIndex={5} position={'relative'}>
+          <Box marginTop={'100px'}>
+            <Box textAlign={'center'}>
+              <Typography fontSize="48px" fontWeight={700}>
+                {player.first_name} {player.name}
+              </Typography>
+              <Box marginTop={'30px'} marginBottom={'50px'}>
+                <StreamLink player={player} />
+              </Box>
+              <Box marginBottom={'50px'}>
+                <TextField
+                  placeholder="Поиск среди всех игр Аукусов"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                    style: {
+                      paddingTop: '10px',
+                      paddingBottom: '10px',
+                      paddingLeft: '10px',
+                      height: '39px',
+                    },
+                  }}
+                  style={{
+                    width: '800px',
+                    fontSize: '16px important!',
+                  }}
+                />
+              </Box>
 
-            {player.current_game && !filter && (
-              <CurrentMove
-                id={playerMoves.length + 1}
-                title={player.current_game}
-                playerColor={playerColor}
-                updatedAt={player.current_game_updated_at}
-              />
-            )}
+              {player.current_game && !filter && (
+                <CurrentMove
+                  id={playerMoves.length + 1}
+                  title={player.current_game}
+                  playerColor={playerColor}
+                  updatedAt={player.current_game_updated_at}
+                />
+              )}
 
-            {filteredMoves.map((move, index) => {
-              return (
-                <Box key={index}>
-                  <MoveCard
-                    id={playerMoves.length - index}
-                    move={move}
-                    displayType="player"
-                    onSave={refetchMoves}
-                  />
-                </Box>
-              )
-            })}
+              {filteredMoves.map((move, index) => {
+                return (
+                  <Box key={index}>
+                    <MoveCard
+                      id={playerMoves.length - index}
+                      move={move}
+                      displayType="player"
+                      onSave={refetchMoves}
+                    />
+                  </Box>
+                )
+              })}
+            </Box>
           </Box>
+
+          {aukus2FilteredGames && (
+            <Box marginTop={filter ? '50px' : '200px'}>
+              <Typography fontSize={'24px'} fontWeight={600} align="center">
+                <Link
+                  to={aukus2games.link}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <LinkSpan color={playerColor}>Аукус Сезон 2 (2023)</LinkSpan>
+                </Link>
+              </Typography>
+
+              <Box marginBottom={'50px'} />
+
+              {aukus2FilteredGames.map((game, index) => (
+                <Fragment key={index}>
+                  <OldMoveCard id={index + 1} game={game} />
+                </Fragment>
+              ))}
+            </Box>
+          )}
+
+          {aukus1FilteredGames && (
+            <Box marginTop={filter ? '50px' : '200px'}>
+              <Typography fontSize={'24px'} fontWeight={600} align="center">
+                <Link
+                  to={aukus1games.link}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <LinkSpan color={playerColor}>Аукус Сезон 1 (2022)</LinkSpan>
+                </Link>
+              </Typography>
+
+              <Box marginBottom={'50px'} />
+
+              {aukus1FilteredGames.map((game, index) => (
+                <Fragment key={index}>
+                  <OldMoveCard id={index + 1} game={game} />
+                </Fragment>
+              ))}
+            </Box>
+          )}
         </Box>
       </PlayerCanvasBackground>
-
-      {aukus2FilteredGames && (
-        <Box marginTop={filter ? '50px' : '200px'}>
-          <Typography fontSize={'24px'} fontWeight={600} align="center">
-            <Link
-              to={aukus2games.link}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <LinkSpan color={playerColor}>Аукус Сезон 2 (2023)</LinkSpan>
-            </Link>
-          </Typography>
-
-          <Box marginBottom={'50px'} />
-
-          {aukus2FilteredGames.map((game, index) => (
-            <Fragment key={index}>
-              <OldMoveCard id={index + 1} game={game} />
-            </Fragment>
-          ))}
-        </Box>
-      )}
-
-      {aukus1FilteredGames && (
-        <Box marginTop={filter ? '50px' : '200px'}>
-          <Typography fontSize={'24px'} fontWeight={600} align="center">
-            <Link
-              to={aukus1games.link}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <LinkSpan color={playerColor}>Аукус Сезон 1 (2022)</LinkSpan>
-            </Link>
-          </Typography>
-
-          <Box marginBottom={'50px'} />
-
-          {aukus1FilteredGames.map((game, index) => (
-            <Fragment key={index}>
-              <OldMoveCard id={index + 1} game={game} />
-            </Fragment>
-          ))}
-        </Box>
-      )}
     </Box>
   )
 }
