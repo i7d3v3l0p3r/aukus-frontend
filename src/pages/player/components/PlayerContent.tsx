@@ -1,4 +1,10 @@
-import { Box, Typography } from '@mui/material'
+import {
+  Box,
+  FormControl,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
@@ -10,6 +16,7 @@ import { aukus1Games } from '../data_aukus1'
 import MoveCard, { formatDate } from './MoveCard'
 import StreamLink from './StreamLink'
 import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
+import { ReactComponent as SearchIcon } from 'assets/search-normal.svg'
 import OldMoveCard from './OldMoveCard'
 import { aukus2Games } from '../data_aukus2'
 
@@ -18,6 +25,7 @@ type Props = {}
 export default function PlayerContent(props: Props) {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
+  const [filter, setFilter] = useState('')
 
   const currentPlayer = useUser()
 
@@ -76,6 +84,30 @@ export default function PlayerContent(props: Props) {
             </Typography>
             <Box marginTop={'30px'} marginBottom={'50px'}>
               <StreamLink player={player} />
+            </Box>
+            <Box marginBottom={'50px'}>
+              <TextField
+                placeholder="Поиск среди всех игр Аукусов"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                  style: {
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    paddingLeft: '10px',
+                    height: '39px',
+                  },
+                }}
+                style={{
+                  width: '800px',
+                  fontSize: '16px important!',
+                }}
+              />
             </Box>
 
             {player.current_game && (

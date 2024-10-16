@@ -59,6 +59,7 @@ function OfflineButton({ player }: Props) {
       }}
       style={{
         fontSize: '14px',
+        borderWidth: '2px',
       }}
       color={getPlayerColorName(player)}
       variant="outlined"
