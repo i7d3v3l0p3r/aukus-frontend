@@ -97,11 +97,13 @@ export async function fetchGameNames(
 type UpdateLinkParams = {
   move_id: number
   link: string
+  title: string
 }
 
 export async function updateVodLink({
   move_id,
   link,
+  title,
 }: UpdateLinkParams): Promise<void> {
   if (MOCK_API) {
     console.log('setting vod link', link)
@@ -112,7 +114,7 @@ export async function updateVodLink({
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ move_id, vod_link: link }),
+    body: JSON.stringify({ move_id, vod_link: link, title }),
   }).then((res) => res.json())
 }
 
