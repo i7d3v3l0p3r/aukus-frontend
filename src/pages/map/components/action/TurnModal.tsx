@@ -247,6 +247,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 fontSize: '16px',
               },
             }}
+            className="CustomSelect"
           >
             <MenuItemStyled value="completed" color={Color.green}>
               Прошел игру

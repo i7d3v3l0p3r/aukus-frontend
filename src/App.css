@@ -86,32 +86,8 @@ tr.MuiTableRow-root {
   vertical-align: top;
 }
 
-div.MuiAutocomplete-inputRoot {
-  padding: 0px !important;
-}
-
-div.MuiAutocomplete-root > div.MuiTextField-root {
-  padding: 0px !important;
-}
-
-div.MuiAutocomplete-inputRoot > input {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
-  padding-left: 14px !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
-}
-
 span.MuiRating-root {
   align-self: center;
-}
-
-div.MuiAutocomplete-root {
-  border: none !important;
-}
-
-ul.MuiAutocomplete-listbox {
-  font-weight: 500;
 }
 
 div.Mui-focused {
@@ -149,4 +125,64 @@ span.MuiSlider-thumb:active {
 div.MuiInputBase-root > input {
   padding: 0px;
   font-weight: 500;
+}
+
+/* Autocomplete dropdown */
+
+div.MuiAutocomplete-inputRoot {
+  padding: 0px !important;
+}
+
+div.MuiAutocomplete-root > div.MuiTextField-root {
+  padding: 0px !important;
+}
+
+div.MuiAutocomplete-inputRoot > input {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  padding-left: 14px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+div.MuiAutocomplete-root {
+  border: none !important;
+}
+
+ul.MuiAutocomplete-listbox {
+  font-weight: 500;
+}
+
+/* Select dropdown */
+
+div.CustomSelect {
+  border: none;
+}
+
+div.CustomSelect > div.MuiSelect-select {
+  border: 2px solid #414141;
+  border-radius: 10px;
+}
+
+div.Mui-focused.CustomSelect > div.MuiSelect-select {
+  border: 2px solid #007aff;
+  border-radius: 10px;
+}
+
+div.MuiInputBase-root > div.MuiSelect-select[aria-expanded='true'] {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
+  border: 2px solid #007aff;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-top: none;
+}
+
+div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper > ul {
+  padding: 0px;
 }
