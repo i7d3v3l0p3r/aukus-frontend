@@ -75,7 +75,7 @@ export default function PlayerContent(props: Props) {
   }
 
   const aukus1games = aukus1Games[player.url_handle]
-  let aukus1FilteredGames = aukus1games?.games ?? []
+  let aukus1FilteredGames = aukus1games?.games
   if (filter && aukus1FilteredGames) {
     aukus1FilteredGames = aukus1games.games.filter((game) => {
       return game.title.toLowerCase().includes(filter.toLowerCase())
@@ -83,7 +83,7 @@ export default function PlayerContent(props: Props) {
   }
 
   const aukus2games = aukus2Games[player.url_handle]
-  let aukus2FilteredGames = aukus2games?.games ?? []
+  let aukus2FilteredGames = aukus2games?.games
   if (filter && aukus2FilteredGames) {
     aukus2FilteredGames = aukus2games.games.filter((game) => {
       return game.title.toLowerCase().includes(filter.toLowerCase())
