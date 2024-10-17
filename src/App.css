@@ -148,4 +148,5 @@ span.MuiSlider-thumb:active {
 
 div.MuiInputBase-root > input {
   padding: 0px;
+  font-weight: 500;
 }
