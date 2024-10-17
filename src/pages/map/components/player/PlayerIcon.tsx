@@ -297,7 +297,9 @@ export default function PlayerIcon({
                 height: '23px',
                 color: 'white',
                 lineHeight: 1,
-                backgroundColor: playerColor,
+                backgroundColor: player.is_online
+                  ? playerColor
+                  : Color.greyLight,
                 paddingLeft: '5px',
                 paddingRight: '5px',
                 borderRadius: '3px',
@@ -308,18 +310,6 @@ export default function PlayerIcon({
               }}
             >
               {player.name}
-              {player.is_online && (
-                <span
-                  style={{
-                    fontSize: '8px',
-                    fontWeight: 600,
-                    marginLeft: '3px',
-                    marginBottom: '7px',
-                  }}
-                >
-                  LIVE
-                </span>
-              )}
             </span>
           </p>
         </Box>
