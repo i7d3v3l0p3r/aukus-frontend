@@ -67,26 +67,37 @@ export default function PlayerContent(props: Props) {
 
   const playerColor = getPlayerColor(player.url_handle)
 
+  const translitFilter = transliterateRussianToEnglishVariants(
+    filter.toLowerCase()
+  )
+  const hasFilter = translitFilter[0].length > 0
+
   let filteredMoves = playerMoves
-  if (filter) {
+  if (hasFilter) {
     filteredMoves = playerMoves.filter((move) => {
-      return move.item_title.toLowerCase().includes(filter.toLowerCase())
+      return translitFilter.some((ftext) =>
+        move.item_title.toLowerCase().includes(ftext)
+      )
     })
   }
 
   const aukus1games = aukus1Games[player.url_handle]
   let aukus1FilteredGames = aukus1games?.games
-  if (filter && aukus1FilteredGames) {
+  if (hasFilter && aukus1FilteredGames) {
     aukus1FilteredGames = aukus1games.games.filter((game) => {
-      return game.title.toLowerCase().includes(filter.toLowerCase())
+      return translitFilter.some((ftext) =>
+        game.title.toLowerCase().includes(ftext)
+      )
     })
   }
 
   const aukus2games = aukus2Games[player.url_handle]
   let aukus2FilteredGames = aukus2games?.games
-  if (filter && aukus2FilteredGames) {
+  if (hasFilter && aukus2FilteredGames) {
     aukus2FilteredGames = aukus2games.games.filter((game) => {
-      return game.title.toLowerCase().includes(filter.toLowerCase())
+      return translitFilter.some((ftext) =>
+        game.title.toLowerCase().includes(ftext)
+      )
     })
   }
 
@@ -249,4 +260,73 @@ function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
       </Box>
     </Box>
   )
+}
+
+// Mapping of Russian characters to arrays of phonetically similar English characters (lowercase only)
+const transliterationMap: { [key: string]: string[] } = {
+  а: ['a'],
+  б: ['b', 'v'],
+  в: ['v', 'w'],
+  г: ['g', 'h'],
+  д: ['d'],
+  е: ['e', 'ye'],
+  ё: ['yo', 'io'],
+  ж: ['zh', 'j'],
+  з: ['z'],
+  и: ['i', 'y'],
+  й: ['y'],
+  к: ['k', 'c'],
+  л: ['l'],
+  м: ['m'],
+  н: ['n'],
+  о: ['o'],
+  п: ['p'],
+  р: ['r'],
+  с: ['s'],
+  т: ['t'],
+  у: ['u'],
+  ф: ['f', 'v'],
+  х: ['kh', 'h', 'ch'],
+  ц: ['ts', 'c'],
+  ч: ['ch', 'tch'],
+  ш: ['sh'],
+  щ: ['shch'],
+  ы: ['y'],
+  э: ['e'],
+  ю: ['yu', 'iu'],
+  я: ['ya', 'ia'],
+}
+
+// Recursive function to generate all combinations of transliterated strings
+function generateCombinations(
+  variants: string[][],
+  index: number,
+  current: string,
+  results: string[]
+) {
+  if (index === variants.length) {
+    results.push(current)
+    return
+  }
+
+  // Loop through all possible phonetic variants for the current character
+  for (const variant of variants[index]) {
+    generateCombinations(variants, index + 1, current + variant, results)
+  }
+}
+
+// Function to transliterate a Russian string to all possible phonetically similar English strings
+function transliterateRussianToEnglishVariants(russianText: string): string[] {
+  const results: string[] = []
+  const variants: string[][] = []
+
+  // Convert Russian text into arrays of possible phonetic matches
+  for (const char of russianText.split('')) {
+    variants.push(transliterationMap[char] || [char]) // Default to the original character if no mapping exists
+  }
+
+  // Generate all possible combinations of the transliterations
+  generateCombinations(variants, 0, '', results)
+
+  return results
 }
