@@ -11,7 +11,7 @@ import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
-import { getPlayerColor } from 'utils/types'
+import { Color, getPlayerColor } from 'utils/types'
 import { aukus1Games } from '../data_aukus1'
 import MoveCard, { formatDate } from './MoveCard'
 import StreamLink from './StreamLink'
@@ -118,6 +118,14 @@ export default function PlayerContent(props: Props) {
                 <StreamLink player={player} />
               </Box>
               <Box marginBottom={'50px'}>
+                <style>
+                  {`
+                  div.MuiOutlinedInput-root {
+                    border: 2px solid ${Color.greyDark};
+                    border-radius: 10px;
+                  }
+                `}
+                </style>
                 <TextField
                   placeholder="Поиск среди всех игр Аукусов"
                   value={filter}
@@ -138,6 +146,9 @@ export default function PlayerContent(props: Props) {
                   style={{
                     width: '800px',
                     fontSize: '16px important!',
+                    backgroundColor: Color.greyDark,
+                    borderRadius: '10px',
+                    borderColor: Color.greyDark,
                   }}
                 />
               </Box>

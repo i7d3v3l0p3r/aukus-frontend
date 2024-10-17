@@ -35,14 +35,15 @@ export default function PlayerSection({ player }: Props) {
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
           {player.first_name || ''} «{player.name}»
         </Typography>
-        <Box
-          height={'340px'}
-          width={'550px'}
-          marginTop={'30px'}
-          sx={{ backgroundColor: 'grey' }}
-        >
+        <Box height={'340px'} width={'550px'} marginTop={'30px'}>
           {photo && (
-            <img src={photo} height="340px" width="550px" alt="player pic" />
+            <img
+              src={photo}
+              height="340px"
+              width="550px"
+              alt="player pic"
+              style={{ borderRadius: '15px' }}
+            />
           )}
         </Box>
         <Box marginTop={'20px'} marginLeft={'20px'}>

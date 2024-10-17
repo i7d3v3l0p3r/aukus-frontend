@@ -15,13 +15,13 @@ export default function RulesContainer() {
         <Box marginBottom={'30px'}>
           <Link to="#" onClick={() => setRulesPage('player')}>
             <LinkSpan color={Color.purple} active={rulesPage === 'player'}>
-              Для стримеров
+              Общие правила проведения для участников
             </LinkSpan>
           </Link>
           <span style={{ marginLeft: '50px' }} />
           <Link to="#" onClick={() => setRulesPage('donater')}>
             <LinkSpan color={Color.orange} active={rulesPage === 'donater'}>
-              Для донатеров
+              Правила заказа игр на аукусе
             </LinkSpan>
           </Link>
         </Box>
