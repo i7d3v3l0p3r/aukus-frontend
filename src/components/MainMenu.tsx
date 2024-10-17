@@ -88,7 +88,7 @@ export default function MainMenu({
                   color={currentPage === 'stats' ? 'primary' : 'info'}
                   sx={{ width: '150px', height: '40px' }}
                 >
-                  Рейтинг
+                  Лидеры
                 </Button>
               </Link>
 
