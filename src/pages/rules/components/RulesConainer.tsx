@@ -15,18 +15,20 @@ export default function RulesContainer() {
         <Box marginBottom={'30px'}>
           <Link to="#" onClick={() => setRulesPage('player')}>
             <LinkSpan color={Color.purple} active={rulesPage === 'player'}>
-              Общие правила проведения для участников
+              Для стримеров
             </LinkSpan>
           </Link>
           <span style={{ marginLeft: '50px' }} />
           <Link to="#" onClick={() => setRulesPage('donater')}>
             <LinkSpan color={Color.orange} active={rulesPage === 'donater'}>
-              Правила заказа игр на аукусе
+              Для донатеров
             </LinkSpan>
           </Link>
         </Box>
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
-          Правила проведения описывают все аспекты Аукуса
+          {rulesPage === 'player'
+            ? 'Общие правила проведения для участников'
+            : 'Правила заказа игр на аукусе'}
         </Typography>
 
         <Box marginTop={'50px'} />
