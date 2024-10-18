@@ -125,7 +125,7 @@ export default function PlayerContent(props: Props) {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SearchIcon />
+                        <SearchIcon color={'#8e8e8e'} />
                       </InputAdornment>
                     ),
                     className: 'customSearch',
