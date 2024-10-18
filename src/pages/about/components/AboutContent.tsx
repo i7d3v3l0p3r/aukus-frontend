@@ -16,7 +16,7 @@ const creators = [
   'mapcar — Фронтенд, организация',
 ]
 
-const sponsors: String[] = ['Станьте первым']
+const sponsors: String[] = ['Стань первым']
 
 export default function AboutContent() {
   return (

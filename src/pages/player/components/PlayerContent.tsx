@@ -118,14 +118,6 @@ export default function PlayerContent(props: Props) {
                 <StreamLink player={player} />
               </Box>
               <Box marginBottom={'50px'}>
-                <style>
-                  {`
-                  div.MuiOutlinedInput-root {
-                    border: 2px solid ${Color.greyDark};
-                    border-radius: 10px;
-                  }
-                `}
-                </style>
                 <TextField
                   placeholder="Поиск среди всех игр Аукусов"
                   value={filter}
@@ -133,9 +125,10 @@ export default function PlayerContent(props: Props) {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SearchIcon />
+                        <SearchIcon color={'#8e8e8e'} />
                       </InputAdornment>
                     ),
+                    className: 'customSearch',
                     style: {
                       paddingTop: '10px',
                       paddingBottom: '10px',

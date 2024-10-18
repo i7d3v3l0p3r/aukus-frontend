@@ -196,3 +196,10 @@ div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
 div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper > ul {
   padding: 0px;
 }
+
+/* Search bar */
+
+div.MuiOutlinedInput-root.customSearch {
+  border: 2px solid #222222;
+  border-radius: 10px;
+}
