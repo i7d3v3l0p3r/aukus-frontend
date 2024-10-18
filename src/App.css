@@ -112,6 +112,13 @@ div.Mui-focused {
   border: 3px solid #0c0c0c; /* creates padding around scroll thumb */
 }
 
+/* Firefox-only styles */
+@-moz-document url-prefix() {
+  * {
+    scrollbar-color: #007aff #0c0c0c;
+  }
+}
+
 * {
   scrollbar-width: auto; /* Makes the scrollbar thinner */
   /* scrollbar-color: #007aff #0c0c0c;*/
