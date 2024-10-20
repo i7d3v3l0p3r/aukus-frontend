@@ -13,7 +13,7 @@ export default function PlayerSection({ player }: Props) {
 
   return (
     <Box display="flex" justifyContent="center">
-      <Box textAlign={'left'}>
+      <Box textAlign={'left'} width={'550px'}>
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
           {player.first_name || ''} «{player.name}»
         </Typography>
