@@ -1,7 +1,6 @@
 import {
   playerMovesMock,
   playersMock,
-  playersMockById,
   playerStatsMock,
 } from './mocks'
 import {

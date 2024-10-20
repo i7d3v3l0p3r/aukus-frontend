@@ -14,7 +14,7 @@ import MainMenu from 'components/MainMenu'
 import PointAucModal from 'pages/player/components/PointAucModal'
 import { useMutation } from '@tanstack/react-query'
 import { resetPointaucToken } from 'utils/api'
-import { ReactComponent as AddSquareIcon } from 'assets/add-square.svg'
+import  AddSquareIcon from 'assets/add-square.svg?react'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (

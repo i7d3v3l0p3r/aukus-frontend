@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import  { useRef } from 'react'
 import { Box } from '@mui/material'
 import { usePlayerCanvasBackgroundContext } from '../context'
 import { useRefDimensions } from '../use-ref-dimensions'

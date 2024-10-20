@@ -1,11 +1,9 @@
-import { Box, Button, Slider, SliderThumb } from '@mui/material'
-import { Mark } from '@mui/material/Slider/useSlider.types'
+import { Box, Button, Slider, SliderThumb, StepLabelProps } from '@mui/material'
+import { Mark, UseSliderThumbSlotProps } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
-
-type Props = {}
 
 const StartDate = new Date('2024-10-01')
 StartDate.setHours(0, 0, 0, 0)

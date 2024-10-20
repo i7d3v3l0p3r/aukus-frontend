@@ -1,4 +1,4 @@
-import { range, sample, random } from 'lodash'
+import { sample, random } from 'lodash'
 import { Player, PlayerMove } from './types'
 
 const playerLasqa: Player = {
@@ -130,8 +130,7 @@ export function playerMovesMock() {
     } else if (status === 'movie') {
       diceRoll = sample([1, 2, 3, 4])
       currentPosition += diceRoll
-    } else if (status === 'reroll') {
-    } else {
+    } else if (status !== 'reroll') {
       diceRoll = sample([1, 2, 3, 4, 5, 6])
       currentPosition += diceRoll
     }
@@ -165,7 +164,7 @@ function generateDateRange(startDate: Date, endDate: Date) {
   const dateArray = []
 
   // Create a new Date object for the start date to avoid modifying the original startDate
-  let currentDate = new Date(startDate)
+  const currentDate = new Date(startDate)
 
   // Loop until the current date is greater than the end date
   while (currentDate <= endDate) {

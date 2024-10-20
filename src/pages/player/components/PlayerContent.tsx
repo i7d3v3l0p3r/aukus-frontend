@@ -1,28 +1,26 @@
 import {
-  Box,
-  FormControl,
-  InputAdornment,
-  TextField,
-  Typography,
+    Box,
+    InputAdornment,
+    TextField,
+    Typography
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
+import SearchIcon from 'assets/search-normal.svg?react'
 import LinkSpan from 'components/LinkSpan'
+import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
 import { useUser } from 'context/UserProvider'
 import { Fragment, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { Color, getPlayerColor } from 'utils/types'
 import { aukus1Games } from '../data_aukus1'
-import MoveCard, { formatDate } from './MoveCard'
-import StreamLink from './StreamLink'
-import { PlayerCanvasBackground } from 'components/PlayerCanvasBackground'
-import { ReactComponent as SearchIcon } from 'assets/search-normal.svg'
-import OldMoveCard from './OldMoveCard'
 import { aukus2Games } from '../data_aukus2'
+import MoveCard from './MoveCard'
+import OldMoveCard from './OldMoveCard'
+import StreamLink from './StreamLink'
+import { formatDate } from './utils'
 
-type Props = {}
-
-export default function PlayerContent(props: Props) {
+export default function PlayerContent() {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
   const [filter, setFilter] = useState('')
