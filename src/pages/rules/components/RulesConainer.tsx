@@ -28,7 +28,7 @@ export default function RulesContainer() {
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
           {rulesPage === 'player'
             ? 'Общие правила проведения для участников'
-            : 'Правила заказа игр на аукусе'}
+            : 'Правила заказа игр'}
         </Typography>
 
         <Box marginTop={'50px'} />
