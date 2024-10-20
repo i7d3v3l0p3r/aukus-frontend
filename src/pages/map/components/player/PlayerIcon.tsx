@@ -172,7 +172,7 @@ export default function PlayerIcon({
 
     api.start({
       from: { x: 0, y: 0 },
-      to: async (next, cancel) => {
+      to: async (next) => {
         for (let i = 0; i < animationsList.length; i++) {
           await next(animationsList[i])
         }
@@ -220,7 +220,6 @@ export default function PlayerIcon({
       }, 50)
       return () => clearInterval(interval)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.map_position, isMoving])
 
   // console.log({ player, cell });
@@ -237,7 +236,7 @@ export default function PlayerIcon({
   const isStillAnimated = iconRef.current?.src.endsWith('gif')
 
   let finalPositionTop = positionTop
-  let finalPositionLeft = positionLeft
+  const finalPositionLeft = positionLeft
 
   if (isMoving || isStillAnimated) {
     // adjust height for animation

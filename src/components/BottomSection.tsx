@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Link } from '@mui/material'
+import { Box, Divider, Link } from '@mui/material'
 import { Color } from 'utils/types'
 import LinkSpan from './LinkSpan'
 

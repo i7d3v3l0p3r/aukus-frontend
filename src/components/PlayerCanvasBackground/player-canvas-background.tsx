@@ -14,7 +14,7 @@ import MainMenu from 'components/MainMenu'
 import PointAucModal from 'pages/player/components/PointAucModal'
 import { useMutation } from '@tanstack/react-query'
 import { resetPointaucToken } from 'utils/api'
-import { ReactComponent as AddSquareIcon } from 'assets/add-square.svg'
+import  AddSquareIcon from 'assets/add-square.svg?react'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (
@@ -113,9 +113,9 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
 
   useEffect(() => {
     if (isEditMode) {
-      setImageList(
+      setImageList((currentList) =>
         images.map((img) => {
-          const localImg = imageList.find((i) => i.id === img.id)
+          const localImg = currentList.find((i) => i.id === img.id)
           if (localImg) {
             return localImg
           }

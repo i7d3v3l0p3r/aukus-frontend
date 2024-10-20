@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material'
 import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
 import { Color, getPlayerColor, Page } from 'utils/types'
-import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
+import SnowflakeIcon from 'assets/snowflake.svg?react'
 import LinkSpan from './LinkSpan'
 
 type Props = {

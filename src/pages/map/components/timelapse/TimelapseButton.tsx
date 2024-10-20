@@ -5,8 +5,6 @@ import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
 
-type Props = {}
-
 const StartDate = new Date('2024-10-01')
 StartDate.setHours(0, 0, 0, 0)
 
@@ -260,11 +258,20 @@ function displayText(value: number) {
   return `${value}`
 }
 
-function CustomMark(props: any) {
+type MarkProps = {
+  'data-index': number
+  ownerState: {
+    marks: Mark[]
+  }
+  label: string
+  style: React.CSSProperties
+}
+
+function CustomMark(props: MarkProps) {
   const index = props['data-index'] as number
   const mark = props.ownerState.marks[index] as Mark
 
-  const baseStyles = {
+  const baseStyles: React.CSSProperties = {
     backgroundColor: 'black',
     height: '24px',
     // width: '50px',
@@ -305,7 +312,11 @@ function CustomMark(props: any) {
   )
 }
 
-function CustomRail(props: any) {
+type RailProps = {
+  style: React.CSSProperties
+}
+
+function CustomRail(props: RailProps) {
   return (
     <div
       style={{
@@ -321,7 +332,12 @@ function CustomRail(props: any) {
   )
 }
 
-function CustomThumb(props: any) {
+type ThumbProps = {
+  className: string
+  style: React.CSSProperties
+}
+
+function CustomThumb(props: ThumbProps) {
   // return <SliderThumb {...props} />
   // console.log(props)
   const className = props.className as string

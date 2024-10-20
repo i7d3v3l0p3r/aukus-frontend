@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { shuffle } from 'lodash'
 import { useState } from 'react'
 import { fetchPlayers } from 'utils/api'
-import PlayerSection, { PlayerPhotoMap } from './PlayerSection'
+import PlayerSection from './PlayerSection'
+import { PlayerPhotoMap } from './utils'
 
 export default function PlayerList() {
   const [fetchStart] = useState(Date.now())

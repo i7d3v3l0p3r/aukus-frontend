@@ -14,12 +14,12 @@ const URLImage = ({
   setImages: React.Dispatch<React.SetStateAction<CanvasImage[]>>
   centerX: number
 }) => {
-  const { url, id, scaleX, scaleY, zIndex, ...restProps } = image
+  const { id, scaleX, scaleY, ...restProps } = image
 
   const { selectedImage, setSelectedImage, setFlipFunction } =
     usePlayerCanvasBackgroundContext()
 
-  const [img, loadState] = useImage(`${image.url}`)
+  const [img] = useImage(`${image.url}`)
   const imageRef = React.useRef<Konva.Image>(null)
   const trRef = useRef<Konva.Transformer>(null)
 
@@ -35,7 +35,7 @@ const URLImage = ({
 
     trRef.current?.nodes([imageRef.current])
     trRef.current?.getLayer()?.batchDraw()
-  }, [trRef.current, imageRef.current])
+  }, [])
 
   const updateImages = (img: CanvasImage) => {
     console.log('updateImages()')
@@ -47,7 +47,7 @@ const URLImage = ({
     const node = imageRef.current
     if (node) {
       const newScaleX = node.scaleX() * -1
-      let rotation = node.rotation()
+      const rotation = node.rotation()
 
       console.log('old node.scaleX()', node.scaleX())
       console.log('old node.scaleY()', node.scaleY())

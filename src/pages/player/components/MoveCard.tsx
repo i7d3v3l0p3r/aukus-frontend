@@ -1,11 +1,13 @@
-import { Box, Link } from '@mui/material'
+import { Box } from '@mui/material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
 import EditVodModal from './EditVodModal'
+import { formatDate, formatNumber } from './utils'
+import TextRender from './TextRender'
 
 type Props = {
   id: number
@@ -62,7 +64,7 @@ export default function MoveCard({
     updateVod.mutate({ move_id: move.id, link: text, title })
     queryClient.invalidateQueries({ queryKey: ['playerMoves', move.player_id] })
     queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
-    onSave && onSave()
+    onSave?.()
     setShowVodsModal(false)
   }
 
@@ -162,7 +164,7 @@ export default function MoveCard({
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
               {move.vod_link
-                ? processText(move.vod_link, borderColor)
+                ? <TextRender text={move.vod_link} borderColor={borderColor} />
                 : 'Записи стримов еще не добавлены'}
             </Box>
           )}
@@ -177,64 +179,4 @@ export default function MoveCard({
       />
     </>
   )
-}
-
-export function formatDate(dateString: string) {
-  // Create a new Date object
-  const date = new Date(dateString)
-
-  // Extract the day, month, and year
-  const day = date.getDate()
-  const month = date.toLocaleString('ru-RU', { month: 'long' })
-  const monthFixed = month.slice(0, -1) + 'я'
-
-  const hour = date.getHours()
-  const paddedHour = hour.toString().padStart(2, '0')
-  const minute = date.getMinutes()
-  const paddedMinute = minute.toString().padStart(2, '0')
-  return `${day} ${monthFixed} ${paddedHour}:${paddedMinute}`
-}
-
-// Function to make URLs clickable and preserve line breaks
-const processText = (text: string, borderColor: string) => {
-  // Regex to detect URLs
-  const urlRegex = /(https?:\/\/[^\s]+)/g
-
-  // Split by new lines and process each line
-  return text.split('\n').map((line: string, index: number) => {
-    // Split by URLs within the line
-    const parts = line.split(urlRegex)
-
-    // Render each part
-    return (
-      <Fragment key={index}>
-        {parts.map((part, i) => {
-          // If part matches the URL regex, render it as a link
-          if (urlRegex.test(part)) {
-            return (
-              <Link
-                href={part}
-                key={i}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkSpan color={borderColor}>{part}</LinkSpan>
-              </Link>
-            )
-          }
-          // Otherwise, render it as text
-          return <span key={i}>{part}</span>
-        })}
-        <br />
-      </Fragment>
-    )
-  })
-}
-
-function formatNumber(i: number) {
-  if (i < 0) {
-    return `−${Math.abs(i)}`
-  } else {
-    return `${i}`
-  }
 }

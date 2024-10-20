@@ -14,7 +14,7 @@ import { DiceOption } from 'utils/types'
 type Props = {
   open: boolean
   dice: DiceOption | null
-  onTurnFinish: (diceRoll: number) => void
+  onTurnFinish: () => void
   onDiceRoll: (diceRoll: number) => void
 }
 
@@ -72,7 +72,7 @@ export default function DiceModal({
     if (canThrowDice) {
       throwDice()
     } else if (isTurnComplete) {
-      onTurnFinish(diceRollSum)
+      onTurnFinish()
     }
   }
 
