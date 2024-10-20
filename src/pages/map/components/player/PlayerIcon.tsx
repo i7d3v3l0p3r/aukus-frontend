@@ -220,7 +220,6 @@ export default function PlayerIcon({
       }, 50)
       return () => clearInterval(interval)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.map_position, isMoving])
 
   // console.log({ player, cell });

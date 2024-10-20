@@ -93,14 +93,14 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }
 
   const handleRatingChange = (
-    event: React.SyntheticEvent,
+    _: React.SyntheticEvent,
     newValue: number | null
   ) => {
     setRating(newValue)
   }
 
   const handleRatingChangeWhileHovering = (
-    event: React.SyntheticEvent,
+    _: React.SyntheticEvent,
     newValue: number | null
   ) => {
     setRatingHover(newValue)
@@ -277,7 +277,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             freeSolo
             options={gameNameOptions}
             value={gameName}
-            onChange={(event, newValue) => {
+            onChange={(_, newValue) => {
               setGameName(newValue || '')
             }}
             renderInput={(params) => (

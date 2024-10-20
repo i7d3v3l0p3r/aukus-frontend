@@ -113,9 +113,9 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
 
   useEffect(() => {
     if (isEditMode) {
-      setImageList(
+      setImageList((currentList) =>
         images.map((img) => {
-          const localImg = imageList.find((i) => i.id === img.id)
+          const localImg = currentList.find((i) => i.id === img.id)
           if (localImg) {
             return localImg
           }

@@ -24,7 +24,7 @@ export default function StaticPanel({ children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapBottom = document.getElementById('map-cell-0')
 
-  if (containerRef.current && mapBottom) {
+  if (containerRef.current && mapBottom && scrollPosition > 0) {
     const makeFixed =
       window.innerHeight - mapBottom.getBoundingClientRect().bottom < 295
 

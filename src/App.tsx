@@ -20,6 +20,7 @@ import { SnackbarProvider } from 'notistack'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {
+  // eslint-disable-next-line
   interface ButtonPropsColorOverrides extends CustomColorOverrides {}
 }
 
