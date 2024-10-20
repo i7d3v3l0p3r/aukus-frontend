@@ -1,5 +1,5 @@
-import { Box, Button, Slider, SliderThumb, StepLabelProps } from '@mui/material'
-import { Mark, UseSliderThumbSlotProps } from '@mui/material/Slider/useSlider.types'
+import { Box, Button, Slider, SliderThumb } from '@mui/material'
+import { Mark } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useState } from 'react'
@@ -258,11 +258,20 @@ function displayText(value: number) {
   return `${value}`
 }
 
-function CustomMark(props: any) {
+type MarkProps = {
+  'data-index': number
+  ownerState: {
+    marks: Mark[]
+  }
+  label: string
+  style: React.CSSProperties
+}
+
+function CustomMark(props: MarkProps) {
   const index = props['data-index'] as number
   const mark = props.ownerState.marks[index] as Mark
 
-  const baseStyles = {
+  const baseStyles: React.CSSProperties = {
     backgroundColor: 'black',
     height: '24px',
     // width: '50px',
@@ -303,7 +312,11 @@ function CustomMark(props: any) {
   )
 }
 
-function CustomRail(props: any) {
+type RailProps = {
+  style: React.CSSProperties
+}
+
+function CustomRail(props: RailProps) {
   return (
     <div
       style={{
@@ -319,7 +332,12 @@ function CustomRail(props: any) {
   )
 }
 
-function CustomThumb(props: any) {
+type ThumbProps = {
+  className: string
+  style: React.CSSProperties
+}
+
+function CustomThumb(props: ThumbProps) {
   // return <SliderThumb {...props} />
   // console.log(props)
   const className = props.className as string
