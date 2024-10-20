@@ -63,7 +63,7 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
         style={{
           borderRadius: '15px',
           padding: '15px',
-          background: Color.greyLight,
+          background: '#161616',
         }}
       >
         <Box>
@@ -74,13 +74,11 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
               </LinkSpan>
             </Link>
           </Typography>
-          <Box marginTop={'8px'} marginBottom={'20px'}>
-            <Typography fontSize={'14px'} fontWeight={500}>
+          <Box color={"#FFFFFFCC"} marginTop={'8px'} marginBottom={'20px'} fontSize={'14px'} fontWeight={500}>
               Игра: {player.current_game}
-            </Typography>
           </Box>
           {player.is_online ? (
-            <Typography fontSize={'14px'} fontWeight={600}>
+            <Box fontSize={'14px'} fontWeight={600}>
               <Link
                 to={player.twitch_stream_link || player.vk_stream_link}
                 target="_blank"
@@ -90,11 +88,11 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
                   <LinkSpan color={Color.green}>Смотреть</LinkSpan>
                 </Tooltip>
               </Link>
-            </Typography>
+            </Box>
           ) : (
-            <Typography fontSize={'14px'} fontWeight={600}>
+            <Box fontSize={'14px'} fontWeight={600}>
               Офлайн
-            </Typography>
+            </Box>
           )}
         </Box>
       </Paper>
