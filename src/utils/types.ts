@@ -87,6 +87,7 @@ export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
 export const Color = {
   greyLight: '#414141',
   greyDark: '#222222',
+  greyNew: '#CECECE',
   red: '#ff3b30',
   green: '#34C759',
   greenLight: '#00B88C',

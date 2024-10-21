@@ -115,7 +115,7 @@ export default function PlayerContent() {
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />
               </Box>
-              <Box marginBottom={'50px'}>
+              <Box marginBottom={'30px'}>
                 <TextField
                   placeholder="Поиск среди всех игр Аукусов"
                   value={filter}
@@ -234,6 +234,9 @@ function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
         textAlign={'left'}
         padding={'15px'}
         lineHeight={1}
+        style={{
+          backgroundColor: playerColor
+        }}
       >
         <Box
           display={'flex'}
@@ -247,7 +250,7 @@ function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
         </Box>
         <Box
           fontSize={'14px'}
-          style={{ backgroundColor: playerColor }}
+          style={{ backgroundColor: 'white', color: 'black' }}
           width={'fit-content'}
           paddingTop={'5px'}
           paddingBottom={'5px'}

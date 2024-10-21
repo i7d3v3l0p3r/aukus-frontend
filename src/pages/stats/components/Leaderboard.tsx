@@ -68,42 +68,46 @@ export default function Leaderboard() {
         display="flex"
       >
         <TableContainer sx={{ width: 'auto' }}>
-          <Table>
+          <Table style={{borderSpacing: '0 10px', borderCollapse: 'separate'}}>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{  }}>
                   #
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{  }}>
                   Участник
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
-                  Позиция на карте
+                <TableCell sx={{ }}>
+                  Позиция
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{ }}>
                   Очки
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{  }}>
                   Пройдено игр
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{ }}>
                   Дропы
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{  }}>
                   Реролы
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
-                  Просмотры фильмов
+                <TableCell sx={{  }}>
+                  Фильмы
                 </TableCell>
-                <TableCell sx={{ borderBottom: `2px solid ${leaderColor}` }}>
+                <TableCell sx={{  }}>
                   Шейх-моменты
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {playersStatsByPosition.map((playerStat, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1}</TableCell>
+                <TableRow key={index} style={{
+                  backgroundColor: Color.greyDark,
+                  height: '39px',
+                  borderRadius: '10px'
+                }}>
+                  <TableCell style={{height: '39px'}}>{index + 1}</TableCell>
                   <TableCell>
                     <Link
                       to={`/players/${playersById[playerStat.id].url_handle}`}
