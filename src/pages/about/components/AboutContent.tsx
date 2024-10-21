@@ -22,19 +22,20 @@ export default function AboutContent() {
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'} width={'740px'}>
-        <Typography fontSize={'32px'} fontWeight={600}>
+        <Box fontSize={'48px'} fontWeight={700}>
           Сайт сделан специально для третьего сезона АУКУСа
-        </Typography>
+        </Box>
 
         <Box marginTop={'30px'} fontSize={'20px'} fontWeight={500}>
           Вы можете поддержать сайт и разработчиков через бусти
         </Box>
         <Box marginTop={'20px'} fontSize={'14px'} fontWeight={500}>
-          <LinkSpan color={Color.blue}>
+          <LinkSpan color={Color.greyNew}>
             <Link
               href="https://boosty.to/aukus"
               rel="noopener nereferrer"
               target="_blank"
+              style={{color: Color.greyNew}}
             >
               boosty.to/aukus/donate
             </Link>
@@ -47,7 +48,7 @@ export default function AboutContent() {
         <Box marginTop={'10px'} fontSize={'20px'}>
           {sponsors.map((item, index) => {
             return (
-              <Box marginTop={'20px'} key={index}>
+              <Box marginTop={'20px'} key={index} color={Color.greyNew}>
                 {item}
               </Box>
             )
@@ -59,7 +60,7 @@ export default function AboutContent() {
         <Box marginTop={'10px'} fontSize={'20px'}>
           {creators.map((item, index) => {
             return (
-              <Box key={index} marginTop={'20px'}>
+              <Box key={index} marginTop={'20px'} color={Color.greyNew}>
                 {item}
               </Box>
             )

@@ -11,7 +11,7 @@ export default function BottomSection() {
             <Divider
               variant="fullWidth"
               sx={{
-                borderWidth: '2px',
+                borderWidth: '1px',
                 backgroundColor: "white",
                 opacity: 1.0,
                 textAlign: 'center',
