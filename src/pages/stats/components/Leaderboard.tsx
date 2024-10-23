@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Table,
   TableBody,
   TableCell,
@@ -97,8 +98,6 @@ export default function Leaderboard() {
     {} as Record<number, number>
   )
 
-  const leaderColor = Color.blue
-
   const headerStyle = {
     cursor: 'pointer',
   }
@@ -136,7 +135,7 @@ export default function Leaderboard() {
             <TableHead>
               <TableRow>
                 <TableCell onClick={() => onHeaderClick('id')}>
-                  <span style={orderBy === 'id' ? selectedStyle : headerStyle}>#</span>
+                  <span style={orderBy === 'id' ? selectedStyle : headerStyle}>Место</span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('id')}>
                   <span style={orderBy === 'id' ? selectedStyle: headerStyle}>Участник</span>
@@ -175,9 +174,22 @@ export default function Leaderboard() {
                 <TableRow key={index} style={{
                   backgroundColor: Color.greyDark,
                   height: '39px',
-                  borderRadius: '10px'
+                  borderRadius: '10px',
+                  verticalAlign: 'middle',
                 }}>
-                  <TableCell style={{height: '39px'}}>{playerIdToPosition[playerStat.id]}</TableCell>
+                  <TableCell style={{height: '39px'}}>
+                    <Box display="flex" alignItems={"center"}>
+                    {playerIdToPosition[playerStat.id]}
+                    <Divider flexItem orientation='vertical'
+                      style={{
+                        borderRightWidth: '3px',
+                        marginLeft: '30px',
+                        borderRadius: '2px',
+                        height: '29px',
+                        borderColor: getPlayerColor(playersById[playerStat.id].url_handle)
+                      }} />
+                    </Box>
+                  </TableCell>
                   <TableCell>
                     <Link
                       to={`/players/${playersById[playerStat.id].url_handle}`}
@@ -186,6 +198,7 @@ export default function Leaderboard() {
                         color={getPlayerColor(
                           playersById[playerStat.id].url_handle
                         )}
+                        hideUnderline
                       >
                         {playersById[playerStat.id].name}
                       </LinkSpan>
