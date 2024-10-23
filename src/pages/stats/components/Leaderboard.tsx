@@ -15,8 +15,12 @@ import { Link } from 'react-router-dom'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Color, getPlayerColor, Player, PlayerStats } from 'utils/types'
 
+type HeaderType = 'id' | 'map_position' | 'score' | 'games_completed' | 'games_dropped' | 'rerolls' | 'movies' | 'sheikh_moments'
+
 export default function Leaderboard() {
   const [fetchStart] = useState(Date.now())
+  const [order, setOrder] = useState<'asc' | 'desc'>('desc')
+  const [orderBy, setOrderBy] = useState<HeaderType>('score')
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -47,11 +51,71 @@ export default function Leaderboard() {
     {} as Record<number, Player>
   )
 
-  const playersStatsByPosition = playersStats.sort(
-    (a, b) => b.map_position - a.map_position
+  const playersStatsSorted = playersStats.sort((a, b) => {
+    if (orderBy === 'map_position') {
+      return order === 'asc'
+        ? a.map_position - b.map_position
+        : b.map_position - a.map_position
+    }
+    if (orderBy === 'score' || orderBy === 'id') {
+      return order === 'asc'
+        ? getPlayerScore(a) - getPlayerScore(b)
+        : getPlayerScore(b) - getPlayerScore(a)
+    }
+    if (orderBy === 'games_completed') {
+      return order === 'asc'
+        ? a.games_completed - b.games_completed
+        : b.games_completed - a.games_completed
+    }
+    if (orderBy === 'games_dropped') {
+      return order === 'asc'
+        ? a.games_dropped - b.games_dropped
+        : b.games_dropped - a.games_dropped
+    }
+    if (orderBy === 'rerolls') {
+      return order === 'asc' ? a.rerolls - b.rerolls : b.rerolls - a.rerolls
+    }
+    if (orderBy === 'movies') {
+      return order === 'asc' ? a.movies - b.movies : b.movies - a.movies
+    }
+    if (orderBy === 'sheikh_moments') {
+      return order === 'asc'
+        ? a.sheikh_moments - b.sheikh_moments
+        : b.sheikh_moments - a.sheikh_moments
+    }
+    return 0
+  })
+
+  const orderedByScore = [...playersStats].sort((a, b) => {
+    return getPlayerScore(b) - getPlayerScore(a)
+  })
+  const playerIdToPosition = orderedByScore.reduce(
+    (acc, playerStat, index) => {
+      acc[playerStat.id] = index+1
+      return acc
+    },
+    {} as Record<number, number>
   )
 
   const leaderColor = Color.blue
+
+  const headerStyle = {
+    cursor: 'pointer',
+  }
+
+  const selectedStyle = {
+    cursor: 'pointer',
+    borderBottom: '1px solid white',
+  }
+
+  const onHeaderClick = (header: HeaderType) => {
+    if (orderBy === header) {
+      setOrder(order === 'asc' ? 'desc' : 'asc')
+    } else {
+      setOrderBy(header)
+      setOrder('desc')
+    }
+  }
 
   return (
     <Box>
@@ -71,43 +135,49 @@ export default function Leaderboard() {
           <Table style={{borderSpacing: '0 10px', borderCollapse: 'separate'}}>
             <TableHead>
               <TableRow>
-                <TableCell sx={{  }}>
-                  #
+                <TableCell onClick={() => onHeaderClick('id')}>
+                  <span style={orderBy === 'id' ? selectedStyle : headerStyle}>#</span>
                 </TableCell>
-                <TableCell sx={{  }}>
-                  Участник
+                <TableCell onClick={() => onHeaderClick('id')}>
+                  <span style={orderBy === 'id' ? selectedStyle: headerStyle}>Участник</span>
                 </TableCell>
-                <TableCell sx={{ }}>
-                  Позиция
+                <TableCell onClick={() => onHeaderClick('map_position')}>
+                  <span style={orderBy === 'map_position' ? selectedStyle : headerStyle}>
+                    Позиция
+                  </span>
                 </TableCell>
-                <TableCell sx={{ }}>
-                  Очки
+                <TableCell onClick={() => onHeaderClick('score')}>
+                <span style={orderBy === 'score' ? selectedStyle : headerStyle}>
+                    Очки
+                </span>
                 </TableCell>
-                <TableCell sx={{  }}>
-                  Пройдено игр
+                <TableCell onClick={() => onHeaderClick('games_completed')}>
+                  <span style={orderBy === 'games_completed' ? selectedStyle : headerStyle}>
+                    Пройдено игр
+                  </span>
                 </TableCell>
-                <TableCell sx={{ }}>
-                  Дропы
+                <TableCell onClick={() => onHeaderClick('games_dropped')}>
+                  <span style={orderBy === 'games_dropped' ? selectedStyle : headerStyle}>Дропы</span>
                 </TableCell>
-                <TableCell sx={{  }}>
-                  Реролы
+                <TableCell onClick={() => onHeaderClick('rerolls')}>
+                  <span style={orderBy === 'rerolls' ? selectedStyle : headerStyle}>Реролы</span>
                 </TableCell>
-                <TableCell sx={{  }}>
-                  Фильмы
+                <TableCell onClick={() => onHeaderClick('movies')}>
+                  <span style={orderBy === 'movies' ? selectedStyle : headerStyle}>Фильмы</span>
                 </TableCell>
-                <TableCell sx={{  }}>
-                  Шейх-моменты
+                <TableCell onClick={() => onHeaderClick('sheikh_moments')}>
+                  <span style={orderBy === 'sheikh_moments' ? selectedStyle : headerStyle}>Шейх-моменты</span>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {playersStatsByPosition.map((playerStat, index) => (
+              {playersStatsSorted.map((playerStat, index) => (
                 <TableRow key={index} style={{
                   backgroundColor: Color.greyDark,
                   height: '39px',
                   borderRadius: '10px'
                 }}>
-                  <TableCell style={{height: '39px'}}>{index + 1}</TableCell>
+                  <TableCell style={{height: '39px'}}>{playerIdToPosition[playerStat.id]}</TableCell>
                   <TableCell>
                     <Link
                       to={`/players/${playersById[playerStat.id].url_handle}`}
