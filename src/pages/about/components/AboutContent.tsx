@@ -68,7 +68,7 @@ export default function AboutContent() {
             target="_blank"
 
           >
-        <Button fontSize={'14px'} fontWeight={500}>
+        <Button style={{fontSize: '16px', fontWeight: 500}}>
           Поддержать на бусти
         </Button>
           </Link>
