@@ -16,12 +16,12 @@ import { Link } from 'react-router-dom'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Color, getPlayerColor, Player, PlayerStats } from 'utils/types'
 
-type HeaderType = 'id' | 'map_position' | 'score' | 'games_completed' | 'games_dropped' | 'rerolls' | 'movies' | 'sheikh_moments'
+type HeaderType = 'id' | 'name' | 'map_position' | 'score' | 'games_completed' | 'games_dropped' | 'rerolls' | 'movies' | 'sheikh_moments'
 
 export default function Leaderboard() {
   const [fetchStart] = useState(Date.now())
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
-  const [orderBy, setOrderBy] = useState<HeaderType>('score')
+  const [orderBy, setOrderBy] = useState<HeaderType>('id')
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -53,6 +53,11 @@ export default function Leaderboard() {
   )
 
   const playersStatsSorted = playersStats.sort((a, b) => {
+    if (orderBy === 'name') {
+      return order === 'asc'
+        ? playersById[a.id].name.localeCompare(playersById[b.id].name)
+        : playersById[b.id].name.localeCompare(playersById[a.id].name)
+    }
     if (orderBy === 'map_position') {
       return order === 'asc'
         ? a.map_position - b.map_position
@@ -90,6 +95,7 @@ export default function Leaderboard() {
   const orderedByScore = [...playersStats].sort((a, b) => {
     return getPlayerScore(b) - getPlayerScore(a)
   })
+
   const playerIdToPosition = orderedByScore.reduce(
     (acc, playerStat, index) => {
       acc[playerStat.id] = index+1
@@ -100,6 +106,7 @@ export default function Leaderboard() {
 
   const headerStyle = {
     cursor: 'pointer',
+    color: Color.greyNew,
   }
 
   const selectedStyle = {
@@ -137,8 +144,8 @@ export default function Leaderboard() {
                 <TableCell onClick={() => onHeaderClick('id')}>
                   <span style={orderBy === 'id' ? selectedStyle : headerStyle}>Место</span>
                 </TableCell>
-                <TableCell onClick={() => onHeaderClick('id')}>
-                  <span style={orderBy === 'id' ? selectedStyle: headerStyle}>Участник</span>
+                <TableCell onClick={() => onHeaderClick('name')}>
+                  <span style={orderBy === 'name' ? selectedStyle: headerStyle}>Участник</span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('map_position')}>
                   <span style={orderBy === 'map_position' ? selectedStyle : headerStyle}>
@@ -179,7 +186,7 @@ export default function Leaderboard() {
                 }}>
                   <TableCell style={{height: '39px'}}>
                     <Box display="flex" alignItems={"center"}>
-                    {playerIdToPosition[playerStat.id]}
+                    <Box width={'10px'}>{playerIdToPosition[playerStat.id]}</Box>
                     <Divider flexItem orientation='vertical'
                       style={{
                         borderRightWidth: '3px',
