@@ -70,8 +70,8 @@ th.MuiTableCell-head {
 }
 
 td.MuiTableCell-root {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   line-height: 1;
   font-size: 16px;
   font-weight: 500;
