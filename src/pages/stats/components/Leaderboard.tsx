@@ -95,6 +95,7 @@ export default function Leaderboard() {
   const orderedByScore = [...playersStats].sort((a, b) => {
     return getPlayerScore(b) - getPlayerScore(a)
   })
+
   const playerIdToPosition = orderedByScore.reduce(
     (acc, playerStat, index) => {
       acc[playerStat.id] = index+1
@@ -105,6 +106,7 @@ export default function Leaderboard() {
 
   const headerStyle = {
     cursor: 'pointer',
+    color: Color.greyNew,
   }
 
   const selectedStyle = {
@@ -184,7 +186,7 @@ export default function Leaderboard() {
                 }}>
                   <TableCell style={{height: '39px'}}>
                     <Box display="flex" alignItems={"center"}>
-                    {playerIdToPosition[playerStat.id]}
+                    <Box width={'10px'}>{playerIdToPosition[playerStat.id]}</Box>
                     <Divider flexItem orientation='vertical'
                       style={{
                         borderRightWidth: '3px',
