@@ -148,17 +148,29 @@ export default function Leaderboard() {
                   <span style={orderBy === 'name' ? selectedStyle: headerStyle}>Участник</span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('map_position')}>
-                  <span style={orderBy === 'map_position' ? selectedStyle : headerStyle}>
+                  <span style={{
+                    ...(orderBy === 'map_position' ? selectedStyle : headerStyle),
+                    display: 'block',
+                    width: '80px'
+                  }}>
                     Позиция
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('score')}>
-                <span style={orderBy === 'score' ? selectedStyle : headerStyle}>
+                <span style={{
+                  ...(orderBy === 'score' ? selectedStyle : headerStyle),
+                  display: 'block',
+                  width: '60px',
+                }}>
                     Очки
                 </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_completed')}>
-                  <span style={orderBy === 'games_completed' ? selectedStyle : headerStyle}>
+                  <span style={{
+                      ...(orderBy === 'games_completed' ? selectedStyle : headerStyle),
+                      display: 'block',
+                      width: '130px',
+                  }}>
                     Пройдено игр
                   </span>
                 </TableCell>
