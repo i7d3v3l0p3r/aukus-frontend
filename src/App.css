@@ -109,19 +109,18 @@ div.Mui-focused {
 /* Scrollbar */
 
 ::-webkit-scrollbar {
-  width: 12px; /* for vertical scrollbar */
-  height: 12px; /* for horizontal scrollbar */
+  width: 6px; /* for vertical scrollbar */
+  height: 6px; /* for horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background: #0c0c0c; /* color of the tracking area */
+  background: transparent; /* color of the tracking area */
   border-radius: 20px; /* roundness of the tracking area */
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #007aff; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
-  border: 3px solid #0c0c0c; /* creates padding around scroll thumb */
 }
 
 ::-webkit-scrollbar-corner {
@@ -212,6 +211,7 @@ div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
 
 div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper > ul {
   padding: 0px;
+  background-color: #222222;
 }
 
 /* Search bar */

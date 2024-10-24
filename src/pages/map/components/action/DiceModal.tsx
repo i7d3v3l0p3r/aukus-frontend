@@ -159,6 +159,7 @@ export default function DiceModal({
               style={{
                 backgroundColor: diceColor,
                 color: useDarkText ? 'black' : 'white',
+                fontSize: '14px',
               }}
             >
               Тестовый бросок
