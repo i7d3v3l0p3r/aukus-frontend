@@ -212,6 +212,7 @@ div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
 
 div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper > ul {
   padding: 0px;
+  background-color: #222222;
 }
 
 /* Search bar */
