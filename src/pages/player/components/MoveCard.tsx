@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
@@ -69,16 +69,16 @@ export default function MoveCard({
   }
 
   const greyColor = '#CECECE'
-  let borderColor = greyColor
+  let playerColor = greyColor
   if (player && displayType === 'map') {
-    borderColor = getPlayerColor(player.url_handle)
+    playerColor = getPlayerColor(player.url_handle)
   }
   if (displayType === 'player') {
-    borderColor = moveTypeColor[move.type]
+    playerColor = moveTypeColor[move.type]
   }
 
   let moveTitle = `Ход — ${id}`
-  if (player) {
+  if (player && displayType === 'map') {
     moveTitle = player.name
   }
 
@@ -102,8 +102,20 @@ export default function MoveCard({
             fontWeight={500}
             marginBottom={'15px'}
           >
-            <Box color={player ? getPlayerColor(player.url_handle) : greyColor}>
-              {moveTitle}
+            <Box display={"flex"}>
+              {displayType === 'map' && (
+                <Divider orientation="vertical" flexItem style={{
+                  borderLeftWidth: '2px',
+                  borderRightWidth: '0px',
+                  borderColor: playerColor,
+                  borderRadius: '5px',
+                  height: '13px',
+                  marginRight: '5px',
+                }} />
+              )}
+              <Box color={greyColor}>
+                {moveTitle}
+              </Box>
             </Box>
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
@@ -145,7 +157,7 @@ export default function MoveCard({
               fontWeight={400}
             >
               <LinkSpan
-                color={borderColor}
+                color={playerColor}
                 defaultColor={greyColor}
                 onClick={() => setShowVods(!showVods)}
               >
@@ -153,7 +165,7 @@ export default function MoveCard({
               </LinkSpan>
               {canEdit && (
                 <LinkSpan
-                  color={borderColor}
+                  color={playerColor}
                   defaultColor={greyColor}
                   style={{ marginLeft: '15px' }}
                   onClick={handleEditVods}
@@ -166,7 +178,7 @@ export default function MoveCard({
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
               {move.vod_link
-                ? <TextRender text={move.vod_link} borderColor={borderColor} />
+                ? <TextRender text={move.vod_link} borderColor={playerColor} />
                 : 'Записи стримов еще не добавлены'}
             </Box>
           )}
