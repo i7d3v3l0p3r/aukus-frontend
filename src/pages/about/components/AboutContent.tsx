@@ -59,7 +59,7 @@ export default function AboutContent() {
         </Box>
 
         <Box marginTop={'30px'} fontSize={'20px'} fontWeight={500}>
-          Вы можете поддержать сайт и разработчиков через бусти
+          Вы можете поддержать сайт и разработчиков
         </Box>
         <Box marginTop={'50px'}>
           <Link
