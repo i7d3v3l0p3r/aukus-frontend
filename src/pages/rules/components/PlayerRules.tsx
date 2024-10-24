@@ -254,7 +254,7 @@ export default function PlayerRules() {
                                 rel="noopener nereferrer"
                                 target="_blank"
                               >
-                                <LinkSpan color={Color.purple}>
+                                <LinkSpan color={Color.blue}>
                                   pointauc.com
                                 </LinkSpan>
                               </Link>{' '}

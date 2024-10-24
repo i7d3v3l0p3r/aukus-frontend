@@ -14,7 +14,7 @@ export default function RulesContainer() {
       <Box width={'740px'}>
         <Box marginBottom={'30px'}>
           <Link to="#" onClick={() => setRulesPage('player')}>
-            <LinkSpan color={Color.purple} active={rulesPage === 'player'}>
+            <LinkSpan color={Color.blue} active={rulesPage === 'player'}>
               Для стримеров
             </LinkSpan>
           </Link>
