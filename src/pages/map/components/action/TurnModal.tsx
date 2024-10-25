@@ -302,6 +302,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             sx={{
               marginTop: '10px',
             }}
+            className={gameNameOptions.length > 0 ? 'has-options' : 'no-options'}
           />
         </Box>
         <Box marginTop={'20px'}>

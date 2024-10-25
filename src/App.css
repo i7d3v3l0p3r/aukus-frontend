@@ -194,7 +194,7 @@ div.MuiAutocomplete-popper.MuiPopper-root > div.MuiPaper-elevation > ul {
   background-color: #222222;
 }
 
-div.MuiAutocomplete-root.Mui-expanded > div > div.MuiAutocomplete-inputRoot.Mui-focused {
+div.MuiAutocomplete-root.Mui-expanded.has-options > div > div.MuiAutocomplete-inputRoot.Mui-focused {
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
