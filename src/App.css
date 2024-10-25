@@ -172,11 +172,31 @@ div.MuiAutocomplete-inputRoot > input {
 }
 
 div.MuiAutocomplete-root {
-  border: none !important;
+  border: none;
 }
 
 ul.MuiAutocomplete-listbox {
   font-weight: 500;
+}
+
+div.MuiAutocomplete-popper.MuiPopper-root {
+  padding: 0;
+  padding-bottom: 3px;
+  border: 2px solid #007aff;
+  border-radius: 10px;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-top: none;
+}
+
+div.MuiAutocomplete-popper.MuiPopper-root > div.MuiPaper-elevation > ul {
+  padding: 0;
+  background-color: #222222;
+}
+
+div.MuiAutocomplete-root.Mui-expanded > div > div.MuiAutocomplete-inputRoot.Mui-focused {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 
 /* Select dropdown */

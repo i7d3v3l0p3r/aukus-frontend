@@ -1,3 +1,4 @@
+import { times } from 'lodash'
 import {
   playerMovesMock,
   playersMock,
@@ -85,10 +86,7 @@ export async function fetchGameNames(
 ): Promise<GameNamesResponse[]> {
   if (MOCK_API) {
     console.log('fetching game names', name)
-    return Promise.resolve([
-      { gameName: 'mock game' },
-      { gameName: 'mock game 2' },
-    ])
+    return Promise.resolve(times(20, (index) => ({ gameName: `${name} ${index}` })))
   }
   return fetch(`/hltb/v1/query?title=${name}`).then((res) => res.json())
 }
