@@ -11,6 +11,8 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
+  Popper,
+  PopperProps,
   Select,
   SelectChangeEvent,
   styled,
@@ -29,6 +31,7 @@ import {
   Player,
 } from 'utils/types'
 import NumRating from './NumRating'
+import { isNumber } from 'lodash'
 
 type Props = {
   open: boolean
@@ -246,6 +249,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 '&& .Mui-selected': { backgroundColor: selectedItemColor },
                 fontSize: '16px',
               },
+              transitionDuration: 0,
             }}
             className="CustomSelect"
           >
@@ -275,6 +279,8 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           </span>
           <Autocomplete
             freeSolo
+            fullWidth
+            PopperComponent={CustomPopper}
             options={gameNameOptions}
             value={gameName}
             onChange={(_, newValue) => {
@@ -464,3 +470,21 @@ const MenuItemStyled = styled(MenuItem)(({ color }) => ({
     backgroundColor: `${color} !important`,
   },
 }))
+
+
+type CustomPopperProps = PopperProps & React.RefAttributes<HTMLDivElement>
+const CustomPopper = (props: CustomPopperProps) => {
+  let width = props.style?.width ?? 0
+  if (isNumber(width)) {
+    width += 4
+  }
+  return (
+    <Popper
+      {...props}
+      placement="bottom"
+      style={{
+        width
+      }}
+    />
+  )
+}
