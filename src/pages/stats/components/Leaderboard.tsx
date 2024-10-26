@@ -148,30 +148,26 @@ export default function Leaderboard() {
                   <span style={orderBy === 'name' ? selectedStyle: headerStyle}>Участник</span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('map_position')}>
-                  <span style={{
-                    ...(orderBy === 'map_position' ? selectedStyle : headerStyle),
-                    display: 'block',
-                    width: '80px'
-                  }}>
-                    Позиция
+                  <span style={{width: '80px', display: 'block'}}>
+                    <span style={
+                      orderBy === 'map_position' ? selectedStyle : headerStyle
+                    }>
+                      Позиция
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('score')}>
-                <span style={{
-                  ...(orderBy === 'score' ? selectedStyle : headerStyle),
-                  display: 'block',
-                  width: '60px',
-                }}>
-                    Очки
-                </span>
+                  <span style={{ display: 'block', width: '60px'}}>
+                    <span style={orderBy === 'score' ? selectedStyle : headerStyle}>
+                      Очки
+                    </span>
+                  </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_completed')}>
-                  <span style={{
-                      ...(orderBy === 'games_completed' ? selectedStyle : headerStyle),
-                      display: 'block',
-                      width: '130px',
-                  }}>
-                    Пройдено игр
+                  <span style={{ display: 'block', width: '130px'}}>
+                    <span style={orderBy === 'games_completed' ? selectedStyle : headerStyle}>
+                      Пройдено игр
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_dropped')}>
