@@ -56,9 +56,7 @@ export default function TimelapseProvider({
     return _moves.sort((a, b) => a.id - b.id)
   }, [movesByDay])
 
-  const lastMoveByDay = useMemo(() => {
-    return movesByDay?.last_move_id
-  }, [movesByDay])
+  const lastMoveByDay = movesByDay?.last_move_id
 
   const { data: playersData } = useQuery({
     queryKey: ['players_moves', selectedDate, moves],
