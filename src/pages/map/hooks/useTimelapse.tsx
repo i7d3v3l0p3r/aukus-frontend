@@ -56,17 +56,21 @@ export default function TimelapseProvider({
     return _moves.sort((a, b) => a.id - b.id)
   }, [movesByDay])
 
+  const lastMoveByDay = useMemo(() => {
+    return movesByDay?.last_move_id
+  }, [movesByDay])
+
   const { data: playersData } = useQuery({
     queryKey: ['players_moves', selectedDate, moves],
     queryFn: () => {
-      if (moves.length === 0) {
+      let queryMoveId = lastMoveByDay
+      if (moves.length > 0) {
+        queryMoveId = moves[selectedMoveId-1].id
+      }
+      if (!queryMoveId) {
         return null
       }
-      const selectedMove = moves[selectedMoveId - 1]
-      if (!selectedMove) {
-        return null
-      }
-      return fetchPlayers(selectedMove.id)
+      return fetchPlayers(queryMoveId)
     },
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',

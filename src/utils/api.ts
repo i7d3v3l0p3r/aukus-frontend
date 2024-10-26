@@ -117,6 +117,7 @@ export async function updateVodLink({
 
 type PlayerMovesResponse = {
   moves: Array<PlayerMove>
+  last_move_id?: number
 }
 
 export async function fetchPlayerMoves(
