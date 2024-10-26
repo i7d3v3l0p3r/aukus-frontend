@@ -119,7 +119,7 @@ div.Mui-focused {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #007aff; /* color of the scroll thumb */
+  background-color: #222222; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
 }
 
@@ -131,7 +131,7 @@ div.Mui-focused {
 /* Firefox-only styles */
 @-moz-document url-prefix() {
   * {
-    scrollbar-color: #007aff #0c0c0c;
+    scrollbar-color: #222222 #0c0c0c;
   }
 }
 
