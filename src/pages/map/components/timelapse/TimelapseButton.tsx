@@ -370,7 +370,7 @@ function turnDescription(player: Player, move: PlayerMove) {
     completed: 'прошел',
     drop: 'дропнул',
     movie: 'посмотрел',
-    reroll: 'рерольную',
+    reroll: 'рерольнул',
     sheikh: 'словил шейха на',
   }
 
