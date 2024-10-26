@@ -4,6 +4,8 @@ import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
 import { Color, getPlayerColor, Page } from 'utils/types'
 import SnowflakeIcon from 'assets/snowflake.svg?react'
+import { TWallpaper } from '@twallpaper/react'
+import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
 
 type Props = {
@@ -26,6 +28,27 @@ export default function MainMenu({
   return (
     <Box>
       <ScrollRestoration />
+      <TWallpaper options={{
+        "fps": 1,
+        "tails": 5,
+        "animate": false,
+        "scrollAnimate": false,
+        "colors": [
+          "#1c1c1c",
+          "#1c1c1c",
+          "#1c1c1c",
+          "#1c1c1c"
+        ],
+        "pattern": {
+          "image": "https://twallpaper.js.org/patterns/games.svg",
+          "background": "#0c0c0c",
+          "blur": 0,
+          "size": "440px",
+          "opacity": 1,
+          "mask": true
+        }
+      }}
+     />
       <Box
         display="block"
         textAlign={'center'}
@@ -119,7 +142,7 @@ export default function MainMenu({
                   color={currentPage === 'about' ? 'primary' : 'info'}
                   sx={{ width: '150px', height: '40px' }}
                 >
-                  О Сайте
+                  Создатели
                 </Button>
               </Link>
             </>
