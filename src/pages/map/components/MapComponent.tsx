@@ -157,7 +157,7 @@ export default function MapComponent() {
         columns={11}
         width={'auto'}
         style={{
-          backgroundImage: "url('static/map_background_new.png')",
+          backgroundImage: "url('static/background1.webp')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
           backgroundSize: 'cover',
