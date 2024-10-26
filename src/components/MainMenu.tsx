@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material'
 import { useUser } from 'context/UserProvider'
 import { Link, ScrollRestoration } from 'react-router-dom'
 import { Color, getPlayerColor, Page } from 'utils/types'
-import { ReactComponent as SnowflakeIcon } from 'assets/snowflake.svg'
+import SnowflakeIcon from 'assets/snowflake.svg?react'
 import LinkSpan from './LinkSpan'
 
 type Props = {
@@ -31,6 +31,7 @@ export default function MainMenu({
         textAlign={'center'}
         marginTop={'15px'}
         marginBottom={'13px'}
+        textTransform={'uppercase'}
       >
         <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
           <LinkSpan
@@ -66,7 +67,7 @@ export default function MainMenu({
           {replaceMenuButtons || (
             <>
               {leftSlot && (
-                <Box marginRight={'55px'} position="absolute" right="100%">
+                <Box marginRight={'30px'} position="absolute" right="100%">
                   {leftSlot}
                 </Box>
               )}
@@ -76,6 +77,18 @@ export default function MainMenu({
                   sx={{ width: '150px', height: '40px' }}
                 >
                   Карта
+                </Button>
+              </Link>
+
+              <Link
+                to="/stats"
+                style={{ marginRight: 10, textDecoration: 'none' }}
+              >
+                <Button
+                  color={currentPage === 'stats' ? 'primary' : 'info'}
+                  sx={{ width: '150px', height: '40px' }}
+                >
+                  Лидеры
                 </Button>
               </Link>
 
@@ -89,18 +102,6 @@ export default function MainMenu({
                   sx={{ width: '150px', height: '40px' }}
                 >
                   Участники
-                </Button>
-              </Link>
-
-              <Link
-                to="/stats"
-                style={{ marginRight: 10, textDecoration: 'none' }}
-              >
-                <Button
-                  color={currentPage === 'stats' ? 'primary' : 'info'}
-                  sx={{ width: '150px', height: '40px' }}
-                >
-                  Статистика
                 </Button>
               </Link>
 
@@ -125,7 +126,7 @@ export default function MainMenu({
           )}
 
           {rightSlot && (
-            <Box marginLeft={'55px'} position="absolute" left="100%">
+            <Box marginLeft={'30px'} position="absolute" left="100%">
               {rightSlot}
             </Box>
           )}

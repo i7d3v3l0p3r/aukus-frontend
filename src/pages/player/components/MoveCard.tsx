@@ -1,16 +1,20 @@
-import { Box, Link } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
 import EditVodModal from './EditVodModal'
+import { formatDate, formatNumber } from './utils'
+import TextRender from './TextRender'
 
 type Props = {
   id: number
   move: PlayerMove
   player?: Player
+  displayType?: 'map' | 'player'
+  onSave?: () => void
 }
 
 const moveTypeColor = {
@@ -29,7 +33,13 @@ const moveTypeText = {
   movie: 'Фильм',
 }
 
-export default function MoveCard({ id, move, player }: Props) {
+export default function MoveCard({
+  id,
+  move,
+  player,
+  displayType,
+  onSave,
+}: Props) {
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
   const currentUser = useUser()
@@ -50,21 +60,26 @@ export default function MoveCard({ id, move, player }: Props) {
     setShowVodsModal(false)
   }
 
-  const handleVodSave = (text: string) => {
-    updateVod.mutate({ move_id: move.id, link: text })
+  const handleVodSave = (text: string, title: string) => {
+    updateVod.mutate({ move_id: move.id, link: text, title })
     queryClient.invalidateQueries({ queryKey: ['playerMoves', move.player_id] })
     queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
+    onSave?.()
     setShowVodsModal(false)
   }
 
   const greyColor = '#CECECE'
-  const borderColor = player
-    ? getPlayerColor(player.url_handle)
-    : Color.greyLight
+  let playerColor = greyColor
+  if (player && displayType === 'map') {
+    playerColor = getPlayerColor(player.url_handle)
+  }
+  if (displayType === 'player') {
+    playerColor = moveTypeColor[move.type]
+  }
 
   let moveTitle = `Ход — ${id}`
-  if (player) {
-    moveTitle = `${player.name}, ход — ${id}`
+  if (player && displayType === 'map') {
+    moveTitle = player.name
   }
 
   return (
@@ -72,20 +87,36 @@ export default function MoveCard({ id, move, player }: Props) {
       <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
         <Box
           borderRadius={'15px'}
-          border={`2px solid ${borderColor}`}
           width={'800px'}
           textAlign={'left'}
           padding={'15px'}
           lineHeight={1}
+          style={{
+            backgroundColor: Color.greyDark
+          }}
         >
           <Box
             display={'flex'}
             justifyContent={'space-between'}
             fontSize={'14px'}
-            fontWeight={400}
+            fontWeight={500}
             marginBottom={'15px'}
           >
-            <Box color={greyColor}>{moveTitle}</Box>
+            <Box display={"flex"}>
+              {displayType === 'map' && (
+                <Divider orientation="vertical" flexItem style={{
+                  borderLeftWidth: '2px',
+                  borderRightWidth: '0px',
+                  borderColor: playerColor,
+                  borderRadius: '5px',
+                  height: '13px',
+                  marginRight: '5px',
+                }} />
+              )}
+              <Box color={greyColor}>
+                {moveTitle}
+              </Box>
+            </Box>
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
           <Box
@@ -106,48 +137,48 @@ export default function MoveCard({ id, move, player }: Props) {
             {move.item_title}
           </Box>
           <Box
-            fontSize={'14px'}
+            fontSize={'13px'}
             fontWeight={400}
             marginBottom={'20px'}
             color={greyColor}
           >
-            Ролл кубика — {move.dice_roll}, позиция на карте — {move.cell_to}
+            Ролл кубика:&nbsp;&nbsp;&nbsp;
+            {formatNumber(move.dice_roll)}, позиция на карте:&nbsp;&nbsp;&nbsp;
+            {move.cell_to}
           </Box>
-          <Box
-            fontSize={'16px'}
-            fontWeight={400}
-            marginBottom={'25px'}
-            lineHeight={1.2}
-          >
+          <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
             {move.item_rating}/10 — {move.item_review}
           </Box>
-          <Box
-            display={'flex'}
-            justifyContent={'space-between'}
-            fontWeight={400}
-          >
-            <LinkSpan
-              color={Color.blue}
-              defaultColor={greyColor}
-              onClick={() => setShowVods(!showVods)}
+          {displayType === 'player' && (
+            <Box
+              marginTop={'25px'}
+              display={'flex'}
+              justifyContent={'space-between'}
+              fontWeight={400}
             >
-              Показать записи стримов
-            </LinkSpan>
-            {canEdit && (
               <LinkSpan
-                color={Color.blue}
+                color={playerColor}
                 defaultColor={greyColor}
-                style={{ marginLeft: '15px' }}
-                onClick={handleEditVods}
+                onClick={() => setShowVods(!showVods)}
               >
-                Редактировать записи стримов
+                Показать записи стримов
               </LinkSpan>
-            )}
-          </Box>
+              {canEdit && (
+                <LinkSpan
+                  color={playerColor}
+                  defaultColor={greyColor}
+                  style={{ marginLeft: '15px' }}
+                  onClick={handleEditVods}
+                >
+                  Редактировать
+                </LinkSpan>
+              )}
+            </Box>
+          )}
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
               {move.vod_link
-                ? processText(move.vod_link)
+                ? <TextRender text={move.vod_link} borderColor={playerColor} />
                 : 'Записи стримов еще не добавлены'}
             </Box>
           )}
@@ -162,56 +193,4 @@ export default function MoveCard({ id, move, player }: Props) {
       />
     </>
   )
-}
-
-export function formatDate(dateString: string) {
-  // Create a new Date object
-  const date = new Date(dateString)
-
-  // Extract the day, month, and year
-  const day = date.getDate()
-  const month = date.toLocaleString('ru-RU', { month: 'long' })
-  const monthFixed = month.slice(0, -1) + 'я'
-
-  const hour = date.getHours()
-  const paddedHour = hour.toString().padStart(2, '0')
-  const minute = date.getMinutes()
-  const paddedMinute = minute.toString().padStart(2, '0')
-  return `${day} ${monthFixed} ${paddedHour}:${paddedMinute}`
-}
-
-// Function to make URLs clickable and preserve line breaks
-const processText = (text: string) => {
-  // Regex to detect URLs
-  const urlRegex = /(https?:\/\/[^\s]+)/g
-
-  // Split by new lines and process each line
-  return text.split('\n').map((line: string, index: number) => {
-    // Split by URLs within the line
-    const parts = line.split(urlRegex)
-
-    // Render each part
-    return (
-      <Fragment key={index}>
-        {parts.map((part, i) => {
-          // If part matches the URL regex, render it as a link
-          if (urlRegex.test(part)) {
-            return (
-              <Link
-                href={part}
-                key={i}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkSpan color={Color.blue}>{part}</LinkSpan>
-              </Link>
-            )
-          }
-          // Otherwise, render it as text
-          return <span key={i}>{part}</span>
-        })}
-        <br />
-      </Fragment>
-    )
-  })
 }

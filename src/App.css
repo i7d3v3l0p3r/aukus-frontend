@@ -63,28 +63,97 @@ div.MuiAccordionSummary-root {
 }
 
 th.MuiTableCell-head {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   line-height: 1;
   font-size: 16px;
   font-weight: 500;
 }
 
 td.MuiTableCell-root {
-  padding-top: 0;
-  padding-bottom: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   line-height: 1;
   font-size: 16px;
   font-weight: 500;
   border: 0;
 }
 
-tbody > tr.MuiTableRow-root:nth-of-type(1) > td {
-  padding-top: 15px;
+thead > tr.MuiTableRow-root > th {
+  padding-top: 0;
+  border-bottom: 0;
 }
 
-tr.MuiTableRow-root {
+tbody > tr.MuiTableRow-root {
   vertical-align: top;
+  border: 0;
 }
+
+tbody > tr.MuiTableRow-root > td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+tbody > tr.MuiTableRow-root > td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+span.MuiRating-root {
+  align-self: center;
+}
+
+div.Mui-focused {
+  border: 2px solid #007aff;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 6px; /* for vertical scrollbar */
+  height: 6px; /* for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+  border-radius: 20px; /* roundness of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #007aff; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
+}
+
+
+/* Firefox-only styles */
+@-moz-document url-prefix() {
+  * {
+    scrollbar-color: #007aff #0c0c0c;
+  }
+}
+
+* {
+  scrollbar-width: auto; /* Makes the scrollbar thinner */
+  /* scrollbar-color: #007aff #0c0c0c;*/
+}
+
+span.MuiSlider-mark {
+  display: none;
+}
+
+span.MuiSlider-thumb:active {
+  box-shadow: none;
+}
+
+div.MuiInputBase-root > input {
+  padding: 0px;
+  font-weight: 500;
+}
+
+/* Autocomplete dropdown */
 
 div.MuiAutocomplete-inputRoot {
   padding: 0px !important;
@@ -102,40 +171,74 @@ div.MuiAutocomplete-inputRoot > input {
   font-weight: 500 !important;
 }
 
-span.MuiRating-root {
-  align-self: center;
-}
-
 div.MuiAutocomplete-root {
-  border: none !important;
+  border: none;
 }
 
 ul.MuiAutocomplete-listbox {
   font-weight: 500;
 }
 
-div.Mui-focused {
+div.MuiAutocomplete-popper.MuiPopper-root {
+  padding: 0;
+  padding-bottom: 3px;
   border: 2px solid #007aff;
+  border-radius: 10px;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-top: none;
 }
 
-::-webkit-scrollbar {
-  width: 12px; /* for vertical scrollbar */
-  height: 12px; /* for horizontal scrollbar */
+div.MuiAutocomplete-popper.MuiPopper-root > div.MuiPaper-elevation > ul {
+  padding: 0;
+  background-color: #222222;
 }
 
-::-webkit-scrollbar-track {
-  background: #0c0c0c; /* color of the tracking area */
+div.MuiAutocomplete-root.Mui-expanded.has-options > div > div.MuiAutocomplete-inputRoot.Mui-focused {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #007aff; /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 3px solid #0c0c0c; /* creates padding around scroll thumb */
+/* Select dropdown */
+
+div.CustomSelect {
+  border: none;
 }
 
-* {
-  scrollbar-width: auto; /* Makes the scrollbar thinner */
-  scrollbar-color: #007aff #0c0c0c; /* Scroll thumb color and track color */
+div.CustomSelect > div.MuiSelect-select {
+  border: 2px solid #414141;
+  border-radius: 10px;
+}
+
+div.Mui-focused.CustomSelect > div.MuiSelect-select {
+  border: 2px solid #007aff;
+  border-radius: 10px;
+}
+
+div.MuiInputBase-root > div.MuiSelect-select[aria-expanded='true'] {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
+  border: 2px solid #007aff;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-top: none;
+}
+
+div.MuiPaper-root.MuiPopover-paper.MuiMenu-paper > ul {
+  padding: 0px;
+  background-color: #222222;
+}
+
+/* Search bar */
+
+div.MuiOutlinedInput-root.customSearch {
+  border: 2px solid #222222;
+  border-radius: 10px;
 }
 
 span.MuiSlider-mark {

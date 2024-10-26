@@ -5,8 +5,6 @@ import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
 
-type Props = {}
-
 const StartDate = new Date('2024-10-01')
 StartDate.setHours(0, 0, 0, 0)
 
@@ -41,7 +39,7 @@ export default function TimelapseButton() {
     month: 'long',
   })
 
-  const datePart = currentDate.toISOString().split('T')[0]
+  const datePart = extractDate(currentDate)
 
   useEffect(() => {
     timelapseState.setSelectedDate(datePart)
@@ -159,21 +157,24 @@ export default function TimelapseButton() {
 
   return (
     <Box width={'100%'}>
-      <Box
-        style={{
-          backgroundColor: Color.blue,
-          color: 'white',
-          height: '38px',
-          borderRadius: '10px',
-          fontSize: '15px',
-          fontWeight: 600,
-          marginBottom: '10px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {turnText}
+      <Box width={'100%'} display="flex" justifyContent={'center'}>
+        <Box
+          style={{
+            backgroundColor: Color.blue,
+            color: 'white',
+            height: '38px',
+            borderRadius: '10px',
+            fontSize: '15px',
+            fontWeight: 600,
+            marginBottom: '10px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '590px',
+          }}
+        >
+          {turnText}
+        </Box>
       </Box>
       <Box
         style={{
@@ -257,11 +258,20 @@ function displayText(value: number) {
   return `${value}`
 }
 
-function CustomMark(props: any) {
+type MarkProps = {
+  'data-index': number
+  ownerState: {
+    marks: Mark[]
+  }
+  label: string
+  style: React.CSSProperties
+}
+
+function CustomMark(props: MarkProps) {
   const index = props['data-index'] as number
   const mark = props.ownerState.marks[index] as Mark
 
-  const baseStyles = {
+  const baseStyles: React.CSSProperties = {
     backgroundColor: 'black',
     height: '24px',
     // width: '50px',
@@ -302,7 +312,11 @@ function CustomMark(props: any) {
   )
 }
 
-function CustomRail(props: any) {
+type RailProps = {
+  style: React.CSSProperties
+}
+
+function CustomRail(props: RailProps) {
   return (
     <div
       style={{
@@ -318,7 +332,12 @@ function CustomRail(props: any) {
   )
 }
 
-function CustomThumb(props: any) {
+type ThumbProps = {
+  className: string
+  style: React.CSSProperties
+}
+
+function CustomThumb(props: ThumbProps) {
   // return <SliderThumb {...props} />
   // console.log(props)
   const className = props.className as string
@@ -358,4 +377,12 @@ function turnDescription(player: Player, move: PlayerMove) {
   const action = actions[move.type] || move.type
 
   return `${player.name} ${action} ${move.item_title}, ходит с ${move.cell_from} на ${move.cell_to}`
+}
+
+function extractDate(date: Date) {
+  // Extract year, month, and day and format them properly
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-based, so add 1
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }

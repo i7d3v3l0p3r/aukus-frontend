@@ -15,7 +15,7 @@ type Props = {
   open: boolean
   title: string
   onClose: () => void
-  onSave: (text: string) => void
+  onSave: (text: string, title: string) => void
   vodText: string | null
 }
 
@@ -27,6 +27,7 @@ export default function EditVodModal({
   vodText,
 }: Props) {
   const [vodValue, setVodValue] = useState(vodText)
+  const [itemTitle, setItemTitle] = useState(title)
 
   const handleVodChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setVodValue(e.target.value)
@@ -67,17 +68,40 @@ export default function EditVodModal({
         style={{
           paddingLeft: '30px',
           paddingRight: '30px',
-          paddingBottom: '30px',
+          paddingBottom: '50px',
         }}
       >
+        <Box marginBottom="10px">Обновить название игры</Box>
+        <TextField
+          fullWidth
+          rows={1}
+          value={itemTitle}
+          onChange={(e) => setItemTitle(e.target.value)}
+          InputProps={{
+            style: {
+              paddingTop: '10px',
+              paddingLeft: '15px',
+              paddingRight: '15px',
+              paddingBottom: '10px',
+              lineHeight: '1.2',
+              fontSize: '16px',
+              fontWeight: 500,
+            },
+          }}
+        />
+        <Box marginTop={'20px'} marginBottom="10px">
+          Обновить ссылки на воды
+        </Box>
         <TextField
           InputProps={{
             style: {
               paddingTop: '10px',
               paddingLeft: '15px',
+              paddingRight: '15px',
               paddingBottom: '10px',
               lineHeight: '1.2',
               fontSize: '16px',
+              fontWeight: 500,
             },
           }}
           multiline
@@ -99,7 +123,7 @@ export default function EditVodModal({
           variant="contained"
           color="primary"
           fullWidth
-          onClick={() => onSave(vodValue || '')}
+          onClick={() => onSave(vodValue || '', itemTitle || '')}
         >
           Сохранить
         </Button>

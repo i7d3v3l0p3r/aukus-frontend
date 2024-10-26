@@ -1,7 +1,7 @@
+import { times } from 'lodash'
 import {
   playerMovesMock,
   playersMock,
-  playersMockById,
   playerStatsMock,
 } from './mocks'
 import {
@@ -86,10 +86,7 @@ export async function fetchGameNames(
 ): Promise<GameNamesResponse[]> {
   if (MOCK_API) {
     console.log('fetching game names', name)
-    return Promise.resolve([
-      { gameName: 'mock game' },
-      { gameName: 'mock game 2' },
-    ])
+    return Promise.resolve(times(20, (index) => ({ gameName: `${name} ${index}` })))
   }
   return fetch(`/hltb/v1/query?title=${name}`).then((res) => res.json())
 }
@@ -97,11 +94,13 @@ export async function fetchGameNames(
 type UpdateLinkParams = {
   move_id: number
   link: string
+  title: string
 }
 
 export async function updateVodLink({
   move_id,
   link,
+  title,
 }: UpdateLinkParams): Promise<void> {
   if (MOCK_API) {
     console.log('setting vod link', link)
@@ -112,7 +111,7 @@ export async function updateVodLink({
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ move_id, vod_link: link }),
+    body: JSON.stringify({ move_id, vod_link: link, title }),
   }).then((res) => res.json())
 }
 

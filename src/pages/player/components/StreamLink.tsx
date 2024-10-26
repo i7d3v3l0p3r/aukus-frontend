@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { getPlayerColorName, Player } from 'utils/types'
+import { Color, getPlayerColorName, Player } from 'utils/types'
 import OpenIcon from 'assets/open_icon.svg'
 
 type Props = {
@@ -59,9 +59,10 @@ function OfflineButton({ player }: Props) {
       }}
       style={{
         fontSize: '14px',
+        borderWidth: '2px',
       }}
-      color={getPlayerColorName(player)}
-      variant="outlined"
+      color={'customGreyDark'}
+      variant="contained"
     >
       Стример оффлайн
     </Button>

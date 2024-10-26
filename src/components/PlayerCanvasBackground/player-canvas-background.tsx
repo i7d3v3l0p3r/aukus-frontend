@@ -14,6 +14,7 @@ import MainMenu from 'components/MainMenu'
 import PointAucModal from 'pages/player/components/PointAucModal'
 import { useMutation } from '@tanstack/react-query'
 import { resetPointaucToken } from 'utils/api'
+import  AddSquareIcon from 'assets/add-square.svg?react'
 
 function ImageSvg(props: SVGProps<SVGSVGElement>) {
   return (
@@ -47,7 +48,7 @@ function EditModeButton() {
   return (
     <Button
       sx={{
-        width: '212px',
+        width: '215px',
         height: '40px',
         paddingLeft: '15px',
         paddingRight: '15px',
@@ -57,9 +58,9 @@ function EditModeButton() {
       color="customBlue"
       onClick={() => setIsEditMode(true)}
     >
-      <ImageSvg />
+      <ImageSvg width="19px" height="19px" />
       <Box marginLeft={'8px'} />
-      Редактировать
+      Изменить страницу
     </Button>
   )
 }
@@ -68,7 +69,7 @@ function PointAucButton({ onClick }: { onClick: () => void }) {
   return (
     <Button
       sx={{
-        width: '212px',
+        width: '220px',
         height: '40px',
         paddingLeft: '15px',
         paddingRight: '15px',
@@ -76,8 +77,10 @@ function PointAucButton({ onClick }: { onClick: () => void }) {
         paddingBottom: '10px',
       }}
       color="customBlue"
-      onClick={() => onClick()}
+      onClick={onClick}
     >
+      <AddSquareIcon />
+      <Box marginLeft={'8px'} />
       Привязать PointAuc
     </Button>
   )
@@ -100,7 +103,7 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
   const handleConnectPointAuc = async () => {
     setShowPointAucModal(false)
     const { token } = await resetToken.mutateAsync()
-    const url = `https://pointauc.com/?aukus_token=${token}`
+    const url = `https://pointauc.com/aukus/redirect?aukus_token=${token}`
     window.open(url, '_blank')
   }
 
@@ -110,9 +113,9 @@ function CanvasContainer({ canEdit, isOwner, ...props }: CanvasContainerProps) {
 
   useEffect(() => {
     if (isEditMode) {
-      setImageList(
+      setImageList((currentList) =>
         images.map((img) => {
-          const localImg = imageList.find((i) => i.id === img.id)
+          const localImg = currentList.find((i) => i.id === img.id)
           if (localImg) {
             return localImg
           }

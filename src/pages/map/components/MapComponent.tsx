@@ -143,9 +143,9 @@ export default function MapComponent() {
     <Box
       style={{
         overflowX: 'auto',
-        width: '1500px',
-        minWidth: '1500px',
-        maxWidth: '1500px',
+        width: '1214px',
+        minWidth: '1214px',
+        maxWidth: '1214px',
       }}
       onClick={handleClick}
     >
@@ -157,47 +157,27 @@ export default function MapComponent() {
         columns={11}
         width={'auto'}
         style={{
-          backgroundImage: "url('static/map_background3.png')",
+          backgroundImage: "url('static/map_background_new.png')",
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
+          backgroundSize: 'cover',
         }}
       >
-        <Grid container columns={11} width={'auto'}>
+        <Grid container columns={10} width={'auto'}>
           <Grid item>
-            <Box width={(cellSize + 1) * 11} height={cellSize * 2} />
+            <Box width={(cellSize + 1) * 10} height={cellSize} />
+          </Grid>
+        </Grid>
+        <Grid container columns={10} width={'auto'}>
+          <Grid item>
+            <CellItem cell={lastCell} />
+          </Grid>
+          <Grid item>
+            <Box width={(cellSize + 1) * 9} height={cellSize} />
           </Grid>
         </Grid>
         {map.cellRows.map((row, index) => (
-          <Grid container key={index} columns={11} width={'auto'}>
-            {index === 0 && (
-              <Grid
-                item
-                sx={{
-                  borderRight: '1px solid transparent',
-                  borderTop: '1px solid transparent',
-                  borderLeft: '1px solid transparent',
-                }}
-              >
-                <CellItem cell={lastCell} />
-              </Grid>
-            )}
-            {index === 9 && (
-              <Grid item sx={{ border: '1px solid transparent' }}>
-                <CellItem cell={startCell} />
-              </Grid>
-            )}
-            {index > 0 && index < 9 && (
-              <Grid
-                item
-                sx={{
-                  borderRight: '1px solid transparent',
-                  borderLeft: '1px solid transparent',
-                  borderTop: index === 1 ? '1px solid transparent' : 0,
-                }}
-              >
-                <div style={{ height: cellSize, width: cellSize }} />
-              </Grid>
-            )}
+          <Grid container key={index} columns={10} width={'auto'}>
             {row.map((cell) => (
               <Grid
                 item
@@ -217,10 +197,14 @@ export default function MapComponent() {
             ))}
           </Grid>
         ))}
-        <Grid container columns={11} width={'auto'}>
+        <Grid container columns={10} width={'auto'}>
+          <Grid item>
+            <CellItem cell={startCell} />
+          </Grid>
+
           <Grid item>
             <Box
-              width={(cellSize + 1) * 11}
+              width={(cellSize + 1) * 9}
               height={cellSize}
               id={'map-cell-start'}
             />
@@ -249,22 +233,33 @@ export default function MapComponent() {
           />
         ))}
       <StaticPanel>
-        {currentPlayer && !timelapseEnabled && (
-          <Box marginBottom={'20px'} display="flex" justifyContent="center">
+        <Box
+          marginBottom={'20px'}
+          display="flex"
+          flexDirection={'column'}
+          justifyContent="center"
+          flexWrap="wrap"
+          alignContent="center"
+        >
+          {currentPlayer && !timelapseEnabled && (
             <ActionButton
               handleNextTurn={handleNextTurn}
               player={currentPlayer}
               onMakingTurn={handleMakingTurn}
               onDiceRoll={handleDiceRoll}
             />
-          </Box>
-        )}
-        <Box display="flex" justifyContent="center">
+          )}
+
+          <Box marginTop={'20px'} />
           <TimelapseButton />
+
+          {currentPlayer && !timelapseEnabled && (
+            <>
+              <Box marginTop={'20px'} />
+              <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+            </>
+          )}
         </Box>
-        {currentPlayer && !timelapseEnabled && (
-          <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
-        )}
       </StaticPanel>
       <TodaysMoves />
     </Box>

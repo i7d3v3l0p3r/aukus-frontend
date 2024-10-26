@@ -50,7 +50,7 @@ export default function ActionButton({
     }
   }
 
-  const handleTurnFinish = (roll: number) => {
+  const handleTurnFinish = () => {
     if (!turnParams) {
       return
     }

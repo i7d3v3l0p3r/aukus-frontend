@@ -2,30 +2,39 @@ import { Box, Button, Typography } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { Link } from 'react-router-dom'
 import { Color, getPlayerColorName, Player } from 'utils/types'
+import { PlayerPhotoMap } from './utils'
 
 type Props = {
   player: Player
 }
 
 export default function PlayerSection({ player }: Props) {
+  const photo = PlayerPhotoMap[player.url_handle]
+
   return (
     <Box display="flex" justifyContent="center">
-      <Box textAlign={'left'}>
+      <Box textAlign={'left'} width={'550px'}>
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
-          {player.first_name || ''} {player.name}
+          {player.first_name || ''} «{player.name}»
         </Typography>
-        <Box
-          height={'300px'}
-          width={'550px'}
-          marginTop={'30px'}
-          sx={{ backgroundColor: 'grey' }}
-        />
+        <Box height={'340px'} width={'550px'} marginTop={'30px'}>
+          {photo && (
+            <img
+              src={photo}
+              height="340px"
+              width="550px"
+              alt="player pic"
+              style={{ borderRadius: '15px' }}
+            />
+          )}
+        </Box>
         <Box marginTop={'20px'} marginLeft={'20px'}>
           {player.twitch_stream_link && (
             <Link
               to={player.twitch_stream_link}
               target="_blank"
               rel="noopener nereferrer"
+              style={{ marginRight: '30px' }}
             >
               <LinkSpan color={Color.purple} style={{ fontSize: '20px' }}>
                 Twitch
@@ -49,7 +58,7 @@ export default function PlayerSection({ player }: Props) {
               to={player.telegram_link}
               target="_blank"
               rel="noopener nereferrer"
-              style={{ marginLeft: '30px' }}
+              style={{ marginRight: '30px' }}
             >
               <LinkSpan color={Color.blueTg} style={{ fontSize: '20px' }}>
                 Телеграм

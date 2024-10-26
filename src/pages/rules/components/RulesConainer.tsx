@@ -14,7 +14,7 @@ export default function RulesContainer() {
       <Box width={'740px'}>
         <Box marginBottom={'30px'}>
           <Link to="#" onClick={() => setRulesPage('player')}>
-            <LinkSpan color={Color.purple} active={rulesPage === 'player'}>
+            <LinkSpan color={Color.blue} active={rulesPage === 'player'}>
               Для стримеров
             </LinkSpan>
           </Link>
@@ -26,7 +26,9 @@ export default function RulesContainer() {
           </Link>
         </Box>
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
-          Правила проведения описывают все аспекты Аукуса
+          {rulesPage === 'player'
+            ? 'Общие правила проведения для участников'
+            : 'Правила заказа игр'}
         </Typography>
 
         <Box marginTop={'50px'} />

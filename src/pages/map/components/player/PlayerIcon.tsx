@@ -29,7 +29,6 @@ import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
-import { CircleSharp } from '@mui/icons-material'
 
 const playerIcons: { [key: string]: string } = {
   lasqa: PlayerBlue,
@@ -114,8 +113,10 @@ export default function PlayerIcon({
 
     const animationsList: Array<{ x: number; y: number }> = []
     if (player.map_position === 0) {
+      // move to beginning of start area
       animationsList.push({ x: -relativeX, y: -relativeY })
-      animationsList.push({ x: -relativeX, y: -moveOffset })
+      // move to start cell
+      animationsList.push({ x: -relativeX - moveOffset, y: -relativeY })
     }
 
     for (let i = 0; i < Math.abs(moves); i++) {
@@ -154,7 +155,7 @@ export default function PlayerIcon({
       )
       if (player.map_position === 0) {
         const adjustedForStart = {
-          x: ladderAnimation.x - relativeX,
+          x: ladderAnimation.x - relativeX - moveOffset,
           y: ladderAnimation.y - moveOffset,
         }
         animationsList.push(adjustedForStart)
@@ -171,7 +172,7 @@ export default function PlayerIcon({
 
     api.start({
       from: { x: 0, y: 0 },
-      to: async (next, cancel) => {
+      to: async (next) => {
         for (let i = 0; i < animationsList.length; i++) {
           await next(animationsList[i])
         }
@@ -219,7 +220,6 @@ export default function PlayerIcon({
       }, 50)
       return () => clearInterval(interval)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [player.map_position, isMoving])
 
   // console.log({ player, cell });
@@ -236,7 +236,7 @@ export default function PlayerIcon({
   const isStillAnimated = iconRef.current?.src.endsWith('gif')
 
   let finalPositionTop = positionTop
-  let finalPositionLeft = positionLeft
+  const finalPositionLeft = positionLeft
 
   if (isMoving || isStillAnimated) {
     // adjust height for animation
@@ -292,28 +292,22 @@ export default function PlayerIcon({
             <span
               style={{
                 fontSize: '14px',
+                fontWeight: 500,
+                height: '23px',
                 color: 'white',
                 lineHeight: 1,
-                backgroundColor: playerColor,
+                backgroundColor: player.is_online
+                  ? playerColor
+                  : Color.greyLight,
                 paddingLeft: '5px',
                 paddingRight: '5px',
-                borderRadius: '5px',
+                borderRadius: '3px',
                 display: 'flex',
                 alignItems: 'center',
                 paddingTop: '3px',
                 paddingBottom: '3px',
               }}
             >
-              {player.is_online && (
-                <CircleSharp
-                  style={{
-                    color: onlineColor,
-                    width: '15px',
-                    height: '15px',
-                    marginRight: '5px',
-                  }}
-                />
-              )}
               {player.name}
             </span>
           </p>
@@ -333,8 +327,11 @@ function calculateAnimation(mapPosition: number, cellTo: number) {
     originRow = 0
   }
 
-  const originColumn =
+  let originColumn =
     originRow % 2 === 0 ? (mapPosition - 1) % 10 : 10 - (mapPosition % 10 || 10)
+  if (originColumn < 0) {
+    originColumn = 0
+  }
 
   const moveOffset = cellSize + 1
 
@@ -356,10 +353,10 @@ function getRelativePosition(player: Player, players: Player[]) {
     return { x: playerIndex * 80, y: 0 }
   }
   if (sortedPlayers.length === 2) {
-    return { x: playerIndex * 50, y: -playerIndex * 20 }
+    return { x: playerIndex * 50 - 10, y: -(playerIndex * 25 - 10) }
   }
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }
   }
-  return { x: 20, y: playerIndex * 20 - 10 }
+  return { x: 20, y: playerIndex * 25 - 10 }
 }

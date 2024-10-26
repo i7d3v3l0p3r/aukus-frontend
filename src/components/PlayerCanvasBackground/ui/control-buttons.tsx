@@ -13,7 +13,7 @@ export function ControlButtons({
   imageList: CanvasImage[]
   setImageList: React.Dispatch<React.SetStateAction<CanvasImage[]>>
 }) {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar()
 
   const {
     selectedImage,

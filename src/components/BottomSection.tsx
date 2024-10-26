@@ -1,28 +1,37 @@
-import { Box, Divider, Grid, Link, Typography } from '@mui/material'
+import { Box, Divider, Link } from '@mui/material'
 import { Color } from 'utils/types'
 import LinkSpan from './LinkSpan'
 
 export default function BottomSection() {
   return (
-    <Box>
-      <Box display="flex" justifyContent="center" marginTop={30}>
-        <Box width="85%">
-          <Divider
-            variant="fullWidth"
-            sx={{
-              backgroundColor: 'white',
-              opacity: 1.0,
-              textAlign: 'center',
-            }}
-          />
+    <Box display="flex" justifyContent="center">
+      <Box width="1200px">
+        <Box display="flex" justifyContent="center" marginTop={30}>
+          <Box width="100%">
+            <Divider
+              variant="fullWidth"
+              sx={{
+                borderWidth: '1px',
+                backgroundColor: "white",
+                opacity: 1.0,
+                textAlign: 'center',
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
-      <Box marginTop={'30px'} marginBottom={5}>
-        <Grid container columns={12} sx={{ width: '100%' }}>
-          <Grid item xs={2}></Grid>
-          <Grid item xs={3} textAlign="left">
-            <Typography variant="h6">Контакты</Typography>
-            <Box marginTop={'15px'}>
+        <Box
+          marginTop={'30px'}
+          marginBottom={'50px'}
+          paddingLeft={'60px'}
+          paddingRight={'60px'}
+          display={'flex'}
+          justifyContent="space-between"
+        >
+          <Box textAlign="left">
+            <Box fontSize={'16px'} fontWeight={700}>
+              Контакты
+            </Box>
+            <Box marginTop={'15px'} fontSize={'14px'} fontWeight={500}>
               Дискорд:{' '}
               <Link
                 href="https://discord.gg/SHsyYTjNb5"
@@ -32,10 +41,12 @@ export default function BottomSection() {
                 <LinkSpan color={Color.blue}>Аукус Разработка</LinkSpan>
               </Link>
             </Box>
-          </Grid>
-          <Grid item xs={3.3} textAlign="left">
-            <Typography variant="h6">GitHub</Typography>
-            <Box marginTop={'15px'}>
+          </Box>
+          <Box textAlign="left">
+            <Box fontSize={'16px'} fontWeight={700}>
+              GitHub
+            </Box>
+            <Box marginTop={'15px'} fontSize={'14px'} fontWeight={500}>
               <Link
                 href="https://github.com/aukus-devs"
                 rel="noopener nereferrer"
@@ -46,10 +57,12 @@ export default function BottomSection() {
                 </LinkSpan>
               </Link>
             </Box>
-          </Grid>
-          <Grid item xs={3} textAlign="left">
-            <Typography variant="h6">Поддержать сайт</Typography>
-            <Box marginTop={'15px'}>
+          </Box>
+          <Box textAlign="left">
+            <Box fontSize={'16px'} fontWeight={700}>
+              Поддержать сайт
+            </Box>
+            <Box marginTop={'15px'} fontSize={'14px'} fontWeight={500}>
               <Link
                 href="https://boosty.to/aukus"
                 rel="noopener nereferrer"
@@ -58,8 +71,8 @@ export default function BottomSection() {
                 <LinkSpan color={Color.blue}>https://boosty.to/aukus</LinkSpan>
               </Link>
             </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
     </Box>
   )

@@ -4,6 +4,7 @@ import { shuffle } from 'lodash'
 import { useState } from 'react'
 import { fetchPlayers } from 'utils/api'
 import PlayerSection from './PlayerSection'
+import { PlayerPhotoMap } from './utils'
 
 export default function PlayerList() {
   const [fetchStart] = useState(Date.now())
@@ -26,11 +27,17 @@ export default function PlayerList() {
 
   return (
     <Grid container columns={1}>
-      {randomPlayers.map((player) => (
-        <Grid item xs={1} key={player.id} marginBottom={'150px'}>
-          <PlayerSection player={player} />
-        </Grid>
-      ))}
+      {randomPlayers.map((player) => {
+        const hasPhoto = PlayerPhotoMap[player.url_handle]
+        if (!hasPhoto) {
+          return null
+        }
+        return (
+          <Grid item xs={1} key={player.id} marginBottom={'150px'}>
+            <PlayerSection player={player} />
+          </Grid>
+        )
+      })}
     </Grid>
   )
 }
