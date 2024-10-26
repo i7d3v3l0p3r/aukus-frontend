@@ -51,7 +51,10 @@ export default function TimelapseProvider({
     enabled: openState !== 'closed',
   })
 
-  const moves = useMemo(() => movesByDay?.moves || [], [movesByDay])
+  const moves = useMemo(() => {
+    const _moves = movesByDay?.moves || []
+    return _moves.sort((a, b) => a.id - b.id)
+  }, [movesByDay])
 
   const { data: playersData } = useQuery({
     queryKey: ['players_moves', selectedDate, moves],
