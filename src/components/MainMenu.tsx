@@ -43,7 +43,7 @@ export default function MainMenu({
           "image": "https://twallpaper.js.org/patterns/games.svg",
           "background": "#0c0c0c",
           "blur": 0,
-          "size": "440px",
+          "size": "470px",
           "opacity": 1,
           "mask": true
         }
