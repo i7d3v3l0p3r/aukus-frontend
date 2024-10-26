@@ -119,7 +119,7 @@ export default function MainMenu({
                   color={currentPage === 'about' ? 'primary' : 'info'}
                   sx={{ width: '150px', height: '40px' }}
                 >
-                  О Сайте
+                  Создатели
                 </Button>
               </Link>
             </>
