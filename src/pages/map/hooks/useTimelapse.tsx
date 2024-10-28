@@ -51,19 +51,23 @@ export default function TimelapseProvider({
     enabled: openState !== 'closed',
   })
 
-  const moves = useMemo(() => movesByDay?.moves || [], [movesByDay])
+  const moves = useMemo(() => {
+    const _moves = movesByDay?.moves || []
+    return _moves.sort((a, b) => a.id - b.id)
+  }, [movesByDay])
+
+  let queryMoveId = movesByDay?.last_move_id
+  if (moves.length > 0) {
+    queryMoveId = moves[selectedMoveId-1].id
+  }
 
   const { data: playersData } = useQuery({
-    queryKey: ['players_moves', selectedDate, moves],
+    queryKey: ['players_moves', selectedDate, queryMoveId],
     queryFn: () => {
-      if (moves.length === 0) {
+      if (!queryMoveId) {
         return null
       }
-      const selectedMove = moves[selectedMoveId - 1]
-      if (!selectedMove) {
-        return null
-      }
-      return fetchPlayers(selectedMove.id)
+      return fetchPlayers(queryMoveId)
     },
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',

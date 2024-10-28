@@ -121,7 +121,8 @@ export default function TimelapseButton() {
     )
   }
 
-  const movesAmount = timelapseState.moves.length || 1
+  const hasMoves = timelapseState.moves.length > 0
+  const movesAmount = timelapseState.moves.length
 
   const turnMarks = range(1, movesAmount + 1, 1).map((value) => ({
     value,
@@ -155,6 +156,10 @@ export default function TimelapseButton() {
     }
   }
 
+  if (!hasMoves) {
+    turnText = 'Ходов за день небыло'
+  }
+
   return (
     <Box width={'100%'}>
       <Box width={'100%'} display="flex" justifyContent={'center'}>
@@ -176,40 +181,42 @@ export default function TimelapseButton() {
           {turnText}
         </Box>
       </Box>
-      <Box
-        style={{
-          display: 'flex',
-          alignContent: 'flex-end',
-          flexWrap: 'wrap',
-          backgroundColor: 'black',
-          width: '100%',
-          height: '63px',
-          paddingLeft: '20px',
-          paddingRight: '20px',
-          borderRadius: '10px',
-          marginBottom: '10px',
-        }}
-      >
-        <Slider
-          min={1}
-          max={movesAmount}
-          step={1}
-          marks={turnMarks}
-          slots={{
-            markLabel: CustomMark,
-            rail: CustomRail,
-            thumb: CustomThumb,
+      {hasMoves && (
+        <Box
+          style={{
+            display: 'flex',
+            alignContent: 'flex-end',
+            flexWrap: 'wrap',
+            backgroundColor: 'black',
+            width: '100%',
+            height: '63px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
+            borderRadius: '10px',
+            marginBottom: '10px',
           }}
-          getAriaValueText={displayText}
-          valueLabelDisplay="off"
-          track={false}
-          sx={{ margin: 0 }}
-          value={timelapseState.selectedMoveId}
-          onChange={(_, value) => {
-            timelapseState.setSelectedMoveId(Math.floor(value as number))
-          }}
-        />
-      </Box>
+        >
+          <Slider
+            min={1}
+            max={movesAmount}
+            step={1}
+            marks={turnMarks}
+            slots={{
+              markLabel: CustomMark,
+              rail: CustomRail,
+              thumb: CustomThumb,
+            }}
+            getAriaValueText={displayText}
+            valueLabelDisplay="off"
+            track={false}
+            sx={{ margin: 0 }}
+            value={timelapseState.selectedMoveId}
+            onChange={(_, value) => {
+              timelapseState.setSelectedMoveId(Math.floor(value as number))
+            }}
+          />
+        </Box>
+      )}
       <Box display={'flex'} justifyContent="center">
         {!datesEqual(currentDate, StartDate) ? (
           <Button
@@ -370,7 +377,7 @@ function turnDescription(player: Player, move: PlayerMove) {
     completed: 'прошел',
     drop: 'дропнул',
     movie: 'посмотрел',
-    reroll: 'рерольную',
+    reroll: 'рерольнул',
     sheikh: 'словил шейха на',
   }
 
