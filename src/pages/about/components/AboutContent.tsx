@@ -11,6 +11,10 @@ const creators = [
   text: 'Графический дизайн',
   },
   {
+    name: 'huykakoyto',
+    text: 'Графический дизайн',
+  },
+  {
   name: 'CorruptedMushroom',
   text: 'Бекенд сервер',
   },
