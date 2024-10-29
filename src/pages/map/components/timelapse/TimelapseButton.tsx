@@ -57,7 +57,7 @@ export default function TimelapseButton() {
         onClick={() => timelapseState.setState('date_selection')}
         sx={{ width: '320px' }}
       >
-        Timelapse
+        Таймлапс
       </Button>
     )
   }
@@ -173,7 +173,8 @@ export default function TimelapseButton() {
             fontWeight: 600,
             marginBottom: '10px',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
+            paddingLeft: '10px',
             alignItems: 'center',
             width: '590px',
           }}
@@ -236,7 +237,7 @@ export default function TimelapseButton() {
           fullWidth
           onClick={() => timelapseState.setState('date_selection')}
           sx={{
-            width: '163px',
+            width: '320px',
             marginRight: '10px',
             marginLeft: '10px',
           }}
