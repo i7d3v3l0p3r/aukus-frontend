@@ -200,7 +200,7 @@ export default function TimelapseButton({variant}: Props) {
           style={{
             backgroundColor: Color.blue,
             color: 'white',
-            height: '38px',
+            height: '44px',
             borderRadius: '10px',
             fontSize: '15px',
             fontWeight: 600,
