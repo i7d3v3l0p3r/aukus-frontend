@@ -96,9 +96,9 @@ export default function TimelapseProvider({
   // scroll to seleceted player move
   useEffect(() => {
     const move = moves[selectedMoveId-1]
-    console.log(move)
+    // console.log(move)
     if (move) {
-      const cellFrom = move.cell_from > 0 ? `map-cell-${move.cell_from}` : 'map-cell-start'
+      const cellFrom = move.cell_to > 0 ? `map-cell-${move.cell_to}` : 'map-cell-start'
       const element = document.getElementById(cellFrom)
       if (element) {
         window.scrollTo({top: element.offsetTop - window.innerHeight / 2 + 300, behavior: 'smooth'})
