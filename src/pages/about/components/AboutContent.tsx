@@ -20,7 +20,7 @@ const creators = [
   },
   {
     name: 'olegsvs',
-    text: 'Сайт, домен, хостинг',
+    text: 'Сайт, домен, хостинг, бекенд',
   },
   {
     name: 'gawk',

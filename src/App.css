@@ -247,3 +247,8 @@ span.MuiSlider-mark {
 span.MuiSlider-thumb:active {
   box-shadow: none;
 }
+
+div#root {
+  background-image: url('/static/meme-background.png');
+  padding-top: 15px;
+}

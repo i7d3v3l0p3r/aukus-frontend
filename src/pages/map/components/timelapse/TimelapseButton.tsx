@@ -1,3 +1,4 @@
+import { CalendarMonth } from '@mui/icons-material'
 import { Box, Button, Slider, SliderThumb } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
@@ -17,14 +18,21 @@ const daysBetween = (date1: Date, date2: Date) => {
 }
 
 const AmountOfDays = daysBetween(StartDate, Today)
-const StartDateDay = StartDate.getDate()
 
-const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => ({
-  value,
-  label: (value + StartDateDay).toString(),
-}))
+const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => {
+  const date = new Date(StartDate)
+  date.setDate(StartDate.getDate() + value)
+  return {
+    value,
+    label: date.getDate().toString(),
+  }
+})
 
-export default function TimelapseButton() {
+type Props = {
+  variant: 'small' | 'big'
+}
+
+export default function TimelapseButton({variant}: Props) {
   const timelapseState = useTimelapse()
 
   const [dateDiff, setDateDiff] = useState<number>(
@@ -52,31 +60,50 @@ export default function TimelapseButton() {
   }
 
   if (timelapseState.state === 'closed') {
+    if (variant === "big") {
     return (
       <Button
         onClick={() => timelapseState.setState('date_selection')}
-        sx={{ width: '320px' }}
+        sx={{ width: '320px', height: '44px' }}
       >
         Таймлапс
       </Button>
     )
   }
+    if (variant === "small") {
+      return (
+        <Button
+          onClick={() => timelapseState.setState('date_selection')}
+          sx={{ width: '60px', height: '44px' }}
+        >
+          <CalendarMonth />
+        </Button>
+      )
+    }
+  }
 
   if (timelapseState.state === 'date_selection') {
+    let sliderWidth = '590px'
+    if (AmountOfDays > 15) {
+      sliderWidth = `${50*AmountOfDays}px`
+    }
+
     return (
       <Box width={'100%'}>
+        <Box width={'100%'} display="flex" justifyContent={'center'}>
         <Box
           style={{
             display: 'flex',
             alignContent: 'flex-end',
             flexWrap: 'wrap',
             backgroundColor: 'black',
-            width: '100%',
+            width: sliderWidth,
             height: '63px',
             paddingLeft: '20px',
             paddingRight: '20px',
             borderRadius: '10px',
             marginBottom: '10px',
+            justifyContent: 'center',
           }}
         >
           <Slider
@@ -99,7 +126,8 @@ export default function TimelapseButton() {
             }
           />
         </Box>
-        <Box textAlign="center" display="relative">
+        </Box>
+        <Box textAlign="center">
           <Button
             onClick={() => timelapseState.setState('move_selection')}
             sx={{ width: '320px', marginRight: '10px', position: 'relative' }}
@@ -160,6 +188,11 @@ export default function TimelapseButton() {
     turnText = 'Ходов за день небыло'
   }
 
+  let sliderWidth = '590px'
+  if (movesAmount > 15) {
+    sliderWidth = `${50*movesAmount}px`
+  }
+
   return (
     <Box width={'100%'}>
       <Box width={'100%'} display="flex" justifyContent={'center'}>
@@ -167,7 +200,7 @@ export default function TimelapseButton() {
           style={{
             backgroundColor: Color.blue,
             color: 'white',
-            height: '38px',
+            height: '44px',
             borderRadius: '10px',
             fontSize: '15px',
             fontWeight: 600,
@@ -183,13 +216,14 @@ export default function TimelapseButton() {
         </Box>
       </Box>
       {hasMoves && (
+        <Box width="100%" display="flex" justifyContent="center">
         <Box
           style={{
             display: 'flex',
             alignContent: 'flex-end',
             flexWrap: 'wrap',
             backgroundColor: 'black',
-            width: '100%',
+            width: sliderWidth,
             height: '63px',
             paddingLeft: '20px',
             paddingRight: '20px',
@@ -217,6 +251,7 @@ export default function TimelapseButton() {
             }}
           />
         </Box>
+      </Box>
       )}
       <Box display={'flex'} justifyContent="center">
         {!datesEqual(currentDate, StartDate) ? (
@@ -332,7 +367,7 @@ function CustomRail(props: RailProps) {
         position: 'absolute',
         height: '4px',
         top: '10px',
-        width: '1263px',
+        width: 'inherit',
         backgroundColor: Color.blue,
         borderRadius: '5px',
       }}

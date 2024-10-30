@@ -234,32 +234,38 @@ export default function MapComponent() {
         ))}
       <StaticPanel>
         <Box
-          marginBottom={'20px'}
           display="flex"
-          flexDirection={'column'}
           justifyContent="center"
-          flexWrap="wrap"
-          alignContent="center"
+          width={'100%'}
         >
           {currentPlayer && !timelapseEnabled && (
-            <ActionButton
-              handleNextTurn={handleNextTurn}
-              player={currentPlayer}
-              onMakingTurn={handleMakingTurn}
-              onDiceRoll={handleDiceRoll}
-            />
-          )}
-
-          <Box marginTop={'20px'} />
-          <TimelapseButton />
-
-          {currentPlayer && !timelapseEnabled && (
-            <>
-              <Box marginTop={'20px'} />
-              <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
-            </>
+            <Box textAlign="center" width="100%">
+              <Box
+                sx={{ position: "relative", width: '320px', display: 'inline-block' }}
+                marginRight={"10px"}
+                textAlign="center"
+              >
+                <ActionButton
+                  handleNextTurn={handleNextTurn}
+                  player={currentPlayer}
+                  onMakingTurn={handleMakingTurn}
+                  onDiceRoll={handleDiceRoll}
+                />
+              </Box>
+              <Box position="absolute" width="50px" display="inline">
+                <TimelapseButton variant="small" />
+              </Box>
+            </Box>
           )}
         </Box>
+          {!currentPlayer && !timelapseEnabled && <TimelapseButton variant="big" />}
+          {currentPlayer && !timelapseEnabled && (
+            <Box marginTop={'10px'} display="block" textAlign="center" >
+              <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+            </Box>
+          )}
+          {timelapseEnabled && <TimelapseButton variant="big" />}
+
       </StaticPanel>
       <TodaysMoves />
     </Box>
