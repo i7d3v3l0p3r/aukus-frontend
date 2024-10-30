@@ -17,12 +17,15 @@ const daysBetween = (date1: Date, date2: Date) => {
 }
 
 const AmountOfDays = daysBetween(StartDate, Today)
-const StartDateDay = StartDate.getDate()
 
-const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => ({
-  value,
-  label: (value + StartDateDay).toString(),
-}))
+const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => {
+  const date = new Date(StartDate)
+  date.setDate(StartDate.getDate() + value)
+  return {
+    value,
+    label: date.getDate().toString(),
+  }
+})
 
 export default function TimelapseButton() {
   const timelapseState = useTimelapse()
@@ -63,20 +66,27 @@ export default function TimelapseButton() {
   }
 
   if (timelapseState.state === 'date_selection') {
+    let sliderWidth = '590px'
+    if (AmountOfDays > 15) {
+      sliderWidth = `${50*AmountOfDays}px`
+    }
+
     return (
       <Box width={'100%'}>
+        <Box width={'100%'} display="flex" justifyContent={'center'}>
         <Box
           style={{
             display: 'flex',
             alignContent: 'flex-end',
             flexWrap: 'wrap',
             backgroundColor: 'black',
-            width: '100%',
+            width: sliderWidth,
             height: '63px',
             paddingLeft: '20px',
             paddingRight: '20px',
             borderRadius: '10px',
             marginBottom: '10px',
+            justifyContent: 'center',
           }}
         >
           <Slider
@@ -98,6 +108,7 @@ export default function TimelapseButton() {
               handleDateDiffChange(Math.floor(value as number))
             }
           />
+        </Box>
         </Box>
         <Box textAlign="center" display="relative">
           <Button
@@ -160,6 +171,11 @@ export default function TimelapseButton() {
     turnText = 'Ходов за день небыло'
   }
 
+  let sliderWidth = '590px'
+  if (movesAmount > 15) {
+    sliderWidth = `${50*movesAmount}px`
+  }
+
   return (
     <Box width={'100%'}>
       <Box width={'100%'} display="flex" justifyContent={'center'}>
@@ -183,13 +199,14 @@ export default function TimelapseButton() {
         </Box>
       </Box>
       {hasMoves && (
+        <Box width="100%" display="flex" justifyContent="center">
         <Box
           style={{
             display: 'flex',
             alignContent: 'flex-end',
             flexWrap: 'wrap',
             backgroundColor: 'black',
-            width: '100%',
+            width: sliderWidth,
             height: '63px',
             paddingLeft: '20px',
             paddingRight: '20px',
@@ -217,6 +234,7 @@ export default function TimelapseButton() {
             }}
           />
         </Box>
+      </Box>
       )}
       <Box display={'flex'} justifyContent="center">
         {!datesEqual(currentDate, StartDate) ? (
@@ -332,7 +350,7 @@ function CustomRail(props: RailProps) {
         position: 'absolute',
         height: '4px',
         top: '10px',
-        width: '1263px',
+        width: 'inherit',
         backgroundColor: Color.blue,
         borderRadius: '5px',
       }}
