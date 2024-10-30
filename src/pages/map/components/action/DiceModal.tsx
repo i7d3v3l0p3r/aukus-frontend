@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
+import deckBackground from 'assets/deck-background.png'
 
 import DiceBox from '@3d-dice/dice-box'
 import { DiceOption } from 'utils/types'
@@ -184,6 +185,7 @@ export default function DiceModal({
             border: '2px solid #414141',
             borderRadius: '10px',
             padding: '5px',
+            backgroundImage: `url(${deckBackground})`,
           }}
           ref={containerRef}
         ></div>
