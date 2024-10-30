@@ -55,6 +55,8 @@ export default function MainMenu({
         marginTop={'15px'}
         marginBottom={'13px'}
         textTransform={'uppercase'}
+        position="relative"
+        zIndex={20}
       >
         <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
           <LinkSpan
@@ -77,7 +79,7 @@ export default function MainMenu({
           </LinkSpan>
         </Link>
       </Box>
-      <Box display="flex" justifyContent={'center'}>
+      <Box display="flex" justifyContent={'center'} zIndex={20} position="relative">
         <Box
           padding={'10px'}
           display="flex"
