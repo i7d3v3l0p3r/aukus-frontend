@@ -241,6 +241,6 @@ div.MuiOutlinedInput-root.customSearch {
 }
 
 div#root {
-  background-image: url('static/meme-background.png');
+  background-image: url('/static/meme-background.png');
   padding-top: 15px;
 }
