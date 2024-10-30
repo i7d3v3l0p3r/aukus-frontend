@@ -1,3 +1,4 @@
+import { CalendarMonth } from '@mui/icons-material'
 import { Box, Button, Slider, SliderThumb } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
@@ -27,7 +28,11 @@ const DateMarks = range(0, AmountOfDays + 1, 1).map((value) => {
   }
 })
 
-export default function TimelapseButton() {
+type Props = {
+  variant: 'small' | 'big'
+}
+
+export default function TimelapseButton({variant}: Props) {
   const timelapseState = useTimelapse()
 
   const [dateDiff, setDateDiff] = useState<number>(
@@ -55,14 +60,26 @@ export default function TimelapseButton() {
   }
 
   if (timelapseState.state === 'closed') {
+    if (variant === "big") {
     return (
       <Button
         onClick={() => timelapseState.setState('date_selection')}
-        sx={{ width: '320px' }}
+        sx={{ width: '320px', height: '44px' }}
       >
         Таймлапс
       </Button>
     )
+  }
+    if (variant === "small") {
+      return (
+        <Button
+          onClick={() => timelapseState.setState('date_selection')}
+          sx={{ width: '60px', height: '44px' }}
+        >
+          <CalendarMonth />
+        </Button>
+      )
+    }
   }
 
   if (timelapseState.state === 'date_selection') {
@@ -110,7 +127,7 @@ export default function TimelapseButton() {
           />
         </Box>
         </Box>
-        <Box textAlign="center" display="relative">
+        <Box textAlign="center">
           <Button
             onClick={() => timelapseState.setState('move_selection')}
             sx={{ width: '320px', marginRight: '10px', position: 'relative' }}
