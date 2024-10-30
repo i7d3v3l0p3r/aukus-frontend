@@ -3,54 +3,54 @@ import { Color } from 'utils/types'
 
 const creators = [
   {
-  name: 'лепус',
-  text: 'Дизайн интерфейсов',
+    name: 'лепус',
+    text: 'Дизайн интерфейсов',
   },
   {
-  name: 'Wabar (Ваки)',
-  text: 'Графический дизайн',
+    name: 'Wabar (Ваки)',
+    text: 'Графический дизайн',
   },
   {
     name: 'huykakoyto',
     text: 'Графический дизайн',
   },
   {
-  name: 'CorruptedMushroom',
-  text: 'Бекенд сервер',
+    name: 'CorruptedMushroom',
+    text: 'Бекенд сервер',
   },
   {
-  name: 'olegsvs',
-  text: 'Сайт, домен, хостинг',
+    name: 'olegsvs',
+    text: 'Сайт, домен, хостинг',
   },
   {
-  name: 'gawk',
-  text: 'Домен, хостинг',
+    name: 'gawk',
+    text: 'Домен, хостинг',
   },
   {
-  name: 'madf12',
-  text: 'Фронтенд, канвас картинок',
+    name: 'madf12',
+    text: 'Фронтенд, канвас картинок',
   },
   {
-  name: '提督_ポイ(ADmiral_POI)',
-  text: 'Организация дискорда',
+    name: '提督_ポイ(ADmiral_POI)',
+    text: 'Организация дискорда',
   },
   {
-  name: 'pechenka242',
-  text: 'Тестирование, обсуждение',
+    name: 'pechenka242',
+    text: 'Тестирование, обсуждение',
   },
   {
-  name: 'ShiroiKumo',
-  text: 'Тестирование, обсуждение',
+    name: 'ShiroiKumo',
+    text: 'Тестирование, обсуждение',
   },
   {
-  name: 'Virtuoz',
-  text: 'Обсуждение, идеи',
+    name: 'Virtuoz',
+    text: 'Обсуждение, идеи',
   },
   {
-  name: 'mapcar',
-  text: 'Фронтенд, организация',
-  },
-]
+    name: 'mapcar',
+    text: 'Фронтенд, организация',
+  }
+];
 
 const sponsors: string[] = ['Стань первым']
 
@@ -58,7 +58,7 @@ export default function AboutContent() {
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'} width={'740px'}>
-        <Box fontSize={'48px'} fontWeight={700}>
+        <Box fontSize={'48px'} fontWeight={700} lineHeight={"1.2"}>
           Сайт сделан специально для третьего сезона АУКУСа
         </Box>
 

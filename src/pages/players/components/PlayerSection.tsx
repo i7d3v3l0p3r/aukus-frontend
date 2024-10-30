@@ -14,7 +14,7 @@ export default function PlayerSection({ player }: Props) {
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'} width={'550px'}>
-        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
+        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
           {player.first_name || ''} «{player.name}»
         </Typography>
         <Box height={'340px'} width={'550px'} marginTop={'30px'}>
