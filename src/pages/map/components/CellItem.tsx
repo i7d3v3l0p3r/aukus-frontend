@@ -1,5 +1,7 @@
-import { ArrowRightAltSharp } from '@mui/icons-material'
-import { Box, Chip, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import ArrowBlue from 'assets/map/arrow_blue.png'
+import ArrowGreen from 'assets/map/arrow_green.png'
+import ArrowYellow from 'assets/map/arrow_yellow.png'
 import { Player } from 'utils/types'
 import { cellSize, MapCell } from '../types'
 
@@ -10,29 +12,7 @@ type Props = {
 }
 
 export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
-  const directionIcons = {
-    right: (
-      <ArrowRightAltSharp sx={{ fontSize: 30, verticalAlign: 'middle' }} />
-    ),
-    left: (
-      <ArrowRightAltSharp
-        sx={{
-          fontSize: 30,
-          verticalAlign: 'middle',
-          transform: 'rotate(180deg)',
-        }}
-      />
-    ),
-    up: (
-      <ArrowRightAltSharp
-        sx={{
-          fontSize: 30,
-          verticalAlign: 'middle',
-          transform: 'rotate(-90deg)',
-        }}
-      />
-    ),
-  }
+
 
   let label = `${cell.id}`
   if (cell.id === 0) {
@@ -62,6 +42,24 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
     }
   }
 
+  let transformation = ''
+  if (cell.direction === 'up') {
+    transformation = 'rotate(-90deg)'
+  } else if (cell.direction === 'left') {
+    transformation = 'rotate(180deg)'
+  }
+
+  let arrowCoords = { top: "0px", left: "-5px" }
+  let arrowImage = ArrowGreen
+  if (cell.id > 40 && cell.id <= 60) {
+    arrowImage = ArrowYellow
+    arrowCoords.left = "-4px"
+    arrowCoords.top = "-5px"
+  } else if (cell.id > 60) {
+    arrowImage = ArrowBlue
+    arrowCoords.left = "5px"
+  }
+
   return (
     <div
       id={`map-cell-${cell.id}`}
@@ -74,9 +72,18 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
         justifyContent: 'center',
       }}
     >
-      <Box alignContent="center" position="absolute" top={0} left={0}>
-        <Chip label={label} />
-        {cell.direction && directionIcons[cell.direction]}
+      <Box alignContent="center" position="absolute" top="0" left="0">
+        <img
+          src={arrowImage}
+          width={"60px"}
+          style={{
+            transform: transformation,
+            position: 'absolute',
+            top: arrowCoords.top,
+            left: arrowCoords.left,
+          }}
+        />
+        <span style={{display: 'inline', position: 'absolute', left: '17px'}}>{label}</span>
       </Box>
       {relativeLocation && (
         <Box textAlign={'center'}>
