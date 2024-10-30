@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useState } from 'react'
 import { DiceOption, NextTurnParams, Player } from 'utils/types'
 import DiceModal from './DiceModal'
@@ -72,7 +72,7 @@ export default function ActionButton({
   }
 
   return (
-    <>
+    <Box>
       <Button
         variant="contained"
         color="primary"
@@ -94,6 +94,6 @@ export default function ActionButton({
         onTurnFinish={handleTurnFinish}
         onDiceRoll={handleDiceRoll}
       />
-    </>
+    </Box>
   )
 }
