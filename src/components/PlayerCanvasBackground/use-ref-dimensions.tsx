@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+const CANVAS_MAX_SIZE = 10000;
 
 export function useRefDimensions(containerRef: React.RefObject<HTMLDivElement>) {
   const [dimensions, setDimensions] = useState({
@@ -9,8 +10,8 @@ export function useRefDimensions(containerRef: React.RefObject<HTMLDivElement>) 
 
   useEffect(() => {
     const getDimensions = () => ({
-      width: containerRef.current?.offsetWidth ?? 0,
-      height: containerRef.current?.scrollHeight ?? 0,
+      width: Math.min(containerRef.current?.offsetWidth ?? 0, CANVAS_MAX_SIZE),
+      height: Math.min(containerRef.current?.scrollHeight ?? 0, CANVAS_MAX_SIZE),
     });
 
     const handleResize = () => {
