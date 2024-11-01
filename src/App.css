@@ -110,7 +110,7 @@ div.Mui-focused {
 
 ::-webkit-scrollbar {
   width: 8px; /* for vertical scrollbar */
-  height: 6px; /* for horizontal scrollbar */
+  height: 8px; /* for horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track {
@@ -241,9 +241,9 @@ div.MuiOutlinedInput-root.customSearch {
 }
 
 div#root {
-  background-image: url('/static/meme-background.png');
+  background-image: url('/static/pattern1.png');
   padding-top: 15px;
-  background-size: 700px;
+  background-size: 400px;
   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent color */
   background-blend-mode: darken;
 }
