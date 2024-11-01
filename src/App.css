@@ -251,4 +251,7 @@ span.MuiSlider-thumb:active {
 div#root {
   background-image: url('/static/meme-background.png');
   padding-top: 15px;
+  background-size: 700px;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent color */
+  background-blend-mode: darken;
 }
