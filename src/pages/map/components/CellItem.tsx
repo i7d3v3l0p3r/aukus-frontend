@@ -93,11 +93,11 @@ function getArrowStyle(cell: MapCell) {
     arrowImage = ArrowYellow
     if (cell.direction === 'right') {
       style.left = '-5px'
-      style.top = '-5px'
+      style.top = '-7px'
     }
     if (cell.direction === 'left') {
       style.left = '0px'
-      style.top = '-5px'
+      style.top = '-7px'
     }
     if (cell.direction === 'up') {
       style.left = '-5px'
@@ -121,11 +121,11 @@ function getArrowStyle(cell: MapCell) {
     arrowImage = ArrowGreen
     if (cell.direction === 'left') {
       style.left = '-5px'
-      style.top = '0px'
+      style.top = '-1px'
     }
     if (cell.direction === 'right') {
-      style.left = '-5px'
-      style.top = '0px'
+      style.left = '-4px'
+      style.top = '-3px'
     }
     if (cell.direction === 'up') {
       style.left = '-2px'
