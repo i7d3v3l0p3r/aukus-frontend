@@ -28,7 +28,7 @@ export default function MainMenu({
   return (
     <Box>
       <ScrollRestoration />
-      {/* <TWallpaper options={{
+      <TWallpaper options={{
         "fps": 1,
         "tails": 5,
         "animate": false,
@@ -48,7 +48,7 @@ export default function MainMenu({
           "mask": true
         }
       }}
-     /> */}
+     />
       <Box
         display="block"
         textAlign={'center'}
