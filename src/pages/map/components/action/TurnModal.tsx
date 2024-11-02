@@ -46,7 +46,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [gameName, setGameName] = useState('')
   const [review, setReview] = useState('')
   const [gameHours, setGameHours] = useState<
-    'short' | 'medium' | 'long' | null
+    'short' | 'medium' | null
   >(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
 
@@ -114,7 +114,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }
 
   const handleGameHoursChange = (
-    newValue: 'short' | 'medium' | 'long' | null
+    newValue: 'short' | 'medium' | null
   ) => {
     setGameHours(newValue)
   }
@@ -132,7 +132,16 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const gameFieldsCompleted = gameName && dice
   const reviewCompleted = review !== '' && rating !== null
 
-  const canThrowDice = gameFieldsCompleted && reviewCompleted
+  let canThrowDice = false
+  if (gameFieldsCompleted) {
+    if (moveType === 'completed') {
+      canThrowDice = reviewCompleted
+    } else if (moveType === 'movie') {
+      canThrowDice = reviewCompleted
+    } else {
+      canThrowDice = true
+    }
+  }
 
   const handleConfirmTurn = () => {
     if (rating && moveType && dice !== null) {
@@ -307,7 +316,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         </Box>
         <Box marginTop={'20px'}>
           {moveType === 'completed' && (
-            <Box display="flex" justifyContent={'space-between'}>
+            <Box display="flex" justifyContent={'center'}>
               <Button
                 onClick={() => handleGameHoursChange('short')}
                 variant={gameHours === 'short' ? 'contained' : 'outlined'}
@@ -339,9 +348,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                   paddingRight: '15px',
                 }}
               >
-                5-15 часов
+                5+ часов
               </Button>
-              <Button
+              {/* <Button
                 onClick={() => handleGameHoursChange('long')}
                 variant={gameHours === 'long' ? 'contained' : 'outlined'}
                 color={gameHours === 'long' ? 'secondary' : 'info'}
@@ -357,7 +366,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 }}
               >
                 15+ часов
-              </Button>
+              </Button> */}
             </Box>
           )}
         </Box>
