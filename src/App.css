@@ -241,9 +241,5 @@ div.MuiOutlinedInput-root.customSearch {
 }
 
 div#root {
-  background-image: url('/static/pattern1.png');
   padding-top: 15px;
-  background-size: 400px;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent color */
-  background-blend-mode: darken;
 }
