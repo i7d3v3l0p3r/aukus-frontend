@@ -12,8 +12,6 @@ type Props = {
 }
 
 export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
-
-
   let label = `${cell.id}`
   if (cell.id === 0) {
     label = 'Старт'
@@ -42,23 +40,7 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
     }
   }
 
-  let transformation = ''
-  if (cell.direction === 'up') {
-    transformation = 'rotate(-90deg)'
-  } else if (cell.direction === 'left') {
-    transformation = 'rotate(180deg)'
-  }
-
-  let arrowCoords = { top: "0px", left: "-5px" }
-  let arrowImage = ArrowGreen
-  if (cell.id > 40 && cell.id <= 60) {
-    arrowImage = ArrowYellow
-    arrowCoords.left = "-4px"
-    arrowCoords.top = "-5px"
-  } else if (cell.id > 60) {
-    arrowImage = ArrowBlue
-    arrowCoords.left = "5px"
-  }
+  const { style: arrowStyle, arrowImage } = getArrowStyle(cell)
 
   return (
     <div
@@ -77,10 +59,8 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
           src={arrowImage}
           width={"60px"}
           style={{
-            transform: transformation,
             position: 'absolute',
-            top: arrowCoords.top,
-            left: arrowCoords.left,
+            ...arrowStyle
           }}
         />
         <span style={{display: 'inline', position: 'absolute', left: '17px'}}>{label}</span>
@@ -98,4 +78,59 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
       )}
     </div>
   )
+}
+
+function getArrowStyle(cell: MapCell) {
+  const style: {[k: string]: string} = {}
+  let arrowImage = ArrowGreen
+  if (cell.direction === 'up') {
+    style.transform = 'rotate(-45deg)'
+  } else if (cell.direction === 'left') {
+    style.transform = 'scaleX(-1)'
+  }
+
+  if (cell.id > 40 && cell.id <= 80) {
+    arrowImage = ArrowYellow
+    if (cell.direction === 'right') {
+      style.left = '-5px'
+      style.top = '-5px'
+    }
+    if (cell.direction === 'left') {
+      style.left = '0px'
+      style.top = '-5px'
+    }
+    if (cell.direction === 'up') {
+      style.left = '-5px'
+      style.top = '-5px'
+    }
+  } else if (cell.id > 60) {
+    arrowImage = ArrowBlue
+    if (cell.direction === 'right') {
+      style.left = '10px'
+      style.top = '-3px'
+    }
+    if (cell.direction === 'left') {
+      style.left = '-6px'
+      style.top = '-3px'
+    }
+    if (cell.direction === 'up') {
+      style.left = '6px'
+      style.top = '-10px'
+    }
+  } else {
+    arrowImage = ArrowGreen
+    if (cell.direction === 'left') {
+      style.left = '-5px'
+      style.top = '0px'
+    }
+    if (cell.direction === 'right') {
+      style.left = '-5px'
+      style.top = '0px'
+    }
+    if (cell.direction === 'up') {
+      style.left = '-2px'
+      style.top = '-3px'
+    }
+  }
+  return {style, arrowImage}
 }
