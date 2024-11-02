@@ -110,7 +110,7 @@ function getArrowStyle(cell: MapCell) {
       style.top = '-3px'
     }
     if (cell.direction === 'left') {
-      style.left = '-6px'
+      style.left = '-15px'
       style.top = '-3px'
     }
     if (cell.direction === 'up') {
