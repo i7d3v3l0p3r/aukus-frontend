@@ -79,7 +79,14 @@ export default function MainMenu({
           </LinkSpan>
         </Link>
       </Box>
-      <Box display="flex" justifyContent={'center'} zIndex={20} position="relative">
+      <Box
+        display="flex"
+        justifyContent={'start'}
+        zIndex={20}
+        position="relative"
+        margin={'auto'}
+        width={'fit-content'}
+      >
         <Box
           padding={'10px'}
           display="flex"
@@ -88,6 +95,7 @@ export default function MainMenu({
           borderRadius="15px"
           height={'60px'}
           position="relative"
+
         >
           {replaceMenuButtons || (
             <>

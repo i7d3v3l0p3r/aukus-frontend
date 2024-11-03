@@ -4,7 +4,7 @@ import LinkSpan from './LinkSpan'
 
 export default function BottomSection() {
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="start" margin={'auto'} width={'fit-content'}>
       <Box width="1200px">
         <Box display="flex" justifyContent="center" marginTop={30}>
           <Box width="100%">
