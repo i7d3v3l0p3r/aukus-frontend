@@ -86,8 +86,8 @@ export default function MapArrow({ from, to }: Props) {
         y1={fromY}
         x2={toX}
         y2={toY}
-        stroke="white"
-        strokeWidth="2"
+        stroke="rgba(0,0,0,0.2)"
+        strokeWidth="3"
         markerStart={
           isSnake ? 'url(#red-arrow-start)' : 'url(#green-arrow-start)'
         }
