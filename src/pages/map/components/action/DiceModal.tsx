@@ -9,7 +9,7 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 import deckBackground from 'assets/deck-background.png'
 
-import DiceBox from '@3d-dice/dice-box'
+import DiceBox from '@mapcar/dice-box'
 import { DiceOption } from 'utils/types'
 
 type Props = {
@@ -185,6 +185,7 @@ export default function DiceModal({
             border: '2px solid #414141',
             borderRadius: '10px',
             padding: '5px',
+            boxSizing: 'border-box',
             backgroundImage: `url(${deckBackground})`,
           }}
           ref={containerRef}
