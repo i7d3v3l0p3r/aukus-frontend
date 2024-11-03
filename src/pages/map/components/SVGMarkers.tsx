@@ -13,7 +13,7 @@ export default function SVGMarkers() {
           id="green-arrow-start"
           markerWidth="6"
           markerHeight="4"
-          refX="-6"
+          refX="-10"
           refY="2"
           orient="auto"
           stroke={baseColor}
@@ -29,6 +29,7 @@ export default function SVGMarkers() {
           refY="2"
           orient="auto"
           stroke={baseColor}
+          strokeWidth={1}
         >
           <polygon points={arrowPoints} fill={greenColor} />
         </marker>
@@ -40,6 +41,7 @@ export default function SVGMarkers() {
           refY="2"
           orient="auto"
           stroke={baseColor}
+          strokeWidth={1}
         >
           <polygon points={arrowPoints} fill={redColor} />
         </marker>
@@ -51,6 +53,7 @@ export default function SVGMarkers() {
           refY="2"
           orient="auto"
           stroke={baseColor}
+          strokeWidth={1}
         >
           <polygon points={arrowPoints} fill={redColor} />
         </marker>
