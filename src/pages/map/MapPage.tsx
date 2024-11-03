@@ -13,7 +13,9 @@ export default function MapPage() {
         alignContent={'center'}
         display="flex"
         alignItems="center"
-        justifyContent={'center'}
+        justifyContent={'start'}
+        margin={'auto'}
+        width={'fit-content'}
       >
         <TimelapseProvider>
           <MapComponent />
