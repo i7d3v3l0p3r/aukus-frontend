@@ -96,9 +96,19 @@ export default function Leaderboard() {
     return getPlayerScore(b) - getPlayerScore(a)
   })
 
+  // maps player ids to position by score, players with same score get the same position
   const playerIdToPosition = orderedByScore.reduce(
-    (acc, playerStat, index) => {
-      acc[playerStat.id] = index+1
+    (acc, player, index) => {
+      if (index === 0) {
+        acc[player.id] = 1
+      } else {
+        const prevPlayer = orderedByScore[index - 1]
+        if (getPlayerScore(player) === getPlayerScore(prevPlayer)) {
+          acc[player.id] = acc[prevPlayer.id]
+        } else {
+          acc[player.id] = acc[prevPlayer.id] + 1
+        }
+      }
       return acc
     },
     {} as Record<number, number>
