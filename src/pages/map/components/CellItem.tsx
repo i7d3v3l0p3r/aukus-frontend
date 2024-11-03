@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material'
 import ArrowBlue from 'assets/map/arrow_blue.png'
 import ArrowGreen from 'assets/map/arrow_green.png'
 import ArrowYellow from 'assets/map/arrow_yellow.png'
+import Sign from 'assets/map/sign.png'
 import { Player } from 'utils/types'
 import { cellSize, MapCell } from '../types'
 
@@ -41,6 +42,8 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
   }
 
   const { style: arrowStyle, arrowImage } = getArrowStyle(cell)
+  const labelLeft = cell.id === 101 ? '55px' : '17px'
+  const labelTop = cell.id === 101 ? '7px' : '0px'
 
   return (
     <div
@@ -63,7 +66,12 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
             ...arrowStyle
           }}
         />
-        <span style={{display: 'inline', position: 'absolute', left: '17px'}}>{label}</span>
+        <span style={{
+          display: 'inline',
+          position: 'absolute',
+          left: labelLeft,
+          top: labelTop,
+        }}>{label}</span>
       </Box>
       {relativeLocation && (
         <Box textAlign={'center'}>
@@ -82,6 +90,15 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
 
 function getArrowStyle(cell: MapCell) {
   const style: {[k: string]: string} = {}
+
+  if (cell.id === 101) {
+    style.transform = 'scale(0.7)'
+    style.left = '0px'
+    style.top = '-10px'
+    return {style, arrowImage: Sign}
+  }
+
+
   let arrowImage = ArrowGreen
   if (cell.direction === 'up') {
     style.transform = 'rotate(-45deg)'
