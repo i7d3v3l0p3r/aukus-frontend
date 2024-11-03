@@ -12,7 +12,7 @@ export default function PlayerSection({ player }: Props) {
   const photo = PlayerPhotoMap[player.url_handle]
 
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="start" margin={'auto'} width={'fit-content'}>
       <Box textAlign={'left'} width={'550px'}>
         <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
           {player.first_name || ''} «{player.name}»
