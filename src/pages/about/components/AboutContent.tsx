@@ -27,6 +27,10 @@ const creators = [
     text: 'Домен, хостинг',
   },
   {
+    name: 'kozjar',
+    text: 'Интеграция с PointAuc',
+  },
+  {
     name: 'madf12',
     text: 'Фронтенд, канвас картинок',
   },
@@ -49,8 +53,8 @@ const creators = [
   {
     name: 'mapcar',
     text: 'Фронтенд, организация',
-  }
-];
+  },
+]
 
 const sponsors: string[] = ['Стань первым']
 
@@ -58,7 +62,7 @@ export default function AboutContent() {
   return (
     <Box display="flex" justifyContent="center">
       <Box textAlign={'left'} width={'740px'}>
-        <Box fontSize={'48px'} fontWeight={700} lineHeight={"1.2"}>
+        <Box fontSize={'48px'} fontWeight={700} lineHeight={'1.2'}>
           Сайт сделан специально для третьего сезона АУКУСа
         </Box>
 
@@ -70,11 +74,10 @@ export default function AboutContent() {
             href="https://boosty.to/aukus"
             rel="noopener nereferrer"
             target="_blank"
-
           >
-        <Button style={{fontSize: '16px', fontWeight: 500}}>
-          Поддержать на бусти
-        </Button>
+            <Button style={{ fontSize: '16px', fontWeight: 500 }}>
+              Поддержать на бусти
+            </Button>
           </Link>
         </Box>
 
@@ -97,8 +100,7 @@ export default function AboutContent() {
           {creators.map((item, index) => {
             return (
               <Box key={index} marginTop={'20px'}>
-                <span style={{ color: 'white' }}>{item.name}</span>
-                {' '}
+                <span style={{ color: 'white' }}>{item.name}</span>{' '}
                 <span style={{ color: Color.greyNew }}>— {item.text}</span>
               </Box>
             )

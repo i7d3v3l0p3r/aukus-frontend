@@ -1,9 +1,4 @@
-import {
-    Box,
-    InputAdornment,
-    TextField,
-    Typography
-} from '@mui/material'
+import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import SearchIcon from 'assets/search-normal.svg?react'
 import LinkSpan from 'components/LinkSpan'
@@ -19,11 +14,14 @@ import MoveCard from './MoveCard'
 import OldMoveCard from './OldMoveCard'
 import StreamLink from './StreamLink'
 import { formatDate } from './utils'
+import useScreenSize from 'src/context/useScreenSize'
 
 export default function PlayerContent() {
   const { id: playerHandle } = useParams()
   const [fetchStart] = useState(Date.now())
   const [filter, setFilter] = useState('')
+
+  const { isMobile } = useScreenSize()
 
   const currentPlayer = useUser()
 
@@ -135,7 +133,7 @@ export default function PlayerContent() {
                     },
                   }}
                   style={{
-                    width: '800px',
+                    width: isMobile ? '100%' : '800px',
                     fontSize: '16px important!',
                     backgroundColor: Color.greyDark,
                     borderRadius: '10px',
@@ -235,7 +233,7 @@ function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
         padding={'15px'}
         lineHeight={1}
         style={{
-          backgroundColor: playerColor
+          backgroundColor: playerColor,
         }}
       >
         <Box
