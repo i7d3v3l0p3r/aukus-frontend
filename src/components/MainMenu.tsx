@@ -7,6 +7,8 @@ import SnowflakeIcon from 'assets/snowflake.svg?react'
 import { TWallpaper } from '@twallpaper/react'
 import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
+import useScreenSize from 'src/context/useScreenSize'
+import MobileMenu from './MainMenuMobile'
 
 type Props = {
   currentPage: Page
@@ -22,33 +24,34 @@ export default function MainMenu({
   leftSlot,
 }: Props) {
   const currentUser = useUser()
+  const { isMobile } = useScreenSize()
   const playerColor = getPlayerColor(currentUser?.url_handle || '')
   const urlHandle = currentUser?.url_handle
+
+  if (isMobile) {
+    return <MobileMenu currentPage={currentPage} />
+  }
 
   return (
     <Box>
       <ScrollRestoration />
-      <TWallpaper options={{
-        "fps": 1,
-        "tails": 5,
-        "animate": false,
-        "scrollAnimate": false,
-        "colors": [
-          "#1c1c1c",
-          "#1c1c1c",
-          "#1c1c1c",
-          "#1c1c1c"
-        ],
-        "pattern": {
-          "image": "https://twallpaper.js.org/patterns/games.svg",
-          "background": "#0c0c0c",
-          "blur": 0,
-          "size": "470px",
-          "opacity": 1,
-          "mask": true
-        }
-      }}
-     />
+      <TWallpaper
+        options={{
+          fps: 1,
+          tails: 5,
+          animate: false,
+          scrollAnimate: false,
+          colors: ['#1c1c1c', '#1c1c1c', '#1c1c1c', '#1c1c1c'],
+          pattern: {
+            image: 'https://twallpaper.js.org/patterns/games.svg',
+            background: '#0c0c0c',
+            blur: 0,
+            size: '470px',
+            opacity: 1,
+            mask: true,
+          },
+        }}
+      />
       <Box
         display="block"
         textAlign={'center'}
@@ -95,7 +98,6 @@ export default function MainMenu({
           borderRadius="15px"
           height={'60px'}
           position="relative"
-
         >
           {replaceMenuButtons || (
             <>

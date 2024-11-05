@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 
-export default function useScreenSize() {
+type Params = {
+  updateOnResize?: boolean
+}
+
+export default function useScreenSize({updateOnResize = false}: Params = {}) {
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
 
@@ -12,7 +16,9 @@ export default function useScreenSize() {
     }
 
     // Add event listener to handle window resize
-    window.addEventListener('resize', handleResize)
+    if (updateOnResize) {
+      window.addEventListener('resize', handleResize)
+    }
 
     // Cleanup the event listener on component unmount
     return () => {
@@ -20,5 +26,6 @@ export default function useScreenSize() {
     }
   }, []) // Empty dependency array ensures this runs only once on mount
 
-  return { width, height }
+  const isMobile = width < 768
+  return { width, height, isMobile }
 }

@@ -50,7 +50,7 @@ export default function MapComponent() {
   }
 
   const currentUser = useUser()
-  useScreenSize()
+  useScreenSize({ updateOnResize: true })
 
   const currentPlayer = players?.find(
     (player) => player.id === currentUser?.user_id
@@ -233,16 +233,16 @@ export default function MapComponent() {
           />
         ))}
       <StaticPanel>
-        <Box
-          display="flex"
-          justifyContent="center"
-          width={'100%'}
-        >
+        <Box display="flex" justifyContent="center" width={'100%'}>
           {currentPlayer && !timelapseEnabled && (
             <Box textAlign="center" width="100%">
               <Box
-                sx={{ position: "relative", width: '320px', display: 'inline-block' }}
-                marginRight={"10px"}
+                sx={{
+                  position: 'relative',
+                  width: '320px',
+                  display: 'inline-block',
+                }}
+                marginRight={'10px'}
                 textAlign="center"
               >
                 <ActionButton
@@ -258,14 +258,15 @@ export default function MapComponent() {
             </Box>
           )}
         </Box>
-          {!currentPlayer && !timelapseEnabled && <TimelapseButton variant="big" />}
-          {currentPlayer && !timelapseEnabled && (
-            <Box marginTop={'10px'} display="block" textAlign="center" >
-              <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
-            </Box>
-          )}
-          {timelapseEnabled && <TimelapseButton variant="big" />}
-
+        {!currentPlayer && !timelapseEnabled && (
+          <TimelapseButton variant="big" />
+        )}
+        {currentPlayer && !timelapseEnabled && (
+          <Box marginTop={'10px'} display="block" textAlign="center">
+            <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
+          </Box>
+        )}
+        {timelapseEnabled && <TimelapseButton variant="big" />}
       </StaticPanel>
       <TodaysMoves />
     </Box>
