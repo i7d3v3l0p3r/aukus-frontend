@@ -8,7 +8,7 @@ import { TWallpaper } from '@twallpaper/react'
 import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
-import MobileMenu from './MainMenuMobile'
+import MainMenuMobile from './MainMenuMobile'
 
 type Props = {
   currentPage: Page
@@ -29,7 +29,7 @@ export default function MainMenu({
   const urlHandle = currentUser?.url_handle
 
   if (isMobile) {
-    return <MobileMenu currentPage={currentPage} />
+    return <MainMenuMobile currentPage={currentPage} />
   }
 
   return (

@@ -1,8 +1,9 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { Link } from 'react-router-dom'
 import { Color, getPlayerColorName, Player } from 'utils/types'
 import { PlayerPhotoMap } from './utils'
+import useScreenSize from 'src/context/useScreenSize'
 
 type Props = {
   player: Player
@@ -10,19 +11,29 @@ type Props = {
 
 export default function PlayerSection({ player }: Props) {
   const photo = PlayerPhotoMap[player.url_handle]
+  const { isMobile } = useScreenSize()
 
   return (
-    <Box display="flex" justifyContent="start" margin={'auto'} width={'fit-content'}>
-      <Box textAlign={'left'} width={'550px'}>
-        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
+    <Box
+      display="flex"
+      justifyContent="start"
+      margin={'auto'}
+      width={'fit-content'}
+    >
+      <Box textAlign={'left'} width={isMobile ? '100%' : '550px'}>
+        <Box fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
           {player.first_name || ''} «{player.name}»
-        </Typography>
-        <Box height={'340px'} width={'550px'} marginTop={'30px'}>
+        </Box>
+        <Box
+          height={'340px'}
+          width={isMobile ? '100%' : '550px'}
+          marginTop={'30px'}
+        >
           {photo && (
             <img
               src={photo}
-              height="340px"
-              width="550px"
+              // height="340px"
+              width={isMobile ? '300px' : '550px'}
               alt="player pic"
               style={{ borderRadius: '15px' }}
             />
@@ -85,7 +96,7 @@ export default function PlayerSection({ player }: Props) {
               color={getPlayerColorName(player)}
               sx={{
                 height: '50px',
-                width: '550px',
+                width: isMobile ? '100%' : '550px',
               }}
               style={{ borderRadius: '15px' }}
             >
