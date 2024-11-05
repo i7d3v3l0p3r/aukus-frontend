@@ -19,7 +19,7 @@ export default function PlayerSectionMobile({ player }: Props) {
       width={'fit-content'}
     >
       <Box textAlign={'left'} width={'100%'}>
-        <Box fontSize={'48px'} fontWeight={700} lineHeight={1.2} width={'100%'}>
+        <Box fontSize={'36px'} fontWeight={700} lineHeight={1.2} width={'100%'}>
           <Box margin={'auto'} width={'90%'}>
             {player.first_name || ''} «{player.name}»
           </Box>
@@ -49,8 +49,9 @@ export default function PlayerSectionMobile({ player }: Props) {
               fullWidth
               color={getPlayerColorName(player)}
               sx={{
-                height: '50px',
+                height: '45px',
                 width: '300px',
+                fontSize: '14px',
               }}
               style={{ borderRadius: '15px' }}
             >
