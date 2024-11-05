@@ -3,24 +3,31 @@ import BottomSection from 'components/BottomSection'
 import MainMenu from 'components/MainMenu'
 import MapComponent from './components/MapComponent'
 import TimelapseProvider from './hooks/useTimelapse'
+import useScreenSize from 'src/context/useScreenSize'
+import MapComponentMobile from './components/MapComponentMobile'
 
 export default function MapPage() {
+  const { isMobile } = useScreenSize()
   return (
     <Box>
       <MainMenu currentPage={'map'} />
-      <Box
-        marginTop={'100px'}
-        alignContent={'center'}
-        display="flex"
-        alignItems="center"
-        justifyContent={'start'}
-        margin={'auto'}
-        width={'fit-content'}
-      >
-        <TimelapseProvider>
-          <MapComponent />
-        </TimelapseProvider>
-      </Box>
+      {isMobile ? (
+        <MapComponentMobile />
+      ) : (
+        <Box
+          alignContent={'center'}
+          display="flex"
+          alignItems="center"
+          justifyContent={'start'}
+          margin={'auto'}
+          marginTop={'100px'}
+          width={'fit-content'}
+        >
+          <TimelapseProvider>
+            <MapComponent />
+          </TimelapseProvider>
+        </Box>
+      )}
       <BottomSection />
     </Box>
   )

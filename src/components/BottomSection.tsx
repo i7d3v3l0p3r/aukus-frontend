@@ -1,10 +1,22 @@
 import { Box, Divider, Link } from '@mui/material'
 import { Color } from 'utils/types'
 import LinkSpan from './LinkSpan'
+import useScreenSize from 'src/context/useScreenSize'
+import BottomSectionMobile from './BottomSectionMobile'
 
 export default function BottomSection() {
+  const { isMobile } = useScreenSize()
+  if (isMobile) {
+    return <BottomSectionMobile />
+  }
+
   return (
-    <Box display="flex" justifyContent="start" margin={'auto'} width={'fit-content'}>
+    <Box
+      display="flex"
+      justifyContent="start"
+      margin={'auto'}
+      width={'fit-content'}
+    >
       <Box width="1200px">
         <Box display="flex" justifyContent="center" marginTop={30}>
           <Box width="100%">
@@ -12,7 +24,7 @@ export default function BottomSection() {
               variant="fullWidth"
               sx={{
                 borderWidth: '1px',
-                backgroundColor: "white",
+                backgroundColor: 'white',
                 opacity: 1.0,
                 textAlign: 'center',
               }}
