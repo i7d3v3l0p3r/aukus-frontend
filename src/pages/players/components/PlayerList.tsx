@@ -1,7 +1,7 @@
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { shuffle } from 'lodash'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { fetchPlayers } from 'utils/api'
 import PlayerSection from './PlayerSection'
 import { PlayerPhotoMap } from './utils'
@@ -26,18 +26,18 @@ export default function PlayerList() {
   const randomPlayers = shuffle(players)
 
   return (
-    <Grid container columns={1}>
+    <Box>
       {randomPlayers.map((player) => {
         const hasPhoto = PlayerPhotoMap[player.url_handle]
         if (!hasPhoto) {
           return null
         }
         return (
-          <Grid item xs={1} key={player.id} marginBottom={'150px'}>
+          <Box key={player.id} marginBottom={'150px'}>
             <PlayerSection player={player} />
-          </Grid>
+          </Box>
         )
       })}
-    </Grid>
+    </Box>
   )
 }
