@@ -45,7 +45,7 @@ export default function StaticPanel({ children }: Props) {
         sx={{
           position: isFixed ? 'fixed' : 'absolute',
           zIndex: 20,
-          ...(isFixed ? { bottom: 100 } : { marginTop: '30px' }),
+          ...(isFixed ? { bottom: '20px' } : { marginTop: '30px' }),
         }}
         ref={containerRef}
       >
