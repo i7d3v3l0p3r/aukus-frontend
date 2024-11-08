@@ -1,5 +1,5 @@
 import { CalendarMonth } from '@mui/icons-material'
-import { Box, Button, Slider, SliderThumb } from '@mui/material'
+import { Box, Button, Slider, SliderThumb, Tooltip } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
@@ -32,7 +32,7 @@ type Props = {
   variant: 'small' | 'big'
 }
 
-export default function TimelapseButton({variant}: Props) {
+export default function TimelapseButton({ variant }: Props) {
   const timelapseState = useTimelapse()
 
   const [dateDiff, setDateDiff] = useState<number>(
@@ -60,24 +60,26 @@ export default function TimelapseButton({variant}: Props) {
   }
 
   if (timelapseState.state === 'closed') {
-    if (variant === "big") {
-    return (
-      <Button
-        onClick={() => timelapseState.setState('date_selection')}
-        sx={{ width: '320px', height: '44px' }}
-      >
-        Таймлапс
-      </Button>
-    )
-  }
-    if (variant === "small") {
+    if (variant === 'big') {
       return (
         <Button
           onClick={() => timelapseState.setState('date_selection')}
-          sx={{ width: '60px', height: '44px' }}
+          sx={{ width: '320px', height: '44px' }}
         >
-          <CalendarMonth />
+          Таймлапс
         </Button>
+      )
+    }
+    if (variant === 'small') {
+      return (
+        <Tooltip title={'Таймлапс'}>
+          <Button
+            onClick={() => timelapseState.setState('date_selection')}
+            sx={{ width: '60px', height: '44px' }}
+          >
+            <CalendarMonth />
+          </Button>
+        </Tooltip>
       )
     }
   }
@@ -85,47 +87,47 @@ export default function TimelapseButton({variant}: Props) {
   if (timelapseState.state === 'date_selection') {
     let sliderWidth = '590px'
     if (AmountOfDays > 15) {
-      sliderWidth = `${50*AmountOfDays}px`
+      sliderWidth = `${50 * AmountOfDays}px`
     }
 
     return (
       <Box width={'100%'}>
         <Box width={'100%'} display="flex" justifyContent={'center'}>
-        <Box
-          style={{
-            display: 'flex',
-            alignContent: 'flex-end',
-            flexWrap: 'wrap',
-            backgroundColor: 'black',
-            width: sliderWidth,
-            height: '63px',
-            paddingLeft: '20px',
-            paddingRight: '20px',
-            borderRadius: '10px',
-            marginBottom: '10px',
-            justifyContent: 'center',
-          }}
-        >
-          <Slider
-            min={0}
-            max={AmountOfDays}
-            step={1}
-            marks={DateMarks}
-            slots={{
-              markLabel: CustomMark,
-              rail: CustomRail,
-              thumb: CustomThumb,
+          <Box
+            style={{
+              display: 'flex',
+              alignContent: 'flex-end',
+              flexWrap: 'wrap',
+              backgroundColor: 'black',
+              width: sliderWidth,
+              height: '63px',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+              borderRadius: '10px',
+              marginBottom: '10px',
+              justifyContent: 'center',
             }}
-            getAriaValueText={displayText}
-            valueLabelDisplay="off"
-            track={false}
-            sx={{ margin: 0 }}
-            value={dateDiff}
-            onChange={(_, value) =>
-              handleDateDiffChange(Math.floor(value as number))
-            }
-          />
-        </Box>
+          >
+            <Slider
+              min={0}
+              max={AmountOfDays}
+              step={1}
+              marks={DateMarks}
+              slots={{
+                markLabel: CustomMark,
+                rail: CustomRail,
+                thumb: CustomThumb,
+              }}
+              getAriaValueText={displayText}
+              valueLabelDisplay="off"
+              track={false}
+              sx={{ margin: 0 }}
+              value={dateDiff}
+              onChange={(_, value) =>
+                handleDateDiffChange(Math.floor(value as number))
+              }
+            />
+          </Box>
         </Box>
         <Box textAlign="center">
           <Button
@@ -190,7 +192,7 @@ export default function TimelapseButton({variant}: Props) {
 
   let sliderWidth = '590px'
   if (movesAmount > 15) {
-    sliderWidth = `${50*movesAmount}px`
+    sliderWidth = `${50 * movesAmount}px`
   }
 
   return (
@@ -217,41 +219,41 @@ export default function TimelapseButton({variant}: Props) {
       </Box>
       {hasMoves && (
         <Box width="100%" display="flex" justifyContent="center">
-        <Box
-          style={{
-            display: 'flex',
-            alignContent: 'flex-end',
-            flexWrap: 'wrap',
-            backgroundColor: 'black',
-            width: sliderWidth,
-            height: '63px',
-            paddingLeft: '20px',
-            paddingRight: '20px',
-            borderRadius: '10px',
-            marginBottom: '10px',
-          }}
-        >
-          <Slider
-            min={1}
-            max={movesAmount}
-            step={1}
-            marks={turnMarks}
-            slots={{
-              markLabel: CustomMark,
-              rail: CustomRail,
-              thumb: CustomThumb,
+          <Box
+            style={{
+              display: 'flex',
+              alignContent: 'flex-end',
+              flexWrap: 'wrap',
+              backgroundColor: 'black',
+              width: sliderWidth,
+              height: '63px',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+              borderRadius: '10px',
+              marginBottom: '10px',
             }}
-            getAriaValueText={displayText}
-            valueLabelDisplay="off"
-            track={false}
-            sx={{ margin: 0 }}
-            value={timelapseState.selectedMoveId}
-            onChange={(_, value) => {
-              timelapseState.setSelectedMoveId(Math.floor(value as number))
-            }}
-          />
+          >
+            <Slider
+              min={1}
+              max={movesAmount}
+              step={1}
+              marks={turnMarks}
+              slots={{
+                markLabel: CustomMark,
+                rail: CustomRail,
+                thumb: CustomThumb,
+              }}
+              getAriaValueText={displayText}
+              valueLabelDisplay="off"
+              track={false}
+              sx={{ margin: 0 }}
+              value={timelapseState.selectedMoveId}
+              onChange={(_, value) => {
+                timelapseState.setSelectedMoveId(Math.floor(value as number))
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
       )}
       <Box display={'flex'} justifyContent="center">
         {!datesEqual(currentDate, StartDate) ? (

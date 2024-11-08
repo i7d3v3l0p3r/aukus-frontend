@@ -80,7 +80,7 @@ export default function ActionButton({
         onClick={handleClick}
         sx={{ width: '320px' }}
       >
-        <strong>Бросить кубик</strong>
+        <strong>Сделать ход</strong>
       </Button>
       <TurnModal
         open={turnModalOpen}
