@@ -3,7 +3,7 @@ import { Color } from 'utils/types'
 
 const creators = [
   {
-    name: 'лепус',
+    name: 'lepayy',
     text: 'Дизайн интерфейсов',
   },
   {
@@ -11,7 +11,7 @@ const creators = [
     text: 'Графический дизайн',
   },
   {
-    name: 'huykakoyto',
+    name: 'Рот в говне',
     text: 'Графический дизайн',
   },
   {
@@ -35,12 +35,12 @@ const creators = [
     text: 'Фронтенд, канвас картинок',
   },
   {
-    name: '提督_ポイ(ADmiral_POI)',
+    name: 'Teitoku_POI',
     text: 'Организация дискорда',
   },
   {
     name: 'pechenka242',
-    text: 'Тестирование, обсуждение',
+    text: 'Аналитик-тестировщик',
   },
   {
     name: 'ShiroiKumo',
