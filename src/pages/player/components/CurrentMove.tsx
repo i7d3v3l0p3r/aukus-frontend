@@ -3,11 +3,14 @@ import LinkSpan from 'src/components/LinkSpan'
 import { formatDate } from './utils'
 import { useState } from 'react'
 import EditCurrentGameModal from './EditCurrentGameModal'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { updateCurrentGame } from 'src/utils/api'
+import { getPlayerColor, Player } from 'src/utils/types'
 
 type CurrentMoveProps = {
   id: number
   title: string
-  playerColor: string
+  player: Player
   updatedAt: string
   canEdit: boolean
 }
@@ -15,11 +18,22 @@ type CurrentMoveProps = {
 export default function CurrentMove({
   id,
   title,
-  playerColor,
+  player,
   updatedAt,
   canEdit,
 }: CurrentMoveProps) {
   const [modalOpen, setModalOpen] = useState(false)
+
+  const queryClient = useQueryClient()
+  const updateTitle = useMutation({ mutationFn: updateCurrentGame })
+
+  const handleSave = (title: string) => {
+    updateTitle.mutate({ player_id: player.id, title })
+    queryClient.invalidateQueries({ queryKey: ['players'] })
+    setModalOpen(false)
+  }
+
+  const playerColor = getPlayerColor(player.url_handle)
 
   return (
     <>
@@ -72,7 +86,7 @@ export default function CurrentMove({
         open={modalOpen}
         title={title}
         onClose={() => setModalOpen(false)}
-        onSave={() => setModalOpen(false)}
+        onSave={handleSave}
       />
     </>
   )

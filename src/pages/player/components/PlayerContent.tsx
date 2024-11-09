@@ -146,7 +146,7 @@ export default function PlayerContent() {
                 <CurrentMove
                   id={playerMoves.length + 1}
                   title={player.current_game}
-                  playerColor={playerColor}
+                  player={player}
                   updatedAt={player.current_game_updated_at}
                   canEdit={canEdit}
                 />
