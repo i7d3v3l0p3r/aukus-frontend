@@ -187,7 +187,7 @@ export default function TimelapseButton({ variant }: Props) {
   }
 
   if (!hasMoves) {
-    turnText = 'Ходов за день небыло'
+    turnText = 'Ходов за день не было'
   }
 
   let sliderWidth = '590px'
@@ -211,7 +211,7 @@ export default function TimelapseButton({ variant }: Props) {
             justifyContent: 'flex-start',
             paddingLeft: '10px',
             alignItems: 'center',
-            width: '590px',
+            width: hasMoves ? '590px' : '748px',
           }}
         >
           {turnText}
