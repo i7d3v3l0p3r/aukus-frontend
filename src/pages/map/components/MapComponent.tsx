@@ -258,9 +258,11 @@ export default function MapComponent() {
             </Box>
           )}
         </Box>
-        {!currentPlayer && !timelapseEnabled && (
-          <TimelapseButton variant="big" />
-        )}
+        <Box display="flex" justifyContent="center" width={'100%'}>
+          {!currentPlayer && !timelapseEnabled && (
+            <TimelapseButton variant="big" />
+          )}
+        </Box>
         {currentPlayer && !timelapseEnabled && (
           <Box marginTop={'10px'} display="block" textAlign="center">
             <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />

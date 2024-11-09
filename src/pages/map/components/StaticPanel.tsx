@@ -26,7 +26,7 @@ export default function StaticPanel({ children }: Props) {
 
   if (containerRef.current && mapBottom && scrollPosition > 0) {
     const makeFixed =
-      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 225
+      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 95
 
     if (!makeFixed && isFixed) {
       setIsFixed(false)
