@@ -9,6 +9,7 @@ import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
+import Clock from './Clock'
 
 type Props = {
   currentPage: Page
@@ -53,11 +54,12 @@ export default function MainMenu({
         }}
       />
       <Box
-        display="block"
+        display="inline-block"
         textAlign={'center'}
         marginTop={'0px'}
         marginBottom={'13px'}
         textTransform={'uppercase'}
+        width={'100%'}
         position="relative"
         zIndex={20}
       >
@@ -81,6 +83,18 @@ export default function MainMenu({
             АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
+        <Box
+          fontWeight={600}
+          position="absolute"
+          display="inline"
+          marginLeft={'30px'}
+          top={'1px'}
+          style={{
+            lineHeight: '1.2',
+          }}
+        >
+          <Clock />
+        </Box>
       </Box>
       <Box
         display="flex"
