@@ -156,3 +156,25 @@ export async function resetPointaucToken(): Promise<ResetPointaucTokenResponse> 
     },
   }).then((res) => res.json())
 }
+
+type UpdateCurrentGameParams = {
+  player_id: number
+  title: string
+}
+
+export async function updateCurrentGame({
+  player_id,
+  title,
+}: UpdateCurrentGameParams): Promise<void> {
+  if (MOCK_API) {
+    console.log('updating current game', player_id, title)
+    return Promise.resolve()
+  }
+  return fetch(`/api/player_current_game`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ player_id, title }),
+  }).then((res) => res.json())
+}
