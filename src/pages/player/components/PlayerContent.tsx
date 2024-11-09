@@ -33,7 +33,7 @@ export default function PlayerContent() {
   const players = playersData?.players
   const player = players?.find((player) => player.url_handle === playerHandle)
 
-  const { data: playerMovesData, refetch: refetchMoves } = useQuery({
+  const { data: playerMovesData } = useQuery({
     queryKey: ['playerMoves', player?.id || 0],
     queryFn: () => player && fetchPlayerMoves(player.id),
     staleTime: 1000 * 60 * 1,
@@ -159,7 +159,6 @@ export default function PlayerContent() {
                       id={playerMoves.length - index}
                       move={move}
                       displayType="player"
-                      onSave={refetchMoves}
                     />
                   </Box>
                 )
