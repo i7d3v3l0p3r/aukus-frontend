@@ -13,8 +13,8 @@ import { aukus2Games } from '../data_aukus2'
 import MoveCard from './MoveCard'
 import OldMoveCard from './OldMoveCard'
 import StreamLink from './StreamLink'
-import { formatDate } from './utils'
 import useScreenSize from 'src/context/useScreenSize'
+import CurrentMove from './CurrentMove'
 
 export default function PlayerContent() {
   const { id: playerHandle } = useParams()
@@ -146,8 +146,9 @@ export default function PlayerContent() {
                 <CurrentMove
                   id={playerMoves.length + 1}
                   title={player.current_game}
-                  playerColor={playerColor}
+                  player={player}
                   updatedAt={player.current_game_updated_at}
+                  canEdit={canEdit}
                 />
               )}
 
@@ -211,56 +212,6 @@ export default function PlayerContent() {
           )}
         </Box>
       </PlayerCanvasBackground>
-    </Box>
-  )
-}
-
-type CurrentMoveProps = {
-  id: number
-  title: string
-  playerColor: string
-  updatedAt: string
-}
-
-function CurrentMove({ id, title, playerColor, updatedAt }: CurrentMoveProps) {
-  return (
-    <Box display={'flex'} justifyContent={'center'} marginBottom={'50px'}>
-      <Box
-        borderRadius={'15px'}
-        border={`2px solid ${playerColor}`}
-        width={'800px'}
-        textAlign={'left'}
-        padding={'15px'}
-        lineHeight={1}
-        style={{
-          backgroundColor: playerColor,
-        }}
-      >
-        <Box
-          display={'flex'}
-          justifyContent={'space-between'}
-          fontSize={'14px'}
-          fontWeight={400}
-          marginBottom={'15px'}
-        >
-          <Box>Ход — {id}</Box>
-          <Box>{formatDate(updatedAt)}</Box>
-        </Box>
-        <Box
-          fontSize={'14px'}
-          style={{ backgroundColor: 'white', color: 'black' }}
-          width={'fit-content'}
-          paddingTop={'5px'}
-          paddingBottom={'5px'}
-          paddingLeft={'12px'}
-          paddingRight={'12px'}
-          borderRadius={'5px'}
-          marginBottom={'15px'}
-        >
-          Выпало на ауке
-        </Box>
-        <Box fontSize={'24px'}>{title}</Box>
-      </Box>
     </Box>
   )
 }
