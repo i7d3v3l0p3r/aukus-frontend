@@ -29,7 +29,7 @@ export default function TodaysMoves() {
     <Box>
       <Box marginTop={'80px'} textAlign={'center'} marginBottom={'50px'}>
         <Typography fontWeight={600} fontSize={'48px'}>
-          История ходов за сегодня
+          Ходы за день
         </Typography>
       </Box>
       {todaysMoves.moves.map((move, index) => (
