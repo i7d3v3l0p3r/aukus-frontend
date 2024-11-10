@@ -60,18 +60,22 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
       <Box alignContent="center" position="absolute" top="0" left="0">
         <img
           src={arrowImage}
-          width={"60px"}
+          width={'60px'}
           style={{
             position: 'absolute',
-            ...arrowStyle
+            ...arrowStyle,
           }}
         />
-        <span style={{
-          display: 'inline',
-          position: 'absolute',
-          left: labelLeft,
-          top: labelTop,
-        }}>{label}</span>
+        <span
+          style={{
+            display: 'inline',
+            position: 'absolute',
+            left: labelLeft,
+            top: labelTop,
+          }}
+        >
+          {label}
+        </span>
       </Box>
       {relativeLocation && (
         <Box textAlign={'center'}>
@@ -89,15 +93,14 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
 }
 
 function getArrowStyle(cell: MapCell) {
-  const style: {[k: string]: string} = {}
+  const style: { [k: string]: string } = {}
 
   if (cell.id === 101) {
     style.transform = 'scale(0.7)'
     style.left = '0px'
     style.top = '-10px'
-    return {style, arrowImage: Sign}
+    return { style, arrowImage: Sign }
   }
-
 
   let arrowImage = ArrowGreen
   if (cell.direction === 'up') {
@@ -137,8 +140,8 @@ function getArrowStyle(cell: MapCell) {
   } else {
     arrowImage = ArrowGreen
     if (cell.direction === 'left') {
-      style.left = '-5px'
-      style.top = '-1px'
+      style.left = '-3px'
+      style.top = '-2px'
     }
     if (cell.direction === 'right') {
       style.left = '-4px'
@@ -149,5 +152,5 @@ function getArrowStyle(cell: MapCell) {
       style.top = '-3px'
     }
   }
-  return {style, arrowImage}
+  return { style, arrowImage }
 }
