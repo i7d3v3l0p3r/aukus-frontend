@@ -36,6 +36,9 @@ export default function MapComponentMobile() {
         margin={'auto'}
         fontWeight={600}
         fontSize={'36px'}
+        marginLeft={'10px'}
+        marginRight={'10px'}
+        lineHeight={'1.2'}
       >
         <Box>Положение на карте</Box>
       </Box>
