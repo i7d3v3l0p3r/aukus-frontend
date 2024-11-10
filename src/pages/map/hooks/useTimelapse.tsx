@@ -49,6 +49,7 @@ export default function TimelapseProvider({
     queryFn: () => fetchMovesByDate(selectedDate),
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
+    placeholderData: (prev) => prev,
   })
 
   const moves = useMemo(() => {
@@ -58,7 +59,7 @@ export default function TimelapseProvider({
 
   let queryMoveId = movesByDay?.last_move_id
   if (moves.length > 0) {
-    queryMoveId = moves[selectedMoveId-1].id
+    queryMoveId = moves[selectedMoveId - 1].id
   }
 
   const { data: playersData } = useQuery({
@@ -95,13 +96,17 @@ export default function TimelapseProvider({
 
   // scroll to seleceted player move
   useEffect(() => {
-    const move = moves[selectedMoveId-1]
+    const move = moves[selectedMoveId - 1]
     // console.log(move)
     if (move) {
-      const cellFrom = move.cell_to > 0 ? `map-cell-${move.cell_to}` : 'map-cell-start'
+      const cellFrom =
+        move.cell_to > 0 ? `map-cell-${move.cell_to}` : 'map-cell-start'
       const element = document.getElementById(cellFrom)
       if (element) {
-        window.scrollTo({top: element.offsetTop - window.innerHeight / 2 + 300, behavior: 'smooth'})
+        window.scrollTo({
+          top: element.offsetTop - window.innerHeight / 2 + 300,
+          behavior: 'smooth',
+        })
         // element.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
