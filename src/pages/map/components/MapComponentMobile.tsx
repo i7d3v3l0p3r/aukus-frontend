@@ -54,7 +54,7 @@ function MapPosition({ cell, players }: { cell: number; players: Player[] }) {
   return (
     <Box marginTop={'50px'}>
       <Box marginLeft={'15px'} fontSize={'12px'}>
-        КЛЕТКА — {cell}
+        КЛЕТКА — {cellName(cell)}
       </Box>
       <Box>
         {players.map((player, index) => (
@@ -74,4 +74,17 @@ function MapPosition({ cell, players }: { cell: number; players: Player[] }) {
       </Box>
     </Box>
   )
+}
+
+function cellName(cell: number) {
+  if (cell === 0) {
+    return 'Старт'
+  }
+  if (cell === 101) {
+    return 'Финальный рывок'
+  }
+  if (cell === 102) {
+    return 'Финиш'
+  }
+  return cell
 }
