@@ -1,18 +1,26 @@
-
 export function formatDate(dateString: string) {
   // Create a new Date object
   const date = new Date(dateString)
 
-  // Extract the day, month, and year
-  const day = date.getDate()
-  const month = date.toLocaleString('ru-RU', { month: 'long' })
-  const monthFixed = month.slice(0, -1) + 'я'
+  // Format the date and time in Moscow timezone
+  const day = date.toLocaleString('ru-RU', {
+    timeZone: 'Europe/Moscow',
+    day: 'numeric',
+  })
+  const month = date.toLocaleString('ru-RU', {
+    timeZone: 'Europe/Moscow',
+    month: 'long',
+  })
+  const monthFixed = month.slice(0, -1) + 'я' // Adjust ending for Russian grammar
 
-  const hour = date.getHours()
-  const paddedHour = hour.toString().padStart(2, '0')
-  const minute = date.getMinutes()
-  const paddedMinute = minute.toString().padStart(2, '0')
-  return `${day} ${monthFixed} ${paddedHour}:${paddedMinute}`
+  const hourMinute = date.toLocaleString('ru-RU', {
+    timeZone: 'Europe/Moscow',
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+  })
+
+  return `${day} ${monthFixed} ${hourMinute}`
 }
 
 export function formatNumber(i: number) {
