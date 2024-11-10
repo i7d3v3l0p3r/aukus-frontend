@@ -6,8 +6,6 @@ import LeadersIcon from 'assets/icons/leaders.svg'
 import PlayersIcon from 'assets/icons/players.svg'
 import RulesIcon from 'assets/icons/rules.svg'
 import AboutIcon from 'assets/icons/about.svg'
-import { TWallpaper } from '@twallpaper/react'
-import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
 import { useUser } from 'src/context/UserProvider'
 import { Color, getPlayerColor, Page } from 'src/utils/types'
@@ -24,23 +22,6 @@ export default function MainMenuMobile({ currentPage }: Props) {
   return (
     <Box>
       <ScrollRestoration />
-      <TWallpaper
-        options={{
-          fps: 1,
-          tails: 5,
-          animate: false,
-          scrollAnimate: false,
-          colors: ['#1c1c1c', '#1c1c1c', '#1c1c1c', '#1c1c1c'],
-          pattern: {
-            image: 'https://twallpaper.js.org/patterns/games.svg',
-            background: '#0c0c0c',
-            blur: 0,
-            size: '470px',
-            opacity: 1,
-            mask: true,
-          },
-        }}
-      />
       <Box
         display="block"
         textAlign={'center'}
