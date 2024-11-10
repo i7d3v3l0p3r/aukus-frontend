@@ -53,7 +53,9 @@ export default function MapComponentMobile() {
 function MapPosition({ cell, players }: { cell: number; players: Player[] }) {
   return (
     <Box marginTop={'50px'}>
-      <Box marginLeft={'15px'}>КЛЕТКА — {cell}</Box>
+      <Box marginLeft={'15px'} fontSize={'12px'}>
+        КЛЕТКА — {cell}
+      </Box>
       <Box>
         {players.map((player, index) => (
           <Box
