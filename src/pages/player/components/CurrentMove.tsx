@@ -27,9 +27,15 @@ export default function CurrentMove({
   const queryClient = useQueryClient()
   const updateTitle = useMutation({ mutationFn: updateCurrentGame })
 
-  const handleSave = (title: string) => {
-    updateTitle.mutate({ player_id: player.id, title })
-    queryClient.invalidateQueries({ queryKey: ['players'] })
+  const handleSave = async (title: string) => {
+    updateTitle.mutate(
+      { player_id: player.id, title },
+      {
+        onSettled: () => {
+          queryClient.invalidateQueries({ queryKey: ['players'] })
+        },
+      }
+    )
     setModalOpen(false)
   }
 

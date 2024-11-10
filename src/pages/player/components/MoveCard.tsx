@@ -61,9 +61,17 @@ export default function MoveCard({
   }
 
   const handleVodSave = (text: string, title: string) => {
-    updateVod.mutate({ move_id: move.id, link: text, title })
-    queryClient.invalidateQueries({ queryKey: ['playerMoves', move.player_id] })
-    queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
+    updateVod.mutate(
+      { move_id: move.id, link: text, title },
+      {
+        onSettled: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['playerMoves', move.player_id],
+          })
+          queryClient.invalidateQueries({ queryKey: ['todaysMoves'] })
+        },
+      }
+    )
     onSave?.()
     setShowVodsModal(false)
   }
@@ -92,7 +100,7 @@ export default function MoveCard({
           padding={'15px'}
           lineHeight={1}
           style={{
-            backgroundColor: Color.greyDark
+            backgroundColor: Color.greyDark,
           }}
         >
           <Box
@@ -102,20 +110,22 @@ export default function MoveCard({
             fontWeight={500}
             marginBottom={'15px'}
           >
-            <Box display={"flex"}>
+            <Box display={'flex'}>
               {displayType === 'map' && (
-                <Divider orientation="vertical" flexItem style={{
-                  borderLeftWidth: '2px',
-                  borderRightWidth: '0px',
-                  borderColor: playerColor,
-                  borderRadius: '5px',
-                  height: '13px',
-                  marginRight: '5px',
-                }} />
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  style={{
+                    borderLeftWidth: '2px',
+                    borderRightWidth: '0px',
+                    borderColor: playerColor,
+                    borderRadius: '5px',
+                    height: '13px',
+                    marginRight: '5px',
+                  }}
+                />
               )}
-              <Box color={greyColor}>
-                {moveTitle}
-              </Box>
+              <Box color={greyColor}>{moveTitle}</Box>
             </Box>
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
@@ -177,9 +187,11 @@ export default function MoveCard({
           )}
           {showVods && (
             <Box marginTop={'15px'} lineHeight={1.4} fontWeight={400}>
-              {move.vod_link
-                ? <TextRender text={move.vod_link} borderColor={playerColor} />
-                : 'Записи стримов еще не добавлены'}
+              {move.vod_link ? (
+                <TextRender text={move.vod_link} borderColor={playerColor} />
+              ) : (
+                'Записи стримов еще не добавлены'
+              )}
             </Box>
           )}
         </Box>
