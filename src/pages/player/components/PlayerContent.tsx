@@ -113,7 +113,11 @@ export default function PlayerContent() {
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />
               </Box>
-              <Box marginBottom={'30px'}>
+              <Box
+                marginBottom={'30px'}
+                marginLeft={'10px'}
+                marginRight={'10px'}
+              >
                 <TextField
                   placeholder="Поиск среди всех игр Аукусов"
                   value={filter}

@@ -27,13 +27,15 @@ export default function OldMoveCard({ id, game }: Props) {
   return (
     <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
       <Box
+        marginLeft={'10px'}
+        marginRight={'10px'}
         borderRadius={'15px'}
         width={'800px'}
         textAlign={'left'}
         padding={'15px'}
         lineHeight={1}
         style={{
-          backgroundColor: Color.greyDark
+          backgroundColor: Color.greyDark,
         }}
       >
         <Box

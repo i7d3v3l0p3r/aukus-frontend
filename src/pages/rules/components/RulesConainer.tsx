@@ -11,7 +11,7 @@ export default function RulesContainer() {
 
   return (
     <Box display={'flex'} justifyContent="center">
-      <Box width={'740px'}>
+      <Box width={'740px'} marginLeft={'10px'} marginRight={'10px'}>
         <Box marginBottom={'30px'}>
           <Link to="#" onClick={() => setRulesPage('player')}>
             <LinkSpan color={Color.blue} active={rulesPage === 'player'}>
