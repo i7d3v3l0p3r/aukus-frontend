@@ -20,7 +20,7 @@ export function formatDate(dateString: string) {
     minute: '2-digit',
   })
 
-  return `${day} ${monthFixed} ${hourMinute}`
+  return `${day} ${monthFixed} ${hourMinute} МСК`
 }
 
 export function formatNumber(i: number) {
