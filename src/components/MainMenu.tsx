@@ -10,6 +10,7 @@ import LinkSpan from './LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
+import FloatingClock from './FloatingClock'
 
 type Props = {
   currentPage: Page
@@ -181,6 +182,7 @@ export default function MainMenu({
           )}
         </Box>
       </Box>
+      <FloatingClock />
     </Box>
   )
 }
