@@ -93,6 +93,7 @@ export default function MainMenu({
           style={{
             lineHeight: '1.2',
           }}
+          color={Color.greyNew}
         >
           <Clock />
         </Box>
