@@ -274,8 +274,13 @@ function transliterateRussianToEnglishVariants(russianText: string): string[] {
   const variants: string[][] = []
 
   // Convert Russian text into arrays of possible phonetic matches
-  for (const char of russianText.split('')) {
-    variants.push(transliterationMap[char] || [char]) // Default to the original character if no mapping exists
+  for (const char of russianText.toLocaleLowerCase().split('')) {
+    const variant = transliterationMap[char]
+    if (variant) {
+      variants.push([char, ...variant])
+    } else {
+      variants.push([char])
+    }
   }
 
   // Generate all possible combinations of the transliterations
