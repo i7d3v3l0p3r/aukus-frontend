@@ -20,12 +20,12 @@ export default function PlayerSectionMobile({ player }: Props) {
     >
       <Box textAlign={'left'} width={'100%'}>
         <Box fontSize={'36px'} fontWeight={700} lineHeight={1.2} width={'100%'}>
-          <Box margin={'auto'} width={'90%'}>
+          <Box margin={'auto'} width={'100%'}>
             {player.first_name || ''} «{player.name}»
           </Box>
           <Box
             // height={'340px'}
-            width={'90%'}
+            width={'100%'}
             margin={'auto'}
             marginTop={'20px'}
             marginBottom={'0px'}

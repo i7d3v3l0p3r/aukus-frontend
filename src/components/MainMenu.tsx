@@ -10,6 +10,7 @@ import LinkSpan from './LinkSpan'
 import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
+import FloatingClock from './FloatingClock'
 
 type Props = {
   currentPage: Page
@@ -87,11 +88,12 @@ export default function MainMenu({
           fontWeight={600}
           position="absolute"
           display="inline"
-          marginLeft={'30px'}
+          marginLeft={'15px'}
           top={'1px'}
           style={{
             lineHeight: '1.2',
           }}
+          color={'#656565'}
         >
           <Clock />
         </Box>

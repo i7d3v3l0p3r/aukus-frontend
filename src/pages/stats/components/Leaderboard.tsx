@@ -13,12 +13,23 @@ import { useQuery } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useScreenSize from 'src/context/useScreenSize'
 import { fetchPlayers, fetchStats } from 'utils/api'
 import { Color, getPlayerColor, Player, PlayerStats } from 'utils/types'
 
-type HeaderType = 'id' | 'name' | 'map_position' | 'score' | 'games_completed' | 'games_dropped' | 'rerolls' | 'movies' | 'sheikh_moments'
+type HeaderType =
+  | 'id'
+  | 'name'
+  | 'map_position'
+  | 'score'
+  | 'games_completed'
+  | 'games_dropped'
+  | 'rerolls'
+  | 'movies'
+  | 'sheikh_moments'
 
 export default function Leaderboard() {
+  const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
   const [orderBy, setOrderBy] = useState<HeaderType>('id')
@@ -136,7 +147,7 @@ export default function Leaderboard() {
   return (
     <Box>
       <Box textAlign={'center'}>
-        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1}>
+        <Typography fontSize={headerSize} fontWeight={700} lineHeight={1}>
           Таблица лидеров
         </Typography>
       </Box>
@@ -148,71 +159,119 @@ export default function Leaderboard() {
         display="flex"
       >
         <TableContainer sx={{ width: 'auto' }}>
-          <Table style={{borderSpacing: '0 10px', borderCollapse: 'separate'}}>
+          <Table
+            style={{ borderSpacing: '0 10px', borderCollapse: 'separate' }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell onClick={() => onHeaderClick('id')}>
-                  <span style={orderBy === 'id' ? selectedStyle : headerStyle}>Место</span>
+                  <span style={orderBy === 'id' ? selectedStyle : headerStyle}>
+                    Место
+                  </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('name')}>
-                  <span style={orderBy === 'name' ? selectedStyle: headerStyle}>Участник</span>
+                  <span
+                    style={orderBy === 'name' ? selectedStyle : headerStyle}
+                  >
+                    Участник
+                  </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('map_position')}>
-                  <span style={{width: '80px', display: 'block'}}>
-                    <span style={
-                      orderBy === 'map_position' ? selectedStyle : headerStyle
-                    }>
+                  <span style={{ width: '80px', display: 'block' }}>
+                    <span
+                      style={
+                        orderBy === 'map_position' ? selectedStyle : headerStyle
+                      }
+                    >
                       Позиция
                     </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('score')}>
-                  <span style={{ display: 'block', width: '60px'}}>
-                    <span style={orderBy === 'score' ? selectedStyle : headerStyle}>
+                  <span style={{ display: 'block', width: '60px' }}>
+                    <span
+                      style={orderBy === 'score' ? selectedStyle : headerStyle}
+                    >
                       Очки
                     </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_completed')}>
-                  <span style={{ display: 'block', width: '130px'}}>
-                    <span style={orderBy === 'games_completed' ? selectedStyle : headerStyle}>
+                  <span style={{ display: 'block', width: '130px' }}>
+                    <span
+                      style={
+                        orderBy === 'games_completed'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
                       Пройдено игр
                     </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_dropped')}>
-                  <span style={orderBy === 'games_dropped' ? selectedStyle : headerStyle}>Дропы</span>
+                  <span
+                    style={
+                      orderBy === 'games_dropped' ? selectedStyle : headerStyle
+                    }
+                  >
+                    Дропы
+                  </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('rerolls')}>
-                  <span style={orderBy === 'rerolls' ? selectedStyle : headerStyle}>Реролы</span>
+                  <span
+                    style={orderBy === 'rerolls' ? selectedStyle : headerStyle}
+                  >
+                    Реролы
+                  </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('movies')}>
-                  <span style={orderBy === 'movies' ? selectedStyle : headerStyle}>Фильмы</span>
+                  <span
+                    style={orderBy === 'movies' ? selectedStyle : headerStyle}
+                  >
+                    Фильмы
+                  </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('sheikh_moments')}>
-                  <span style={orderBy === 'sheikh_moments' ? selectedStyle : headerStyle}>Шейх-моменты</span>
+                  <span
+                    style={
+                      orderBy === 'sheikh_moments' ? selectedStyle : headerStyle
+                    }
+                  >
+                    Шейх-моменты
+                  </span>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {playersStatsSorted.map((playerStat, index) => (
-                <TableRow key={index} style={{
-                  backgroundColor: Color.greyDark,
-                  height: '39px',
-                  borderRadius: '10px',
-                  verticalAlign: 'middle',
-                }}>
-                  <TableCell style={{height: '39px'}}>
-                    <Box display="flex" alignItems={"center"}>
-                    <Box width={'10px'}>{playerIdToPosition[playerStat.id]}</Box>
-                    <Divider flexItem orientation='vertical'
-                      style={{
-                        borderRightWidth: '3px',
-                        marginLeft: '30px',
-                        borderRadius: '2px',
-                        height: '29px',
-                        borderColor: getPlayerColor(playersById[playerStat.id].url_handle)
-                      }} />
+                <TableRow
+                  key={index}
+                  style={{
+                    backgroundColor: Color.greyDark,
+                    height: '39px',
+                    borderRadius: '10px',
+                    verticalAlign: 'middle',
+                  }}
+                >
+                  <TableCell style={{ height: '39px' }}>
+                    <Box display="flex" alignItems={'center'}>
+                      <Box width={'10px'}>
+                        {playerIdToPosition[playerStat.id]}
+                      </Box>
+                      <Divider
+                        flexItem
+                        orientation="vertical"
+                        style={{
+                          borderRightWidth: '3px',
+                          marginLeft: '30px',
+                          borderRadius: '2px',
+                          height: '29px',
+                          borderColor: getPlayerColor(
+                            playersById[playerStat.id].url_handle
+                          ),
+                        }}
+                      />
                     </Box>
                   </TableCell>
                   <TableCell>

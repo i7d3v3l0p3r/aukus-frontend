@@ -26,7 +26,7 @@ export default function PlayerList() {
   const randomPlayers = shuffle(players)
 
   return (
-    <Box>
+    <Box marginLeft={'10px'} marginRight={'10px'}>
       {randomPlayers.map((player) => {
         const hasPhoto = PlayerPhotoMap[player.url_handle]
         if (!hasPhoto) {

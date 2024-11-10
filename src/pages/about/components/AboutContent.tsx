@@ -1,4 +1,5 @@
 import { Box, Button, Link } from '@mui/material'
+import useScreenSize from 'src/context/useScreenSize'
 import { Color } from 'utils/types'
 
 const creators = [
@@ -59,10 +60,16 @@ const creators = [
 const sponsors: string[] = ['Стань первым']
 
 export default function AboutContent() {
+  const { headerSize } = useScreenSize()
   return (
     <Box display="flex" justifyContent="center">
-      <Box textAlign={'left'} width={'740px'}>
-        <Box fontSize={'48px'} fontWeight={700} lineHeight={'1.2'}>
+      <Box
+        textAlign={'left'}
+        width={'740px'}
+        marginLeft={'10px'}
+        marginRight={'10px'}
+      >
+        <Box fontSize={headerSize} fontWeight={700} lineHeight={'1.2'}>
           Сайт сделан специально для третьего сезона АУКУСа
         </Box>
 

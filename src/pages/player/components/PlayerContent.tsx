@@ -113,7 +113,11 @@ export default function PlayerContent() {
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />
               </Box>
-              <Box marginBottom={'30px'}>
+              <Box
+                marginBottom={'30px'}
+                marginLeft={'10px'}
+                marginRight={'10px'}
+              >
                 <TextField
                   placeholder="Поиск среди всех игр Аукусов"
                   value={filter}
@@ -274,8 +278,13 @@ function transliterateRussianToEnglishVariants(russianText: string): string[] {
   const variants: string[][] = []
 
   // Convert Russian text into arrays of possible phonetic matches
-  for (const char of russianText.split('')) {
-    variants.push(transliterationMap[char] || [char]) // Default to the original character if no mapping exists
+  for (const char of russianText.toLocaleLowerCase().split('')) {
+    const variant = transliterationMap[char]
+    if (variant) {
+      variants.push([char, ...variant])
+    } else {
+      variants.push([char])
+    }
   }
 
   // Generate all possible combinations of the transliterations
