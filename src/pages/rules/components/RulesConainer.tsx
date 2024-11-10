@@ -1,12 +1,14 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import LinkSpan from 'components/LinkSpan'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Color } from 'utils/types'
 import DonaterRules from './DonaterRules'
 import PlayerRules from './PlayerRules'
+import useScreenSize from 'src/context/useScreenSize'
 
 export default function RulesContainer() {
+  const { headerSize } = useScreenSize()
   const [rulesPage, setRulesPage] = useState<'player' | 'donater'>('player')
 
   return (
@@ -25,11 +27,11 @@ export default function RulesContainer() {
             </LinkSpan>
           </Link>
         </Box>
-        <Typography fontSize={'48px'} fontWeight={700} lineHeight={1.2}>
+        <Box fontSize={headerSize} fontWeight={700} lineHeight={1.2}>
           {rulesPage === 'player'
             ? 'Общие правила проведения для участников'
             : 'Правила заказа игр'}
-        </Typography>
+        </Box>
 
         <Box marginTop={'50px'} />
         {rulesPage === 'player' && <PlayerRules />}
