@@ -49,7 +49,6 @@ export default function TimelapseProvider({
     queryFn: () => fetchMovesByDate(selectedDate),
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
-    placeholderData: (prev) => prev,
   })
 
   const moves = useMemo(() => {
@@ -72,9 +71,15 @@ export default function TimelapseProvider({
     },
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
+    placeholderData: () => ({
+      players: updatedPlayers,
+    }),
   })
 
-  const players = useMemo(() => playersData?.players || [], [playersData])
+  const players = useMemo(
+    () => playersData?.players || [],
+    [playersData?.players]
+  )
 
   useEffect(() => {
     const editablePlayers = players.map((player) => ({
