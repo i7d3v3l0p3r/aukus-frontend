@@ -45,6 +45,8 @@ export default function CurrentMove({
     <>
       <Box display={'flex'} justifyContent={'center'} marginBottom={'50px'}>
         <Box
+          marginLeft={'10px'}
+          marginRight={'10px'}
           borderRadius={'15px'}
           border={`2px solid ${playerColor}`}
           width={'800px'}

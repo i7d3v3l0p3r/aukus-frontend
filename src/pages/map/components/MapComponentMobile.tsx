@@ -3,8 +3,15 @@ import TodaysMoves from './TodaysMoves'
 
 export default function MapComponentMobile() {
   return (
-    <Box fontWeight={600} fontSize={'36px'}>
-      <Box>Положняк на карте TBD</Box>
+    <Box marginTop={'100px'}>
+      <Box
+        width={'fit-content'}
+        margin={'auto'}
+        fontWeight={600}
+        fontSize={'36px'}
+      >
+        <Box>Положение на карте</Box>
+      </Box>
       <TodaysMoves />
     </Box>
   )

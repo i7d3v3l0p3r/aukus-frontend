@@ -94,6 +94,8 @@ export default function MoveCard({
     <>
       <Box marginBottom={'30px'} display={'flex'} justifyContent={'center'}>
         <Box
+          marginLeft={'10px'}
+          marginRight={'10px'}
           borderRadius={'15px'}
           width={'800px'}
           textAlign={'left'}
