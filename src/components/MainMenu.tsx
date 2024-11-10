@@ -88,12 +88,12 @@ export default function MainMenu({
           fontWeight={600}
           position="absolute"
           display="inline"
-          marginLeft={'30px'}
+          marginLeft={'15px'}
           top={'1px'}
           style={{
             lineHeight: '1.2',
           }}
-          color={Color.greyNew}
+          color={'#656565'}
         >
           <Clock />
         </Box>
@@ -183,7 +183,6 @@ export default function MainMenu({
           )}
         </Box>
       </Box>
-      <FloatingClock />
     </Box>
   )
 }
