@@ -1,11 +1,13 @@
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { find } from 'lodash'
 import MoveCard from 'pages/player/components/MoveCard'
+import useScreenSize from 'src/context/useScreenSize'
 import { fetchMovesByDate, fetchPlayers } from 'utils/api'
 import { Player } from 'utils/types'
 
 export default function TodaysMoves() {
+  const { headerSize } = useScreenSize()
   const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
   const formattedDate = today.toISOString().split('T')[0]
 
@@ -28,9 +30,9 @@ export default function TodaysMoves() {
   return (
     <Box>
       <Box marginTop={'80px'} textAlign={'center'} marginBottom={'50px'}>
-        <Typography fontWeight={600} fontSize={'48px'}>
+        <Box fontWeight={600} fontSize={headerSize}>
           Ходы за день
-        </Typography>
+        </Box>
       </Box>
       {todaysMoves.moves.map((move, index) => (
         <Box key={index}>

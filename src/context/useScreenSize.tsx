@@ -4,7 +4,7 @@ type Params = {
   updateOnResize?: boolean
 }
 
-export default function useScreenSize({updateOnResize = false}: Params = {}) {
+export default function useScreenSize({ updateOnResize = false }: Params = {}) {
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
 
@@ -27,5 +27,7 @@ export default function useScreenSize({updateOnResize = false}: Params = {}) {
   }, []) // Empty dependency array ensures this runs only once on mount
 
   const isMobile = width < 768
-  return { width, height, isMobile }
+  const headerSize = isMobile ? '36px' : '48px'
+
+  return { width, height, isMobile, headerSize }
 }
