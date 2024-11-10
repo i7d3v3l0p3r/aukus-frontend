@@ -44,23 +44,12 @@ export default function TimelapseProvider({
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
 
-  const [previousMovesByDay, setPreviousMovesByDay] = useState<PlayerMove[]>([])
-
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
     queryFn: () => fetchMovesByDate(selectedDate),
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
-    placeholderData: () => ({
-      moves: previousMovesByDay,
-    }),
   })
-
-  useEffect(() => {
-    if (movesByDay) {
-      setPreviousMovesByDay(movesByDay.moves)
-    }
-  }, [movesByDay, selectedDate])
 
   const moves = useMemo(() => {
     const _moves = movesByDay?.moves || []
@@ -82,9 +71,15 @@ export default function TimelapseProvider({
     },
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
+    placeholderData: () => ({
+      players: updatedPlayers,
+    }),
   })
 
-  const players = useMemo(() => playersData?.players || [], [playersData])
+  const players = useMemo(
+    () => playersData?.players || [],
+    [playersData?.players]
+  )
 
   useEffect(() => {
     const editablePlayers = players.map((player) => ({
