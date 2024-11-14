@@ -45,9 +45,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState('')
   const [review, setReview] = useState('')
-  const [gameHours, setGameHours] = useState<
-    'short' | 'medium' | null
-  >(null)
+  const [gameHours, setGameHours] = useState<'short' | 'medium' | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
 
   useEffect(() => {
@@ -92,7 +90,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
 
   let gameNameOptions: string[] = []
   if (gameName.length > 3 && gameNamesData) {
-    gameNameOptions = gameNamesData.map((game) => game.gameName)
+    gameNameOptions = gameNamesData.games.map((game) => game.gameName)
   }
 
   const handleRatingChange = (
@@ -113,9 +111,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setReview(event.target.value)
   }
 
-  const handleGameHoursChange = (
-    newValue: 'short' | 'medium' | null
-  ) => {
+  const handleGameHoursChange = (newValue: 'short' | 'medium' | null) => {
     setGameHours(newValue)
   }
 
@@ -311,7 +307,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
             sx={{
               marginTop: '10px',
             }}
-            className={gameNameOptions.length > 0 ? 'has-options' : 'no-options'}
+            className={
+              gameNameOptions.length > 0 ? 'has-options' : 'no-options'
+            }
           />
         </Box>
         <Box marginTop={'20px'}>
@@ -324,7 +322,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 style={{
                   width: 200,
                   fontSize: '16px',
-                  border: gameHours === 'short' ? '2px solid transparent' : `2px solid ${Color.greyLight}`,
+                  border:
+                    gameHours === 'short'
+                      ? '2px solid transparent'
+                      : `2px solid ${Color.greyLight}`,
                   paddingTop: '5px',
                   paddingBottom: '5px',
                   paddingLeft: '15px',
@@ -341,7 +342,10 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                   marginLeft: 20,
                   width: 200,
                   fontSize: '16px',
-                  border: gameHours === 'medium' ? '2px solid transparent' : `2px solid ${Color.greyLight}`,
+                  border:
+                    gameHours === 'medium'
+                      ? '2px solid transparent'
+                      : `2px solid ${Color.greyLight}`,
                   paddingTop: '5px',
                   paddingBottom: '5px',
                   paddingLeft: '15px',
@@ -481,7 +485,6 @@ const MenuItemStyled = styled(MenuItem)(({ color }) => ({
   },
 }))
 
-
 type CustomPopperProps = PopperProps & React.RefAttributes<HTMLDivElement>
 const CustomPopper = (props: CustomPopperProps) => {
   let width = props.style?.width ?? 0
@@ -493,7 +496,7 @@ const CustomPopper = (props: CustomPopperProps) => {
       {...props}
       placement="bottom"
       style={{
-        width
+        width,
       }}
     />
   )
