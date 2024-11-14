@@ -6,11 +6,10 @@ import LeadersIcon from 'assets/icons/leaders.svg'
 import PlayersIcon from 'assets/icons/players.svg'
 import RulesIcon from 'assets/icons/rules.svg'
 import AboutIcon from 'assets/icons/about.svg'
-import { TWallpaper } from '@twallpaper/react'
-import '@twallpaper/react/css'
 import LinkSpan from './LinkSpan'
 import { useUser } from 'src/context/UserProvider'
 import { Color, getPlayerColor, Page } from 'src/utils/types'
+import Clock from './Clock'
 
 type Props = {
   currentPage: Page
@@ -24,26 +23,11 @@ export default function MainMenuMobile({ currentPage }: Props) {
   return (
     <Box>
       <ScrollRestoration />
-      <TWallpaper
-        options={{
-          fps: 1,
-          tails: 5,
-          animate: false,
-          scrollAnimate: false,
-          colors: ['#1c1c1c', '#1c1c1c', '#1c1c1c', '#1c1c1c'],
-          pattern: {
-            image: 'https://twallpaper.js.org/patterns/games.svg',
-            background: '#0c0c0c',
-            blur: 0,
-            size: '470px',
-            opacity: 1,
-            mask: true,
-          },
-        }}
-      />
       <Box
-        display="block"
+        display="flex"
         textAlign={'center'}
+        width={'fit-content'}
+        margin={'auto'}
         marginTop={'0px'}
         marginBottom={'13px'}
         textTransform={'uppercase'}
@@ -70,6 +54,9 @@ export default function MainMenuMobile({ currentPage }: Props) {
             АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
+        <Box lineHeight={'1.2'} paddingTop={'1px'} marginLeft={'15px'}>
+          <Clock />
+        </Box>
       </Box>
       <Box
         padding={'10px'}
