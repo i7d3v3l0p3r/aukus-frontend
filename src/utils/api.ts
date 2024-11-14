@@ -1,9 +1,5 @@
 import { times } from 'lodash'
-import {
-  playerMovesMock,
-  playersMock,
-  playerStatsMock,
-} from './mocks'
+import { playerMovesMock, playersMock, playerStatsMock } from './mocks'
 import {
   CurrentUser,
   Player,
@@ -79,6 +75,8 @@ export async function fetchStats(): Promise<StatsResponse> {
 
 type GameNamesResponse = {
   gameName: string
+  box_art_url: string
+  id: number
 }
 
 export async function fetchGameNames(
@@ -86,9 +84,16 @@ export async function fetchGameNames(
 ): Promise<GameNamesResponse[]> {
   if (MOCK_API) {
     console.log('fetching game names', name)
-    return Promise.resolve(times(20, (index) => ({ gameName: `${name} ${index}` })))
+    return Promise.resolve(
+      times(20, (index) => ({
+        gameName: `${name} ${index}`,
+        box_art_url: '',
+        id: index,
+      }))
+    )
   }
-  return fetch(`/hltb/v1/query?title=${name}`).then((res) => res.json())
+
+  return fetch(`/api/games?title=${name}`).then((res) => res.json())
 }
 
 type UpdateLinkParams = {
