@@ -4,13 +4,11 @@ import { useEffect, useState } from 'react'
 const getMSKTime = () => {
   // returns hour and minute without seconds
   const date = new Date()
-  const mskTime = new Date(
-    date.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })
-  )
-  return mskTime.toLocaleTimeString('ru-RU', {
+  return date.toLocaleTimeString('ru-RU', {
     hour: '2-digit',
     hour12: false,
     minute: '2-digit',
+    timeZone: 'Europe/Moscow',
   })
 }
 
@@ -24,5 +22,5 @@ export default function Clock() {
     return () => clearInterval(interval)
   }, [])
 
-  return <Box>МСК {time}</Box>
+  return <Box>{time} МСК</Box>
 }

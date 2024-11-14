@@ -9,6 +9,7 @@ import AboutIcon from 'assets/icons/about.svg'
 import LinkSpan from './LinkSpan'
 import { useUser } from 'src/context/UserProvider'
 import { Color, getPlayerColor, Page } from 'src/utils/types'
+import Clock from './Clock'
 
 type Props = {
   currentPage: Page
@@ -23,8 +24,10 @@ export default function MainMenuMobile({ currentPage }: Props) {
     <Box>
       <ScrollRestoration />
       <Box
-        display="block"
+        display="flex"
         textAlign={'center'}
+        width={'fit-content'}
+        margin={'auto'}
         marginTop={'0px'}
         marginBottom={'13px'}
         textTransform={'uppercase'}
@@ -51,6 +54,9 @@ export default function MainMenuMobile({ currentPage }: Props) {
             АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
+        <Box lineHeight={'1.2'} paddingTop={'1px'} marginLeft={'15px'}>
+          <Clock />
+        </Box>
       </Box>
       <Box
         padding={'10px'}
