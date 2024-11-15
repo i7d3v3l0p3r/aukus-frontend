@@ -84,7 +84,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }
 
   let gameImage = null
-  if (gameNamesData) {
+  if (gameNamesData && gameNamesData.games.length > 0) {
     gameImage = gameNamesData.games[0].box_art_url
       .replace('{width}', '200')
       .replace('{height}', '300')
