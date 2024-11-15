@@ -48,16 +48,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [gameHours, setGameHours] = useState<'short' | 'medium' | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
 
-  // useEffect(() => {
-  //   if (!open) {
-  //     setRating(null)
-  //     setRatingHover(null)
-  //     setGameName(player.current_game)
-  //     setReview('')
-  //     setGameHours(null)
-  //     setMoveType(null)
-  //   }
-  // }, [open])
+  useEffect(() => {
+    setGameName(player.current_game)
+  }, [player.current_game])
 
   const {
     data: gameNamesData,
@@ -150,6 +143,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         },
         dice
       )
+      setRating(null)
+      setRatingHover(null)
+      setGameName('')
+      setReview('')
+      setGameHours(null)
+      setMoveType(null)
     }
   }
 
