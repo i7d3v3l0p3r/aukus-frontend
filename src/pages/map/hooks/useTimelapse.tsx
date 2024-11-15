@@ -14,6 +14,8 @@ type TimelapseState = {
   setSelectedMoveId: (moveId: number) => void
   players: Player[]
   moves: PlayerMove[]
+  followMode: boolean
+  setFollowMode: (mode: boolean) => void
 }
 
 const Today = new Date()
@@ -28,6 +30,8 @@ const TimelapseContext = createContext<TimelapseState>({
   setSelectedMoveId: () => {},
   players: [],
   moves: [],
+  followMode: true,
+  setFollowMode: () => {},
 })
 
 export function useTimelapse() {
@@ -43,6 +47,7 @@ export default function TimelapseProvider({
   const [selectedDate, setSelectedDate] = useState<string>(TodayString)
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
+  const [followMode, setFollowMode] = useState<boolean>(true)
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
@@ -101,6 +106,9 @@ export default function TimelapseProvider({
 
   // scroll to seleceted player move
   useEffect(() => {
+    if (!followMode) {
+      return
+    }
     const move = moves[selectedMoveId - 1]
     // console.log(move)
     if (move) {
@@ -128,6 +136,8 @@ export default function TimelapseProvider({
         setSelectedMoveId,
         players: updatedPlayers,
         moves,
+        followMode,
+        setFollowMode,
       }}
     >
       {children}
