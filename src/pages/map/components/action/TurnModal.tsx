@@ -96,7 +96,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   useEffect(() => {
     const checkImage = async (url: string) => {
       const result = await checkImageValid(url)
-      setIsImageValid(!result)
+      setIsImageValid(result)
     }
     if (gameImage) {
       checkImage(gameImage)
