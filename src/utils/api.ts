@@ -75,8 +75,6 @@ export async function fetchStats(): Promise<StatsResponse> {
 
 type Game = {
   gameName: string
-  box_art_url: string
-  id: number
 }
 
 type GamesResponse = {
