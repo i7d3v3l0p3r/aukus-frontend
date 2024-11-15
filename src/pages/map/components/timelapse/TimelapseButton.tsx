@@ -144,7 +144,7 @@ export default function TimelapseButton({ variant }: Props) {
           </Button>
           <Button
             onClick={() => timelapseState.setState('move_selection')}
-            sx={{ width: '320px', marginRight: '10px' }}
+            sx={{ width: '320px', marginRight: '10px', height: '44px' }}
           >
             Выбрать дату - {dateString}
           </Button>
