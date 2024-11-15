@@ -22,6 +22,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { fetchGameNames } from 'utils/api'
+import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 
 import {
   Color,
@@ -80,6 +81,13 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   let gameNameOptions: string[] = []
   if (gameName.length > 3 && gameNamesData) {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
+  }
+
+  let gameImage = null
+  if (gameNamesData) {
+    gameImage = gameNamesData.games[0].box_art_url
+      .replace('{width}', '200')
+      .replace('{height}', '300')
   }
 
   const handleRatingChange = (
@@ -200,7 +208,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     <Dialog
       open={open}
       onClose={() => {}}
-      fullWidth
+      maxWidth="md"
       keepMounted
       sx={{ fontWeight: 500 }}
     >
@@ -273,103 +281,117 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           </Select>
         </FormControl>
 
-        <Box marginTop={'30px'} lineHeight={1}>
-          <span style={{ marginLeft: '15px', fontSize: '20px' }}>
-            {moveType === 'movie' ? 'Фильм' : 'Игра'}
-          </span>
-          <Autocomplete
-            freeSolo
-            fullWidth
-            PopperComponent={CustomPopper}
-            options={gameNameOptions}
-            value={gameName}
-            onChange={(_, newValue) => {
-              setGameName(newValue || '')
-            }}
-            renderInput={(params) => (
-              <TextField
-                onChange={(
-                  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => setGameName(event.target.value)}
-                {...params}
-                style={{
-                  paddingTop: '10px',
-                  paddingBottom: '10px',
-                  fontSize: '16px important!',
-                }}
+        <Box marginTop={'30px'} lineHeight={1} display={'flex'}>
+          <Box marginRight={'30px'}>
+            {gameImage ? (
+              <img
+                src={gameImage}
+                alt="game"
+                style={{ width: '120px', height: '180px' }}
               />
+            ) : (
+              <ImagePlaceholder width={'120px'} height={'180px'} />
             )}
-            sx={{
-              marginTop: '10px',
-            }}
-            className={
-              gameNameOptions.length > 0 ? 'has-options' : 'no-options'
-            }
-          />
-        </Box>
-        <Box marginTop={'20px'}>
-          {moveType === 'completed' && (
-            <Box display="flex" justifyContent={'center'}>
-              <Button
-                onClick={() => handleGameHoursChange('short')}
-                variant={gameHours === 'short' ? 'contained' : 'outlined'}
-                color={gameHours === 'short' ? 'secondary' : 'info'}
-                style={{
-                  width: 200,
-                  fontSize: '16px',
-                  border:
-                    gameHours === 'short'
-                      ? '2px solid transparent'
-                      : `2px solid ${Color.greyLight}`,
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  paddingLeft: '15px',
-                  paddingRight: '15px',
-                }}
-              >
-                0-5 часов
-              </Button>
-              <Button
-                onClick={() => handleGameHoursChange('medium')}
-                variant={gameHours === 'medium' ? 'contained' : 'outlined'}
-                color={gameHours === 'medium' ? 'secondary' : 'info'}
-                style={{
-                  marginLeft: 20,
-                  width: 200,
-                  fontSize: '16px',
-                  border:
-                    gameHours === 'medium'
-                      ? '2px solid transparent'
-                      : `2px solid ${Color.greyLight}`,
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  paddingLeft: '15px',
-                  paddingRight: '15px',
-                }}
-              >
-                5+ часов
-              </Button>
-              {/* <Button
-                onClick={() => handleGameHoursChange('long')}
-                variant={gameHours === 'long' ? 'contained' : 'outlined'}
-                color={gameHours === 'long' ? 'secondary' : 'info'}
-                style={{
-                  marginLeft: 20,
-                  width: 200,
-                  fontSize: '16px',
-                  border: gameHours === 'long' ? '2px solid transparent' : `2px solid ${Color.greyLight}`,
-                  paddingTop: '5px',
-                  paddingBottom: '5px',
-                  paddingLeft: '15px',
-                  paddingRight: '15px',
-                }}
-              >
-                15+ часов
-              </Button> */}
+          </Box>
+          <Box width={'100%'}>
+            <span style={{ marginLeft: '15px', fontSize: '20px' }}>
+              {moveType === 'movie' ? 'Фильм' : 'Игра'}
+            </span>
+            <Autocomplete
+              freeSolo
+              fullWidth
+              PopperComponent={CustomPopper}
+              options={gameNameOptions}
+              value={gameName}
+              onChange={(_, newValue) => {
+                setGameName(newValue || '')
+              }}
+              renderInput={(params) => (
+                <TextField
+                  onChange={(
+                    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                  ) => setGameName(event.target.value)}
+                  {...params}
+                  style={{
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    fontSize: '16px important!',
+                  }}
+                />
+              )}
+              sx={{
+                marginTop: '10px',
+                width: '420px',
+              }}
+              className={
+                gameNameOptions.length > 0 ? 'has-options' : 'no-options'
+              }
+            />
+            <Box marginTop={'30px'}>
+              {moveType === 'completed' && (
+                <Box display="flex" justifyContent={'center'}>
+                  <Button
+                    onClick={() => handleGameHoursChange('short')}
+                    variant={gameHours === 'short' ? 'contained' : 'outlined'}
+                    color={gameHours === 'short' ? 'secondary' : 'info'}
+                    style={{
+                      width: 200,
+                      fontSize: '16px',
+                      border:
+                        gameHours === 'short'
+                          ? '2px solid transparent'
+                          : `2px solid ${Color.greyLight}`,
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      paddingLeft: '15px',
+                      paddingRight: '15px',
+                    }}
+                  >
+                    0-5 часов
+                  </Button>
+                  <Button
+                    onClick={() => handleGameHoursChange('medium')}
+                    variant={gameHours === 'medium' ? 'contained' : 'outlined'}
+                    color={gameHours === 'medium' ? 'secondary' : 'info'}
+                    style={{
+                      marginLeft: 20,
+                      width: 200,
+                      fontSize: '16px',
+                      border:
+                        gameHours === 'medium'
+                          ? '2px solid transparent'
+                          : `2px solid ${Color.greyLight}`,
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      paddingLeft: '15px',
+                      paddingRight: '15px',
+                    }}
+                  >
+                    5+ часов
+                  </Button>
+                  {/* <Button
+                    onClick={() => handleGameHoursChange('long')}
+                    variant={gameHours === 'long' ? 'contained' : 'outlined'}
+                    color={gameHours === 'long' ? 'secondary' : 'info'}
+                    style={{
+                      marginLeft: 20,
+                      width: 200,
+                      fontSize: '16px',
+                      border: gameHours === 'long' ? '2px solid transparent' : `2px solid ${Color.greyLight}`,
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      paddingLeft: '15px',
+                      paddingRight: '15px',
+                    }}
+                  >
+                    15+ часов
+                  </Button> */}
+                </Box>
+              )}
             </Box>
-          )}
+          </Box>
         </Box>
-        <Box marginTop={'28px'} display="flex">
+        <Box marginTop={'30px'} display="flex">
           <span
             style={{ width: '110px', marginLeft: '15px', fontSize: '16px' }}
           >
