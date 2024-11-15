@@ -33,6 +33,7 @@ import {
 } from 'utils/types'
 import NumRating from './NumRating'
 import { isNumber } from 'lodash'
+import { checkImageValid } from '../utils'
 
 type Props = {
   open: boolean
@@ -48,6 +49,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [review, setReview] = useState('')
   const [gameHours, setGameHours] = useState<'short' | 'medium' | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
+  const [isImageValid, setIsImageValid] = useState(false)
 
   useEffect(() => {
     if (player.current_game) {
@@ -83,11 +85,26 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
   }
 
-  let gameImage = null
+  let gameImage: string | null = null
+
   if (gameNamesData && gameNamesData.games.length > 0) {
     gameImage = gameNamesData.games[0].box_art_url
       .replace('{width}', '200')
       .replace('{height}', '300')
+  }
+
+  useEffect(() => {
+    const checkImage = async (url: string) => {
+      const result = await checkImageValid(url)
+      setIsImageValid(!result)
+    }
+    if (gameImage) {
+      checkImage(gameImage)
+    }
+  }, [gameImage])
+
+  if (!isImageValid) {
+    gameImage = null
   }
 
   const handleRatingChange = (
