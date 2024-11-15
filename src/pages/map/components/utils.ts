@@ -94,3 +94,14 @@ export const snakesByCell = snakes.reduce(
   },
   {} as Record<number, Snake>
 )
+
+export async function checkImageValid(url: string) {
+  if (url === '') {
+    return false
+  }
+  const response = await fetch(url, { method: 'HEAD' })
+  if (response.redirected) {
+    return false
+  }
+  return true
+}
