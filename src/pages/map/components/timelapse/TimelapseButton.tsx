@@ -131,8 +131,20 @@ export default function TimelapseButton({ variant }: Props) {
         </Box>
         <Box textAlign="center">
           <Button
+            onClick={() =>
+              timelapseState.setFollowMode(!timelapseState.followMode)
+            }
+            sx={{
+              backgroundColor: timelapseState.followMode ? Color.blue : 'black',
+              marginRight: '10px',
+              width: '163px',
+            }}
+          >
+            {timelapseState.followMode ? 'Не следовать' : 'Следовать'}
+          </Button>
+          <Button
             onClick={() => timelapseState.setState('move_selection')}
-            sx={{ width: '320px', marginRight: '10px', position: 'relative' }}
+            sx={{ width: '320px', marginRight: '10px' }}
           >
             Выбрать дату - {dateString}
           </Button>
@@ -140,7 +152,7 @@ export default function TimelapseButton({ variant }: Props) {
             onClick={() => timelapseState.setState('closed')}
             sx={{
               backgroundColor: 'black',
-              position: 'absolute',
+
               width: '163px',
             }}
           >
