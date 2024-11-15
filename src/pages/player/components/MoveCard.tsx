@@ -1,10 +1,11 @@
 import { Box, Divider } from '@mui/material'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
 import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
+import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import EditVodModal from './EditVodModal'
 import { formatDate, formatNumber } from './utils'
 import TextRender from './TextRender'
@@ -151,15 +152,25 @@ export default function MoveCard({
             {moveTypeText[move.type]}
           </Box>
           <Box display={'flex'}>
-            {gameImage && (
-              <Box marginRight={'15px'}>
-                <img
-                  src={gameImage}
-                  width={'80px'}
-                  style={{ borderRadius: '5px' }}
-                />
-              </Box>
-            )}
+            {move.type !== 'movie' &&
+              (gameImage ? (
+                <Box marginRight={'15px'}>
+                  <img
+                    src={gameImage}
+                    width={'80px'}
+                    height={'120px'}
+                    style={{ borderRadius: '5px' }}
+                  />
+                </Box>
+              ) : (
+                <Box marginRight={'15px'}>
+                  <ImagePlaceholder
+                    width={'80px'}
+                    height={'120'}
+                    style={{ borderRadius: '5px' }}
+                  />
+                </Box>
+              ))}
             <Box>
               <Box fontSize={'24px'} marginBottom={'10px'}>
                 {move.item_title}
