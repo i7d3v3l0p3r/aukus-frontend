@@ -1,5 +1,5 @@
 import { Box, Divider } from '@mui/material'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import LinkSpan from 'components/LinkSpan'
 import { useUser } from 'context/UserProvider'
 import { useState } from 'react'
@@ -43,6 +43,11 @@ export default function MoveCard({
   const [showVods, setShowVods] = useState(false)
   const [showVodsModal, setShowVodsModal] = useState(false)
   const currentUser = useUser()
+
+  let gameImage = move.item_image
+  if (gameImage) {
+    gameImage = gameImage.replace('{width}', '200').replace('{height}', '300')
+  }
 
   const canEdit =
     (currentUser?.role === 'player' &&
@@ -145,21 +150,31 @@ export default function MoveCard({
           >
             {moveTypeText[move.type]}
           </Box>
-          <Box fontSize={'24px'} marginBottom={'10px'}>
-            {move.item_title}
-          </Box>
-          <Box
-            fontSize={'13px'}
-            fontWeight={400}
-            marginBottom={'20px'}
-            color={greyColor}
-          >
-            Ролл кубика:&nbsp;&nbsp;&nbsp;
-            {formatNumber(move.dice_roll)}, позиция на карте:&nbsp;&nbsp;&nbsp;
-            {move.cell_to}
-          </Box>
-          <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
-            {move.item_rating}/10 — {move.item_review}
+          <Box display={'flex'}>
+            {gameImage && (
+              <Box marginRight={'10px'}>
+                <img src={gameImage} height={'150px'} />
+              </Box>
+            )}
+            <Box>
+              <Box fontSize={'24px'} marginBottom={'10px'}>
+                {move.item_title}
+              </Box>
+              <Box
+                fontSize={'13px'}
+                fontWeight={400}
+                marginBottom={'20px'}
+                color={greyColor}
+              >
+                Ролл кубика:&nbsp;&nbsp;&nbsp;
+                {formatNumber(move.dice_roll)}, позиция на
+                карте:&nbsp;&nbsp;&nbsp;
+                {move.cell_to}
+              </Box>
+              <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
+                {move.item_rating}/10 — {move.item_review}
+              </Box>
+            </Box>
           </Box>
           {displayType === 'player' && (
             <Box

@@ -90,7 +90,7 @@ export default function EditVodModal({
           }}
         />
         <Box marginTop={'20px'} marginBottom="10px">
-          Обновить ссылки на воды
+          Обновить ссылки на записи стримов
         </Box>
         <TextField
           InputProps={{

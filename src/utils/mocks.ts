@@ -152,6 +152,8 @@ export function playerMovesMock() {
       snake_from: null,
       snake_to: null,
       item_length: 'medium',
+      item_image:
+        'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
       vod_link:
         'test link 1\nДень 1 https://twitch.com/lasqa\nЧасть 2 https://youtube.com/test\ntest link 2\ntest field',
     })

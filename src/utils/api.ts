@@ -73,24 +73,24 @@ export async function fetchStats(): Promise<StatsResponse> {
   return fetch(`/api/player_stats`).then((res) => res.json())
 }
 
-type GameNamesResponse = {
+type Game = {
   gameName: string
-  box_art_url: string
-  id: number
 }
 
-export async function fetchGameNames(
-  name: string
-): Promise<GameNamesResponse[]> {
+type GamesResponse = {
+  games: Game[]
+}
+
+export async function fetchGameNames(name: string): Promise<GamesResponse> {
   if (MOCK_API) {
     console.log('fetching game names', name)
-    return Promise.resolve(
-      times(20, (index) => ({
+    return Promise.resolve({
+      games: times(20, (index) => ({
         gameName: `${name} ${index}`,
         box_art_url: '',
         id: index,
-      }))
-    )
+      })),
+    })
   }
 
   return fetch(`/api/games?title=${name}`).then((res) => res.json())
