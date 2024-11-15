@@ -43,26 +43,13 @@ type Props = {
 export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [rating, setRating] = useState<number | null>(null)
   const [ratingHover, setRatingHover] = useState<number | null>(null)
-  const [gameName, setGameName] = useState('')
+  const [gameName, setGameName] = useState(player.current_game)
   const [review, setReview] = useState('')
   const [gameHours, setGameHours] = useState<'short' | 'medium' | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
 
   useEffect(() => {
-    if (!open) {
-      setRating(null)
-      setRatingHover(null)
-      setGameName('')
-      setReview('')
-      setGameHours(null)
-      setMoveType(null)
-    }
-  }, [open])
-
-  useEffect(() => {
-    if (player.current_game) {
-      setGameName(player.current_game)
-    }
+    setGameName(player.current_game)
   }, [player.current_game])
 
   const {
@@ -156,6 +143,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         },
         dice
       )
+      setRating(null)
+      setRatingHover(null)
+      setGameName('')
+      setReview('')
+      setGameHours(null)
+      setMoveType(null)
     }
   }
 
