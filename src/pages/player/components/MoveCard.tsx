@@ -153,7 +153,11 @@ export default function MoveCard({
           <Box display={'flex'}>
             {gameImage && (
               <Box marginRight={'15px'}>
-                <img src={gameImage} width={'73px'} />
+                <img
+                  src={gameImage}
+                  width={'80px'}
+                  style={{ borderRadius: '5px' }}
+                />
               </Box>
             )}
             <Box>
