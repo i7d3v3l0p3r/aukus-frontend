@@ -33,6 +33,7 @@ import {
 } from 'utils/types'
 import NumRating from './NumRating'
 import { isNumber } from 'lodash'
+import { checkImageValid } from '../utils'
 
 type Props = {
   open: boolean
@@ -48,6 +49,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [review, setReview] = useState('')
   const [gameHours, setGameHours] = useState<'short' | 'medium' | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
+  const [gameImage, setGameImage] = useState<string | null>(null)
 
   useEffect(() => {
     if (player.current_game) {
@@ -83,12 +85,27 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
   }
 
-  let gameImage = null
-  if (gameNamesData) {
-    gameImage = gameNamesData.games[0].box_art_url
-      .replace('{width}', '200')
-      .replace('{height}', '300')
-  }
+  useEffect(() => {
+    if (
+      gameNamesData &&
+      gameNamesData.games.length > 0 &&
+      gameName.length > 3
+    ) {
+      const imageUrl = gameNamesData.games[0].box_art_url
+        .replace('{width}', '200')
+        .replace('{height}', '300')
+
+      const validateImage = async (url: string) => {
+        console.log('checking image validity')
+        const isValid = await checkImageValid(url)
+        setGameImage(isValid ? url : null)
+      }
+
+      validateImage(imageUrl)
+    } else {
+      setGameImage(null) // No game data
+    }
+  }, [gameNamesData?.games, gameName])
 
   const handleRatingChange = (
     _: React.SyntheticEvent,
@@ -287,10 +304,18 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               <img
                 src={gameImage}
                 alt="game"
-                style={{ width: '120px', height: '180px' }}
+                style={{
+                  width: '120px',
+                  height: '180px',
+                  borderRadius: '10px',
+                }}
               />
             ) : (
-              <ImagePlaceholder width={'120px'} height={'180px'} />
+              <ImagePlaceholder
+                width={'120px'}
+                height={'180px'}
+                style={{ borderRadius: '10px' }}
+              />
             )}
           </Box>
           <Box width={'100%'}>

@@ -88,7 +88,7 @@ export async function fetchGameNames(name: string): Promise<GamesResponse> {
     return Promise.resolve({
       games: times(20, (index) => ({
         gameName: `${name} ${index}`,
-        box_art_url: '',
+        box_art_url: `https://static-cdn.jtvnw.net/ttv-boxart/${index}-{width}x{height}.jpg`,
         id: index,
       })),
     })
