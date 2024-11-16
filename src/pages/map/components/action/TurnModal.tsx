@@ -91,7 +91,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       gameNamesData.games.length > 0 &&
       gameName.length > 3
     ) {
-      const imageUrl = gameNamesData.games[0].box_art_url
+      const matchingUrl =
+        gameNamesData.games.find((game) => game.gameName === gameName)
+          ?.box_art_url || gameNamesData.games[0].box_art_url
+
+      const imageUrl = matchingUrl
         .replace('{width}', '200')
         .replace('{height}', '300')
 
