@@ -86,7 +86,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }
 
   useEffect(() => {
-    if (gameNamesData && gameNamesData.games.length > 0) {
+    if (
+      gameNamesData &&
+      gameNamesData.games.length > 0 &&
+      gameName.length > 3
+    ) {
       const imageUrl = gameNamesData.games[0].box_art_url
         .replace('{width}', '200')
         .replace('{height}', '300')
@@ -101,7 +105,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     } else {
       setGameImage(null) // No game data
     }
-  }, [gameNamesData?.games])
+  }, [gameNamesData?.games, gameName])
 
   const handleRatingChange = (
     _: React.SyntheticEvent,
@@ -300,10 +304,18 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               <img
                 src={gameImage}
                 alt="game"
-                style={{ width: '120px', height: '180px' }}
+                style={{
+                  width: '120px',
+                  height: '180px',
+                  borderRadius: '10px',
+                }}
               />
             ) : (
-              <ImagePlaceholder width={'120px'} height={'180px'} />
+              <ImagePlaceholder
+                width={'120px'}
+                height={'180px'}
+                style={{ borderRadius: '10px' }}
+              />
             )}
           </Box>
           <Box width={'100%'}>
