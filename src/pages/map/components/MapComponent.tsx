@@ -60,7 +60,7 @@ export default function MapComponent() {
   const winnerFound =
     !timelapseEnabled &&
     playerWithMaxPosition &&
-    playerWithMaxPosition.map_position > 1
+    playerWithMaxPosition.map_position > 101
 
   const currentUser = useUser()
   useScreenSize({ updateOnResize: true })
