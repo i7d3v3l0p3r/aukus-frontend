@@ -4,7 +4,7 @@ import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
 import { Fragment, useState } from 'react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
-import { NextTurnParams, Player } from 'utils/types'
+import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
 import ActionButton from './action/ActionButton'
@@ -26,6 +26,7 @@ import {
   snakesByCell,
   startCell,
 } from './utils'
+import LinkSpan from 'src/components/LinkSpan'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
@@ -48,6 +49,18 @@ export default function MapComponent() {
   if (timelapseEnabled) {
     players = timelapseState.players
   }
+
+  const playerWithMaxPosition =
+    players.length > 0
+      ? players.reduce((prev, current) =>
+          prev.map_position > current.map_position ? prev : current
+        )
+      : null
+
+  const winnerFound =
+    !timelapseEnabled &&
+    playerWithMaxPosition &&
+    playerWithMaxPosition.map_position > 1
 
   const currentUser = useUser()
   useScreenSize({ updateOnResize: true })
@@ -139,6 +152,11 @@ export default function MapComponent() {
     setMakingTurn(false)
   }
 
+  const stopActions = winnerFound
+
+  const showBigTimelapse = !currentPlayer && !timelapseEnabled
+  const showActionButtons = currentPlayer && !timelapseEnabled && !stopActions
+
   return (
     <Box
       style={{
@@ -150,6 +168,16 @@ export default function MapComponent() {
       onClick={handleClick}
     >
       <SVGMarkers />
+
+      {winnerFound && (
+        <Box fontSize={'32px'} textAlign={'center'}>
+          Можете выдыхать, ивент закончен:{' '}
+          <LinkSpan color={getPlayerColor(playerWithMaxPosition.url_handle)}>
+            {playerWithMaxPosition.name}
+          </LinkSpan>{' '}
+          победил!
+        </Box>
+      )}
 
       <Grid
         container
@@ -234,7 +262,7 @@ export default function MapComponent() {
         ))}
       <StaticPanel>
         <Box display="flex" justifyContent="center" width={'100%'}>
-          {currentPlayer && !timelapseEnabled && (
+          {showActionButtons && (
             <Box textAlign="center" width="100%">
               <Box
                 sx={{
@@ -259,9 +287,7 @@ export default function MapComponent() {
           )}
         </Box>
         <Box display="flex" justifyContent="center" width={'100%'}>
-          {!currentPlayer && !timelapseEnabled && (
-            <TimelapseButton variant="big" />
-          )}
+          {showBigTimelapse && <TimelapseButton variant="big" />}
         </Box>
         {currentPlayer && !timelapseEnabled && (
           <Box marginTop={'10px'} display="block" textAlign="center">
