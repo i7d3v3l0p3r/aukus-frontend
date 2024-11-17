@@ -116,6 +116,7 @@ export const ColorByUrlHandle: { [key: string]: string } = {
   lasqa: Color.blue,
   segall: Color.orange,
   praden: Color.brown,
+  predan: Color.brown,
   artur: Color.red,
   uselessmouth: Color.pink,
   roadhouse: Color.purple,
@@ -130,6 +131,7 @@ export const ColorNameByUrlHandle: {
 } = {
   lasqa: 'customBlue',
   praden: 'customBrown',
+  predan: 'customBrown',
   roadhouse: 'customPurple',
   segall: 'customOrange',
   artur: 'customRed',
