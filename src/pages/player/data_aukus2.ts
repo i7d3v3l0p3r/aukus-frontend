@@ -3780,6 +3780,10 @@ export const aukus2Games: { [key: string]: GamesItem } = {
     games: PradenGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1053243152#gid=1053243152',
   },
+  predan: {
+    games: PradenGames,
+    link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1053243152#gid=1053243152',
+  },
   roadhouse: {
     games: RoadhouseGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1528544705#gid=1528544705',

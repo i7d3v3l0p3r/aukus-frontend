@@ -7,11 +7,11 @@ import BrowjeyPhoto from 'assets/photos/browjey.webp'
 import UnclebjornPhoto from 'assets/photos/unclebjorn.webp'
 import UselessmouthPhoto from 'assets/photos/uselessmouth.webp'
 
-
 export const PlayerPhotoMap: { [s: string]: string } = {
   roadhouse: RoadhousePhoto,
   lasqa: LasqaPhoto,
   praden: PradenPhoto,
+  predan: PradenPhoto,
   f1ashko: FlashkoPhoto,
   segall: SegallPhoto,
   browjey: BrowjeyPhoto,
