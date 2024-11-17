@@ -3,6 +3,7 @@ import TodaysMoves from './TodaysMoves'
 import { fetchPlayers } from 'src/utils/api'
 import { useQuery } from '@tanstack/react-query'
 import { Color, getPlayerColor, Player } from 'src/utils/types'
+import { Link } from 'react-router-dom'
 
 export default function MapComponentMobile() {
   const { data: playersData } = useQuery({
@@ -61,18 +62,31 @@ function MapPosition({ cell, players }: { cell: number; players: Player[] }) {
       </Box>
       <Box>
         {players.map((player, index) => (
-          <Box
+          <Link
             key={index}
-            borderRadius={'10px'}
-            padding={'15px'}
-            marginTop={'15px'}
-            style={{ backgroundColor: getPlayerColor(player.url_handle) }}
+            to={`/players/${player.url_handle}`}
+            style={{ textDecoration: 'none' }}
           >
-            <Box fontSize={'12px'} color="rgba(255,255,255,0.8)">
-              {player.name}
+            <Box
+              key={index}
+              borderRadius={'10px'}
+              padding={'15px'}
+              marginTop={'15px'}
+              style={{ backgroundColor: getPlayerColor(player.url_handle) }}
+            >
+              <Box
+                fontSize={'12px'}
+                color="rgba(255,255,255,0.8)"
+                textTransform={'uppercase'}
+                display={'flex'}
+                justifyContent={'space-between'}
+              >
+                <Box>{player.name}</Box>
+                <Box>{player.is_online ? 'стримит' : 'офлайн'}</Box>
+              </Box>
+              <Box fontSize={'32px'}>{player.current_game}</Box>
             </Box>
-            <Box fontSize={'32px'}>{player.current_game}</Box>
-          </Box>
+          </Link>
         ))}
       </Box>
     </Box>
