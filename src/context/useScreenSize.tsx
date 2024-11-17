@@ -8,11 +8,15 @@ export default function useScreenSize({ updateOnResize = false }: Params = {}) {
   const [width, setWidth] = useState(window.innerWidth)
   const [height, setHeight] = useState(window.innerHeight)
 
+  const getIsMobile = () => document.documentElement.clientWidth <= 768
+  const [isMobile, setIsMobile] = useState(getIsMobile)
+
   useEffect(() => {
     // Function to update the window size state
     const handleResize = () => {
       setWidth(window.innerWidth)
       setHeight(window.innerHeight)
+      setIsMobile(getIsMobile())
     }
 
     // Add event listener to handle window resize
@@ -26,7 +30,7 @@ export default function useScreenSize({ updateOnResize = false }: Params = {}) {
     }
   }, []) // Empty dependency array ensures this runs only once on mount
 
-  const isMobile = width < 768
+  // const isMobile = width < 768
   const headerSize = isMobile ? '36px' : '48px'
 
   return { width, height, isMobile, headerSize }
