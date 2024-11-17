@@ -93,27 +93,29 @@ function MapPosition({ cell, players }: { cell: number; players: Player[] }) {
                   <Box>{player.name}</Box>
                   <Box>{player.is_online ? 'стримит' : 'офлайн'}</Box>
                 </Box>
-                <Box display="flex" marginTop={'10px'}>
-                  <Box marginRight={'10px'}>
-                    {gameImage ? (
-                      <img
-                        src={gameImage}
-                        width={'66px'}
-                        height={'99px'}
-                        style={{ borderRadius: '5px' }}
-                      />
-                    ) : (
-                      <ImagePlaceholder
-                        style={{
-                          width: '66px',
-                          height: '99px',
-                          borderRadius: '5px',
-                        }}
-                      />
-                    )}
+                {player.current_game && (
+                  <Box display="flex" marginTop={'10px'}>
+                    <Box marginRight={'10px'}>
+                      {gameImage ? (
+                        <img
+                          src={gameImage}
+                          width={'66px'}
+                          height={'99px'}
+                          style={{ borderRadius: '5px' }}
+                        />
+                      ) : (
+                        <ImagePlaceholder
+                          style={{
+                            width: '66px',
+                            height: '99px',
+                            borderRadius: '5px',
+                          }}
+                        />
+                      )}
+                    </Box>
+                    <Box fontSize={'32px'}>{player.current_game}</Box>
                   </Box>
-                  <Box fontSize={'32px'}>{player.current_game}</Box>
-                </Box>
+                )}
               </Box>
             </Link>
           )
