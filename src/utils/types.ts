@@ -8,6 +8,7 @@ export type Player = {
   is_online: boolean
   current_game: string | null
   current_game_updated_at: string
+  current_game_image: string | null
   url_handle: string
   map_position: number
   stream_last_category: string
