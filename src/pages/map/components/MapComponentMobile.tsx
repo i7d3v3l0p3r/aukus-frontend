@@ -2,7 +2,8 @@ import { Box } from '@mui/material'
 import TodaysMoves from './TodaysMoves'
 import { fetchPlayers } from 'src/utils/api'
 import { useQuery } from '@tanstack/react-query'
-import { Color, getPlayerColor, Player } from 'src/utils/types'
+import { getPlayerColor, Player } from 'src/utils/types'
+import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import { Link } from 'react-router-dom'
 
 export default function MapComponentMobile() {
@@ -61,33 +62,62 @@ function MapPosition({ cell, players }: { cell: number; players: Player[] }) {
         КЛЕТКА — {cellName(cell)}
       </Box>
       <Box>
-        {players.map((player, index) => (
-          <Link
-            key={index}
-            to={`/players/${player.url_handle}`}
-            style={{ textDecoration: 'none' }}
-          >
-            <Box
+        {players.map((player, index) => {
+          let gameImage = player.current_game_image
+          if (gameImage) {
+            gameImage = gameImage
+              .replace('{width}', '200')
+              .replace('{height}', '300')
+          }
+
+          return (
+            <Link
               key={index}
-              borderRadius={'10px'}
-              padding={'15px'}
-              marginTop={'15px'}
-              style={{ backgroundColor: getPlayerColor(player.url_handle) }}
+              to={`/players/${player.url_handle}`}
+              style={{ textDecoration: 'none' }}
             >
               <Box
-                fontSize={'12px'}
-                color="rgba(255,255,255,0.8)"
-                textTransform={'uppercase'}
-                display={'flex'}
-                justifyContent={'space-between'}
+                key={index}
+                borderRadius={'10px'}
+                padding={'15px'}
+                marginTop={'15px'}
+                style={{ backgroundColor: getPlayerColor(player.url_handle) }}
               >
-                <Box>{player.name}</Box>
-                <Box>{player.is_online ? 'стримит' : 'офлайн'}</Box>
+                <Box
+                  fontSize={'12px'}
+                  color="rgba(255,255,255,0.8)"
+                  textTransform={'uppercase'}
+                  display={'flex'}
+                  justifyContent={'space-between'}
+                >
+                  <Box>{player.name}</Box>
+                  <Box>{player.is_online ? 'стримит' : 'офлайн'}</Box>
+                </Box>
+                <Box display="flex" marginTop={'10px'}>
+                  <Box marginRight={'10px'}>
+                    {gameImage ? (
+                      <img
+                        src={gameImage}
+                        width={'66px'}
+                        height={'99px'}
+                        style={{ borderRadius: '5px' }}
+                      />
+                    ) : (
+                      <ImagePlaceholder
+                        style={{
+                          width: '66px',
+                          height: '99px',
+                          borderRadius: '5px',
+                        }}
+                      />
+                    )}
+                  </Box>
+                  <Box fontSize={'32px'}>{player.current_game}</Box>
+                </Box>
               </Box>
-              <Box fontSize={'32px'}>{player.current_game}</Box>
-            </Box>
-          </Link>
-        ))}
+            </Link>
+          )
+        })}
       </Box>
     </Box>
   )

@@ -16,6 +16,8 @@ const playerLasqa: Player = {
   last_name: '',
   telegram_link: 'https://t.me/lasqa',
   current_game_updated_at: '2024-10-11 12:14:15',
+  current_game_image:
+    'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
 }
 
 const playerSegall: Player = {
@@ -33,6 +35,8 @@ const playerSegall: Player = {
   last_name: '',
   telegram_link: 'https://t.me/segall',
   current_game_updated_at: '2024-10-11 12:14:15',
+  current_game_image:
+    'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
 }
 
 const playerRoadhouse: Player = {
@@ -50,6 +54,8 @@ const playerRoadhouse: Player = {
   last_name: '',
   telegram_link: 'https://t.me/roadhouse',
   current_game_updated_at: '2024-10-11 12:14:15',
+  current_game_image:
+    'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
 }
 
 const playerPraden: Player = {
@@ -67,6 +73,8 @@ const playerPraden: Player = {
   last_name: '',
   telegram_link: 'https://t.me/roadhouse',
   current_game_updated_at: '2024-10-11 12:14:15',
+  current_game_image:
+    'https://static-cdn.jtvnw.net/ttv-boxart/Valheim-{width}x{height}.jpg',
 }
 
 export const playersMock = [
