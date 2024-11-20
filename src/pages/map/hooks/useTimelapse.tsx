@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { fetchMovesByDate, fetchPlayers } from 'utils/api'
+import { fetchMovesByDate, fetchPlayers, PlayerMovesResponse } from 'utils/api'
 import { Player, PlayerMove } from 'utils/types'
 
 type StateOption = 'closed' | 'date_selection' | 'move_selection'
@@ -48,13 +48,22 @@ export default function TimelapseProvider({
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
   const [followMode, setFollowMode] = useState<boolean>(true)
+  const [currentResponse, setCurrentResponse] =
+    useState<PlayerMovesResponse | null>(null)
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
     queryFn: () => fetchMovesByDate(selectedDate),
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
+    placeholderData: () => currentResponse,
   })
+
+  useEffect(() => {
+    if (movesByDay) {
+      setCurrentResponse(movesByDay)
+    }
+  }, [movesByDay])
 
   const moves = useMemo(() => {
     const _moves = movesByDay?.moves || []
@@ -107,6 +116,9 @@ export default function TimelapseProvider({
   // scroll to seleceted player move
   useEffect(() => {
     if (!followMode) {
+      return
+    }
+    if (openState === 'closed') {
       return
     }
     const move = moves[selectedMoveId - 1]

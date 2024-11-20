@@ -121,7 +121,7 @@ export async function updateVodLink({
   }).then((res) => res.json())
 }
 
-type PlayerMovesResponse = {
+export type PlayerMovesResponse = {
   moves: Array<PlayerMove>
   last_move_id?: number
 }
