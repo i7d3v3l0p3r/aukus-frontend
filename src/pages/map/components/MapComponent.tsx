@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
 import { Fragment, useState } from 'react'
@@ -37,6 +37,8 @@ export default function MapComponent() {
 
   const timelapseState = useTimelapse()
   const timelapseEnabled = timelapseState.state !== 'closed'
+
+  const queryClient = useQueryClient()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -136,20 +138,27 @@ export default function MapComponent() {
     if (currentPlayer.map_position === 101 && params.type === 'completed') {
       // win condition
       const newPosition = 102
-      makeMove.mutate({
-        player_id: currentPlayer.id,
-        dice_roll: 1,
-        move_to: newPosition,
-        stair_from: null,
-        stair_to: null,
-        snake_from: null,
-        snake_to: null,
-        type: params.type,
-        item_title: params.itemTitle,
-        item_length: params.itemLength,
-        item_rating: params.itemRating,
-        item_review: params.itemReview,
-      })
+      makeMove.mutate(
+        {
+          player_id: currentPlayer.id,
+          dice_roll: 1,
+          move_to: newPosition,
+          stair_from: null,
+          stair_to: null,
+          snake_from: null,
+          snake_to: null,
+          type: params.type,
+          item_title: params.itemTitle,
+          item_length: params.itemLength,
+          item_rating: params.itemRating,
+          item_review: params.itemReview,
+        },
+        {
+          onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ['players'] })
+          },
+        }
+      )
       return
     }
 
@@ -165,6 +174,7 @@ export default function MapComponent() {
     player.map_position = newPosition
     setMoveSteps(0)
     setMakingTurn(false)
+    queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
   const stopActions = winnerFound
