@@ -204,6 +204,7 @@ export default function MapComponent() {
           backgroundPosition: 'center' /* Center the image */,
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
           backgroundSize: 'cover',
+          borderRadius: '15px',
         }}
       >
         <Grid container columns={10} width={'auto'}>
