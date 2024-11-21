@@ -133,7 +133,7 @@ export default function MoveCard({
                   }}
                 />
               )}
-              <Box color={greyColor}>{moveTitle}</Box>
+              <Box>{moveTitle}</Box>
             </Box>
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
