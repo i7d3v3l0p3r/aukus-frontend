@@ -135,6 +135,21 @@ export default function MapComponent() {
 
     if (currentPlayer.map_position === 101 && params.type === 'completed') {
       // win condition
+      const newPosition = 102
+      makeMove.mutate({
+        player_id: currentPlayer.id,
+        dice_roll: 1,
+        move_to: newPosition,
+        stair_from: null,
+        stair_to: null,
+        snake_from: null,
+        snake_to: null,
+        type: params.type,
+        item_title: params.itemTitle,
+        item_length: params.itemLength,
+        item_rating: params.itemRating,
+        item_review: params.itemReview,
+      })
       return
     }
 
