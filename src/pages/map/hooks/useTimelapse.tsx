@@ -48,8 +48,9 @@ export default function TimelapseProvider({
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
   const [followMode, setFollowMode] = useState<boolean>(true)
-  const [currentResponse, setCurrentResponse] =
-    useState<PlayerMovesResponse | null>(null)
+  const [currentResponse, setCurrentResponse] = useState<
+    PlayerMovesResponse | undefined
+  >(undefined)
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
