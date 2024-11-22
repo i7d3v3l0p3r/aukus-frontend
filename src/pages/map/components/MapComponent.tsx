@@ -2,7 +2,9 @@ import { Box, Grid } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fireworks } from '@fireworks-js/react'
+import type { FireworksHandlers } from '@fireworks-js/react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
 import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
@@ -40,6 +42,31 @@ export default function MapComponent() {
 
   const queryClient = useQueryClient()
 
+  const fireworksRef = useRef<FireworksHandlers>(null)
+
+  const disableFireworks = () => {
+    if (fireworksRef.current) {
+      fireworksRef.current.stop()
+    }
+  }
+
+  const enableFireworks = () => {
+    if (fireworksRef.current) {
+      fireworksRef.current.start()
+    }
+  }
+
+  const toggleFireworks = () => {
+    if (!fireworksRef.current) {
+      return
+    }
+    if (fireworksRef.current.isRunning) {
+      fireworksRef.current.stop()
+    } else {
+      fireworksRef.current.start()
+    }
+  }
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: () => fetchPlayers(),
@@ -63,6 +90,15 @@ export default function MapComponent() {
     !timelapseEnabled &&
     playerWithMaxPosition &&
     playerWithMaxPosition.map_position > 101
+
+  useEffect(() => {
+    if (winnerFound && !fireworksRef.current?.isRunning) {
+      enableFireworks()
+    }
+    if (!winnerFound) {
+      disableFireworks()
+    }
+  }, [winnerFound])
 
   const currentUser = useUser()
   useScreenSize({ updateOnResize: true })
@@ -193,10 +229,23 @@ export default function MapComponent() {
       onClick={handleClick}
     >
       <SVGMarkers />
+      <Fireworks
+        ref={fireworksRef}
+        options={{ opacity: 0.5, explosion: 8, intensity: 45, particles: 105 }}
+        style={{
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          position: 'fixed',
+          zIndex: 2,
+        }}
+      />
 
       {winnerFound && (
-        <Box fontSize={'32px'} textAlign={'center'}>
-          Можете выдыхать, ивент закончен:{' '}
+        <Box fontSize={'32px'} textAlign={'center'} marginBottom={'30px'}>
+          Можете выдыхать, ивент закончен:
+          <br />
           <LinkSpan color={getPlayerColor(playerWithMaxPosition.url_handle)}>
             {playerWithMaxPosition.name}
           </LinkSpan>{' '}
