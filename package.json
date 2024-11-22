@@ -12,6 +12,8 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@fireworks-js/react": "^2.10.8",
+    "@mapcar/dice-box": "^1.1.5",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
@@ -34,8 +36,7 @@
     "styled-components": "^6.1.12",
     "use-image": "^1.1.1",
     "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^5.0.1",
-    "@mapcar/dice-box": "^1.1.5"
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
