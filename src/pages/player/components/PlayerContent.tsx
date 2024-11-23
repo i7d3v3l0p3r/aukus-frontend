@@ -119,7 +119,7 @@ export default function PlayerContent() {
                 marginRight={'10px'}
               >
                 <TextField
-                  placeholder="Поиск среди всех игр Аукусов"
+                  placeholder="Поиск среди всех игр Аукусов (ру/en)"
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
                   InputProps={{
@@ -221,16 +221,16 @@ export default function PlayerContent() {
 
 // Mapping of Russian characters to arrays of phonetically similar English characters (lowercase only)
 const transliterationMap: { [key: string]: string[] } = {
-  а: ['a'],
+  а: ['a', 'u'],
   б: ['b', 'v'],
   в: ['v', 'w'],
   г: ['g', 'h'],
-  д: ['d'],
+  д: ['d', 'j'],
   е: ['e', 'ye'],
   ё: ['yo', 'io'],
   ж: ['zh', 'j'],
   з: ['z'],
-  и: ['i', 'y'],
+  и: ['i', 'y', 'ee'],
   й: ['y'],
   к: ['k', 'c'],
   л: ['l'],
@@ -241,15 +241,15 @@ const transliterationMap: { [key: string]: string[] } = {
   р: ['r'],
   с: ['s'],
   т: ['t'],
-  у: ['u'],
+  у: ['u', 'oo'],
   ф: ['f', 'v'],
   х: ['kh', 'h', 'ch'],
   ц: ['ts', 'c'],
   ч: ['ch', 'tch'],
   ш: ['sh'],
   щ: ['shch'],
-  ы: ['y'],
-  э: ['e'],
+  ы: ['y', 'i'],
+  э: ['e', 'a'],
   ю: ['yu', 'iu'],
   я: ['ya', 'ia'],
 }
