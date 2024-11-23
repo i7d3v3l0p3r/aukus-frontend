@@ -251,6 +251,8 @@ export default function MapComponent() {
             style={{
               backgroundColor: getPlayerColor(playerWithMaxPosition.url_handle),
               borderRadius: '10px',
+              zIndex: 10,
+              position: 'relative',
             }}
             width={'740px'}
             height={'44px'}
