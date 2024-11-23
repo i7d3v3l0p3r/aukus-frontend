@@ -33,6 +33,7 @@ import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 const playerIcons: { [key: string]: string } = {
   lasqa: PlayerBlue,
   praden: PlayerBrown,
+  predan: PlayerBrown,
   roadhouse: PlayerPurple,
   segall: PlayerOrange,
   artur: PlayerRed,
@@ -46,6 +47,7 @@ const playerIcons: { [key: string]: string } = {
 const playerMovingIcons: { [key: string]: string } = {
   lasqa: PlayerBlueMoving,
   praden: PlayerBrownMoving,
+  predan: PlayerBrownMoving,
   roadhouse: PlayerPurpleMoving,
   segall: PlayerOrangeMoving,
   artur: PlayerRedMoving,
