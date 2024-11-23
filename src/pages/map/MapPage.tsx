@@ -20,7 +20,7 @@ export default function MapPage() {
           alignItems="center"
           justifyContent={'start'}
           margin={'auto'}
-          marginTop={'100px'}
+          marginTop={'50px'}
           width={'fit-content'}
         >
           <TimelapseProvider>

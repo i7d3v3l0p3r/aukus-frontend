@@ -6,6 +6,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
+import CrownIcon from 'assets/icons/crown.svg?react'
 import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
@@ -243,15 +244,42 @@ export default function MapComponent() {
       />
 
       {winnerFound && (
-        <Box fontSize={'32px'} textAlign={'center'} marginBottom={'30px'}>
-          Можете выдыхать, ивент закончен:
-          <br />
-          <LinkSpan color={getPlayerColor(playerWithMaxPosition.url_handle)}>
-            {playerWithMaxPosition.name}
-          </LinkSpan>{' '}
-          победил!
+        <Box display={'flex'} justifyContent={'center'}>
+          <Box
+            fontSize={'20px'}
+            textAlign={'center'}
+            style={{
+              backgroundColor: getPlayerColor(playerWithMaxPosition.url_handle),
+              borderRadius: '10px',
+            }}
+            width={'740px'}
+            height={'44px'}
+            padding={'10px'}
+          >
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              height={'100%'}
+            >
+              <CrownIcon
+                width={'24px'}
+                height={'24px'}
+                style={{ marginRight: '10px' }}
+              />
+              <Box>
+                Можете выдыхать, ивент закончен:{' '}
+                <LinkSpan color={'white'}>
+                  {playerWithMaxPosition.name}
+                </LinkSpan>{' '}
+                победил!
+              </Box>
+            </Box>
+          </Box>
         </Box>
       )}
+
+      {!winnerFound && <Box height={'44px'} />}
 
       <Grid
         container
@@ -264,6 +292,7 @@ export default function MapComponent() {
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
           backgroundSize: 'cover',
           borderRadius: '15px',
+          marginTop: '30px',
         }}
       >
         <Grid container columns={10} width={'auto'}>
