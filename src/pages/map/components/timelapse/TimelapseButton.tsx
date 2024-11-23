@@ -75,9 +75,9 @@ export default function TimelapseButton({ variant }: Props) {
         <Tooltip title={'Таймлапс'}>
           <Button
             onClick={() => timelapseState.setState('date_selection')}
-            sx={{ width: '60px', height: '44px' }}
+            sx={{ width: '135px', height: '44px' }}
           >
-            <CalendarMonth />
+            <CalendarMonth style={{ marginRight: '8px' }} /> Таймлапс
           </Button>
         </Tooltip>
       )
