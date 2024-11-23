@@ -93,7 +93,7 @@ export default function MoveCard({
 
   let moveTitle = `Ход — ${id}`
   if (player && displayType === 'map') {
-    moveTitle = player.name
+    moveTitle = player.name.toUpperCase()
   }
 
   return (

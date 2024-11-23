@@ -2,8 +2,11 @@ import { Box, Grid } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fireworks } from '@fireworks-js/react'
+import type { FireworksHandlers } from '@fireworks-js/react'
 import { createPlayerMove, fetchPlayers } from 'utils/api'
+import CrownIcon from 'assets/icons/crown.svg?react'
 import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
@@ -40,6 +43,31 @@ export default function MapComponent() {
 
   const queryClient = useQueryClient()
 
+  const fireworksRef = useRef<FireworksHandlers>(null)
+
+  const disableFireworks = () => {
+    if (fireworksRef.current) {
+      fireworksRef.current.stop()
+    }
+  }
+
+  const enableFireworks = () => {
+    if (fireworksRef.current) {
+      fireworksRef.current.start()
+    }
+  }
+
+  const toggleFireworks = () => {
+    if (!fireworksRef.current) {
+      return
+    }
+    if (fireworksRef.current.isRunning) {
+      fireworksRef.current.stop()
+    } else {
+      fireworksRef.current.start()
+    }
+  }
+
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: () => fetchPlayers(),
@@ -63,6 +91,15 @@ export default function MapComponent() {
     !timelapseEnabled &&
     playerWithMaxPosition &&
     playerWithMaxPosition.map_position > 101
+
+  useEffect(() => {
+    if (winnerFound && !fireworksRef.current?.isRunning) {
+      enableFireworks()
+    }
+    if (!winnerFound) {
+      disableFireworks()
+    }
+  }, [winnerFound])
 
   const currentUser = useUser()
   useScreenSize({ updateOnResize: true })
@@ -193,16 +230,58 @@ export default function MapComponent() {
       onClick={handleClick}
     >
       <SVGMarkers />
+      <Fireworks
+        ref={fireworksRef}
+        options={{ opacity: 0.5, explosion: 8, intensity: 45, particles: 105 }}
+        style={{
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '700px',
+          position: 'absolute',
+          zIndex: 2,
+        }}
+      />
 
       {winnerFound && (
-        <Box fontSize={'32px'} textAlign={'center'}>
-          Можете выдыхать, ивент закончен:{' '}
-          <LinkSpan color={getPlayerColor(playerWithMaxPosition.url_handle)}>
-            {playerWithMaxPosition.name}
-          </LinkSpan>{' '}
-          победил!
+        <Box display={'flex'} justifyContent={'center'}>
+          <Box
+            fontSize={'20px'}
+            textAlign={'center'}
+            style={{
+              backgroundColor: getPlayerColor(playerWithMaxPosition.url_handle),
+              borderRadius: '10px',
+              zIndex: 10,
+              position: 'relative',
+            }}
+            width={'740px'}
+            height={'44px'}
+            padding={'10px'}
+          >
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              height={'100%'}
+            >
+              <CrownIcon
+                width={'24px'}
+                height={'24px'}
+                style={{ marginRight: '10px' }}
+              />
+              <Box>
+                Можете выдыхать, ивент закончен:{' '}
+                <LinkSpan color={'white'}>
+                  {playerWithMaxPosition.name}
+                </LinkSpan>{' '}
+                победил!
+              </Box>
+            </Box>
+          </Box>
         </Box>
       )}
+
+      {!winnerFound && <Box height={'44px'} />}
 
       <Grid
         container
@@ -215,6 +294,7 @@ export default function MapComponent() {
           backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
           backgroundSize: 'cover',
           borderRadius: '15px',
+          marginTop: '30px',
         }}
       >
         <Grid container columns={10} width={'auto'}>
