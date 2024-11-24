@@ -108,7 +108,7 @@ export default function PlayerContent() {
           <Box marginTop={'100px'}>
             <Box textAlign={'center'}>
               <Typography fontSize="48px" fontWeight={700}>
-                {player.first_name} {player.name}
+                {player.first_name} «{player.name}»
               </Typography>
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />
