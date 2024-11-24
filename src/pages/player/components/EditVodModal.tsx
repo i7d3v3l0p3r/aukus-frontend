@@ -55,7 +55,7 @@ export default function EditVodModal({
     ) {
       refetch()
     }
-  }, [itemTitle.length, updateTs, refetch, fetchStatus])
+  }, [itemTitle, updateTs, refetch, fetchStatus, open])
 
   let titleOptions: string[] = []
   let imageUrl: string | null = null
