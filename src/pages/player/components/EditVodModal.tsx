@@ -66,8 +66,11 @@ export default function EditVodModal({
     const matchingUrl =
       gameNamesData.games.find((game) => game.gameName === itemTitle)
         ?.box_art_url || gameNamesData.games[0].box_art_url
-
-    imageUrl = matchingUrl.replace('{width}', '200').replace('{height}', '300')
+    if (fetchStatus === 'idle') {
+      imageUrl = matchingUrl
+        .replace('{width}', '200')
+        .replace('{height}', '300')
+    }
   }
 
   const handleVodChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
