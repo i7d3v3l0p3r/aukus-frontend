@@ -57,7 +57,7 @@ export default function EditCurrentGameModal({
   let titleOptions: string[] = []
   let imageUrl: string | null = null
 
-  if (itemTitle.length > 3 && gameNamesData) {
+  if (itemTitle.length > 3 && gameNamesData && gameNamesData.games.length > 0) {
     titleOptions = gameNamesData.games.map((game) => game.gameName)
 
     const matchingUrl =
