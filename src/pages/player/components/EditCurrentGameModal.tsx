@@ -105,7 +105,6 @@ export default function EditCurrentGameModal({
           paddingBottom: '50px',
         }}
       >
-        <Box marginBottom="10px">Обновить название игры</Box>
         <Box display={'flex'}>
           <Box marginRight={'10px'}>
             {imageUrl ? (
@@ -126,33 +125,36 @@ export default function EditCurrentGameModal({
               />
             )}
           </Box>
-          <Autocomplete
-            freeSolo
-            fullWidth
-            PopperComponent={CustomPopper}
-            options={titleOptions}
-            value={itemTitle}
-            onChange={(_, newValue) => {
-              setItemTitle(newValue || '')
-            }}
-            renderInput={(params) => (
-              <TextField
-                onChange={(
-                  event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                ) => setItemTitle(event.target.value)}
-                {...params}
-                style={{
-                  paddingTop: '10px',
-                  paddingBottom: '10px',
-                  fontSize: '16px important!',
-                }}
-              />
-            )}
-            sx={{
-              width: '420px',
-            }}
-            className={titleOptions.length > 0 ? 'has-options' : 'no-options'}
-          />
+          <Box>
+            <Box marginBottom="10px">Обновить название игры</Box>
+            <Autocomplete
+              freeSolo
+              fullWidth
+              PopperComponent={CustomPopper}
+              options={titleOptions}
+              value={itemTitle}
+              onChange={(_, newValue) => {
+                setItemTitle(newValue || '')
+              }}
+              renderInput={(params) => (
+                <TextField
+                  onChange={(
+                    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                  ) => setItemTitle(event.target.value)}
+                  {...params}
+                  style={{
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    fontSize: '16px important!',
+                  }}
+                />
+              )}
+              sx={{
+                width: '420px',
+              }}
+              className={titleOptions.length > 0 ? 'has-options' : 'no-options'}
+            />
+          </Box>
         </Box>
       </DialogContent>
       <DialogActions
