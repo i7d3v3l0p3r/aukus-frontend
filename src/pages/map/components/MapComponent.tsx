@@ -252,9 +252,8 @@ export default function MapComponent() {
   }
 
   const stopActions = winnerFound
-
-  const showBigTimelapse = !currentPlayer && !timelapseEnabled
-  const showActionButtons = currentPlayer && !timelapseEnabled && !stopActions
+  const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
+  const showBigTimelapse = !showActionButton && !timelapseEnabled
 
   return (
     <Box
@@ -437,7 +436,7 @@ export default function MapComponent() {
         ))}
       <StaticPanel>
         <Box display="flex" justifyContent="center" width={'100%'}>
-          {showActionButtons && (
+          {showActionButton && (
             <Box textAlign="center" width="100%">
               <Box
                 sx={{
