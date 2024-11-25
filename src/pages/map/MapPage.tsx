@@ -7,34 +7,58 @@ import useScreenSize from 'src/context/useScreenSize'
 import MapComponentMobile from './components/MapComponentMobile'
 
 export default function MapPage() {
-  const { isMobile } = useScreenSize()
+  const { isMobile, width } = useScreenSize()
+  const mapWidth = 1715
+
+  if (isMobile) {
+    return (
+      <Box>
+        <MainMenu currentPage={'map'} />
+        <MapComponentMobile />
+        <BottomSection />
+      </Box>
+    )
+  }
+
+  if (width < mapWidth) {
+    return (
+      <Box width={'fit-content'}>
+        <MainMenu currentPage={'map'} />
+        <Box
+          alignContent={'center'}
+          display="flex"
+          alignItems="center"
+          justifyContent={'start'}
+          margin={'auto'}
+          marginTop={'50px'}
+          width={'fit-content'}
+        >
+          <TimelapseProvider>
+            <MapComponent />
+          </TimelapseProvider>
+        </Box>
+        <BottomSection />
+      </Box>
+    )
+  }
+
   return (
     <Box>
-      {isMobile ? (
-        <Box>
-          <MainMenu currentPage={'map'} />
-          <MapComponentMobile />
-          <BottomSection />
-        </Box>
-      ) : (
-        <Box width={'fit-content'}>
-          <MainMenu currentPage={'map'} />
-          <Box
-            alignContent={'center'}
-            display="flex"
-            alignItems="center"
-            justifyContent={'start'}
-            margin={'auto'}
-            marginTop={'50px'}
-            width={'fit-content'}
-          >
-            <TimelapseProvider>
-              <MapComponent />
-            </TimelapseProvider>
-          </Box>
-          <BottomSection />
-        </Box>
-      )}
+      <MainMenu currentPage={'map'} />
+      <Box
+        alignContent={'center'}
+        display="flex"
+        alignItems="center"
+        justifyContent={'start'}
+        margin={'auto'}
+        marginTop={'50px'}
+        width={'fit-content'}
+      >
+        <TimelapseProvider>
+          <MapComponent />
+        </TimelapseProvider>
+      </Box>
+      <BottomSection />
     </Box>
   )
 }
