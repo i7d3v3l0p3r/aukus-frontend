@@ -5,7 +5,7 @@ import useScreenSize from 'context/useScreenSize'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
-import { createPlayerMove, fetchPlayers } from 'utils/api'
+import { createPlayerMove, fetchPlayers, fetchStats } from 'utils/api'
 import CrownIcon from 'assets/icons/crown.svg?react'
 import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
@@ -30,6 +30,8 @@ import {
   startCell,
 } from './utils'
 import LinkSpan from 'src/components/LinkSpan'
+import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
+import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
@@ -91,6 +93,32 @@ export default function MapComponent() {
     !timelapseEnabled &&
     playerWithMaxPosition &&
     playerWithMaxPosition.map_position > 101
+
+  const { data: playerStats } = useQuery({
+    queryKey: ['playersStats'],
+    queryFn: fetchStats,
+    staleTime: 1000 * 60 * 1,
+    enabled: !!winnerFound,
+  })
+  const playersStats = playerStats?.players || []
+
+  const top3players: Player[] = []
+  // const top3players: Player[] = players.slice(0, 3)
+  if (winnerFound && playersStats.length > 2) {
+    top3players.push(playerWithMaxPosition)
+    const statsByScore = playersStats
+      .filter((player) => player.id !== playerWithMaxPosition.id)
+      .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
+    const top2Scores = statsByScore.slice(0, 2)
+    const top2player = players.find((player) => player.id === top2Scores[0].id)
+    const top3player = players.find((player) => player.id === top2Scores[1].id)
+    if (top2player) {
+      top3players.push(top2player)
+    }
+    if (top3player) {
+      top3players.push(top3player)
+    }
+  }
 
   useEffect(() => {
     if (winnerFound && !fireworksRef.current?.isRunning) {
@@ -294,6 +322,13 @@ export default function MapComponent() {
             backgroundPosition: 'center' /* Center the image */,
           }}
         >
+          {winnerFound && top3players.length > 2 && (
+            <Box position={'relative'}>
+              <PlayerWinnerIcon player={top3players[0]} position={1} isMoving />
+              <PlayerWinnerIcon player={top3players[1]} position={2} />
+              <PlayerWinnerIcon player={top3players[2]} position={3} />
+            </Box>
+          )}
           <Grid
             container
             justifyContent={'center'}
