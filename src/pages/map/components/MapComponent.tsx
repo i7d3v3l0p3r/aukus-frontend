@@ -288,7 +288,7 @@ export default function MapComponent() {
           style={{
             width: '1715px',
             height: '2146px',
-            backgroundImage: "url('static/map_full.png')",
+            backgroundImage: "url('uploads/aukus_map_compressed.png')",
             backgroundRepeat:
               'no-repeat' /* Prevent the image from repeating */,
             backgroundPosition: 'center' /* Center the image */,
