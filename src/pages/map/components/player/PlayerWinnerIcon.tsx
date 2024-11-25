@@ -113,6 +113,7 @@ export default function PlayerWinnerIcon({
         position: 'absolute',
         top: finalPositionTop,
         left: finalPositionLeft,
+        zIndex: 10,
       }}
     >
       <Box position="relative">

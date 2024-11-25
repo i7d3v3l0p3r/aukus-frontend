@@ -56,6 +56,7 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
         top: topPosition,
         left: leftPosition,
         width: '250px',
+        zIndex: 99,
       }}
       onClick={close}
     >
@@ -74,8 +75,14 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
               </LinkSpan>
             </Link>
           </Typography>
-          <Box color={"#FFFFFFCC"} marginTop={'8px'} marginBottom={'20px'} fontSize={'14px'} fontWeight={500}>
-              Игра: {player.current_game}
+          <Box
+            color={'#FFFFFFCC'}
+            marginTop={'8px'}
+            marginBottom={'20px'}
+            fontSize={'14px'}
+            fontWeight={500}
+          >
+            Игра: {player.current_game}
           </Box>
           {player.is_online ? (
             <Box fontSize={'14px'} fontWeight={600}>
