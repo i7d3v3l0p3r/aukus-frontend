@@ -26,7 +26,7 @@ export default function StaticPanel({ children }: Props) {
 
   if (containerRef.current && mapBottom && scrollPosition > 0) {
     const makeFixed =
-      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 95
+      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 300
 
     if (!makeFixed && isFixed) {
       setIsFixed(false)
@@ -45,7 +45,8 @@ export default function StaticPanel({ children }: Props) {
         sx={{
           position: isFixed ? 'fixed' : 'absolute',
           zIndex: 20,
-          ...(isFixed ? { bottom: '20px' } : { marginTop: '30px' }),
+          left: '6%',
+          ...(isFixed ? { bottom: '20px' } : { marginTop: '-100px' }),
         }}
         ref={containerRef}
       >

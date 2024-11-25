@@ -29,7 +29,7 @@ export default function TodaysMoves() {
 
   return (
     <Box>
-      <Box marginTop={'80px'} textAlign={'center'} marginBottom={'50px'}>
+      <Box marginTop={'20px'} textAlign={'center'} marginBottom={'50px'}>
         <Box fontWeight={600} fontSize={headerSize}>
           Ходы за день
         </Box>

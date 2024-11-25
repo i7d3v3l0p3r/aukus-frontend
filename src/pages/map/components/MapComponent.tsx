@@ -223,9 +223,9 @@ export default function MapComponent() {
     <Box
       style={{
         overflowX: 'auto',
-        width: '1214px',
-        minWidth: '1214px',
-        maxWidth: '1214px',
+        // width: '1214px',
+        // minWidth: '1214px',
+        // maxWidth: '1214px',
       }}
       onClick={handleClick}
     >
@@ -283,68 +283,78 @@ export default function MapComponent() {
 
       {!winnerFound && <Box height={'44px'} />}
 
-      <Grid
-        container
-        justifyContent={'center'}
-        columns={11}
-        width={'auto'}
-        style={{
-          backgroundImage: "url('static/map_final.png')",
-          backgroundPosition: 'center' /* Center the image */,
-          backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
-          backgroundSize: 'cover',
-          borderRadius: '15px',
-          marginTop: '30px',
-        }}
-      >
-        <Grid container columns={10} width={'auto'}>
-          <Grid item>
-            <Box width={(cellSize + 1) * 10} height={cellSize} />
-          </Grid>
-        </Grid>
-        <Grid container columns={10} width={'auto'}>
-          <Grid item>
-            <CellItem cell={lastCell} />
-          </Grid>
-          <Grid item>
-            <Box width={(cellSize + 1) * 9} height={cellSize} />
-          </Grid>
-        </Grid>
-        {map.cellRows.map((row, index) => (
-          <Grid container key={index} columns={10} width={'auto'}>
-            {row.map((cell) => (
-              <Grid
-                item
-                key={cell.id}
-                sx={{
-                  borderRight: '1px solid transparent',
-                  borderBottom: index === 9 ? '1px solid transparent' : 0,
-                  borderTop: '1px solid transparent',
-                }}
-              >
-                <CellItem
-                  cell={cell}
-                  currentPlayer={currentPlayer}
-                  moveSteps={moveSteps}
-                />
+      <Box display={'flex'} justifyContent={'center'}>
+        <Box
+          style={{
+            width: '1715px',
+            height: '2146px',
+            backgroundImage: "url('static/map_full.png')",
+            backgroundRepeat:
+              'no-repeat' /* Prevent the image from repeating */,
+            backgroundPosition: 'center' /* Center the image */,
+          }}
+        >
+          <Grid
+            container
+            justifyContent={'center'}
+            columns={11}
+            width={'auto'}
+            style={{
+              backgroundSize: 'cover',
+              borderRadius: '15px',
+              marginTop: '300px',
+            }}
+          >
+            <Grid container columns={10} width={'auto'}>
+              <Grid item>
+                <Box width={(cellSize + 1) * 10} height={cellSize} />
+              </Grid>
+            </Grid>
+            <Grid container columns={10} width={'auto'}>
+              <Grid item>
+                <CellItem cell={lastCell} />
+              </Grid>
+              <Grid item>
+                <Box width={(cellSize + 1) * 9} height={cellSize} />
+              </Grid>
+            </Grid>
+            {map.cellRows.map((row, index) => (
+              <Grid container key={index} columns={10} width={'auto'}>
+                {row.map((cell) => (
+                  <Grid
+                    item
+                    key={cell.id}
+                    sx={{
+                      borderRight: '1px solid transparent',
+                      borderBottom: index === 9 ? '1px solid transparent' : 0,
+                      borderTop: '1px solid transparent',
+                    }}
+                  >
+                    <CellItem
+                      cell={cell}
+                      currentPlayer={currentPlayer}
+                      moveSteps={moveSteps}
+                    />
+                  </Grid>
+                ))}
               </Grid>
             ))}
-          </Grid>
-        ))}
-        <Grid container columns={10} width={'auto'}>
-          <Grid item>
-            <CellItem cell={startCell} />
-          </Grid>
+            <Grid container columns={10} width={'auto'}>
+              <Grid item>
+                <CellItem cell={startCell} />
+              </Grid>
 
-          <Grid item>
-            <Box
-              width={(cellSize + 1) * 9}
-              height={cellSize}
-              id={'map-cell-start'}
-            />
+              <Grid item>
+                <Box
+                  width={(cellSize + 1) * 9}
+                  height={cellSize}
+                  id={'map-cell-start'}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
       {ladders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
           <MapArrow from={ladder.cellFrom} to={ladder.cellTo} />
