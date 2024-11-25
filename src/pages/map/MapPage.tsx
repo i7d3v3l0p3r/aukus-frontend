@@ -10,25 +10,31 @@ export default function MapPage() {
   const { isMobile } = useScreenSize()
   return (
     <Box>
-      <MainMenu currentPage={'map'} />
       {isMobile ? (
-        <MapComponentMobile />
+        <Box>
+          <MainMenu currentPage={'map'} />
+          <MapComponentMobile />
+          <BottomSection />
+        </Box>
       ) : (
-        <Box
-          alignContent={'center'}
-          display="flex"
-          alignItems="center"
-          justifyContent={'start'}
-          margin={'auto'}
-          marginTop={'50px'}
-          width={'fit-content'}
-        >
-          <TimelapseProvider>
-            <MapComponent />
-          </TimelapseProvider>
+        <Box width={'fit-content'}>
+          <MainMenu currentPage={'map'} />
+          <Box
+            alignContent={'center'}
+            display="flex"
+            alignItems="center"
+            justifyContent={'start'}
+            margin={'auto'}
+            marginTop={'50px'}
+            width={'fit-content'}
+          >
+            <TimelapseProvider>
+              <MapComponent />
+            </TimelapseProvider>
+          </Box>
+          <BottomSection />
         </Box>
       )}
-      <BottomSection />
     </Box>
   )
 }
