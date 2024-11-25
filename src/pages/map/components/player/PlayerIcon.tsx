@@ -76,8 +76,12 @@ export default function PlayerIcon({
   const [anchorCell, setAnchorCell] = useState<HTMLElement | null>(null)
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
-  const playerElement = useRef<HTMLDivElement>(null)
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const iconRef = useRef<HTMLImageElement>(null)
+
+  const updateContiner = (element: HTMLDivElement) => {
+    setContainer(element)
+  }
 
   const playersOnSamePosition = players.filter(
     (p) => p.map_position === player.map_position && p.id !== player.id
@@ -230,7 +234,7 @@ export default function PlayerIcon({
   }
 
   const originTop = anchorCell.offsetTop + 30
-  const originLeft = anchorCell.offsetLeft + 10
+  const originLeft = anchorCell.offsetLeft + 55
 
   const positionTop = originTop + relativeY
   const positionLeft = originLeft + relativeX
@@ -238,7 +242,12 @@ export default function PlayerIcon({
   const isStillAnimated = iconRef.current?.src.endsWith('gif')
 
   let finalPositionTop = positionTop
-  const finalPositionLeft = positionLeft
+  let finalPositionLeft = positionLeft
+
+  const containerWidth = container?.offsetWidth
+  if (containerWidth) {
+    finalPositionLeft = positionLeft - containerWidth / 2
+  }
 
   if (isMoving || isStillAnimated) {
     // adjust height for animation
@@ -279,7 +288,7 @@ export default function PlayerIcon({
         <Box
           onClick={handleClick}
           style={{ cursor: 'pointer', display: 'block', textAlign: 'center' }}
-          ref={playerElement}
+          ref={updateContiner}
         >
           {!hideAvatar && (
             <img
@@ -352,10 +361,10 @@ function getRelativePosition(player: Player, players: Player[]) {
   const playerIndex = sortedPlayers.findIndex((p) => p.id === player.id)
 
   if (player.map_position === 0) {
-    return { x: playerIndex * 80, y: 0 }
+    return { x: playerIndex * 100, y: 0 }
   }
   if (sortedPlayers.length === 2) {
-    return { x: playerIndex * 50 - 10, y: -(playerIndex * 25 - 10) }
+    return { x: -50 * playerIndex + 30, y: playerIndex * 25 - 30 }
   }
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }

@@ -158,12 +158,12 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }
 
   const handleConfirmTurn = () => {
-    if (rating && moveType && dice !== null) {
+    if (moveType && dice !== null) {
       onConfirm(
         {
           type: moveType,
           itemLength: gameHours,
-          itemRating: rating,
+          itemRating: rating || 0,
           itemReview: review,
           itemTitle: gameName,
           snakeFrom: null,
