@@ -83,7 +83,7 @@ export default function PlayerWinnerIcon({
   }, [closePopup])
 
   const positionToCoordsMap = {
-    1: { top: -5, left: 365, scale: 1.3 },
+    1: { top: -5, left: 365, scale: 1.5 },
     2: { top: 23, left: 555, scale: 1.2 },
     3: { top: 100, left: 664, scale: 1.1 },
   }
@@ -134,7 +134,13 @@ export default function PlayerWinnerIcon({
             alt=""
             style={{ verticalAlign: 'middle' }}
           />
-          <p style={{ padding: 0, margin: 0, lineHeight: 1 }}>
+          <p
+            style={{
+              padding: 0,
+              margin: 0,
+              lineHeight: 1,
+            }}
+          >
             <span
               style={{
                 fontSize: '14px',
@@ -150,6 +156,7 @@ export default function PlayerWinnerIcon({
                 borderRadius: '3px',
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 paddingTop: '3px',
                 paddingBottom: '3px',
               }}
