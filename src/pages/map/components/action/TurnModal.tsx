@@ -100,7 +100,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         .replace('{height}', '300')
 
       const validateImage = async (url: string) => {
-        console.log('checking image validity')
+        // console.log('checking image validity')
         const isValid = await checkImageValid(url)
         setGameImage(isValid ? url : null)
       }
@@ -532,7 +532,7 @@ const MenuItemStyled = styled(MenuItem)(({ color }) => ({
 }))
 
 type CustomPopperProps = PopperProps & React.RefAttributes<HTMLDivElement>
-const CustomPopper = (props: CustomPopperProps) => {
+export const CustomPopper = (props: CustomPopperProps) => {
   let width = props.style?.width ?? 0
   if (isNumber(width)) {
     width += 4

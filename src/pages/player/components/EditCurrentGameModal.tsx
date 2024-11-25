@@ -1,5 +1,6 @@
 import { Close } from '@mui/icons-material'
 import {
+  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -9,7 +10,11 @@ import {
   IconButton,
   TextField,
 } from '@mui/material'
-import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { CustomPopper } from 'src/pages/map/components/action/TurnModal'
+import { fetchGameNames } from 'src/utils/api'
 
 type Props = {
   open: boolean
@@ -25,6 +30,42 @@ export default function EditCurrentGameModal({
   onSave,
 }: Props) {
   const [itemTitle, setItemTitle] = useState(title)
+
+  const {
+    data: gameNamesData,
+    dataUpdatedAt: updateTs,
+    refetch,
+    fetchStatus,
+    status,
+  } = useQuery({
+    queryKey: ['game_names'],
+    queryFn: () => fetchGameNames(itemTitle),
+    enabled: itemTitle.length > 3,
+  })
+
+  useEffect(() => {
+    if (
+      status !== 'pending' &&
+      fetchStatus === 'idle' &&
+      itemTitle.length > 3 &&
+      updateTs + 500 < Date.now()
+    ) {
+      refetch()
+    }
+  }, [itemTitle.length, updateTs, refetch, fetchStatus])
+
+  let titleOptions: string[] = []
+  let imageUrl: string | null = null
+
+  if (itemTitle.length > 3 && gameNamesData && gameNamesData.games.length > 0) {
+    titleOptions = gameNamesData.games.map((game) => game.gameName)
+
+    const matchingUrl =
+      gameNamesData.games.find((game) => game.gameName === itemTitle)
+        ?.box_art_url || gameNamesData.games[0].box_art_url
+
+    imageUrl = matchingUrl.replace('{width}', '200').replace('{height}', '300')
+  }
 
   return (
     <Dialog open={open} fullWidth>
@@ -64,24 +105,57 @@ export default function EditCurrentGameModal({
           paddingBottom: '50px',
         }}
       >
-        <Box marginBottom="10px">Обновить название игры</Box>
-        <TextField
-          fullWidth
-          rows={1}
-          value={itemTitle}
-          onChange={(e) => setItemTitle(e.target.value)}
-          InputProps={{
-            style: {
-              paddingTop: '10px',
-              paddingLeft: '15px',
-              paddingRight: '15px',
-              paddingBottom: '10px',
-              lineHeight: '1.2',
-              fontSize: '16px',
-              fontWeight: 500,
-            },
-          }}
-        />
+        <Box display={'flex'}>
+          <Box marginRight={'10px'}>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="game"
+                style={{
+                  width: '120px',
+                  height: '180px',
+                  borderRadius: '10px',
+                }}
+              />
+            ) : (
+              <ImagePlaceholder
+                width={'120px'}
+                height={'180px'}
+                style={{ borderRadius: '10px' }}
+              />
+            )}
+          </Box>
+          <Box>
+            <Box marginBottom="10px">Обновить название игры</Box>
+            <Autocomplete
+              freeSolo
+              fullWidth
+              PopperComponent={CustomPopper}
+              options={titleOptions}
+              value={itemTitle}
+              onChange={(_, newValue) => {
+                setItemTitle(newValue || '')
+              }}
+              renderInput={(params) => (
+                <TextField
+                  onChange={(
+                    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                  ) => setItemTitle(event.target.value)}
+                  {...params}
+                  style={{
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    fontSize: '16px important!',
+                  }}
+                />
+              )}
+              sx={{
+                width: '420px',
+              }}
+              className={titleOptions.length > 0 ? 'has-options' : 'no-options'}
+            />
+          </Box>
+        </Box>
       </DialogContent>
       <DialogActions
         style={{

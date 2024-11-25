@@ -108,7 +108,7 @@ export default function PlayerContent() {
           <Box marginTop={'100px'}>
             <Box textAlign={'center'}>
               <Typography fontSize="48px" fontWeight={700}>
-                {player.first_name} {player.name}
+                {player.first_name} «{player.name}»
               </Typography>
               <Box marginTop={'30px'} marginBottom={'50px'}>
                 <StreamLink player={player} />
@@ -221,15 +221,15 @@ export default function PlayerContent() {
 
 // Mapping of Russian characters to arrays of phonetically similar English characters (lowercase only)
 const transliterationMap: { [key: string]: string[] } = {
-  а: ['a', 'u'],
+  а: ['a', 'u', 'ia'],
   б: ['b', 'v'],
   в: ['v', 'w'],
   г: ['g', 'h'],
   д: ['d', 'j'],
-  е: ['e', 'ye'],
+  е: ['e', 'ye', 'a'],
   ё: ['yo', 'io'],
   ж: ['zh', 'j'],
-  з: ['z'],
+  з: ['z', 's'],
   и: ['i', 'y', 'ee'],
   й: ['y'],
   к: ['k', 'c'],

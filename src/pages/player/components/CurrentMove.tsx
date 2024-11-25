@@ -6,6 +6,7 @@ import EditCurrentGameModal from './EditCurrentGameModal'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateCurrentGame } from 'src/utils/api'
 import { getPlayerColor, Player } from 'src/utils/types'
+import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 
 type CurrentMoveProps = {
   id: number
@@ -37,6 +38,11 @@ export default function CurrentMove({
       }
     )
     setModalOpen(false)
+  }
+
+  let gameImage = player.current_game_image
+  if (gameImage) {
+    gameImage = gameImage.replace('{width}', '200').replace('{height}', '300')
   }
 
   const playerColor = getPlayerColor(player.url_handle)
@@ -80,7 +86,30 @@ export default function CurrentMove({
           >
             Выпало на ауке
           </Box>
-          <Box fontSize={'24px'}>{title}</Box>
+          <Box display={'flex'}>
+            <Box marginRight={'10px'}>
+              {gameImage ? (
+                <img
+                  src={gameImage}
+                  alt="game"
+                  style={{
+                    borderRadius: '5px',
+                    width: '80px',
+                    height: '120px',
+                  }}
+                />
+              ) : (
+                <ImagePlaceholder
+                  style={{
+                    borderRadius: '5px',
+                    width: '80px',
+                    height: '120px',
+                  }}
+                />
+              )}
+            </Box>
+            <Box fontSize={'24px'}>{title}</Box>
+          </Box>
           {canEdit && (
             <Box fontWeight={400} textAlign={'end'}>
               <LinkSpan onClick={() => setModalOpen(true)}>
