@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
+import useScreenSize from 'src/context/useScreenSize'
 
 type Props = {
   children: React.ReactNode
@@ -8,6 +9,7 @@ type Props = {
 export default function StaticPanel({ children }: Props) {
   const [isFixed, setIsFixed] = useState(true)
   const [scrollPosition, setScrollPosition] = useState(0)
+  const { width } = useScreenSize()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +39,8 @@ export default function StaticPanel({ children }: Props) {
     }
   }
 
+  const left = width / 2 - 1300 / 2
+
   return (
     <Box display={'flex'} justifyContent="center">
       <Box
@@ -45,8 +49,7 @@ export default function StaticPanel({ children }: Props) {
         sx={{
           position: isFixed ? 'fixed' : 'absolute',
           zIndex: 20,
-          left: '6%',
-          ...(isFixed ? { bottom: '20px' } : { marginTop: '-100px' }),
+          ...(isFixed ? { bottom: '20px', left } : { marginTop: '-100px' }),
         }}
         ref={containerRef}
       >
