@@ -41,7 +41,7 @@ const playerSegall: Player = {
 
 const playerRoadhouse: Player = {
   id: 3,
-  name: 'Roadhouse',
+  name: 'Roadhousexxxxxx',
   twitch_stream_link: 'https://www.twitch.tv/roadhouse',
   vk_stream_link: 'https://live.vkplay.ru/roadhouse',
   donation_link: 'https://www.donationalerts.com/r/roadhouse',
