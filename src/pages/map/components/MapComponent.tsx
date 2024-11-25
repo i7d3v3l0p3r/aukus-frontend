@@ -32,6 +32,7 @@ import {
 import LinkSpan from 'src/components/LinkSpan'
 import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
 import PlayerWinnerIcon from './player/PlayerWinnerIcon'
+import { Link } from 'react-router-dom'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
@@ -299,9 +300,11 @@ export default function MapComponent() {
               />
               <Box>
                 Можете выдыхать, ивент закончен:{' '}
-                <LinkSpan color={'white'}>
-                  {playerWithMaxPosition.name}
-                </LinkSpan>{' '}
+                <Link to={`/players/${playerWithMaxPosition.url_handle}`}>
+                  <LinkSpan color={'white'}>
+                    {playerWithMaxPosition.name}
+                  </LinkSpan>{' '}
+                </Link>
                 победил!
               </Box>
             </Box>
