@@ -74,6 +74,7 @@ export default function PlayerWinnerIcon({
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
   const iconRef = useRef<HTMLImageElement>(null)
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (popupOpen) {
@@ -82,13 +83,23 @@ export default function PlayerWinnerIcon({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closePopup])
 
+  const updateContainer = (element: HTMLDivElement) => {
+    setContainer(element)
+  }
+
   const positionToCoordsMap = {
-    1: { top: -20, left: 365, scale: 1.5 },
-    2: { top: 23, left: 555, scale: 1.2 },
-    3: { top: 100, left: 664, scale: 1.1 },
+    1: { top: -20, left: 392, scale: 1.5 },
+    2: { top: 23, left: 582, scale: 1.2 },
+    3: { top: 100, left: 700, scale: 1.1 },
   }
 
   const coords = positionToCoordsMap[position]
+
+  const containerWidth = container?.offsetWidth
+  let adjustedLeft = coords.left
+  if (containerWidth) {
+    adjustedLeft = coords.left - containerWidth / 2
+  }
 
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement)
@@ -107,7 +118,7 @@ export default function PlayerWinnerIcon({
       style={{
         position: 'absolute',
         top: coords.top,
-        left: coords.left,
+        left: adjustedLeft,
         zIndex: 10,
       }}
     >
@@ -121,6 +132,7 @@ export default function PlayerWinnerIcon({
         <Box
           onClick={handleClick}
           style={{ cursor: 'pointer', display: 'block', textAlign: 'center' }}
+          ref={updateContainer}
         >
           <img
             ref={iconRef}
