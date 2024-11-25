@@ -335,9 +335,22 @@ export default function MapComponent() {
         >
           {winnerFound && top3players.length > 2 && (
             <Box position={'relative'}>
-              <PlayerWinnerIcon player={top3players[0]} position={1} isMoving />
-              <PlayerWinnerIcon player={top3players[1]} position={2} />
-              <PlayerWinnerIcon player={top3players[2]} position={3} />
+              <PlayerWinnerIcon
+                player={top3players[0]}
+                position={1}
+                isMoving
+                closePopup={closePopups}
+              />
+              <PlayerWinnerIcon
+                player={top3players[1]}
+                position={2}
+                closePopup={closePopups}
+              />
+              <PlayerWinnerIcon
+                player={top3players[2]}
+                position={3}
+                closePopup={closePopups}
+              />
             </Box>
           )}
           <Grid

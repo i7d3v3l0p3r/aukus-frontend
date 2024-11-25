@@ -90,11 +90,6 @@ export default function PlayerWinnerIcon({
 
   const coords = positionToCoordsMap[position]
 
-  const isStillAnimated = iconRef.current?.src.endsWith('gif')
-
-  const finalPositionTop = coords.top
-  const finalPositionLeft = coords.left
-
   const handleClick = (event: React.MouseEvent) => {
     setPopupAnchor(event.currentTarget as HTMLElement)
     setPopupOpen(!popupOpen)
@@ -111,8 +106,8 @@ export default function PlayerWinnerIcon({
     <Box
       style={{
         position: 'absolute',
-        top: finalPositionTop,
-        left: finalPositionLeft,
+        top: coords.top,
+        left: coords.left,
         zIndex: 10,
       }}
     >
