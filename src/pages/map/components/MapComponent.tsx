@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, FormGroup, Grid } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
@@ -7,7 +7,7 @@ import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
 import { createPlayerMove, fetchPlayers, fetchStats } from 'utils/api'
 import CrownIcon from 'assets/icons/crown.svg?react'
-import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
+import { Color, getPlayerColor, NextTurnParams, Player } from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
 import ActionButton from './action/ActionButton'
@@ -38,6 +38,7 @@ export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
   const [moveSteps, setMoveSteps] = useState(0)
   const [makingTurn, setMakingTurn] = useState(false)
+  const [showArrows, setShowArrows] = useState(true)
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
@@ -415,14 +416,23 @@ export default function MapComponent() {
       </Box>
       {ladders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
-          <MapArrow from={ladder.cellFrom} to={ladder.cellTo} />
+          <MapArrow
+            from={ladder.cellFrom}
+            to={ladder.cellTo}
+            hide={!showArrows}
+          />
         </Fragment>
       ))}
       {snakes.map((snake) => (
         <Fragment key={snake.cellFrom}>
-          <MapArrow from={snake.cellFrom} to={snake.cellTo} />
+          <MapArrow
+            from={snake.cellFrom}
+            to={snake.cellTo}
+            hide={!showArrows}
+          />
         </Fragment>
       ))}
+
       {players &&
         players.map((player) => (
           <PlayerIcon
@@ -437,7 +447,7 @@ export default function MapComponent() {
       <StaticPanel>
         <Box display="flex" justifyContent="center" width={'100%'}>
           {showActionButton && (
-            <Box textAlign="center" width="100%">
+            <Box textAlign="center" width="100%" position={'relative'}>
               <Box
                 sx={{
                   position: 'relative',
@@ -447,6 +457,32 @@ export default function MapComponent() {
                 marginRight={'10px'}
                 textAlign="center"
               >
+                <Box
+                  position="absolute"
+                  left={'-155px'}
+                  width="fit-content"
+                  display="inline"
+                  style={{
+                    background: Color.blue,
+                    borderRadius: '10px',
+                    paddingLeft: '16px',
+                    paddingRight: '16px',
+                    height: '44px',
+                  }}
+                >
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={showArrows}
+                          onChange={(val) => setShowArrows(val.target.checked)}
+                          color="customWhite"
+                        />
+                      }
+                      label="Стрелки"
+                    />
+                  </FormGroup>
+                </Box>
                 <ActionButton
                   handleNextTurn={handleNextTurn}
                   player={currentPlayer}

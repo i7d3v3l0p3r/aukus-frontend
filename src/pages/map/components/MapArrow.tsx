@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react'
 type Props = {
   from: number
   to: number
+  hide?: boolean
 }
 
-export default function MapArrow({ from, to }: Props) {
+export default function MapArrow({ from, to, hide }: Props) {
   const [cellFrom, setCellFrom] = useState<HTMLElement | null>(null)
   const [cellTo, setCellTo] = useState<HTMLElement | null>(null)
 
@@ -78,6 +79,7 @@ export default function MapArrow({ from, to }: Props) {
         top: topPoint,
         left: leftPoint,
         pointerEvents: 'none',
+        display: hide ? 'none' : 'block',
       }}
     >
       <line
@@ -86,7 +88,7 @@ export default function MapArrow({ from, to }: Props) {
         y1={fromY}
         x2={toX}
         y2={toY}
-        stroke="rgba(0,0,0,0.2)"
+        stroke="rgba(0,0,0,0.5)"
         strokeWidth="3"
         markerStart={
           isSnake ? 'url(#red-arrow-start)' : 'url(#green-arrow-start)'

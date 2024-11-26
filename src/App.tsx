@@ -24,6 +24,11 @@ declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides extends CustomColorOverrides {}
 }
 
+declare module '@mui/material/Checkbox' {
+  // eslint-disable-next-line
+  interface CheckboxPropsColorOverrides extends CustomColorOverrides {}
+}
+
 const router = createBrowserRouter(
   [
     {
