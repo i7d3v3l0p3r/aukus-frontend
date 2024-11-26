@@ -50,7 +50,7 @@ export default function MapComponent() {
     const mapWidth = 1715
     const diff = mapWidth - window.innerWidth
     if (diff > 0) {
-      window.scrollTo({ left: diff / 2, top: 0, behavior: 'smooth' })
+      window.scrollTo({ left: diff / 2, behavior: 'smooth' })
     }
   }, [])
 
