@@ -40,7 +40,7 @@ export default function PlayerLinks({ player }: Props) {
           style={{ marginRight: linksMargin }}
         >
           <LinkSpan color={'#FF2B42'} style={{ fontSize: '20px' }}>
-            VK Видео
+            ВК Видео
           </LinkSpan>
         </Link>
       )}

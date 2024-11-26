@@ -36,7 +36,7 @@ export default function PlayerLinksMobile({ player }: Props) {
           rel="noopener nereferrer"
           style={{ marginRight: linksMargin }}
         >
-          <LinkSpan color={'#FF2B42'}>VK Видео</LinkSpan>
+          <LinkSpan color={'#FF2B42'}>ВК Видео</LinkSpan>
         </Link>
       )}
       {player.telegram_link && (
