@@ -159,6 +159,7 @@ export default function MapComponent() {
 
   const handleClick = () => {
     setClosePopups(!closePopups)
+    setShowArrows(!showArrows)
   }
 
   const handleMakingTurn = (value: boolean) => {
@@ -457,7 +458,7 @@ export default function MapComponent() {
                 marginRight={'10px'}
                 textAlign="center"
               >
-                <Box
+                {/* <Box
                   position="absolute"
                   left={'-155px'}
                   width="fit-content"
@@ -482,7 +483,7 @@ export default function MapComponent() {
                       label="Стрелки"
                     />
                   </FormGroup>
-                </Box>
+                </Box> */}
                 <ActionButton
                   handleNextTurn={handleNextTurn}
                   player={currentPlayer}
