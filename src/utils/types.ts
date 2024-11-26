@@ -91,6 +91,7 @@ export const Color = {
   greyDark: '#222222',
   greyDarkest: '#121212',
   greyNew: '#CECECE',
+  greyText: '#656565',
   red: '#ff3b30',
   green: '#34C759',
   greenLight: '#00B88C',

@@ -111,7 +111,7 @@ export default function MainMenu({
               lineHeight: '1.2',
               width: 'max-content',
             }}
-            color={'#656565'}
+            color={Color.greyText}
           >
             <Clock />
           </Box>
