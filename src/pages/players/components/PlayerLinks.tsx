@@ -27,7 +27,7 @@ export default function PlayerLinks({ player }: Props) {
             style={{ marginRight: linksMargin }}
           >
             <LinkSpan color={Color.purple} style={{ fontSize: '20px' }}>
-              Twitch
+              Твич
             </LinkSpan>
           </Link>
         </Box>
