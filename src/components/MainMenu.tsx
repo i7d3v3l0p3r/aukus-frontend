@@ -55,7 +55,8 @@ export default function MainMenu({
         }}
       />
       <Box
-        display="inline-block"
+        display="flex"
+        justifyContent="center"
         textAlign={'center'}
         marginTop={'0px'}
         marginBottom={'13px'}
@@ -64,38 +65,56 @@ export default function MainMenu({
         position="relative"
         zIndex={20}
       >
-        <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
-          <LinkSpan
-            color={playerColor}
+        <Box position="relative" width="fit-content">
+          <Box
+            fontWeight={600}
+            position="absolute"
+            display="inline"
+            marginRight={'15px'}
+            top={'1px'}
+            left={'-325px'}
+            width={'max-content'}
             style={{
-              fontWeight: 600,
-              paddingBottom: 0,
               lineHeight: '1.2',
-              display: 'inline-flex',
-              justifyContent: 'center',
-              alignItems: 'center',
             }}
+            color={'#656565'}
           >
-            <SnowflakeIcon
-              width={'15px'}
-              height={'15px'}
-              style={{ marginRight: '8px' }}
-            />
-            АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
-          </LinkSpan>
-        </Link>
-        <Box
-          fontWeight={600}
-          position="absolute"
-          display="inline"
-          marginLeft={'15px'}
-          top={'1px'}
-          style={{
-            lineHeight: '1.2',
-          }}
-          color={'#656565'}
-        >
-          <Clock />
+            {/* До конца ивента: 24 дня 20 часов */}
+          </Box>
+          <Link to={urlHandle ? `/players/${urlHandle}` : '/'}>
+            <LinkSpan
+              color={playerColor}
+              style={{
+                fontWeight: 600,
+                paddingBottom: 0,
+                lineHeight: '1.2',
+                display: 'inline-flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <SnowflakeIcon
+                width={'15px'}
+                height={'15px'}
+                style={{ marginRight: '8px' }}
+              />
+              АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
+            </LinkSpan>
+          </Link>
+          <Box
+            fontWeight={600}
+            position="absolute"
+            display="inline"
+            marginLeft={'15px'}
+            top={'1px'}
+            style={{
+              lineHeight: '1.2',
+              width: 'max-content',
+            }}
+            color={'#656565'}
+          >
+            <Clock />
+          </Box>
         </Box>
       </Box>
       <Box

@@ -6,6 +6,7 @@ import { Color } from 'utils/types'
 import DonaterRules from './DonaterRules'
 import PlayerRules from './PlayerRules'
 import useScreenSize from 'src/context/useScreenSize'
+import Countdown from './Countdown'
 
 export default function RulesContainer() {
   const { headerSize } = useScreenSize()
@@ -26,6 +27,18 @@ export default function RulesContainer() {
               Для донатеров
             </LinkSpan>
           </Link>
+          <span
+            style={{
+              lineHeight: '1.2',
+              width: 'max-content',
+              fontWeight: 600,
+              marginLeft: '50px',
+              // top={'1px'}
+              // color: 'white5',
+            }}
+          >
+            <Countdown />
+          </span>
         </Box>
         <Box fontSize={headerSize} fontWeight={700} lineHeight={1.2}>
           {rulesPage === 'player'
