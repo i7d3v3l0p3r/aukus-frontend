@@ -127,7 +127,7 @@ export default function PlayerWinnerIcon({
           open={popupOpen}
           player={player}
           anchorEl={popupAnchor}
-          close={() => setPopupOpen(false)}
+          onClick={() => setPopupOpen(false)}
         />
         <Box
           onClick={handleClick}

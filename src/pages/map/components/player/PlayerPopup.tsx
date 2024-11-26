@@ -8,11 +8,16 @@ import { Color, getPlayerColor, Player } from 'utils/types'
 type Props = {
   player: Player
   open: boolean
-  close: () => void
+  onClick: (event: React.MouseEvent) => void
   anchorEl: HTMLElement | null
 }
 
-export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
+export default function PlayerPopup({
+  player,
+  open,
+  onClick,
+  anchorEl,
+}: Props) {
   const [topPosition, setTopPosition] = useState(0)
   const [leftPosition, setLeftPosition] = useState(0)
   const [popupRef, setPopupRef] = useState<HTMLDivElement | null>(null)
@@ -58,7 +63,7 @@ export default function PlayerPopup({ player, open, close, anchorEl }: Props) {
         width: '250px',
         zIndex: 99,
       }}
-      onClick={close}
+      onClick={onClick}
     >
       <Paper
         style={{

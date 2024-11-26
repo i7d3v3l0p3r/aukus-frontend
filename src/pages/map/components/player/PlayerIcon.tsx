@@ -288,7 +288,7 @@ export default function PlayerIcon({
           open={popupOpen}
           player={player}
           anchorEl={popupAnchor}
-          close={onPopupClick}
+          onClick={onPopupClick}
         />
         <Box
           onClick={handleClick}
