@@ -115,17 +115,17 @@ function getArrowStyle(cell: MapCell) {
     if (cell.direction === 'right') {
       style.left = '-5px'
       style.top = '-7px'
-      style.color = 'black'
+      // style.color = 'black'
     }
     if (cell.direction === 'left') {
       style.left = '0px'
       style.top = '-7px'
-      style.color = 'black'
+      // style.color = 'black'
     }
     if (cell.direction === 'up') {
       style.left = '-5px'
       style.top = '-5px'
-      style.color = 'black'
+      // style.color = 'black'
     }
   } else if (cell.id > 60) {
     arrowImage = ArrowBlue
