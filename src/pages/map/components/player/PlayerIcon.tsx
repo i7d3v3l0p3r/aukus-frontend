@@ -269,6 +269,11 @@ export default function PlayerIcon({
   const hideAvatar =
     playersOnSamePosition.length > 1 && player.map_position !== 0 && !isMoving
 
+  const onPopupClick = (event: React.MouseEvent) => {
+    setPopupOpen(false)
+    event.stopPropagation()
+  }
+
   return (
     <animated.div
       style={{
@@ -283,7 +288,7 @@ export default function PlayerIcon({
           open={popupOpen}
           player={player}
           anchorEl={popupAnchor}
-          close={() => setPopupOpen(false)}
+          close={onPopupClick}
         />
         <Box
           onClick={handleClick}
