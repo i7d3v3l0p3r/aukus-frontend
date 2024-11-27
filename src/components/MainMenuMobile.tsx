@@ -54,7 +54,12 @@ export default function MainMenuMobile({ currentPage }: Props) {
             АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
-        <Box lineHeight={'1.2'} paddingTop={'1px'} marginLeft={'15px'}>
+        <Box
+          lineHeight={'1.2'}
+          paddingTop={'1px'}
+          marginLeft={'15px'}
+          color={Color.greyText}
+        >
           <Clock />
         </Box>
       </Box>
