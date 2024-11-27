@@ -120,10 +120,15 @@ export default function PlayerIcon({
     const ladder = laddersByCell[player.map_position + moves]
     const snake = snakesByCell[player.map_position + moves]
 
-    const animationsList: Array<{ x: number; y: number }> = []
+    const animationsList: Array<{ x: number; y: number; duration?: number }> =
+      []
     if (player.map_position === 0) {
       // move to beginning of start area
-      animationsList.push({ x: -relativeX, y: -relativeY })
+      animationsList.push({
+        x: -relativeX,
+        y: -relativeY,
+        duration: Math.abs(relativeX / 100) * 800,
+      })
       // move to start cell
       animationsList.push({ x: -relativeX - moveOffset, y: -relativeY })
     }
@@ -183,11 +188,13 @@ export default function PlayerIcon({
       from: { x: 0, y: 0 },
       to: async (next) => {
         for (let i = 0; i < animationsList.length; i++) {
-          await next(animationsList[i])
+          await next({
+            ...animationsList[i],
+            config: { duration: animationsList[i].duration || 1000 },
+          })
         }
         onAnimationEnd(player, moves)
       },
-      config: { duration: 1000 },
     })
   }
 
