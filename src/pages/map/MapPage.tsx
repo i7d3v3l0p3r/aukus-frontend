@@ -49,7 +49,7 @@ export default function MapPage() {
         alignContent={'center'}
         display="flex"
         alignItems="center"
-        justifyContent={'start'}
+        justifyContent={'center'}
         margin={'auto'}
         marginTop={'50px'}
         width={'100%'}
