@@ -105,7 +105,7 @@ export default function PlayerWinnerIcon({
   const containerWidth = container?.offsetWidth
   let adjustedLeft = coords.left + mapContainerLeft
   if (containerWidth) {
-    adjustedLeft = coords.left - containerWidth / 2
+    adjustedLeft = adjustedLeft - containerWidth / 2
   }
 
   const handleClick = (event: React.MouseEvent) => {
