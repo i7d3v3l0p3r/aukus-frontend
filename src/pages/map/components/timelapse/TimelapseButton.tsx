@@ -68,7 +68,6 @@ export default function TimelapseButton({ variant }: Props) {
 
   useEffect(() => {
     if (timelapseState.state === 'date_selection') {
-      console.log('switch', dateSliderRef.current)
       const input = dateSliderRef.current?.querySelector('input')
       input?.focus()
     }
