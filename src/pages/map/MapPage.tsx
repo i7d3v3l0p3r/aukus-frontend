@@ -52,7 +52,7 @@ export default function MapPage() {
         justifyContent={'start'}
         margin={'auto'}
         marginTop={'50px'}
-        width={'fit-content'}
+        width={'100%'}
       >
         <TimelapseProvider>
           <MapComponent />
