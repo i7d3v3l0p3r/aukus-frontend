@@ -59,6 +59,10 @@ export default function TimelapseButton({ variant }: Props) {
     setDateDiff(value)
   }
 
+  const stopPropagation = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
   if (timelapseState.state === 'closed') {
     if (variant === 'big') {
       return (
@@ -91,7 +95,7 @@ export default function TimelapseButton({ variant }: Props) {
     }
 
     return (
-      <Box width={'100%'}>
+      <Box width={'100%'} onClick={stopPropagation}>
         <Box width={'100%'} display="flex" justifyContent={'center'}>
           <Box
             style={{
@@ -208,7 +212,7 @@ export default function TimelapseButton({ variant }: Props) {
   }
 
   return (
-    <Box width={'100%'}>
+    <Box width={'100%'} onClick={stopPropagation}>
       <Box width={'100%'} display="flex" justifyContent={'center'}>
         <Box
           style={{

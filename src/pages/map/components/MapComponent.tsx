@@ -33,12 +33,15 @@ import LinkSpan from 'src/components/LinkSpan'
 import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
 import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 import { Link } from 'react-router-dom'
+import useLocalStorage from 'src/context/useLocalStorage'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
   const [moveSteps, setMoveSteps] = useState(0)
   const [makingTurn, setMakingTurn] = useState(false)
-  const [showArrows, setShowArrows] = useState(true)
+
+  const { save, load } = useLocalStorage()
+  const showArrows = load('showArrows', true)
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
@@ -159,7 +162,7 @@ export default function MapComponent() {
 
   const handleClick = () => {
     setClosePopups(!closePopups)
-    setShowArrows(!showArrows)
+    save('showArrows', !showArrows)
   }
 
   const handleMakingTurn = (value: boolean) => {

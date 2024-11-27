@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import useLocalStorage from 'src/context/useLocalStorage'
 import { fetchMovesByDate, fetchPlayers, PlayerMovesResponse } from 'utils/api'
 import { Player, PlayerMove } from 'utils/types'
 
@@ -47,10 +48,16 @@ export default function TimelapseProvider({
   const [selectedDate, setSelectedDate] = useState<string>(TodayString)
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
-  const [followMode, setFollowMode] = useState<boolean>(true)
+  // const [followMode, setFollowMode] = useState<boolean>(true)
   const [currentResponse, setCurrentResponse] = useState<
     PlayerMovesResponse | undefined
   >(undefined)
+
+  const { save, load } = useLocalStorage()
+  const followMode = load('followMode', true)
+  const setFollowMode = (mode: boolean) => {
+    save('followMode', mode)
+  }
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],

@@ -41,8 +41,12 @@ export default function StaticPanel({ children }: Props) {
 
   const left = width / 2 - 1300 / 2
 
+  const stopPropogation = (e: React.MouseEvent) => {
+    e.stopPropagation()
+  }
+
   return (
-    <Box display={'flex'} justifyContent="center">
+    <Box display={'flex'} justifyContent="center" onClick={stopPropogation}>
       <Box
         minWidth={'1300px'}
         width={'1300px'}
