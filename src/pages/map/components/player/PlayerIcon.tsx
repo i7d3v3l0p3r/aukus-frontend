@@ -64,6 +64,7 @@ type Props = {
   closePopup?: boolean
   moveSteps: number
   onAnimationEnd: (player: Player, steps: number) => void
+  winAnimation: boolean
 }
 
 export default function PlayerIcon({
@@ -72,6 +73,7 @@ export default function PlayerIcon({
   closePopup,
   moveSteps,
   onAnimationEnd,
+  winAnimation,
 }: Props) {
   const [anchorCell, setAnchorCell] = useState<HTMLElement | null>(null)
   const [popupOpen, setPopupOpen] = useState(false)
@@ -92,13 +94,14 @@ export default function PlayerIcon({
     playersOnSamePosition
   )
 
-  const isMoving = moveSteps !== 0
+  const isMoving = moveSteps !== 0 || winAnimation
 
   const [springs, api] = useSpring(() => {
     return {
       from: {
         x: 0,
         y: 0,
+        scale: 1,
       },
     }
   }, [])
@@ -174,7 +177,7 @@ export default function PlayerIcon({
       animationsList.push(calculateAnimation(player.map_position, snake.cellTo))
     }
 
-    console.log({ animationsList })
+    // console.log({ animationsList })
 
     api.start({
       from: { x: 0, y: 0 },
@@ -189,23 +192,59 @@ export default function PlayerIcon({
   }
 
   useEffect(() => {
-    if (isMoving && player.map_position <= 101) {
+    if (isMoving && !winAnimation) {
       if (anchorCell) {
         window.scrollTo({
-          top: anchorCell.offsetTop - window.innerHeight / 2,
+          top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
           behavior: 'smooth',
         })
       }
       startChainedAnimation(moveSteps)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMoving, moveSteps])
+  }, [isMoving, moveSteps, winAnimation])
 
   useEffect(() => {
     if (anchorCell) {
-      api.start({ from: { x: 0, y: 0 }, to: { x: 0, y: 0 } })
+      api.start({
+        from: { x: 0, y: 0, scale: 1 },
+        to: { x: 0, y: 0, scale: 1 },
+      })
     }
   }, [anchorCell, api, player.map_position])
+
+  const startWinAnimation = () => {
+    if (!anchorCell) {
+      return
+    }
+
+    const targetX = 392
+    const targetY = 240
+
+    const originTop = anchorCell.offsetTop + 30
+    const originLeft = anchorCell.offsetLeft + 55
+
+    const currentX = originLeft + relativeX
+    const currentY = originTop + relativeY
+
+    const deltaX = targetX - currentX
+    const deltaY = targetY - currentY
+
+    api.start({
+      from: { x: 0, y: 0 },
+      to: async (next) => {
+        await next({ x: deltaX, y: deltaY, scale: 1.5 })
+        onAnimationEnd(player, 1)
+      },
+      config: { duration: 5000 },
+    })
+  }
+
+  useEffect(() => {
+    if (winAnimation) {
+      startWinAnimation()
+    }
+  }, [winAnimation])
 
   useEffect(() => {
     // console.log("updating map position to", player.mapPosition);

@@ -88,9 +88,9 @@ export default function PlayerWinnerIcon({
   }
 
   const positionToCoordsMap = {
-    1: { top: -20, left: 392, scale: 1.5 },
-    2: { top: 23, left: 582, scale: 1.2 },
-    3: { top: 100, left: 700, scale: 1.1 },
+    1: { top: 180, left: 392, scale: 1.5 },
+    2: { top: 235, left: 582, scale: 1.2 },
+    3: { top: 300, left: 705, scale: 1.1 },
   }
 
   const coords = positionToCoordsMap[position]

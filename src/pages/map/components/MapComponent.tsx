@@ -39,6 +39,7 @@ export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
   const [moveSteps, setMoveSteps] = useState(0)
   const [makingTurn, setMakingTurn] = useState(false)
+  const [startWinAnimation, setStartWinAnimation] = useState(false)
 
   const { save, load } = useLocalStorage()
   const showArrows = load('showArrows', true)
@@ -231,13 +232,15 @@ export default function MapComponent() {
           item_length: params.itemLength,
           item_rating: params.itemRating,
           item_review: params.itemReview,
-        },
-        {
-          onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: ['players'] })
-          },
         }
+        // {
+        //   onSettled: () => {
+        //     queryClient.invalidateQueries({ queryKey: ['players'] })
+        //   },
+        // }
       )
+      setStartWinAnimation(true)
+      setMakingTurn(true)
       return
     }
 
@@ -253,12 +256,15 @@ export default function MapComponent() {
     player.map_position = newPosition
     setMoveSteps(0)
     setMakingTurn(false)
+    setStartWinAnimation(false)
     queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
-  const stopActions = winnerFound
+  const animating = startWinAnimation || moveSteps !== 0
+
+  const stopActions = winnerFound || animating
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
-  const showBigTimelapse = !showActionButton && !timelapseEnabled
+  const showBigTimelapse = !showActionButton && !timelapseEnabled && !animating
 
   return (
     <Box
@@ -338,7 +344,7 @@ export default function MapComponent() {
           }}
         >
           {winnerFound && top3players.length > 2 && (
-            <Box position={'relative'}>
+            <>
               <PlayerWinnerIcon
                 player={top3players[0]}
                 position={1}
@@ -355,8 +361,9 @@ export default function MapComponent() {
                 position={3}
                 closePopup={closePopups}
               />
-            </Box>
+            </>
           )}
+
           <Grid
             container
             justifyContent={'center'}
@@ -418,6 +425,7 @@ export default function MapComponent() {
           </Grid>
         </Box>
       </Box>
+
       {ladders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
           <MapArrow
@@ -446,6 +454,9 @@ export default function MapComponent() {
             closePopup={closePopups}
             moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
             onAnimationEnd={handleAnimationEnd}
+            winAnimation={
+              player.id === currentPlayer?.id ? startWinAnimation : false
+            }
           />
         ))}
       <StaticPanel>
