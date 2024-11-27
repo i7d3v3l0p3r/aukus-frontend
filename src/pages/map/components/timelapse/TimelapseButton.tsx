@@ -3,7 +3,7 @@ import { Box, Button, Slider, SliderThumb, Tooltip } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
 
 const StartDate = new Date('2024-10-01')
@@ -35,6 +35,9 @@ type Props = {
 export default function TimelapseButton({ variant }: Props) {
   const timelapseState = useTimelapse()
 
+  const dateSliderRef = useRef<HTMLDivElement>(null)
+  const moveSliderRef = useRef<HTMLDivElement>(null)
+
   const [dateDiff, setDateDiff] = useState<number>(
     daysBetween(StartDate, Today)
   )
@@ -62,6 +65,18 @@ export default function TimelapseButton({ variant }: Props) {
   const stopPropagation = (event: React.MouseEvent) => {
     event.stopPropagation()
   }
+
+  useEffect(() => {
+    if (timelapseState.state === 'date_selection') {
+      console.log('switch', dateSliderRef.current)
+      const input = dateSliderRef.current?.querySelector('input')
+      input?.focus()
+    }
+    if (timelapseState.state === 'move_selection') {
+      const input = moveSliderRef.current?.querySelector('input')
+      input?.focus()
+    }
+  }, [timelapseState.state])
 
   if (timelapseState.state === 'closed') {
     if (variant === 'big') {
@@ -113,6 +128,7 @@ export default function TimelapseButton({ variant }: Props) {
             }}
           >
             <Slider
+              ref={dateSliderRef}
               min={0}
               max={AmountOfDays}
               step={1}
@@ -250,6 +266,7 @@ export default function TimelapseButton({ variant }: Props) {
             }}
           >
             <Slider
+              ref={moveSliderRef}
               min={1}
               max={movesAmount}
               step={1}
