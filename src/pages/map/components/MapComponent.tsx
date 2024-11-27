@@ -382,7 +382,11 @@ export default function MapComponent() {
             </Grid>
             <Grid container columns={10} width={'auto'}>
               <Grid item>
-                <CellItem cell={lastCell} />
+                <CellItem
+                  cell={lastCell}
+                  currentPlayer={currentPlayer}
+                  moveSteps={moveSteps}
+                />
               </Grid>
               <Grid item>
                 <Box width={(cellSize + 1) * 9} height={cellSize} />
