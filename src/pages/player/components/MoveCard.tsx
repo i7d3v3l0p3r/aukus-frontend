@@ -119,7 +119,7 @@ export default function MoveCard({
             fontWeight={500}
             marginBottom={'15px'}
           >
-            {displayType === 'map' && (
+            {displayType === 'map' && player && (
               <Link to={`/players/${player.url_handle}`}>
                 <Box display={'flex'}>
                   <Divider

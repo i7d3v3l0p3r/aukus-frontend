@@ -41,7 +41,7 @@ export default function LeaderboardMobile() {
   )
 
   const playersStatsSorted = playersStats.sort((a, b) => {
-    return a.map_position - b.map_position
+    return b.map_position - a.map_position
   })
 
   return (
