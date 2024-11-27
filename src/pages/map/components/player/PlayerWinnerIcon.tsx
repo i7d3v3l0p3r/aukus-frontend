@@ -87,6 +87,13 @@ export default function PlayerWinnerIcon({
     setContainer(element)
   }
 
+  const mapContainer = document.getElementById('map-container')
+  if (!mapContainer) {
+    return
+  }
+
+  const mapContainerLeft = mapContainer.offsetLeft
+
   const positionToCoordsMap = {
     1: { top: 180, left: 392, scale: 1.5 },
     2: { top: 235, left: 582, scale: 1.2 },
@@ -96,7 +103,7 @@ export default function PlayerWinnerIcon({
   const coords = positionToCoordsMap[position]
 
   const containerWidth = container?.offsetWidth
-  let adjustedLeft = coords.left
+  let adjustedLeft = coords.left + mapContainerLeft
   if (containerWidth) {
     adjustedLeft = coords.left - containerWidth / 2
   }

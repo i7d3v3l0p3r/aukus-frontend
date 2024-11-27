@@ -334,6 +334,7 @@ export default function MapComponent() {
 
       <Box display={'flex'} justifyContent={'center'}>
         <Box
+          id="map-container"
           style={{
             width: '1715px',
             height: '2146px',
