@@ -218,6 +218,13 @@ export default function PlayerIcon({
       return
     }
 
+    const mapContainer = document.getElementById('map-container')
+    if (!mapContainer) {
+      return
+    }
+
+    const mapContainerLeft = mapContainer.offsetLeft
+
     const targetX = 392
     const targetY = 240
 
@@ -227,7 +234,7 @@ export default function PlayerIcon({
     const currentX = originLeft + relativeX
     const currentY = originTop + relativeY
 
-    const deltaX = targetX - currentX
+    const deltaX = targetX - currentX + mapContainerLeft
     const deltaY = targetY - currentY
 
     api.start({
