@@ -28,22 +28,6 @@ export default function PlayerList() {
 
   return (
     <Box marginLeft={'10px'} marginRight={'10px'}>
-      <Link
-        href={'https://veksever.ru/twitch_live/aucus3'}
-        target={'_blank'}
-        rel="noopener nereferrer"
-      >
-        <Box textAlign={'center'} marginBottom={'20px'}>
-          <Button>
-            Мультистрим (Твич)
-            <img
-              src={OpenIcon}
-              alt=""
-              style={{ marginLeft: '10px', width: '17px', height: '17px' }}
-            />
-          </Button>
-        </Box>
-      </Link>
       {randomPlayers.map((player) => {
         const hasPhoto = PlayerPhotoMap[player.url_handle]
         if (!hasPhoto) {
