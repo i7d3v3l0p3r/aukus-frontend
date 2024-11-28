@@ -134,7 +134,7 @@ export default function DiceModal({
   }
 
   const handleTestThrow = () => {
-    if (diceBox) {
+    if (diceBox && diceStatus === 'idle') {
       setDiceRoll(null)
       diceBox.roll(currentDice).then((result: Array<DiceRoll>) => {
         setDiceRoll(result.map((diceRoll) => diceRoll.value))
@@ -151,6 +151,7 @@ export default function DiceModal({
     : ` — ${diceRollSum}`
 
   const useDarkText = isBright(diceColor)
+  const canTestThrow = diceStatus === 'idle'
 
   return (
     <Dialog open={open} keepMounted maxWidth="md">
@@ -191,6 +192,7 @@ export default function DiceModal({
                 disableRipple
                 onClick={handleTestThrow}
                 style={{
+                  display: 'none',
                   backgroundColor: diceColor,
                   color: useDarkText ? 'black' : 'white',
                   fontSize: '14px',
@@ -211,6 +213,7 @@ export default function DiceModal({
       >
         <div
           id={DiceBoxContainerId}
+          onClick={handleTestThrow}
           style={{
             display: 'flex',
             position: 'relative',
@@ -222,6 +225,7 @@ export default function DiceModal({
             padding: '5px',
             boxSizing: 'border-box',
             backgroundImage: `url(${deckBackground})`,
+            cursor: canTestThrow ? 'pointer' : 'default',
           }}
           ref={containerRef}
         ></div>
