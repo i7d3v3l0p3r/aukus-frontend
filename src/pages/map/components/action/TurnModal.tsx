@@ -27,6 +27,7 @@ import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import {
   Color,
   DiceOption,
+  DiceOrSkip,
   MoveType,
   NextTurnParams,
   Player,
@@ -38,7 +39,7 @@ import { checkImageValid } from '../utils'
 type Props = {
   open: boolean
   onClose: () => void
-  onConfirm: (params: NextTurnParams, dice: DiceOption) => void
+  onConfirm: (params: NextTurnParams, dice: DiceOrSkip) => void
   player: Player
 }
 
@@ -137,7 +138,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setMoveType(event.target.value as MoveType)
   }
 
-  const dice: DiceOption | null = getDiceType({
+  const dice: DiceOrSkip | null = getDiceType({
     moveType,
     gameHours,
     playerPosition: player.map_position,

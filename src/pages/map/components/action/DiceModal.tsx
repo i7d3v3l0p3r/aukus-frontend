@@ -14,7 +14,7 @@ import { DiceOption } from 'utils/types'
 
 type Props = {
   open: boolean
-  dice: DiceOption | null
+  dice: DiceOption
   onTurnFinish: () => void
   onDiceRoll: (diceRoll: number) => void
 }
@@ -50,6 +50,14 @@ export default function DiceModal({
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
   const [diceColor, setDiceColor] = useState<string>(getRandomHexColor())
 
+  const [currentDice, setCurrentDice] = useState<DiceOption>(dice)
+
+  useEffect(() => {
+    if (dice !== currentDice) {
+      setCurrentDice(dice)
+    }
+  }, [dice])
+
   const diceRollSum = diceRoll
     ? diceRoll.reduce((acc, value) => acc + value, 0)
     : null
@@ -58,6 +66,18 @@ export default function DiceModal({
     diceRoll !== null && diceStatus === 'done' && diceRollSum
 
   const canThrowDice = diceStatus === 'idle'
+
+  const diceCanBeChanged = dice === '2d6'
+
+  const changeDice = () => {
+    if (diceCanBeChanged) {
+      if (currentDice === '1d6') {
+        setCurrentDice('2d6')
+      } else {
+        setCurrentDice('1d6')
+      }
+    }
+  }
 
   useEffect(() => {
     if (!open) {
@@ -86,7 +106,7 @@ export default function DiceModal({
         const diceBox = new DiceBox({
           assetPath: '/static/assets/',
           container: DiceBoxContainer,
-          scale: 11,
+          scale: 9,
           themeColor: diceColor,
           // delay: 100,
         })
@@ -100,12 +120,12 @@ export default function DiceModal({
   )
 
   const throwDice = () => {
-    if (diceStatus !== 'idle' || !dice || !diceBox) {
+    if (diceStatus !== 'idle' || !diceBox) {
       return
     }
 
     setDiceStatus('rolling')
-    diceBox.roll(dice).then((result: Array<DiceRoll>) => {
+    diceBox.roll(currentDice).then((result: Array<DiceRoll>) => {
       setDiceRoll(result.map((diceRoll) => diceRoll.value))
       setDiceStatus('done')
       const diceSum = result.reduce((acc, value) => acc + value.value, 0)
@@ -114,9 +134,9 @@ export default function DiceModal({
   }
 
   const handleTestThrow = () => {
-    if (diceBox && dice) {
+    if (diceBox) {
       setDiceRoll(null)
-      diceBox.roll(dice).then((result: Array<DiceRoll>) => {
+      diceBox.roll(currentDice).then((result: Array<DiceRoll>) => {
         setDiceRoll(result.map((diceRoll) => diceRoll.value))
       })
       const newColor = getRandomHexColor()
@@ -133,7 +153,7 @@ export default function DiceModal({
   const useDarkText = isBright(diceColor)
 
   return (
-    <Dialog open={open} fullWidth keepMounted>
+    <Dialog open={open} keepMounted maxWidth="md">
       <DialogTitle
         fontSize={'24px'}
         style={{
@@ -154,17 +174,29 @@ export default function DiceModal({
             {diceRollSum && diceRollDisplay}
           </Box>
           {diceStatus === 'idle' && (
-            <Button
-              disableRipple
-              onClick={handleTestThrow}
-              style={{
-                backgroundColor: diceColor,
-                color: useDarkText ? 'black' : 'white',
-                fontSize: '14px',
-              }}
-            >
-              Тестовый бросок
-            </Button>
+            <Box>
+              <Button
+                style={{
+                  fontSize: '14px',
+                  marginRight: '10px',
+                  width: '158px',
+                }}
+                onClick={changeDice}
+              >
+                Сменить на {currentDice === '1d6' ? '2d6' : '1d6'}
+              </Button>
+              <Button
+                disableRipple
+                onClick={handleTestThrow}
+                style={{
+                  backgroundColor: diceColor,
+                  color: useDarkText ? 'black' : 'white',
+                  fontSize: '14px',
+                }}
+              >
+                Тестовый бросок
+              </Button>
+            </Box>
           )}
         </Box>
       </DialogTitle>
@@ -181,7 +213,8 @@ export default function DiceModal({
             display: 'flex',
             position: 'relative',
             justifyContent: 'center',
-            height: '200px',
+            width: '640px',
+            height: '260px',
             border: '2px solid #414141',
             borderRadius: '10px',
             padding: '5px',
@@ -206,7 +239,7 @@ export default function DiceModal({
           color="secondary"
           variant="contained"
         >
-          {diceStatus === 'idle' ? `Бросить кубик — ${dice}` : 'Ходить'}
+          {diceStatus === 'idle' ? `Бросить кубик — ${currentDice}` : 'Ходить'}
         </Button>
       </DialogActions>
     </Dialog>
