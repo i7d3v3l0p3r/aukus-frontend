@@ -175,16 +175,18 @@ export default function DiceModal({
           </Box>
           {diceStatus === 'idle' && (
             <Box>
-              <Button
-                style={{
-                  fontSize: '14px',
-                  marginRight: '10px',
-                  width: '158px',
-                }}
-                onClick={changeDice}
-              >
-                Сменить на {currentDice === '1d6' ? '2d6' : '1d6'}
-              </Button>
+              {diceCanBeChanged && (
+                <Button
+                  style={{
+                    fontSize: '14px',
+                    marginRight: '10px',
+                    width: '158px',
+                  }}
+                  onClick={changeDice}
+                >
+                  Сменить на {currentDice === '1d6' ? '2d6' : '1d6'}
+                </Button>
+              )}
               <Button
                 disableRipple
                 onClick={handleTestThrow}
