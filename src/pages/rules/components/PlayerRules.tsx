@@ -9,17 +9,28 @@ import {
 import LinkSpan from 'components/LinkSpan'
 import { Color } from 'utils/types'
 
-const playerRules = [
+type TextContent = string | string[]
+type Content = { title: string; content: TextContent[] }
+type Rule = { title: string; content: Content[] }
+
+const playerRules: Rule[] = [
   {
     title: 'Правила аукциона и хода стримера',
     content: [
       {
         title: 'Аукцион',
-        special: true,
         content: [
-          'Стример запускает аукцион на сайте pointauc.com с таймером 20 минут и минимальной ставкой 100 рублей',
+          [
+            'Стример запускает аукцион на сайте',
+            'pointauc.com',
+            'с таймером 20 минут и минимальной ставкой 100 рублей',
+          ],
           'Время на таймере можно увеличивать за донат только если остаётся менее двух минут (по минуте за донат)',
-          'После завершения аукциона и выбора игры (время вращения колеса — не менее 60 секунд), стример начинает прохождение игры',
+          [
+            'После завершения аукциона и выбора игры (время вращения колеса — не менее 60 секунд), стример ролит сложность на сайте аукуса или ',
+            'wheelofnames.com/ru/krm-bsb',
+          ],
+          'После ролла сложности начинается прохождение с максимально подходящим уровнем сложности',
           'Участники ивента не могут заказывать друг другу игры',
         ],
       },
@@ -190,7 +201,7 @@ const playerRules = [
       {
         title: 'Определение победителя при отсутствии финишера',
         content: [
-          'Если никто не дошёл до финиша, победитель определяется по формуле: (пройденные игры) x (этаж) - (количество дропов)',
+          'Если никто не дошёл до финиша, победитель определяется по формуле: (пройденные игры - количество дропов) x (этаж)',
         ],
       },
     ],
@@ -243,31 +254,19 @@ export default function PlayerRules() {
                       {':'}
                     </Typography>
                     <Box marginTop={1} />
-                    <ul>
-                      {content.content.map((text, index) => (
-                        <li key={index}>
-                          {content.special && index === 0 ? (
-                            <Typography fontWeight={400} fontSize={'16px'}>
-                              Стример запускает аукцион на сайте{' '}
-                              <Link
-                                href={'https://pointauc.com/'}
-                                rel="noopener nereferrer"
-                                target="_blank"
-                              >
-                                <LinkSpan color={Color.blue}>
-                                  pointauc.com
-                                </LinkSpan>
-                              </Link>{' '}
-                              с таймером 20 минут и минимальной ставкой 100
-                              рублей
-                            </Typography>
-                          ) : (
-                            <Typography fontWeight={400} fontSize={'16px'}>
-                              {text}
-                            </Typography>
-                          )}
-                        </li>
-                      ))}
+                    <ul style={{ fontWeight: 400, fontSize: '16px' }}>
+                      {content.content.map((text, index) => {
+                        if (Array.isArray(text)) {
+                          return (
+                            <li key={index}>
+                              {text.map((textItem, index) => (
+                                <ContentItem text={textItem} key={index} />
+                              ))}
+                            </li>
+                          )
+                        }
+                        return <li key={index}>{text}</li>
+                      })}
                     </ul>
                   </Box>
                 ))}
@@ -278,4 +277,38 @@ export default function PlayerRules() {
       ))}
     </Box>
   )
+}
+
+function ContentItem({ text }: { text: string }) {
+  if (text === 'pointauc.com') {
+    return (
+      <>
+        {' '}
+        <Link
+          href={'https://pointauc.com/'}
+          rel="noopener nereferrer"
+          target="_blank"
+        >
+          <LinkSpan color={Color.blue}>{text}</LinkSpan>
+        </Link>{' '}
+      </>
+    )
+  }
+
+  if (text === 'wheelofnames.com/ru/krm-bsb') {
+    return (
+      <>
+        {' '}
+        <Link
+          href={'https://wheelofnames.com/ru/krm-bsb'}
+          rel="noopener nereferrer"
+          target="_blank"
+        >
+          <LinkSpan color={Color.blue}>{text}</LinkSpan>
+        </Link>{' '}
+      </>
+    )
+  }
+
+  return text
 }
