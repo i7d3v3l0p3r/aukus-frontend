@@ -307,5 +307,5 @@ export default function Leaderboard() {
 
 export function getPlayerScore(player: PlayerStats) {
   const row = Math.floor(player.map_position / 10) || 1
-  return player.games_completed * row - player.games_dropped
+  return (player.games_completed - player.games_dropped) * row
 }
