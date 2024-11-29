@@ -48,15 +48,16 @@ export default function TimelapseProvider({
   const [selectedDate, setSelectedDate] = useState<string>(TodayString)
   const [selectedMoveId, setSelectedMoveId] = useState<number>(1)
   const [updatedPlayers, setUpdatedPlayers] = useState<Player[]>([])
-  // const [followMode, setFollowMode] = useState<boolean>(true)
+  const [followMode, setFollowMode] = useState<boolean>(true)
   const [currentResponse, setCurrentResponse] = useState<
     PlayerMovesResponse | undefined
   >(undefined)
 
   const { save, load } = useLocalStorage()
-  const followMode = load('followMode', true)
-  const setFollowMode = (mode: boolean) => {
+  const followModeLoaded = load('followMode', true)
+  const updateFollowMode = (mode: boolean) => {
     save('followMode', mode)
+    setFollowMode(mode)
   }
 
   const { data: movesByDay } = useQuery({
@@ -123,7 +124,7 @@ export default function TimelapseProvider({
 
   // scroll to seleceted player move
   useEffect(() => {
-    if (!followMode) {
+    if (!followModeLoaded) {
       return
     }
     if (openState === 'closed') {
@@ -137,7 +138,7 @@ export default function TimelapseProvider({
       const element = document.getElementById(cellFrom)
       if (element) {
         window.scrollTo({
-          top: element.offsetTop - window.innerHeight / 2 + 300,
+          top: element.offsetTop - window.innerHeight / 2 + 200,
           behavior: 'smooth',
         })
         // element.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -156,8 +157,8 @@ export default function TimelapseProvider({
         setSelectedMoveId,
         players: updatedPlayers,
         moves,
-        followMode,
-        setFollowMode,
+        followMode: followModeLoaded,
+        setFollowMode: updateFollowMode,
       }}
     >
       {children}

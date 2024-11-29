@@ -149,18 +149,22 @@ export default function TimelapseButton({ variant }: Props) {
           </Box>
         </Box>
         <Box textAlign="center">
-          <Button
-            onClick={() =>
-              timelapseState.setFollowMode(!timelapseState.followMode)
-            }
-            sx={{
-              backgroundColor: timelapseState.followMode ? Color.blue : 'black',
-              marginRight: '10px',
-              width: '163px',
-            }}
-          >
-            {timelapseState.followMode ? 'Не следовать' : 'Следовать'}
-          </Button>
+          <Tooltip title={'Следовать камерой за ходами'}>
+            <Button
+              onClick={() =>
+                timelapseState.setFollowMode(!timelapseState.followMode)
+              }
+              sx={{
+                backgroundColor: timelapseState.followMode
+                  ? Color.blue
+                  : 'black',
+                marginRight: '10px',
+                width: '163px',
+              }}
+            >
+              {timelapseState.followMode ? 'Не следовать' : 'Следовать'}
+            </Button>
+          </Tooltip>
           <Button
             onClick={() => timelapseState.setState('move_selection')}
             sx={{ width: '320px', marginRight: '10px', height: '44px' }}
