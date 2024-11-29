@@ -14,6 +14,7 @@ import Melharucos2 from 'assets/photos/melharucos2.png'
 import Praden2 from 'assets/photos/praden2.png'
 import Timofey2 from 'assets/photos/timofey2.png'
 import UselessMouth2 from 'assets/photos/uselessmouth2.png'
+import KelyQ_Q2 from 'assets/photos/kelyq_q2.png'
 
 export const PlayerPhotoMap: { [s: string]: string } = {
   roadhouse: RoadhousePhoto,
@@ -30,4 +31,5 @@ export const PlayerPhotoMap: { [s: string]: string } = {
   timofey: Timofey2,
   krabick: Krabik2,
   hyomushka: Hyomushka2,
+  keliq_q: KelyQ_Q2,
 }
