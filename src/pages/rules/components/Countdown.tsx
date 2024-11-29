@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-const targetDate = new Date('2024-12-31T00:00:00+03:00')
+const targetDate = new Date('2024-12-29T00:00:00+03:00')
 
 export function getCurrentDiff() {
   return Math.max(targetDate.getTime() - new Date().getTime(), 0)
