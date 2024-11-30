@@ -370,7 +370,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     variant={gameHours === 'tiny' ? 'contained' : 'outlined'}
                     color={gameHours === 'tiny' ? 'secondary' : 'info'}
                     style={{
-                      width: 125,
+                      width: 127,
                       fontSize: '16px',
                       border:
                         gameHours === 'tiny'
@@ -389,7 +389,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     variant={gameHours === 'short' ? 'contained' : 'outlined'}
                     color={gameHours === 'short' ? 'secondary' : 'info'}
                     style={{
-                      width: 125,
+                      width: 127,
                       marginLeft: 20,
                       fontSize: '16px',
                       border:
@@ -410,7 +410,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     color={gameHours === 'medium' ? 'secondary' : 'info'}
                     style={{
                       marginLeft: 20,
-                      width: 125,
+                      width: 126,
                       fontSize: '16px',
                       border:
                         gameHours === 'medium'
