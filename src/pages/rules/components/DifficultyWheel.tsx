@@ -6,35 +6,26 @@ export default function DifficultyWheel() {
     <Box display={'flex'} justifyContent={'center'}>
       <Box
         style={{
+          position: 'absolute',
+          width: '700px',
           backgroundColor: Color.greyDark,
+          height: '10px',
+          // display: 'none',
         }}
-      >
-        <Box textAlign={'center'} fontSize={'32px'} marginBottom={'0px'}>
-          Ролл сложности игры
-        </Box>
-        <Box
+      />
+      <Box>
+        <iframe
+          src="https://wheelofnames.com/ru/79v-hfc"
+          title="Колесо сложности"
+          width={'700px'}
+          height={'700px'}
           style={{
-            position: 'absolute',
-            width: '700px',
-            backgroundColor: Color.greyDark,
-            height: '10px',
-            // display: 'none',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            overflow: 'hidden',
           }}
         />
-        <Box>
-          <iframe
-            src="https://wheelofnames.com/ru/79v-hfc"
-            title="Колесо сложности"
-            width={'700px'}
-            height={'700px'}
-            style={{
-              border: 'none',
-              padding: 0,
-              margin: 0,
-              overflow: 'hidden',
-            }}
-          />
-        </Box>
       </Box>
     </Box>
   )
