@@ -7,6 +7,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import DifficultyWheel from './DifficultyWheel'
+import WheelIcon from 'assets/icons/wheel.svg?react'
 
 export default function DifficultyButton() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -18,9 +19,15 @@ export default function DifficultyButton() {
 
   return (
     <>
-      <Box display="flex" justifyContent={'center'}>
-        <Button onClick={() => setModalOpen(true)}>Колесо сложности</Button>
-      </Box>
+      <Button
+        sx={{ width: '207px', paddingLeft: '15px', paddingRight: '15px' }}
+        onClick={() => setModalOpen(true)}
+      >
+        <WheelIcon
+          style={{ marginRight: '8px', width: '19px', height: '19px' }}
+        />
+        Колесо сложности
+      </Button>
       <Dialog
         open={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -30,7 +37,9 @@ export default function DifficultyButton() {
           <DifficultyWheel />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setModalOpen(false)}>Закрыть</Button>
+          <Box display={'flex'} justifyContent={'center'} width={'100%'}>
+            <Button onClick={() => setModalOpen(false)}>Закрыть</Button>
+          </Box>
         </DialogActions>
       </Dialog>
     </>
