@@ -52,6 +52,8 @@ export default function MapComponent() {
 
   const queryClient = useQueryClient()
 
+  const [timeLeft, setTimeLeft] = useState(() => getEventTimeLeft())
+
   useEffect(() => {
     const mapWidth = 1715
     const diff = mapWidth - window.innerWidth
@@ -104,7 +106,19 @@ export default function MapComponent() {
         )
       : null
 
-  const deadlineReached = getEventTimeLeft() === 0
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const difference = getEventTimeLeft()
+      setTimeLeft(difference)
+    }, 1000)
+
+    return () => clearInterval(interval) // Cleanup interval on component unmount
+  }, [])
+
+  const deadlineReached = timeLeft <= 0
+  const showCountdown = timeLeft <= 1000 * 60 * 60 * 24
+
+  const timerText = formatSeconds(timeLeft)
 
   const winnerFound =
     !timelapseEnabled &&
@@ -343,7 +357,37 @@ export default function MapComponent() {
         </Box>
       )}
 
-      {!showWinScreen && <Box height={'44px'} />}
+      {showCountdown && !showWinScreen && (
+        <Box display={'flex'} justifyContent={'center'}>
+          <Box
+            fontSize={'20px'}
+            textAlign={'center'}
+            style={{
+              backgroundColor: Color.greyLight,
+              borderRadius: '10px',
+              zIndex: 10,
+              position: 'relative',
+            }}
+            width={'740px'}
+            height={'44px'}
+            padding={'10px'}
+          >
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              height={'100%'}
+            >
+              <Box>
+                До конца ивента{' '}
+                <span style={{ fontFamily: 'monospace' }}>{timerText}</span>{' '}
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      )}
+
+      {!showWinScreen && !showCountdown && <Box height={'44px'} />}
 
       <Box display={'flex'} justifyContent={'center'}>
         <Box
@@ -572,4 +616,16 @@ function getMoveSteps(player: Player, moves: number) {
     return -player.map_position
   }
   return moves
+}
+
+function formatSeconds(timeDiff: number) {
+  const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24)
+  const minutes = Math.floor((timeDiff / (1000 * 60)) % 60)
+  const seconds = Math.floor((timeDiff / 1000) % 60)
+
+  const hoursPadded = hours.toString().padStart(2, '0')
+  const minutesPadded = minutes.toString().padStart(2, '0')
+  const secondsPadded = seconds.toString().padStart(2, '0')
+
+  return `${hoursPadded}:${minutesPadded}:${secondsPadded}`
 }
