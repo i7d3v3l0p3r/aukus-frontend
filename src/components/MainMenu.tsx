@@ -30,13 +30,15 @@ export default function MainMenu({
   const playerColor = getPlayerColor(currentUser?.url_handle || '')
   const urlHandle = currentUser?.url_handle
 
+  const enableScrollRestoration = currentPage !== 'map'
+
   if (isMobile) {
     return <MainMenuMobile currentPage={currentPage} />
   }
 
   return (
     <Box>
-      <ScrollRestoration />
+      {enableScrollRestoration && <ScrollRestoration />}
       <TWallpaper
         options={{
           fps: 1,
