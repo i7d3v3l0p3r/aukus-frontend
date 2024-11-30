@@ -28,6 +28,7 @@ import {
   Color,
   DiceOption,
   DiceOrSkip,
+  ItemLength,
   MoveType,
   NextTurnParams,
   Player,
@@ -48,7 +49,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
   const [review, setReview] = useState('')
-  const [gameHours, setGameHours] = useState<'short' | 'medium' | null>(null)
+  const [gameHours, setGameHours] = useState<
+    'tiny' | 'short' | 'medium' | null
+  >(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
 
@@ -130,7 +133,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setReview(event.target.value)
   }
 
-  const handleGameHoursChange = (newValue: 'short' | 'medium' | null) => {
+  const handleGameHoursChange = (
+    newValue: 'tiny' | 'short' | 'medium' | null
+  ) => {
     setGameHours(newValue)
   }
 
@@ -361,11 +366,31 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               {moveType === 'completed' && (
                 <Box display="flex" justifyContent={'center'}>
                   <Button
+                    onClick={() => handleGameHoursChange('tiny')}
+                    variant={gameHours === 'tiny' ? 'contained' : 'outlined'}
+                    color={gameHours === 'tiny' ? 'secondary' : 'info'}
+                    style={{
+                      width: 125,
+                      fontSize: '16px',
+                      border:
+                        gameHours === 'tiny'
+                          ? '2px solid transparent'
+                          : `2px solid ${Color.greyLight}`,
+                      paddingTop: '5px',
+                      paddingBottom: '5px',
+                      paddingLeft: '15px',
+                      paddingRight: '15px',
+                    }}
+                  >
+                    0-3 часов
+                  </Button>
+                  <Button
                     onClick={() => handleGameHoursChange('short')}
                     variant={gameHours === 'short' ? 'contained' : 'outlined'}
                     color={gameHours === 'short' ? 'secondary' : 'info'}
                     style={{
-                      width: 200,
+                      width: 125,
+                      marginLeft: 20,
                       fontSize: '16px',
                       border:
                         gameHours === 'short'
@@ -377,7 +402,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       paddingRight: '15px',
                     }}
                   >
-                    0-5 часов
+                    3-5 часов
                   </Button>
                   <Button
                     onClick={() => handleGameHoursChange('medium')}
@@ -385,7 +410,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     color={gameHours === 'medium' ? 'secondary' : 'info'}
                     style={{
                       marginLeft: 20,
-                      width: 200,
+                      width: 125,
                       fontSize: '16px',
                       border:
                         gameHours === 'medium'
@@ -484,7 +509,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
 
 type GetDiceTypeProps = {
   moveType: MoveType | null
-  gameHours: 'short' | 'medium' | 'long' | null
+  gameHours: ItemLength | null
   playerPosition: number
 }
 
@@ -507,6 +532,8 @@ function getDiceType({
       return '1d6'
     }
     switch (gameHours) {
+      case 'tiny':
+        return '1d6'
       case 'short':
         return '1d6'
       case 'medium':
