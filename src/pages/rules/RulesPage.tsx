@@ -9,7 +9,6 @@ export default function RulesPage() {
   return (
     <Box>
       <MainMenu currentPage={'rules'} />
-      <DifficultyButton />
       <Box marginTop={'100px'} />
       <RulesContainer />
       <BottomSection />
