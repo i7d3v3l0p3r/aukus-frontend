@@ -346,7 +346,7 @@ export default function MapComponent() {
                 style={{ marginRight: '10px' }}
               />
               <Box>
-                Можете выдыхать, ивент закончен:{' '}
+                Можете выдыхать, ивент закончен{' — '}
                 <Link to={`/players/${winner.url_handle}`}>
                   <LinkSpan color={'white'}>{winner.name}</LinkSpan>{' '}
                 </Link>
@@ -379,8 +379,8 @@ export default function MapComponent() {
               height={'100%'}
             >
               <Box>
-                До конца ивента{' '}
-                <span style={{ fontFamily: 'monospace' }}>{timerText}</span>{' '}
+                До конца ивента{' — '}
+                <span style={{ fontFamily: 'monospace' }}>{timerText}</span>
               </Box>
             </Box>
           </Box>
