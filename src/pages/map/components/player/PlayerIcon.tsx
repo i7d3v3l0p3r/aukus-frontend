@@ -1,7 +1,13 @@
 import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { Color, getPlayerColor, MoveParams, Player } from 'utils/types'
+import {
+  Color,
+  getPlayerColor,
+  MoveParams,
+  Player,
+  PlayerUrl,
+} from 'utils/types'
 import PlayerGreen from 'assets/map/PlayerGreen.webp'
 import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
 import PlayerRed from 'assets/map/PlayerRed.webp'
@@ -30,7 +36,7 @@ import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 
-const playerIcons: { [key: string]: string } = {
+const playerIcons: { [key in PlayerUrl]: string } = {
   lasqa: PlayerBlue,
   segall: PlayerGreen,
   praden: PlayerBrown,
@@ -43,9 +49,11 @@ const playerIcons: { [key: string]: string } = {
   vovapain: PlayerRed,
   timofey: PlayerGreenLight,
   unclobjorn: PlayerPinkLight,
+  krabick: PlayerBlueLight,
+  keliq_q: PlayerBlueLight,
 }
 
-const playerMovingIcons: { [key: string]: string } = {
+const playerMovingIcons: { [key in PlayerUrl]: string } = {
   lasqa: PlayerBlueMoving,
   segall: PlayerGreenMoving,
   praden: PlayerBrownMoving,
@@ -58,6 +66,8 @@ const playerMovingIcons: { [key: string]: string } = {
   vovapain: PlayerRedMoving,
   timofey: PlayerGreenLightMoving,
   unclobjorn: PlayerPinkLightMoving,
+  krabick: PlayerBlueLightMoving,
+  keliq_q: PlayerBlueLightMoving,
 }
 
 type Props = {

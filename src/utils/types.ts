@@ -121,7 +121,23 @@ export type CustomColorOverrides = {
   [K in keyof typeof Color as CustomColorNames]: true
 }
 
-export const ColorByUrlHandle: { [key: string]: string } = {
+export type PlayerUrl =
+  | 'lasqa'
+  | 'segall'
+  | 'praden'
+  | 'predan'
+  | 'browjey'
+  | 'uselessmouth'
+  | 'roadhouse'
+  | 'melharucos'
+  | 'maddyson'
+  | 'krabick'
+  | 'vovapain'
+  | 'timofey'
+  | 'keliq_q'
+  | 'unclobjorn'
+
+export const ColorByUrlHandle: { [key in PlayerUrl]: string } = {
   lasqa: Color.blue,
   segall: Color.green,
   praden: Color.brown,
@@ -139,7 +155,7 @@ export const ColorByUrlHandle: { [key: string]: string } = {
 }
 
 export const ColorNameByUrlHandle: {
-  [key: string]: CustomColorNames
+  [key in PlayerUrl]: CustomColorNames
 } = {
   lasqa: 'customBlue',
   segall: 'customGreen',
@@ -158,11 +174,13 @@ export const ColorNameByUrlHandle: {
 }
 
 export function getPlayerColor(urlHandle: string): string {
-  return ColorByUrlHandle[urlHandle] || Color.blueLight
+  return ColorByUrlHandle[urlHandle as PlayerUrl] || Color.blueLight
 }
 
 export function getPlayerColorName(player: Player): CustomColorNames {
-  return ColorNameByUrlHandle[player.url_handle] || 'customBlueLight'
+  return (
+    ColorNameByUrlHandle[player.url_handle as PlayerUrl] || 'customBlueLight'
+  )
 }
 
 export type CurrentUser = {
