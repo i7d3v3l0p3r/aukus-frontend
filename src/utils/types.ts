@@ -113,7 +113,6 @@ export const Color = {
   blueTg: '#27a7e7',
   lime: '#A9DE2C',
   yellow: '#F2C200',
-  teal: '#00B88C',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
@@ -134,7 +133,7 @@ export const ColorByUrlHandle: { [key: string]: string } = {
   maddyson: Color.blueDark,
   krabick: Color.lime,
   vovapain: Color.red,
-  timofey: Color.teal,
+  timofey: Color.greenLight,
   keliq_q: Color.yellow,
   unclobjorn: Color.pinkLight,
 }
@@ -153,7 +152,7 @@ export const ColorNameByUrlHandle: {
   maddyson: 'customBlueDark',
   krabick: 'customLime',
   vovapain: 'customRed',
-  timofey: 'customTeal',
+  timofey: 'customGreenLight',
   keliq_q: 'customYellow',
   unclobjorn: 'customPinkLight',
 }

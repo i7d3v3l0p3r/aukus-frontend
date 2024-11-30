@@ -32,30 +32,32 @@ import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 
 const playerIcons: { [key: string]: string } = {
   lasqa: PlayerBlue,
+  segall: PlayerGreen,
   praden: PlayerBrown,
   predan: PlayerBrown,
-  roadhouse: PlayerPurple,
-  segall: PlayerOrange,
-  artur: PlayerRed,
+  browjey: PlayerOrange,
   uselessmouth: PlayerPink,
-  unclobjorn: PlayerBlueDark,
+  roadhouse: PlayerPurple,
   melharucos: PlayerBlueLight,
-  browjey: PlayerGreen,
-  f1ashko: PlayerPinkLight,
+  maddyson: PlayerBlueDark,
+  vovapain: PlayerRed,
+  timofey: PlayerGreenLight,
+  unclobjorn: PlayerPinkLight,
 }
 
 const playerMovingIcons: { [key: string]: string } = {
   lasqa: PlayerBlueMoving,
+  segall: PlayerGreenMoving,
   praden: PlayerBrownMoving,
   predan: PlayerBrownMoving,
-  roadhouse: PlayerPurpleMoving,
-  segall: PlayerOrangeMoving,
-  artur: PlayerRedMoving,
+  browjey: PlayerOrangeMoving,
   uselessmouth: PlayerPinkMoving,
-  unclobjorn: PlayerBlueDarkMoving,
+  roadhouse: PlayerPurpleMoving,
   melharucos: PlayerBlueLightMoving,
-  browjey: PlayerGreenMoving,
-  f1ashko: PlayerPinkLightMoving,
+  maddyson: PlayerBlueDarkMoving,
+  vovapain: PlayerRedMoving,
+  timofey: PlayerGreenLightMoving,
+  unclobjorn: PlayerPinkLightMoving,
 }
 
 type Props = {
