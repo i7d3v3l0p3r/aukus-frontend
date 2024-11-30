@@ -63,6 +63,8 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
           width={'60px'}
           style={{
             position: 'absolute',
+            opacity: 0.5,
+            // display: 'none',
             ...arrowStyle,
           }}
         />
@@ -72,7 +74,7 @@ export default function CellItem({ cell, currentPlayer, moveSteps }: Props) {
             position: 'absolute',
             left: labelLeft,
             top: labelTop,
-            color: arrowStyle.color || 'white',
+            color: arrowStyle.color || 'rgba(255,255,255,0.8)',
           }}
         >
           {label}
