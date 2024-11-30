@@ -48,7 +48,7 @@ const playerIcons: { [key in PlayerUrl]: string } = {
   maddyson: PlayerBlueDark,
   vovapain: PlayerRed,
   timofey: PlayerGreenLight,
-  unclobjorn: PlayerPinkLight,
+  unclebjorn: PlayerPinkLight,
   krabick: PlayerBlueLight,
   keliq_q: PlayerBlueLight,
 }
@@ -65,7 +65,7 @@ const playerMovingIcons: { [key in PlayerUrl]: string } = {
   maddyson: PlayerBlueDarkMoving,
   vovapain: PlayerRedMoving,
   timofey: PlayerGreenLightMoving,
-  unclobjorn: PlayerPinkLightMoving,
+  unclebjorn: PlayerPinkLightMoving,
   krabick: PlayerBlueLightMoving,
   keliq_q: PlayerBlueLightMoving,
 }

@@ -9,7 +9,7 @@ export type Player = {
   current_game: string | null
   current_game_updated_at: string
   current_game_image: string | null
-  url_handle: string
+  url_handle: PlayerUrl
   map_position: number
   stream_last_category: string
   first_name: string
@@ -135,7 +135,7 @@ export type PlayerUrl =
   | 'vovapain'
   | 'timofey'
   | 'keliq_q'
-  | 'unclobjorn'
+  | 'unclebjorn'
 
 export const ColorByUrlHandle: { [key in PlayerUrl]: string } = {
   lasqa: Color.blue,
@@ -151,7 +151,7 @@ export const ColorByUrlHandle: { [key in PlayerUrl]: string } = {
   vovapain: Color.red,
   timofey: Color.greenLight,
   keliq_q: Color.yellow,
-  unclobjorn: Color.pinkLight,
+  unclebjorn: Color.pinkLight,
 }
 
 export const ColorNameByUrlHandle: {
@@ -170,23 +170,21 @@ export const ColorNameByUrlHandle: {
   vovapain: 'customRed',
   timofey: 'customGreenLight',
   keliq_q: 'customYellow',
-  unclobjorn: 'customPinkLight',
+  unclebjorn: 'customPinkLight',
 }
 
-export function getPlayerColor(urlHandle: string): string {
-  return ColorByUrlHandle[urlHandle as PlayerUrl] || Color.blueLight
+export function getPlayerColor(urlHandle: PlayerUrl): string {
+  return ColorByUrlHandle[urlHandle] || Color.blueLight
 }
 
 export function getPlayerColorName(player: Player): CustomColorNames {
-  return (
-    ColorNameByUrlHandle[player.url_handle as PlayerUrl] || 'customBlueLight'
-  )
+  return ColorNameByUrlHandle[player.url_handle] || 'customBlueLight'
 }
 
 export type CurrentUser = {
   user_id: number
   role: 'player' | 'moder'
   moder_for?: number
-  url_handle: string
+  url_handle: PlayerUrl | null
   name: string
 }

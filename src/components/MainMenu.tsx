@@ -27,7 +27,9 @@ export default function MainMenu({
 }: Props) {
   const currentUser = useUser()
   const { isMobile } = useScreenSize()
-  const playerColor = getPlayerColor(currentUser?.url_handle || '')
+  const playerColor = currentUser?.url_handle
+    ? getPlayerColor(currentUser.url_handle)
+    : Color.blueLight
   const urlHandle = currentUser?.url_handle
 
   const enableScrollRestoration = currentPage !== 'map'
