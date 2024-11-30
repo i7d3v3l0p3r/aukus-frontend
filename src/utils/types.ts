@@ -111,6 +111,9 @@ export const Color = {
   pinkLight: '#ECA3D4',
   white: '#FFFFFF',
   blueTg: '#27a7e7',
+  lime: '#A9DE2C',
+  yellow: '#F2C200',
+  teal: '#00B88C',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
@@ -121,32 +124,38 @@ export type CustomColorOverrides = {
 
 export const ColorByUrlHandle: { [key: string]: string } = {
   lasqa: Color.blue,
-  segall: Color.orange,
+  segall: Color.green,
   praden: Color.brown,
   predan: Color.brown,
-  artur: Color.red,
+  browjey: Color.orange,
   uselessmouth: Color.pink,
   roadhouse: Color.purple,
-  unclobjorn: Color.blueDark,
   melharucos: Color.blueLight,
-  browjey: Color.green,
-  f1ashko: Color.pinkLight,
+  maddyson: Color.blueDark,
+  krabick: Color.lime,
+  vovapain: Color.red,
+  timofey: Color.teal,
+  keliq_q: Color.yellow,
+  unclobjorn: Color.pinkLight,
 }
 
 export const ColorNameByUrlHandle: {
   [key: string]: CustomColorNames
 } = {
   lasqa: 'customBlue',
+  segall: 'customGreen',
   praden: 'customBrown',
   predan: 'customBrown',
-  roadhouse: 'customPurple',
-  segall: 'customOrange',
-  artur: 'customRed',
+  browjey: 'customOrange',
   uselessmouth: 'customPink',
-  unclobjorn: 'customBlueDark',
+  roadhouse: 'customPurple',
   melharucos: 'customBlueLight',
-  browjey: 'customGreen',
-  f1ashko: 'customPinkLight',
+  maddyson: 'customBlueDark',
+  krabick: 'customLime',
+  vovapain: 'customRed',
+  timofey: 'customTeal',
+  keliq_q: 'customYellow',
+  unclobjorn: 'customPinkLight',
 }
 
 export function getPlayerColor(urlHandle: string): string {
