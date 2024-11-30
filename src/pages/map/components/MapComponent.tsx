@@ -7,7 +7,13 @@ import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
 import { createPlayerMove, fetchPlayers, fetchStats } from 'utils/api'
 import CrownIcon from 'assets/icons/crown.svg?react'
-import { Color, getPlayerColor, NextTurnParams, Player } from 'utils/types'
+import {
+  Color,
+  getPlayerColor,
+  MoveParams,
+  NextTurnParams,
+  Player,
+} from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
 import ActionButton from './action/ActionButton'
@@ -38,7 +44,10 @@ import { getEventTimeLeft } from 'src/pages/rules/components/Countdown'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
-  const [moveSteps, setMoveSteps] = useState(0)
+  // const [moveSteps, setMoveSteps] = useState(0)
+
+  const [moveParams, setMoveParams] = useState<MoveParams | null>(null)
+
   const [makingTurn, setMakingTurn] = useState(false)
   const [startWinAnimation, setStartWinAnimation] = useState(false)
 
@@ -208,7 +217,13 @@ export default function MapComponent() {
       return
     }
 
-    const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
+    const skipLadders = params.itemLength === 'tiny'
+
+    const newPosition = getNextPlayerPosition({
+      player: currentPlayer,
+      moves: diceRoll,
+      skipLadders,
+    })
     // console.log(
     //   'current position',
     //   currentPlayer.map_position,
@@ -272,22 +287,24 @@ export default function MapComponent() {
     }
 
     const steps = getMoveSteps(currentPlayer, diceRoll)
-    setMoveSteps(steps)
+    // setMoveSteps(steps)
+    setMoveParams({ steps, skipLadders: params.itemLength === 'tiny' })
   }
 
   const handleAnimationEnd = (player: Player, moves: number) => {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    const newPosition = getNextPlayerPosition(player, moves)
+    const newPosition = getNextPlayerPosition({ player, moves })
     player.map_position = newPosition
-    setMoveSteps(0)
+    // setMoveSteps(0)
+    setMoveParams(null)
     setMakingTurn(false)
     setStartWinAnimation(false)
     queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
-  const animating = startWinAnimation || moveSteps !== 0
+  const animating = startWinAnimation || moveParams !== null
 
   const stopActions = showWinScreen || animating
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
@@ -443,7 +460,7 @@ export default function MapComponent() {
                 <CellItem
                   cell={lastCell}
                   currentPlayer={currentPlayer}
-                  moveSteps={moveSteps}
+                  moveSteps={moveParams?.steps}
                 />
               </Grid>
               <Grid item>
@@ -465,7 +482,7 @@ export default function MapComponent() {
                     <CellItem
                       cell={cell}
                       currentPlayer={currentPlayer}
-                      moveSteps={moveSteps}
+                      moveSteps={moveParams?.steps}
                     />
                   </Grid>
                 ))}
@@ -514,7 +531,7 @@ export default function MapComponent() {
             player={player}
             players={players}
             closePopup={closePopups}
-            moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
+            moveParams={player.id === currentPlayer?.id ? moveParams : null}
             onAnimationEnd={handleAnimationEnd}
             winAnimation={
               player.id === currentPlayer?.id ? startWinAnimation : false
@@ -588,14 +605,20 @@ export default function MapComponent() {
   )
 }
 
-function getNextPlayerPosition(player: Player, moves: number) {
+type PositionParams = {
+  player: Player
+  moves: number
+  skipLadders?: boolean
+}
+
+function getNextPlayerPosition({ player, moves, skipLadders }: PositionParams) {
   const steps = getMoveSteps(player, moves)
   const newPosition = player.map_position + steps
 
   const ladder = laddersByCell[newPosition]
   const snake = snakesByCell[newPosition]
 
-  if (ladder) {
+  if (ladder && !skipLadders) {
     return ladder.cellTo
   }
   if (snake) {

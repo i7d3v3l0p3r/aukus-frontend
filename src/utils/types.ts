@@ -85,6 +85,11 @@ export type NextTurnParams = {
   itemLength: ItemLength | null
 }
 
+export type MoveParams = {
+  steps: number
+  skipLadders: boolean
+}
+
 export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
 
 export const Color = {

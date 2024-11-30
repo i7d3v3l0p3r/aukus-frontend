@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { Color, getPlayerColor, Player } from 'utils/types'
+import { Color, getPlayerColor, MoveParams, Player } from 'utils/types'
 import PlayerGreen from 'assets/map/PlayerGreen.webp'
 import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
 import PlayerRed from 'assets/map/PlayerRed.webp'
@@ -62,7 +62,7 @@ type Props = {
   player: Player
   players: Player[]
   closePopup?: boolean
-  moveSteps: number
+  moveParams: MoveParams | null
   onAnimationEnd: (player: Player, steps: number) => void
   winAnimation: boolean
 }
@@ -71,7 +71,7 @@ export default function PlayerIcon({
   player,
   players,
   closePopup,
-  moveSteps,
+  moveParams,
   onAnimationEnd,
   winAnimation,
 }: Props) {
@@ -94,7 +94,7 @@ export default function PlayerIcon({
     playersOnSamePosition
   )
 
-  const isMoving = moveSteps !== 0 || winAnimation
+  const isMoving = moveParams !== null || winAnimation
 
   const [springs, api] = useSpring(() => {
     return {
@@ -113,11 +113,14 @@ export default function PlayerIcon({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closePopup])
 
-  const startChainedAnimation = (moves: number) => {
+  const startChainedAnimation = (moveParams: MoveParams) => {
+    const moves = moveParams.steps
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
 
-    const ladder = laddersByCell[player.map_position + moves]
+    const ladder = moveParams.skipLadders
+      ? undefined
+      : laddersByCell[player.map_position + moves]
     const snake = snakesByCell[player.map_position + moves]
 
     const animationsList: Array<{ x: number; y: number; duration?: number }> =
@@ -199,17 +202,17 @@ export default function PlayerIcon({
   }
 
   useEffect(() => {
-    if (isMoving && !winAnimation) {
+    if (isMoving && !winAnimation && moveParams) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
           behavior: 'smooth',
         })
       }
-      startChainedAnimation(moveSteps)
+      startChainedAnimation(moveParams)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMoving, moveSteps, winAnimation])
+  }, [isMoving, moveParams, winAnimation])
 
   useEffect(() => {
     if (anchorCell) {
