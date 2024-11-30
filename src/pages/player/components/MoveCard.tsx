@@ -94,7 +94,7 @@ export default function MoveCard({
 
   let moveTitle = `Ход — ${id}`
   if (player && displayType === 'map') {
-    moveTitle = player.name.toUpperCase()
+    moveTitle = player.name
   }
 
   return (
@@ -134,7 +134,9 @@ export default function MoveCard({
                       marginRight: '5px',
                     }}
                   />
-                  <Box>{moveTitle}</Box>
+                  <Box color={playerColor} fontWeight={600}>
+                    {moveTitle}
+                  </Box>
                 </Box>
               </Link>
             )}
