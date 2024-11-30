@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 const targetDate = new Date('2024-12-29T00:00:00+03:00')
 
-export function getCurrentDiff() {
+export function getEventTimeLeft() {
   return Math.max(targetDate.getTime() - new Date().getTime(), 0)
 }
 
@@ -14,7 +14,7 @@ export default function Countdown() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const difference = getCurrentDiff()
+      const difference = getEventTimeLeft()
       setTimeDiff(difference) // Ensure it doesn't go negative
     }, 1000)
 

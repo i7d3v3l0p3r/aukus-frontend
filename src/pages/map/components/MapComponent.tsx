@@ -34,6 +34,7 @@ import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
 import PlayerWinnerIcon from './player/PlayerWinnerIcon'
 import { Link } from 'react-router-dom'
 import useLocalStorage from 'src/context/useLocalStorage'
+import { getEventTimeLeft } from 'src/pages/rules/components/Countdown'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
@@ -103,6 +104,8 @@ export default function MapComponent() {
         )
       : null
 
+  const deadlineReached = getEventTimeLeft() === 0
+
   const winnerFound =
     !timelapseEnabled &&
     playerWithMaxPosition &&
@@ -112,36 +115,46 @@ export default function MapComponent() {
     queryKey: ['playersStats'],
     queryFn: fetchStats,
     staleTime: 1000 * 60 * 1,
-    enabled: !!winnerFound,
+    enabled: !!(winnerFound || deadlineReached),
   })
   const playersStats = playerStats?.players || []
 
-  const top3players: Player[] = []
+  let top3players: Player[] = []
   // const top3players: Player[] = players.slice(0, 3)
   if (winnerFound && playersStats.length > 2) {
     top3players.push(playerWithMaxPosition)
     const statsByScore = playersStats
       .filter((player) => player.id !== playerWithMaxPosition.id)
       .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
-    const top2Scores = statsByScore.slice(0, 2)
-    const top2player = players.find((player) => player.id === top2Scores[0].id)
-    const top3player = players.find((player) => player.id === top2Scores[1].id)
-    if (top2player) {
-      top3players.push(top2player)
-    }
-    if (top3player) {
-      top3players.push(top3player)
-    }
+
+    const top2players = statsByScore
+      .slice(0, 2) // Get the top 3 player stats
+      .map((stat) => players.find((player) => player.id === stat.id)) // Map to player objects
+      .filter((player): player is Player => !!player) // Filter out any undefined results
+
+    top3players = [playerWithMaxPosition, ...top2players]
   }
 
+  if (deadlineReached && playersStats.length > 2) {
+    const statsByScore = playersStats.sort(
+      (a, b) => getPlayerScore(b) - getPlayerScore(a)
+    )
+    top3players = statsByScore
+      .slice(0, 3) // Get the top 3 player stats
+      .map((stat) => players.find((player) => player.id === stat.id)) // Map to player objects
+      .filter((player): player is Player => !!player) // Filter out any undefined results
+  }
+
+  const showWinScreen = top3players.length > 0
+
   useEffect(() => {
-    if (winnerFound && !fireworksRef.current?.isRunning) {
+    if (showWinScreen && !fireworksRef.current?.isRunning) {
       enableFireworks()
     }
-    if (!winnerFound) {
+    if (!showWinScreen) {
       disableFireworks()
     }
-  }, [winnerFound])
+  }, [showWinScreen])
 
   const currentUser = useUser()
   useScreenSize({ updateOnResize: true })
@@ -262,9 +275,11 @@ export default function MapComponent() {
 
   const animating = startWinAnimation || moveSteps !== 0
 
-  const stopActions = winnerFound || animating
+  const stopActions = showWinScreen || animating
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
   const showBigTimelapse = !showActionButton && !timelapseEnabled && !animating
+
+  const winner = top3players[0] ?? null
 
   return (
     <Box
@@ -290,13 +305,13 @@ export default function MapComponent() {
         }}
       />
 
-      {winnerFound && (
+      {showWinScreen && winner && (
         <Box display={'flex'} justifyContent={'center'}>
           <Box
             fontSize={'20px'}
             textAlign={'center'}
             style={{
-              backgroundColor: getPlayerColor(playerWithMaxPosition.url_handle),
+              backgroundColor: getPlayerColor(winner.url_handle),
               borderRadius: '10px',
               zIndex: 10,
               position: 'relative',
@@ -318,10 +333,8 @@ export default function MapComponent() {
               />
               <Box>
                 Можете выдыхать, ивент закончен:{' '}
-                <Link to={`/players/${playerWithMaxPosition.url_handle}`}>
-                  <LinkSpan color={'white'}>
-                    {playerWithMaxPosition.name}
-                  </LinkSpan>{' '}
+                <Link to={`/players/${winner.url_handle}`}>
+                  <LinkSpan color={'white'}>{winner.name}</LinkSpan>{' '}
                 </Link>
                 победил!
               </Box>
@@ -330,7 +343,7 @@ export default function MapComponent() {
         </Box>
       )}
 
-      {!winnerFound && <Box height={'44px'} />}
+      {!showWinScreen && <Box height={'44px'} />}
 
       <Box display={'flex'} justifyContent={'center'}>
         <Box
@@ -344,7 +357,7 @@ export default function MapComponent() {
             backgroundPosition: 'center' /* Center the image */,
           }}
         >
-          {winnerFound && top3players.length > 2 && (
+          {showWinScreen && top3players.length > 2 && (
             <>
               <PlayerWinnerIcon
                 player={top3players[0]}
