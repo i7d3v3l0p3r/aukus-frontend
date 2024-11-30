@@ -9,6 +9,7 @@ import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import EditVodModal from './EditVodModal'
 import { formatDate, formatNumber } from './utils'
 import TextRender from './TextRender'
+import { Link } from 'react-router-dom'
 
 type Props = {
   id: number
@@ -118,23 +119,30 @@ export default function MoveCard({
             fontWeight={500}
             marginBottom={'15px'}
           >
-            <Box display={'flex'}>
-              {displayType === 'map' && (
-                <Divider
-                  orientation="vertical"
-                  flexItem
-                  style={{
-                    borderLeftWidth: '2px',
-                    borderRightWidth: '0px',
-                    borderColor: playerColor,
-                    borderRadius: '5px',
-                    height: '13px',
-                    marginRight: '5px',
-                  }}
-                />
-              )}
-              <Box>{moveTitle}</Box>
-            </Box>
+            {displayType === 'map' && player && (
+              <Link to={`/players/${player.url_handle}`}>
+                <Box display={'flex'}>
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    style={{
+                      borderLeftWidth: '2px',
+                      borderRightWidth: '0px',
+                      borderColor: playerColor,
+                      borderRadius: '5px',
+                      height: '13px',
+                      marginRight: '5px',
+                    }}
+                  />
+                  <Box>{moveTitle}</Box>
+                </Box>
+              </Link>
+            )}
+            {displayType === 'player' && (
+              <Box display={'flex'}>
+                <Box>{moveTitle}</Box>
+              </Box>
+            )}
             <Box color={greyColor}>{formatDate(move.created_at)}</Box>
           </Box>
           <Box

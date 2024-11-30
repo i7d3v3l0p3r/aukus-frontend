@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
+import useScreenSize from 'src/context/useScreenSize'
 
 type Props = {
   children: React.ReactNode
@@ -8,6 +9,7 @@ type Props = {
 export default function StaticPanel({ children }: Props) {
   const [isFixed, setIsFixed] = useState(true)
   const [scrollPosition, setScrollPosition] = useState(0)
+  const { width } = useScreenSize()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +28,7 @@ export default function StaticPanel({ children }: Props) {
 
   if (containerRef.current && mapBottom && scrollPosition > 0) {
     const makeFixed =
-      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 95
+      window.innerHeight - mapBottom.getBoundingClientRect().bottom < 300
 
     if (!makeFixed && isFixed) {
       setIsFixed(false)
@@ -37,15 +39,21 @@ export default function StaticPanel({ children }: Props) {
     }
   }
 
+  const left = width / 2 - 1300 / 2
+
+  const stopPropogation = (e: React.MouseEvent) => {
+    e.stopPropagation()
+  }
+
   return (
-    <Box display={'flex'} justifyContent="center">
+    <Box display={'flex'} justifyContent="center" onClick={stopPropogation}>
       <Box
         minWidth={'1300px'}
         width={'1300px'}
         sx={{
           position: isFixed ? 'fixed' : 'absolute',
           zIndex: 20,
-          ...(isFixed ? { bottom: '20px' } : { marginTop: '30px' }),
+          ...(isFixed ? { bottom: '20px', left } : { marginTop: '-100px' }),
         }}
         ref={containerRef}
       >

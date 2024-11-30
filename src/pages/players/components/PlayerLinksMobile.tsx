@@ -26,7 +26,7 @@ export default function PlayerLinksMobile({ player }: Props) {
           rel="noopener nereferrer"
           style={{ marginRight: linksMargin }}
         >
-          <LinkSpan color={Color.purple}>Twitch</LinkSpan>
+          <LinkSpan color={Color.purple}>Твич</LinkSpan>
         </Link>
       )}
       {player.vk_stream_link && (
@@ -36,7 +36,7 @@ export default function PlayerLinksMobile({ player }: Props) {
           rel="noopener nereferrer"
           style={{ marginRight: linksMargin }}
         >
-          <LinkSpan color={Color.blue}>VKPlay</LinkSpan>
+          <LinkSpan color={'#FF2B42'}>ВК Видео</LinkSpan>
         </Link>
       )}
       {player.telegram_link && (

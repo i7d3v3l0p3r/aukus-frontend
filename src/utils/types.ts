@@ -31,9 +31,10 @@ export type PlayerStats = {
 
 export type MoveType = 'completed' | 'drop' | 'sheikh' | 'reroll' | 'movie'
 
-export type DiceOption = '1d6' | '2d6' | '3d6' | '1d8' | '1d4' | 'skip'
+export type DiceOption = '1d6' | '2d6' | '3d6' | '1d8' | '1d4'
+export type DiceOrSkip = DiceOption | 'skip'
 
-export type ItemLength = 'short' | 'medium' | 'long'
+export type ItemLength = 'tiny' | 'short' | 'medium' | 'long'
 
 export type PlayerMove = {
   id: number
@@ -84,6 +85,11 @@ export type NextTurnParams = {
   itemLength: ItemLength | null
 }
 
+export type MoveParams = {
+  steps: number
+  skipLadders: boolean
+}
+
 export type Page = 'map' | 'players' | 'player' | 'about' | 'rules' | 'stats'
 
 export const Color = {
@@ -91,6 +97,7 @@ export const Color = {
   greyDark: '#222222',
   greyDarkest: '#121212',
   greyNew: '#CECECE',
+  greyText: '#656565',
   red: '#ff3b30',
   green: '#34C759',
   greenLight: '#00B88C',

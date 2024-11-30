@@ -17,11 +17,17 @@ import MapPage from './pages/map/MapPage'
 import PlayerPage from './pages/player/PlayerPage'
 import PlayersPage from './pages/players/PlayersPage'
 import { SnackbarProvider } from 'notistack'
+import NotFound from './pages/NotFound'
 
 // Update the Button's color options types
 declare module '@mui/material/Button' {
   // eslint-disable-next-line
   interface ButtonPropsColorOverrides extends CustomColorOverrides {}
+}
+
+declare module '@mui/material/Checkbox' {
+  // eslint-disable-next-line
+  interface CheckboxPropsColorOverrides extends CustomColorOverrides {}
 }
 
 const router = createBrowserRouter(
@@ -49,6 +55,10 @@ const router = createBrowserRouter(
     {
       path: '/stats',
       element: <StatsPage />,
+    },
+    {
+      path: '*',
+      element: <NotFound />,
     },
   ],
   { basename: '/' }

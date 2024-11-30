@@ -3788,7 +3788,7 @@ export const aukus2Games: { [key: string]: GamesItem } = {
     games: RoadhouseGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1528544705#gid=1528544705',
   },
-  krabik: {
+  krabick: {
     games: KrabikGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=1161158670#gid=1161158670',
   },
@@ -3808,7 +3808,7 @@ export const aukus2Games: { [key: string]: GamesItem } = {
     games: Guit88manGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=888994374#gid=888994374',
   },
-  keliQ_Q: {
+  keliq_q: {
     games: KeliQ_QGames,
     link: 'https://docs.google.com/spreadsheets/d/16JxvqzWmZgigHVBhsxHQsP4ElpXZ2sl3XbslmkW-m88/edit?gid=642006589#gid=642006589',
   },

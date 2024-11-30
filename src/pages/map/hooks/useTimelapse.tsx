@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import useLocalStorage from 'src/context/useLocalStorage'
 import { fetchMovesByDate, fetchPlayers, PlayerMovesResponse } from 'utils/api'
 import { Player, PlayerMove } from 'utils/types'
 
@@ -51,6 +52,13 @@ export default function TimelapseProvider({
   const [currentResponse, setCurrentResponse] = useState<
     PlayerMovesResponse | undefined
   >(undefined)
+
+  const { save, load } = useLocalStorage()
+  const followModeLoaded = load('followMode', true)
+  const updateFollowMode = (mode: boolean) => {
+    save('followMode', mode)
+    setFollowMode(mode)
+  }
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
@@ -116,7 +124,7 @@ export default function TimelapseProvider({
 
   // scroll to seleceted player move
   useEffect(() => {
-    if (!followMode) {
+    if (!followModeLoaded) {
       return
     }
     if (openState === 'closed') {
@@ -130,7 +138,7 @@ export default function TimelapseProvider({
       const element = document.getElementById(cellFrom)
       if (element) {
         window.scrollTo({
-          top: element.offsetTop - window.innerHeight / 2 + 300,
+          top: element.offsetTop - window.innerHeight / 2 + 200,
           behavior: 'smooth',
         })
         // element.scrollIntoView({ behavior: 'smooth', block: 'center' })
@@ -149,8 +157,8 @@ export default function TimelapseProvider({
         setSelectedMoveId,
         players: updatedPlayers,
         moves,
-        followMode,
-        setFollowMode,
+        followMode: followModeLoaded,
+        setFollowMode: updateFollowMode,
       }}
     >
       {children}

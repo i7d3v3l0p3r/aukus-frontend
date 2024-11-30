@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { Color, getPlayerColor, Player } from 'utils/types'
+import { Color, getPlayerColor, MoveParams, Player } from 'utils/types'
 import PlayerGreen from 'assets/map/PlayerGreen.webp'
 import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
 import PlayerRed from 'assets/map/PlayerRed.webp'
@@ -62,22 +62,28 @@ type Props = {
   player: Player
   players: Player[]
   closePopup?: boolean
-  moveSteps: number
-  onAnimationEnd: (player: Player, steps: number) => void
+  moveParams: MoveParams | null
+  onAnimationEnd: (player: Player, params: MoveParams) => void
+  winAnimation: boolean
 }
 
 export default function PlayerIcon({
   player,
   players,
   closePopup,
-  moveSteps,
+  moveParams,
   onAnimationEnd,
+  winAnimation,
 }: Props) {
   const [anchorCell, setAnchorCell] = useState<HTMLElement | null>(null)
   const [popupOpen, setPopupOpen] = useState(false)
   const [popupAnchor, setPopupAnchor] = useState<HTMLElement | null>(null)
-  const playerElement = useRef<HTMLDivElement>(null)
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const iconRef = useRef<HTMLImageElement>(null)
+
+  const updateContiner = (element: HTMLDivElement) => {
+    setContainer(element)
+  }
 
   const playersOnSamePosition = players.filter(
     (p) => p.map_position === player.map_position && p.id !== player.id
@@ -88,13 +94,14 @@ export default function PlayerIcon({
     playersOnSamePosition
   )
 
-  const isMoving = moveSteps !== 0
+  const isMoving = moveParams !== null || winAnimation
 
   const [springs, api] = useSpring(() => {
     return {
       from: {
         x: 0,
         y: 0,
+        scale: 1,
       },
     }
   }, [])
@@ -106,17 +113,25 @@ export default function PlayerIcon({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [closePopup])
 
-  const startChainedAnimation = (moves: number) => {
+  const startChainedAnimation = (moveParams: MoveParams) => {
+    const moves = moveParams.steps
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
 
-    const ladder = laddersByCell[player.map_position + moves]
+    const ladder = moveParams.skipLadders
+      ? undefined
+      : laddersByCell[player.map_position + moves]
     const snake = snakesByCell[player.map_position + moves]
 
-    const animationsList: Array<{ x: number; y: number }> = []
+    const animationsList: Array<{ x: number; y: number; duration?: number }> =
+      []
     if (player.map_position === 0) {
       // move to beginning of start area
-      animationsList.push({ x: -relativeX, y: -relativeY })
+      animationsList.push({
+        x: -relativeX,
+        y: -relativeY,
+        duration: Math.abs(relativeX / 100) * 800,
+      })
       // move to start cell
       animationsList.push({ x: -relativeX - moveOffset, y: -relativeY })
     }
@@ -170,38 +185,83 @@ export default function PlayerIcon({
       animationsList.push(calculateAnimation(player.map_position, snake.cellTo))
     }
 
-    console.log({ animationsList })
+    // console.log({ animationsList })
 
     api.start({
       from: { x: 0, y: 0 },
       to: async (next) => {
         for (let i = 0; i < animationsList.length; i++) {
-          await next(animationsList[i])
+          await next({
+            ...animationsList[i],
+            config: { duration: animationsList[i].duration || 1000 },
+          })
         }
-        onAnimationEnd(player, moves)
+        onAnimationEnd(player, moveParams)
       },
-      config: { duration: 1000 },
     })
   }
 
   useEffect(() => {
-    if (isMoving && player.map_position <= 101) {
+    if (isMoving && !winAnimation && moveParams) {
       if (anchorCell) {
         window.scrollTo({
-          top: anchorCell.offsetTop - window.innerHeight / 2,
+          top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
           behavior: 'smooth',
         })
       }
-      startChainedAnimation(moveSteps)
+      startChainedAnimation(moveParams)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMoving, moveSteps])
+  }, [isMoving, moveParams, winAnimation])
 
   useEffect(() => {
     if (anchorCell) {
-      api.start({ from: { x: 0, y: 0 }, to: { x: 0, y: 0 } })
+      api.start({
+        from: { x: 0, y: 0, scale: 1 },
+        to: { x: 0, y: 0, scale: 1 },
+      })
     }
   }, [anchorCell, api, player.map_position])
+
+  const startWinAnimation = () => {
+    if (!anchorCell) {
+      return
+    }
+
+    const mapContainer = document.getElementById('map-container')
+    if (!mapContainer) {
+      return
+    }
+
+    const mapContainerLeft = mapContainer.offsetLeft
+
+    const targetX = 392
+    const targetY = 240
+
+    const originTop = anchorCell.offsetTop + 30
+    const originLeft = anchorCell.offsetLeft + 55
+
+    const currentX = originLeft + relativeX
+    const currentY = originTop + relativeY
+
+    const deltaX = targetX - currentX + mapContainerLeft
+    const deltaY = targetY - currentY
+
+    api.start({
+      from: { x: 0, y: 0 },
+      to: async (next) => {
+        await next({ x: deltaX, y: deltaY, scale: 1.5 })
+        onAnimationEnd(player, { steps: 1, skipLadders: false })
+      },
+      config: { duration: 5000 },
+    })
+  }
+
+  useEffect(() => {
+    if (winAnimation) {
+      startWinAnimation()
+    }
+  }, [winAnimation])
 
   useEffect(() => {
     // console.log("updating map position to", player.mapPosition);
@@ -230,7 +290,7 @@ export default function PlayerIcon({
   }
 
   const originTop = anchorCell.offsetTop + 30
-  const originLeft = anchorCell.offsetLeft + 10
+  const originLeft = anchorCell.offsetLeft + 55
 
   const positionTop = originTop + relativeY
   const positionLeft = originLeft + relativeX
@@ -238,7 +298,12 @@ export default function PlayerIcon({
   const isStillAnimated = iconRef.current?.src.endsWith('gif')
 
   let finalPositionTop = positionTop
-  const finalPositionLeft = positionLeft
+  let finalPositionLeft = positionLeft
+
+  const containerWidth = container?.offsetWidth
+  if (containerWidth) {
+    finalPositionLeft = positionLeft - containerWidth / 2
+  }
 
   if (isMoving || isStillAnimated) {
     // adjust height for animation
@@ -251,7 +316,7 @@ export default function PlayerIcon({
     event.stopPropagation()
   }
 
-  // const onlineColor = player.is_online ? Color.green : Color.red
+  const onlineColor = player.is_online ? Color.green : Color.red
   const playerColor = getPlayerColor(player.url_handle)
   const playerIcon = isMoving
     ? playerMovingIcons[player.url_handle] || PlayerBlueLightMoving
@@ -259,6 +324,11 @@ export default function PlayerIcon({
 
   const hideAvatar =
     playersOnSamePosition.length > 1 && player.map_position !== 0 && !isMoving
+
+  const onPopupClick = (event: React.MouseEvent) => {
+    setPopupOpen(false)
+    event.stopPropagation()
+  }
 
   return (
     <animated.div
@@ -274,12 +344,12 @@ export default function PlayerIcon({
           open={popupOpen}
           player={player}
           anchorEl={popupAnchor}
-          close={() => setPopupOpen(false)}
+          onClick={onPopupClick}
         />
         <Box
           onClick={handleClick}
           style={{ cursor: 'pointer', display: 'block', textAlign: 'center' }}
-          ref={playerElement}
+          ref={updateContiner}
         >
           {!hideAvatar && (
             <img
@@ -352,10 +422,10 @@ function getRelativePosition(player: Player, players: Player[]) {
   const playerIndex = sortedPlayers.findIndex((p) => p.id === player.id)
 
   if (player.map_position === 0) {
-    return { x: playerIndex * 80, y: 0 }
+    return { x: playerIndex * 100, y: 0 }
   }
   if (sortedPlayers.length === 2) {
-    return { x: playerIndex * 50 - 10, y: -(playerIndex * 25 - 10) }
+    return { x: -50 * playerIndex + 30, y: playerIndex * 25 - 30 }
   }
   if (sortedPlayers.length === 3) {
     return { x: 15, y: playerIndex * 30 - 10 }

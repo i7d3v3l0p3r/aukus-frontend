@@ -3,10 +3,10 @@ import { Box, Button, Slider, SliderThumb, Tooltip } from '@mui/material'
 import { Mark } from '@mui/material/Slider/useSlider.types'
 import { range } from 'lodash'
 import { useTimelapse } from 'pages/map/hooks/useTimelapse'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
 
-const StartDate = new Date('2024-10-01')
+const StartDate = new Date('2024-11-20')
 StartDate.setHours(0, 0, 0, 0)
 
 const Today = new Date()
@@ -35,6 +35,9 @@ type Props = {
 export default function TimelapseButton({ variant }: Props) {
   const timelapseState = useTimelapse()
 
+  const dateSliderRef = useRef<HTMLDivElement>(null)
+  const moveSliderRef = useRef<HTMLDivElement>(null)
+
   const [dateDiff, setDateDiff] = useState<number>(
     daysBetween(StartDate, Today)
   )
@@ -58,6 +61,21 @@ export default function TimelapseButton({ variant }: Props) {
   const handleDateDiffChange = (value: number) => {
     setDateDiff(value)
   }
+
+  const stopPropagation = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
+  useEffect(() => {
+    if (timelapseState.state === 'date_selection') {
+      const input = dateSliderRef.current?.querySelector('input')
+      input?.focus()
+    }
+    if (timelapseState.state === 'move_selection') {
+      const input = moveSliderRef.current?.querySelector('input')
+      input?.focus()
+    }
+  }, [timelapseState.state])
 
   if (timelapseState.state === 'closed') {
     if (variant === 'big') {
@@ -91,7 +109,7 @@ export default function TimelapseButton({ variant }: Props) {
     }
 
     return (
-      <Box width={'100%'}>
+      <Box width={'100%'} onClick={stopPropagation}>
         <Box width={'100%'} display="flex" justifyContent={'center'}>
           <Box
             style={{
@@ -109,6 +127,7 @@ export default function TimelapseButton({ variant }: Props) {
             }}
           >
             <Slider
+              ref={dateSliderRef}
               min={0}
               max={AmountOfDays}
               step={1}
@@ -130,18 +149,22 @@ export default function TimelapseButton({ variant }: Props) {
           </Box>
         </Box>
         <Box textAlign="center">
-          <Button
-            onClick={() =>
-              timelapseState.setFollowMode(!timelapseState.followMode)
-            }
-            sx={{
-              backgroundColor: timelapseState.followMode ? Color.blue : 'black',
-              marginRight: '10px',
-              width: '163px',
-            }}
-          >
-            {timelapseState.followMode ? 'Не следовать' : 'Следовать'}
-          </Button>
+          <Tooltip title={'Следовать камерой за ходами'}>
+            <Button
+              onClick={() =>
+                timelapseState.setFollowMode(!timelapseState.followMode)
+              }
+              sx={{
+                backgroundColor: timelapseState.followMode
+                  ? Color.blue
+                  : 'black',
+                marginRight: '10px',
+                width: '163px',
+              }}
+            >
+              {timelapseState.followMode ? 'Не следовать' : 'Следовать'}
+            </Button>
+          </Tooltip>
           <Button
             onClick={() => timelapseState.setState('move_selection')}
             sx={{ width: '320px', marginRight: '10px', height: '44px' }}
@@ -208,7 +231,7 @@ export default function TimelapseButton({ variant }: Props) {
   }
 
   return (
-    <Box width={'100%'}>
+    <Box width={'100%'} onClick={stopPropagation}>
       <Box width={'100%'} display="flex" justifyContent={'center'}>
         <Box
           style={{
@@ -246,6 +269,7 @@ export default function TimelapseButton({ variant }: Props) {
             }}
           >
             <Slider
+              ref={moveSliderRef}
               min={1}
               max={movesAmount}
               step={1}

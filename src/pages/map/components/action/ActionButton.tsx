@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material'
 import { useState } from 'react'
-import { DiceOption, NextTurnParams, Player } from 'utils/types'
+import { DiceOption, DiceOrSkip, NextTurnParams, Player } from 'utils/types'
 import DiceModal from './DiceModal'
 import TurnModal from './TurnModal'
 
@@ -20,7 +20,7 @@ export default function ActionButton({
   const [turnModalOpen, setTurnModalOpen] = useState(false)
   const [diceModalOpen, setDiceModalOpen] = useState(false)
 
-  const [dice, setDice] = useState<DiceOption | null>(null)
+  const [dice, setDice] = useState<DiceOrSkip>('1d6')
   const [turnParams, setTurnParams] = useState<NextTurnParams | null>(null)
 
   const handleClick = () => {
@@ -33,7 +33,7 @@ export default function ActionButton({
     onMakingTurn(false)
   }
 
-  const handleConfirm = (params: NextTurnParams, dice: DiceOption) => {
+  const handleConfirm = (params: NextTurnParams, dice: DiceOption | 'skip') => {
     setTurnParams(params)
     setDice(dice)
     setTurnModalOpen(false)
@@ -90,7 +90,7 @@ export default function ActionButton({
       />
       <DiceModal
         open={diceModalOpen}
-        dice={dice}
+        dice={dice === 'skip' ? '1d6' : dice}
         onTurnFinish={handleTurnFinish}
         onDiceRoll={handleDiceRoll}
       />

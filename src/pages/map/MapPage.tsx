@@ -5,15 +5,27 @@ import MapComponent from './components/MapComponent'
 import TimelapseProvider from './hooks/useTimelapse'
 import useScreenSize from 'src/context/useScreenSize'
 import MapComponentMobile from './components/MapComponentMobile'
+import MultistreamButton from '../players/components/MultistreamButton'
+import DifficultyButton from '../rules/components/DifficultyButton'
 
 export default function MapPage() {
-  const { isMobile } = useScreenSize()
-  return (
-    <Box>
-      <MainMenu currentPage={'map'} />
-      {isMobile ? (
+  const { isMobile, width } = useScreenSize()
+  const mapWidth = 1715
+
+  if (isMobile) {
+    return (
+      <Box>
+        <MainMenu currentPage={'map'} />
         <MapComponentMobile />
-      ) : (
+        <BottomSection />
+      </Box>
+    )
+  }
+
+  if (width < mapWidth) {
+    return (
+      <Box width={'fit-content'}>
+        <MainMenu currentPage={'map'} leftSlot={<DifficultyButton />} />
         <Box
           alignContent={'center'}
           display="flex"
@@ -27,7 +39,27 @@ export default function MapPage() {
             <MapComponent />
           </TimelapseProvider>
         </Box>
-      )}
+        <BottomSection />
+      </Box>
+    )
+  }
+
+  return (
+    <Box>
+      <MainMenu currentPage={'map'} leftSlot={<DifficultyButton />} />
+      <Box
+        alignContent={'center'}
+        display="flex"
+        alignItems="center"
+        justifyContent={'center'}
+        margin={'auto'}
+        marginTop={'50px'}
+        width={'100%'}
+      >
+        <TimelapseProvider>
+          <MapComponent />
+        </TimelapseProvider>
+      </Box>
       <BottomSection />
     </Box>
   )

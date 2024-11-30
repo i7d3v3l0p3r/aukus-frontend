@@ -27,7 +27,7 @@ export default function PlayerLinks({ player }: Props) {
             style={{ marginRight: linksMargin }}
           >
             <LinkSpan color={Color.purple} style={{ fontSize: '20px' }}>
-              Twitch
+              Твич
             </LinkSpan>
           </Link>
         </Box>
@@ -39,8 +39,8 @@ export default function PlayerLinks({ player }: Props) {
           rel="noopener nereferrer"
           style={{ marginRight: linksMargin }}
         >
-          <LinkSpan color={Color.blue} style={{ fontSize: '20px' }}>
-            VKPlay
+          <LinkSpan color={'#FF2B42'} style={{ fontSize: '20px' }}>
+            ВК Видео
           </LinkSpan>
         </Link>
       )}

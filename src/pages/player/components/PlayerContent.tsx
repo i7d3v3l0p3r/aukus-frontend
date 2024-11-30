@@ -119,7 +119,7 @@ export default function PlayerContent() {
                 marginRight={'10px'}
               >
                 <TextField
-                  placeholder="Поиск среди всех игр Аукусов (ру/en)"
+                  placeholder="Поиск среди всех игр Аукусов, например: Witcher, Вичер"
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
                   InputProps={{

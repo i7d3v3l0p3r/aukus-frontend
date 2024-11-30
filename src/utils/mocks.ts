@@ -7,7 +7,7 @@ const playerLasqa: Player = {
   twitch_stream_link: '',
   vk_stream_link: 'https://live.vkplay.ru/lasqa',
   donation_link: 'https://www.donationalerts.com/r/lasqa',
-  map_position: 10,
+  map_position: 102,
   current_game: 'Балдурс Гейт 3 Game of the year edition',
   is_online: false,
   url_handle: 'lasqa',
@@ -41,7 +41,7 @@ const playerSegall: Player = {
 
 const playerRoadhouse: Player = {
   id: 3,
-  name: 'Roadhouse',
+  name: 'Roadhousexxxxxx',
   twitch_stream_link: 'https://www.twitch.tv/roadhouse',
   vk_stream_link: 'https://live.vkplay.ru/roadhouse',
   donation_link: 'https://www.donationalerts.com/r/roadhouse',

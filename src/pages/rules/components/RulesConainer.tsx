@@ -6,6 +6,7 @@ import { Color } from 'utils/types'
 import DonaterRules from './DonaterRules'
 import PlayerRules from './PlayerRules'
 import useScreenSize from 'src/context/useScreenSize'
+import Countdown from './Countdown'
 
 export default function RulesContainer() {
   const { headerSize } = useScreenSize()
@@ -31,6 +32,18 @@ export default function RulesContainer() {
           {rulesPage === 'player'
             ? 'Общие правила проведения для участников'
             : 'Правила заказа игр'}
+        </Box>
+
+        <Box
+          style={{
+            lineHeight: '1.2',
+            width: 'max-content',
+            fontWeight: 600,
+            marginTop: '15px',
+            color: Color.greyText,
+          }}
+        >
+          <Countdown />
         </Box>
 
         <Box marginTop={'50px'} />

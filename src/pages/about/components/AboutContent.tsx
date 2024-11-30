@@ -29,7 +29,11 @@ const creators = [
   },
   {
     name: 'kozjar',
-    text: 'Интеграция с PointAuc',
+    text: 'Интеграция с PointAuc.com',
+  },
+  {
+    name: 'garik_1987',
+    text: 'Мультистрим на VekSever.ru',
   },
   {
     name: 'madf12',

@@ -1,13 +1,19 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, FormGroup, Grid } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useUser } from 'context/UserProvider'
 import useScreenSize from 'context/useScreenSize'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Fireworks } from '@fireworks-js/react'
 import type { FireworksHandlers } from '@fireworks-js/react'
-import { createPlayerMove, fetchPlayers } from 'utils/api'
+import { createPlayerMove, fetchPlayers, fetchStats } from 'utils/api'
 import CrownIcon from 'assets/icons/crown.svg?react'
-import { getPlayerColor, NextTurnParams, Player } from 'utils/types'
+import {
+  Color,
+  getPlayerColor,
+  MoveParams,
+  NextTurnParams,
+  Player,
+} from 'utils/types'
 import { useTimelapse } from '../hooks/useTimelapse'
 import { cellSize, MainMap } from '../types'
 import ActionButton from './action/ActionButton'
@@ -30,11 +36,23 @@ import {
   startCell,
 } from './utils'
 import LinkSpan from 'src/components/LinkSpan'
+import { getPlayerScore } from 'src/pages/stats/components/Leaderboard'
+import PlayerWinnerIcon from './player/PlayerWinnerIcon'
+import { Link } from 'react-router-dom'
+import useLocalStorage from 'src/context/useLocalStorage'
+import { getEventTimeLeft } from 'src/pages/rules/components/Countdown'
 
 export default function MapComponent() {
   const [closePopups, setClosePopups] = useState(false)
-  const [moveSteps, setMoveSteps] = useState(0)
+  // const [moveSteps, setMoveSteps] = useState(0)
+
+  const [moveParams, setMoveParams] = useState<MoveParams | null>(null)
+
   const [makingTurn, setMakingTurn] = useState(false)
+  const [startWinAnimation, setStartWinAnimation] = useState(false)
+
+  const { save, load } = useLocalStorage()
+  const showArrows = load('showArrows', true)
 
   const [frozenDice, setFrozenDice] = useState<number | null>(null)
 
@@ -42,6 +60,16 @@ export default function MapComponent() {
   const timelapseEnabled = timelapseState.state !== 'closed'
 
   const queryClient = useQueryClient()
+
+  const [timeLeft, setTimeLeft] = useState(() => getEventTimeLeft())
+
+  useEffect(() => {
+    const mapWidth = 1715
+    const diff = mapWidth - window.innerWidth
+    if (diff > 0) {
+      window.scrollTo({ left: diff / 2, behavior: 'smooth' })
+    }
+  }, [])
 
   const fireworksRef = useRef<FireworksHandlers>(null)
 
@@ -87,19 +115,69 @@ export default function MapComponent() {
         )
       : null
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const difference = getEventTimeLeft()
+      setTimeLeft(difference)
+    }, 1000)
+
+    return () => clearInterval(interval) // Cleanup interval on component unmount
+  }, [])
+
+  const deadlineReached = timeLeft <= 0
+  const showCountdown = timeLeft <= 1000 * 60 * 60 * 24
+
+  const timerText = formatSeconds(timeLeft)
+
   const winnerFound =
     !timelapseEnabled &&
     playerWithMaxPosition &&
     playerWithMaxPosition.map_position > 101
 
+  const { data: playerStats } = useQuery({
+    queryKey: ['playersStats'],
+    queryFn: fetchStats,
+    staleTime: 1000 * 60 * 1,
+    enabled: !!(winnerFound || deadlineReached),
+  })
+  const playersStats = playerStats?.players || []
+
+  let top3players: Player[] = []
+  // const top3players: Player[] = players.slice(0, 3)
+  if (winnerFound && playersStats.length > 2) {
+    top3players.push(playerWithMaxPosition)
+    const statsByScore = playersStats
+      .filter((player) => player.id !== playerWithMaxPosition.id)
+      .sort((a, b) => getPlayerScore(b) - getPlayerScore(a))
+
+    const top2players = statsByScore
+      .slice(0, 2) // Get the top 3 player stats
+      .map((stat) => players.find((player) => player.id === stat.id)) // Map to player objects
+      .filter((player): player is Player => !!player) // Filter out any undefined results
+
+    top3players = [playerWithMaxPosition, ...top2players]
+  }
+
+  if (deadlineReached && playersStats.length > 2) {
+    const statsByScore = playersStats.sort(
+      (a, b) => getPlayerScore(b) - getPlayerScore(a)
+    )
+    top3players = statsByScore
+      .slice(0, 3) // Get the top 3 player stats
+      .map((stat) => players.find((player) => player.id === stat.id)) // Map to player objects
+      .filter((player): player is Player => !!player) // Filter out any undefined results
+  }
+
+  const showWinScreen = top3players.length > 0
+
   useEffect(() => {
-    if (winnerFound && !fireworksRef.current?.isRunning) {
+    if (showWinScreen && !fireworksRef.current?.isRunning) {
       enableFireworks()
     }
-    if (!winnerFound) {
+    if (!showWinScreen) {
       disableFireworks()
     }
-  }, [winnerFound])
+  }, [showWinScreen])
 
   const currentUser = useUser()
   useScreenSize({ updateOnResize: true })
@@ -121,6 +199,7 @@ export default function MapComponent() {
 
   const handleClick = () => {
     setClosePopups(!closePopups)
+    save('showArrows', !showArrows)
   }
 
   const handleMakingTurn = (value: boolean) => {
@@ -138,7 +217,13 @@ export default function MapComponent() {
       return
     }
 
-    const newPosition = getNextPlayerPosition(currentPlayer, diceRoll)
+    const skipLadders = params.itemLength === 'tiny'
+
+    const newPosition = getNextPlayerPosition({
+      player: currentPlayer,
+      moves: diceRoll,
+      skipLadders,
+    })
     // console.log(
     //   'current position',
     //   currentPlayer.map_position,
@@ -189,43 +274,55 @@ export default function MapComponent() {
           item_length: params.itemLength,
           item_rating: params.itemRating,
           item_review: params.itemReview,
-        },
-        {
-          onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: ['players'] })
-          },
         }
+        // {
+        //   onSettled: () => {
+        //     queryClient.invalidateQueries({ queryKey: ['players'] })
+        //   },
+        // }
       )
+      setStartWinAnimation(true)
+      setMakingTurn(true)
       return
     }
 
     const steps = getMoveSteps(currentPlayer, diceRoll)
-    setMoveSteps(steps)
+    // setMoveSteps(steps)
+    setMoveParams({ steps, skipLadders: params.itemLength === 'tiny' })
   }
 
-  const handleAnimationEnd = (player: Player, moves: number) => {
+  const handleAnimationEnd = (player: Player, params: MoveParams) => {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    const newPosition = getNextPlayerPosition(player, moves)
+    const newPosition = getNextPlayerPosition({
+      player,
+      moves: params.steps,
+      skipLadders: params.skipLadders,
+    })
     player.map_position = newPosition
-    setMoveSteps(0)
+    // setMoveSteps(0)
+    setMoveParams(null)
     setMakingTurn(false)
+    setStartWinAnimation(false)
     queryClient.invalidateQueries({ queryKey: ['players'] })
   }
 
-  const stopActions = winnerFound
+  const animating = startWinAnimation || moveParams !== null
 
-  const showBigTimelapse = !currentPlayer && !timelapseEnabled
-  const showActionButtons = currentPlayer && !timelapseEnabled && !stopActions
+  const stopActions = showWinScreen || animating
+  const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
+  const showBigTimelapse = !showActionButton && !timelapseEnabled && !animating
+
+  const winner = top3players[0] ?? null
 
   return (
     <Box
       style={{
         overflowX: 'auto',
-        width: '1214px',
-        minWidth: '1214px',
-        maxWidth: '1214px',
+        // width: '1214px',
+        // minWidth: '1214px',
+        // maxWidth: '1214px',
       }}
       onClick={handleClick}
     >
@@ -243,13 +340,13 @@ export default function MapComponent() {
         }}
       />
 
-      {winnerFound && (
+      {showWinScreen && winner && (
         <Box display={'flex'} justifyContent={'center'}>
           <Box
             fontSize={'20px'}
             textAlign={'center'}
             style={{
-              backgroundColor: getPlayerColor(playerWithMaxPosition.url_handle),
+              backgroundColor: getPlayerColor(winner.url_handle),
               borderRadius: '10px',
               zIndex: 10,
               position: 'relative',
@@ -270,10 +367,10 @@ export default function MapComponent() {
                 style={{ marginRight: '10px' }}
               />
               <Box>
-                Можете выдыхать, ивент закончен:{' '}
-                <LinkSpan color={'white'}>
-                  {playerWithMaxPosition.name}
-                </LinkSpan>{' '}
+                Можете выдыхать, ивент закончен{' — '}
+                <Link to={`/players/${winner.url_handle}`}>
+                  <LinkSpan color={'white'}>{winner.name}</LinkSpan>{' '}
+                </Link>
                 победил!
               </Box>
             </Box>
@@ -281,80 +378,156 @@ export default function MapComponent() {
         </Box>
       )}
 
-      {!winnerFound && <Box height={'44px'} />}
+      {showCountdown && !showWinScreen && (
+        <Box display={'flex'} justifyContent={'center'}>
+          <Box
+            fontSize={'20px'}
+            textAlign={'center'}
+            style={{
+              backgroundColor: Color.greyLight,
+              borderRadius: '10px',
+              zIndex: 10,
+              position: 'relative',
+            }}
+            width={'740px'}
+            height={'44px'}
+            padding={'10px'}
+          >
+            <Box
+              display={'flex'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              height={'100%'}
+            >
+              <Box>
+                До конца ивента{' — '}
+                <span style={{ fontFamily: 'monospace' }}>{timerText}</span>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      )}
 
-      <Grid
-        container
-        justifyContent={'center'}
-        columns={11}
-        width={'auto'}
-        style={{
-          backgroundImage: "url('static/map_background_new.png')",
-          backgroundPosition: 'center' /* Center the image */,
-          backgroundRepeat: 'no-repeat' /* Prevent the image from repeating */,
-          backgroundSize: 'cover',
-          borderRadius: '15px',
-          marginTop: '30px',
-        }}
-      >
-        <Grid container columns={10} width={'auto'}>
-          <Grid item>
-            <Box width={(cellSize + 1) * 10} height={cellSize} />
-          </Grid>
-        </Grid>
-        <Grid container columns={10} width={'auto'}>
-          <Grid item>
-            <CellItem cell={lastCell} />
-          </Grid>
-          <Grid item>
-            <Box width={(cellSize + 1) * 9} height={cellSize} />
-          </Grid>
-        </Grid>
-        {map.cellRows.map((row, index) => (
-          <Grid container key={index} columns={10} width={'auto'}>
-            {row.map((cell) => (
-              <Grid
-                item
-                key={cell.id}
-                sx={{
-                  borderRight: '1px solid transparent',
-                  borderBottom: index === 9 ? '1px solid transparent' : 0,
-                  borderTop: '1px solid transparent',
-                }}
-              >
+      {!showWinScreen && !showCountdown && <Box height={'44px'} />}
+
+      <Box display={'flex'} justifyContent={'center'}>
+        <Box
+          id="map-container"
+          style={{
+            width: '1715px',
+            height: '2146px',
+            backgroundImage: "url('uploads/aukus_map_compressed.png')",
+            backgroundRepeat:
+              'no-repeat' /* Prevent the image from repeating */,
+            backgroundPosition: 'center' /* Center the image */,
+          }}
+        >
+          {showWinScreen && top3players.length > 2 && (
+            <>
+              <PlayerWinnerIcon
+                player={top3players[0]}
+                position={1}
+                isMoving
+                closePopup={closePopups}
+              />
+              <PlayerWinnerIcon
+                player={top3players[1]}
+                position={2}
+                closePopup={closePopups}
+              />
+              <PlayerWinnerIcon
+                player={top3players[2]}
+                position={3}
+                closePopup={closePopups}
+              />
+            </>
+          )}
+
+          <Grid
+            container
+            justifyContent={'center'}
+            columns={11}
+            width={'auto'}
+            style={{
+              backgroundSize: 'cover',
+              borderRadius: '15px',
+              marginTop: '300px',
+            }}
+          >
+            <Grid container columns={10} width={'auto'}>
+              <Grid item>
+                <Box width={(cellSize + 1) * 10} height={cellSize} />
+              </Grid>
+            </Grid>
+            <Grid container columns={10} width={'auto'}>
+              <Grid item>
                 <CellItem
-                  cell={cell}
+                  cell={lastCell}
                   currentPlayer={currentPlayer}
-                  moveSteps={moveSteps}
+                  moveSteps={moveParams?.steps}
                 />
               </Grid>
+              <Grid item>
+                <Box width={(cellSize + 1) * 9} height={cellSize} />
+              </Grid>
+            </Grid>
+            {map.cellRows.map((row, index) => (
+              <Grid container key={index} columns={10} width={'auto'}>
+                {row.map((cell) => (
+                  <Grid
+                    item
+                    key={cell.id}
+                    sx={{
+                      borderRight: '1px solid transparent',
+                      borderBottom: index === 9 ? '1px solid transparent' : 0,
+                      borderTop: '1px solid transparent',
+                    }}
+                  >
+                    <CellItem
+                      cell={cell}
+                      currentPlayer={currentPlayer}
+                      moveSteps={moveParams?.steps}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
             ))}
-          </Grid>
-        ))}
-        <Grid container columns={10} width={'auto'}>
-          <Grid item>
-            <CellItem cell={startCell} />
-          </Grid>
+            <Grid container columns={10} width={'auto'}>
+              <Grid item>
+                <CellItem cell={startCell} />
+              </Grid>
 
-          <Grid item>
-            <Box
-              width={(cellSize + 1) * 9}
-              height={cellSize}
-              id={'map-cell-start'}
-            />
+              <Grid item>
+                <Box
+                  width={(cellSize + 1) * 9}
+                  height={cellSize}
+                  id={'map-cell-start'}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
+
       {ladders.map((ladder) => (
         <Fragment key={ladder.cellFrom}>
-          <MapArrow from={ladder.cellFrom} to={ladder.cellTo} />
+          <MapArrow
+            from={ladder.cellFrom}
+            to={ladder.cellTo}
+            hide={!showArrows}
+          />
         </Fragment>
       ))}
       {snakes.map((snake) => (
         <Fragment key={snake.cellFrom}>
-          <MapArrow from={snake.cellFrom} to={snake.cellTo} />
+          <MapArrow
+            from={snake.cellFrom}
+            to={snake.cellTo}
+            hide={!showArrows}
+          />
         </Fragment>
       ))}
+
       {players &&
         players.map((player) => (
           <PlayerIcon
@@ -362,14 +535,17 @@ export default function MapComponent() {
             player={player}
             players={players}
             closePopup={closePopups}
-            moveSteps={player.id === currentPlayer?.id ? moveSteps : 0}
+            moveParams={player.id === currentPlayer?.id ? moveParams : null}
             onAnimationEnd={handleAnimationEnd}
+            winAnimation={
+              player.id === currentPlayer?.id ? startWinAnimation : false
+            }
           />
         ))}
       <StaticPanel>
         <Box display="flex" justifyContent="center" width={'100%'}>
-          {showActionButtons && (
-            <Box textAlign="center" width="100%">
+          {showActionButton && (
+            <Box textAlign="center" width="100%" position={'relative'}>
               <Box
                 sx={{
                   position: 'relative',
@@ -379,6 +555,32 @@ export default function MapComponent() {
                 marginRight={'10px'}
                 textAlign="center"
               >
+                {/* <Box
+                  position="absolute"
+                  left={'-155px'}
+                  width="fit-content"
+                  display="inline"
+                  style={{
+                    background: Color.blue,
+                    borderRadius: '10px',
+                    paddingLeft: '16px',
+                    paddingRight: '16px',
+                    height: '44px',
+                  }}
+                >
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={showArrows}
+                          onChange={(val) => setShowArrows(val.target.checked)}
+                          color="customWhite"
+                        />
+                      }
+                      label="Стрелки"
+                    />
+                  </FormGroup>
+                </Box> */}
                 <ActionButton
                   handleNextTurn={handleNextTurn}
                   player={currentPlayer}
@@ -407,14 +609,20 @@ export default function MapComponent() {
   )
 }
 
-function getNextPlayerPosition(player: Player, moves: number) {
+type PositionParams = {
+  player: Player
+  moves: number
+  skipLadders?: boolean
+}
+
+function getNextPlayerPosition({ player, moves, skipLadders }: PositionParams) {
   const steps = getMoveSteps(player, moves)
   const newPosition = player.map_position + steps
 
   const ladder = laddersByCell[newPosition]
   const snake = snakesByCell[newPosition]
 
-  if (ladder) {
+  if (ladder && !skipLadders) {
     return ladder.cellTo
   }
   if (snake) {
@@ -435,4 +643,16 @@ function getMoveSteps(player: Player, moves: number) {
     return -player.map_position
   }
   return moves
+}
+
+function formatSeconds(timeDiff: number) {
+  const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24)
+  const minutes = Math.floor((timeDiff / (1000 * 60)) % 60)
+  const seconds = Math.floor((timeDiff / 1000) % 60)
+
+  const hoursPadded = hours.toString().padStart(2, '0')
+  const minutesPadded = minutes.toString().padStart(2, '0')
+  const secondsPadded = seconds.toString().padStart(2, '0')
+
+  return `${hoursPadded}:${minutesPadded}:${secondsPadded}`
 }
