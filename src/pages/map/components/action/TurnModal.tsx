@@ -402,7 +402,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       paddingRight: '15px',
                     }}
                   >
-                    3-5 часов
+                    3-15 часов
                   </Button>
                   <Button
                     onClick={() => handleGameHoursChange('medium')}
@@ -422,7 +422,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       paddingRight: '15px',
                     }}
                   >
-                    5+ часов
+                    15+ часов
                   </Button>
                   {/* <Button
                     onClick={() => handleGameHoursChange('long')}
