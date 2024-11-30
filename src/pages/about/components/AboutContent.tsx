@@ -1,4 +1,4 @@
-import { Box, Button, Link } from '@mui/material'
+import { Box, Button, Link, Tooltip } from '@mui/material'
 import useScreenSize from 'src/context/useScreenSize'
 import { Color } from 'utils/types'
 
@@ -14,6 +14,7 @@ const creators = [
   {
     name: 'Рот в говне',
     text: 'Графический дизайн',
+    tooltip: 'Он сам так назывался',
   },
   {
     name: 'CorruptedMushroom',
@@ -111,7 +112,9 @@ export default function AboutContent() {
           {creators.map((item, index) => {
             return (
               <Box key={index} marginTop={'20px'}>
-                <span style={{ color: 'white' }}>{item.name}</span>{' '}
+                <Tooltip title={item.tooltip} key={index}>
+                  <span style={{ color: 'white' }}>{item.name}</span>
+                </Tooltip>{' '}
                 <span style={{ color: Color.greyNew }}>— {item.text}</span>
               </Box>
             )
