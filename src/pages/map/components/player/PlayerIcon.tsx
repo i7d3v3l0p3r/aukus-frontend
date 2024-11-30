@@ -63,7 +63,7 @@ type Props = {
   players: Player[]
   closePopup?: boolean
   moveParams: MoveParams | null
-  onAnimationEnd: (player: Player, steps: number) => void
+  onAnimationEnd: (player: Player, params: MoveParams) => void
   winAnimation: boolean
 }
 
@@ -196,7 +196,7 @@ export default function PlayerIcon({
             config: { duration: animationsList[i].duration || 1000 },
           })
         }
-        onAnimationEnd(player, moves)
+        onAnimationEnd(player, moveParams)
       },
     })
   }
@@ -251,7 +251,7 @@ export default function PlayerIcon({
       from: { x: 0, y: 0 },
       to: async (next) => {
         await next({ x: deltaX, y: deltaY, scale: 1.5 })
-        onAnimationEnd(player, 1)
+        onAnimationEnd(player, { steps: 1, skipLadders: false })
       },
       config: { duration: 5000 },
     })

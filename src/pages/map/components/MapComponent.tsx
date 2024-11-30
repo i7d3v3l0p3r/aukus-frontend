@@ -291,11 +291,15 @@ export default function MapComponent() {
     setMoveParams({ steps, skipLadders: params.itemLength === 'tiny' })
   }
 
-  const handleAnimationEnd = (player: Player, moves: number) => {
+  const handleAnimationEnd = (player: Player, params: MoveParams) => {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    const newPosition = getNextPlayerPosition({ player, moves })
+    const newPosition = getNextPlayerPosition({
+      player,
+      moves: params.steps,
+      skipLadders: params.skipLadders,
+    })
     player.map_position = newPosition
     // setMoveSteps(0)
     setMoveParams(null)
