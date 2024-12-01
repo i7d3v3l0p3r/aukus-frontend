@@ -34,6 +34,7 @@ import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
 import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
 import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
 import PlayerBiegeMoving from 'assets/map/PlayerBiegeMoving.gif'
+import PlayerYellowMoving from 'assets/map/PlayerYellowMoving.gif'
 
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
@@ -65,7 +66,7 @@ const playerMovingIcons: { [key in PlayerUrl]: string } = {
   uselessmouth: PlayerPinkMoving,
   roadhouse: PlayerPurpleMoving,
   melharucos: PlayerBlueLightMoving,
-  maddyson: PlayerBlueDarkMoving,
+  maddyson: PlayerYellowMoving,
   vovapain: PlayerRedMoving,
   timofey: PlayerGreenLightMoving,
   unclebjorn: PlayerPinkLightMoving,
