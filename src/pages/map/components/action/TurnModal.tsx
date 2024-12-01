@@ -311,15 +311,15 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 src={gameImage}
                 alt="game"
                 style={{
-                  width: '120px',
-                  height: '180px',
+                  width: '134px',
+                  height: '201px',
                   borderRadius: '10px',
                 }}
               />
             ) : (
               <ImagePlaceholder
-                width={'120px'}
-                height={'180px'}
+                width={'134px'}
+                height={'201px'}
                 style={{ borderRadius: '10px' }}
               />
             )}
@@ -358,89 +358,103 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 gameNameOptions.length > 0 ? 'has-options' : 'no-options'
               }
             />
-            <Box marginTop={'30px'}>
+            <Box marginTop={'20px'}>
               {moveType === 'completed' && (
-                <Box display="flex" justifyContent={'center'}>
-                  <Button
-                    onClick={() => handleGameHoursChange('tiny')}
-                    variant={gameHours === 'tiny' ? 'contained' : 'outlined'}
-                    color={gameHours === 'tiny' ? 'secondary' : 'info'}
-                    style={{
-                      // width: 127,
-                      fontSize: '16px',
-                      border:
-                        gameHours === 'tiny'
-                          ? '2px solid transparent'
-                          : `2px solid ${Color.greyLight}`,
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
-                      paddingLeft: '15px',
-                      paddingRight: '15px',
-                    }}
+                <>
+                  <Box display="flex" justifyContent={'center'}>
+                    <Button
+                      onClick={() => handleGameHoursChange('tiny')}
+                      variant={gameHours === 'tiny' ? 'contained' : 'outlined'}
+                      color={gameHours === 'tiny' ? 'secondary' : 'info'}
+                      style={{
+                        width: '200px',
+                        height: '44px',
+                        fontSize: '16px',
+                        border:
+                          gameHours === 'tiny'
+                            ? '2px solid transparent'
+                            : `2px solid ${Color.greyLight}`,
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        paddingLeft: '15px',
+                        paddingRight: '15px',
+                      }}
+                    >
+                      0-3 часов
+                    </Button>
+                    <Button
+                      onClick={() => handleGameHoursChange('short')}
+                      variant={gameHours === 'short' ? 'contained' : 'outlined'}
+                      color={gameHours === 'short' ? 'secondary' : 'info'}
+                      style={{
+                        width: '200px',
+                        height: '44px',
+                        marginLeft: 20,
+                        fontSize: '16px',
+                        border:
+                          gameHours === 'short'
+                            ? '2px solid transparent'
+                            : `2px solid ${Color.greyLight}`,
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        paddingLeft: '15px',
+                        paddingRight: '15px',
+                      }}
+                    >
+                      3-15 часов
+                    </Button>
+                  </Box>
+                  <Box
+                    display="flex"
+                    justifyContent={'center'}
+                    marginTop={'15px'}
                   >
-                    0-3 часов
-                  </Button>
-                  <Button
-                    onClick={() => handleGameHoursChange('short')}
-                    variant={gameHours === 'short' ? 'contained' : 'outlined'}
-                    color={gameHours === 'short' ? 'secondary' : 'info'}
-                    style={{
-                      // width: 127,
-                      marginLeft: 20,
-                      fontSize: '16px',
-                      border:
-                        gameHours === 'short'
-                          ? '2px solid transparent'
-                          : `2px solid ${Color.greyLight}`,
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
-                      paddingLeft: '15px',
-                      paddingRight: '15px',
-                    }}
-                  >
-                    3-15 часов
-                  </Button>
-                  <Button
-                    onClick={() => handleGameHoursChange('medium')}
-                    variant={gameHours === 'medium' ? 'contained' : 'outlined'}
-                    color={gameHours === 'medium' ? 'secondary' : 'info'}
-                    style={{
-                      marginLeft: 20,
-                      // width: 126,
-                      fontSize: '16px',
-                      border:
-                        gameHours === 'medium'
-                          ? '2px solid transparent'
-                          : `2px solid ${Color.greyLight}`,
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
-                      paddingLeft: '15px',
-                      paddingRight: '15px',
-                    }}
-                  >
-                    15-30 часов
-                  </Button>
-                  <Button
-                    onClick={() => handleGameHoursChange('long')}
-                    variant={gameHours === 'long' ? 'contained' : 'outlined'}
-                    color={gameHours === 'long' ? 'secondary' : 'info'}
-                    style={{
-                      marginLeft: 20,
-                      // width: 200,
-                      fontSize: '16px',
-                      border:
-                        gameHours === 'long'
-                          ? '2px solid transparent'
-                          : `2px solid ${Color.greyLight}`,
-                      paddingTop: '5px',
-                      paddingBottom: '5px',
-                      paddingLeft: '15px',
-                      paddingRight: '15px',
-                    }}
-                  >
-                    30+ часов
-                  </Button>
-                </Box>
+                    <Button
+                      onClick={() => handleGameHoursChange('medium')}
+                      variant={
+                        gameHours === 'medium' ? 'contained' : 'outlined'
+                      }
+                      color={gameHours === 'medium' ? 'secondary' : 'info'}
+                      style={{
+                        // marginLeft: 20,
+                        width: '200px',
+                        height: '44px',
+                        fontSize: '16px',
+                        border:
+                          gameHours === 'medium'
+                            ? '2px solid transparent'
+                            : `2px solid ${Color.greyLight}`,
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        paddingLeft: '15px',
+                        paddingRight: '15px',
+                      }}
+                    >
+                      15-30 часов
+                    </Button>
+                    <Button
+                      onClick={() => handleGameHoursChange('long')}
+                      variant={gameHours === 'long' ? 'contained' : 'outlined'}
+                      color={gameHours === 'long' ? 'secondary' : 'info'}
+                      style={{
+                        marginLeft: 20,
+                        width: '200px',
+                        height: '44px',
+                        fontSize: '16px',
+                        border:
+                          gameHours === 'long'
+                            ? '2px solid transparent'
+                            : `2px solid ${Color.greyLight}`,
+                        paddingTop: '5px',
+                        paddingBottom: '5px',
+                        paddingLeft: '15px',
+                        paddingRight: '15px',
+                      }}
+                    >
+                      30+ часов
+                    </Button>
+                  </Box>
+                </>
               )}
             </Box>
           </Box>
