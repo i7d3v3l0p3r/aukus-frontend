@@ -49,9 +49,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
   const [review, setReview] = useState('')
-  const [gameHours, setGameHours] = useState<
-    'tiny' | 'short' | 'medium' | null
-  >(null)
+  const [gameHours, setGameHours] = useState<ItemLength | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
 
@@ -133,9 +131,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setReview(event.target.value)
   }
 
-  const handleGameHoursChange = (
-    newValue: 'tiny' | 'short' | 'medium' | null
-  ) => {
+  const handleGameHoursChange = (newValue: ItemLength | null) => {
     setGameHours(newValue)
   }
 
@@ -370,7 +366,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     variant={gameHours === 'tiny' ? 'contained' : 'outlined'}
                     color={gameHours === 'tiny' ? 'secondary' : 'info'}
                     style={{
-                      width: 127,
+                      // width: 127,
                       fontSize: '16px',
                       border:
                         gameHours === 'tiny'
@@ -389,7 +385,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     variant={gameHours === 'short' ? 'contained' : 'outlined'}
                     color={gameHours === 'short' ? 'secondary' : 'info'}
                     style={{
-                      width: 127,
+                      // width: 127,
                       marginLeft: 20,
                       fontSize: '16px',
                       border:
@@ -410,7 +406,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                     color={gameHours === 'medium' ? 'secondary' : 'info'}
                     style={{
                       marginLeft: 20,
-                      width: 126,
+                      // width: 126,
                       fontSize: '16px',
                       border:
                         gameHours === 'medium'
@@ -422,25 +418,28 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       paddingRight: '15px',
                     }}
                   >
-                    15+ часов
+                    15-30 часов
                   </Button>
-                  {/* <Button
+                  <Button
                     onClick={() => handleGameHoursChange('long')}
                     variant={gameHours === 'long' ? 'contained' : 'outlined'}
                     color={gameHours === 'long' ? 'secondary' : 'info'}
                     style={{
                       marginLeft: 20,
-                      width: 200,
+                      // width: 200,
                       fontSize: '16px',
-                      border: gameHours === 'long' ? '2px solid transparent' : `2px solid ${Color.greyLight}`,
+                      border:
+                        gameHours === 'long'
+                          ? '2px solid transparent'
+                          : `2px solid ${Color.greyLight}`,
                       paddingTop: '5px',
                       paddingBottom: '5px',
                       paddingLeft: '15px',
                       paddingRight: '15px',
                     }}
                   >
-                    15+ часов
-                  </Button> */}
+                    30+ часов
+                  </Button>
                 </Box>
               )}
             </Box>
