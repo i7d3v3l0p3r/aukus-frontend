@@ -3,6 +3,7 @@ export type Player = {
   name: string
   twitch_stream_link: string
   vk_stream_link: string
+  kick_stream_link: string
   donation_link: string
   telegram_link: string
   is_online: boolean
