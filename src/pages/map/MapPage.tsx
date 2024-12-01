@@ -10,7 +10,6 @@ import { useUser } from 'src/context/UserProvider'
 
 export default function MapPage() {
   const { isMobile, width } = useScreenSize()
-  const currentUser = useUser()
   const mapWidth = 1715
 
   if (isMobile) {
@@ -23,12 +22,10 @@ export default function MapPage() {
     )
   }
 
-  const leftSlot = currentUser ? <DifficultyButton /> : null
-
   if (width < mapWidth) {
     return (
       <Box width={'fit-content'}>
-        <MainMenu currentPage={'map'} rightSlot={leftSlot} />
+        <MainMenu currentPage={'map'} />
         <Box
           alignContent={'center'}
           display="flex"
@@ -49,7 +46,7 @@ export default function MapPage() {
 
   return (
     <Box>
-      <MainMenu currentPage={'map'} rightSlot={leftSlot} />
+      <MainMenu currentPage={'map'} />
       <Box
         alignContent={'center'}
         display="flex"
