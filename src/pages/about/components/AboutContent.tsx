@@ -127,11 +127,11 @@ export default function AboutContent() {
         <Box marginTop={'10px'} fontSize={'20px'}>
           {sponsorsSortedByAmount.map((item, index) => {
             const hasText = item.text.length > 0
-            const text = hasText ? ` — ${item.text}` : ''
+            const text = hasText && item.amount >= 5000 ? ` — ${item.text}` : ''
             return (
               <Box marginTop={'20px'} key={index} color={'white'}>
                 {item.name}
-                {text}
+                <span style={{ color: Color.greyNew }}>{text}</span>
               </Box>
             )
           })}
