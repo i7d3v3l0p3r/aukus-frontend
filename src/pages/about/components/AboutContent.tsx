@@ -17,6 +17,10 @@ const creators = [
     tooltip: 'Он сам так назывался',
   },
   {
+    name: 'Pepedg13ch',
+    text: 'Анимации',
+  },
+  {
     name: 'CorruptedMushroom',
     text: 'Бекенд сервер',
   },
