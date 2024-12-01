@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Tooltip,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import deckBackground from 'assets/deck-background.png'
@@ -36,9 +37,21 @@ type DiceBoxType = {
   }
 }
 
+const diceChangeMaps: { [k: string]: { [k: string]: DiceOption } } = {
+  '2d6': {
+    '1d6': '2d6',
+    '2d6': '1d6',
+  },
+  '3d6': {
+    '1d6': '2d6',
+    '2d6': '3d6',
+    '3d6': '1d6',
+  },
+}
+
 export default function DiceModal({
   open,
-  dice,
+  dice: maxDice,
   onTurnFinish,
   onDiceRoll,
 }: Props) {
@@ -50,13 +63,13 @@ export default function DiceModal({
   const [diceBox, setDiceBox] = useState<DiceBoxType | null>(null)
   const [diceColor, setDiceColor] = useState<string>(getRandomHexColor())
 
-  const [currentDice, setCurrentDice] = useState<DiceOption>(dice)
+  const [currentDice, setCurrentDice] = useState<DiceOption>(maxDice)
 
   useEffect(() => {
-    if (dice !== currentDice) {
-      setCurrentDice(dice)
+    if (maxDice !== currentDice) {
+      setCurrentDice(maxDice)
     }
-  }, [dice])
+  }, [maxDice])
 
   const diceRollSum = diceRoll
     ? diceRoll.reduce((acc, value) => acc + value, 0)
@@ -67,16 +80,12 @@ export default function DiceModal({
 
   const canThrowDice = diceStatus === 'idle'
 
-  const diceCanBeChanged = dice === '2d6'
+  const diceCanBeChanged = maxDice in diceChangeMaps
+  const changeMap = diceChangeMaps[maxDice] ?? {}
+  const changeOption = changeMap[currentDice] ?? null
 
-  const changeDice = () => {
-    if (diceCanBeChanged) {
-      if (currentDice === '1d6') {
-        setCurrentDice('2d6')
-      } else {
-        setCurrentDice('1d6')
-      }
-    }
+  const changeDice = (option: DiceOption) => {
+    setCurrentDice(changeOption)
   }
 
   useEffect(() => {
@@ -171,21 +180,21 @@ export default function DiceModal({
           alignItems={'center'}
         >
           <Box>
-            Бросок кубика
+            Бросок кубика {currentDice}
             {diceRollSum && diceRollDisplay}
           </Box>
           {diceStatus === 'idle' && (
             <Box>
-              {diceCanBeChanged && (
+              {diceCanBeChanged && changeOption && (
                 <Button
                   style={{
                     fontSize: '14px',
                     marginRight: '10px',
                     width: '158px',
                   }}
-                  onClick={changeDice}
+                  onClick={() => changeDice(changeOption)}
                 >
-                  Сменить на {currentDice === '1d6' ? '2d6' : '1d6'}
+                  Сменить на {changeOption}
                 </Button>
               )}
               <Button
@@ -211,24 +220,26 @@ export default function DiceModal({
           paddingBottom: '30px',
         }}
       >
-        <div
-          id={DiceBoxContainerId}
-          onClick={handleTestThrow}
-          style={{
-            display: 'flex',
-            position: 'relative',
-            justifyContent: 'center',
-            width: '640px',
-            height: '260px',
-            border: '2px solid #414141',
-            borderRadius: '10px',
-            padding: '5px',
-            boxSizing: 'border-box',
-            backgroundImage: `url(${deckBackground})`,
-            cursor: canTestThrow ? 'pointer' : 'default',
-          }}
-          ref={containerRef}
-        ></div>
+        <Tooltip title={canTestThrow ? 'Тестовый бросок' : ''} placement="top">
+          <div
+            id={DiceBoxContainerId}
+            onClick={handleTestThrow}
+            style={{
+              display: 'flex',
+              position: 'relative',
+              justifyContent: 'center',
+              width: '640px',
+              height: '260px',
+              border: '2px solid #414141',
+              borderRadius: '10px',
+              padding: '5px',
+              boxSizing: 'border-box',
+              backgroundImage: `url(${deckBackground})`,
+              cursor: canTestThrow ? 'pointer' : 'default',
+            }}
+            ref={containerRef}
+          ></div>
+        </Tooltip>
       </DialogContent>
       <DialogActions
         style={{
