@@ -102,7 +102,7 @@ export default function MainMenu({
                 height={'15px'}
                 style={{ marginRight: '8px' }}
               />
-              АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
+              АУКУС 2024 {currentUser && `// ${currentUser.name}`}
             </LinkSpan>
           </Link>
           <Box
