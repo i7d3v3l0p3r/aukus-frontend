@@ -15,6 +15,7 @@ import OldMoveCard from './OldMoveCard'
 import StreamLink from './StreamLink'
 import useScreenSize from 'src/context/useScreenSize'
 import CurrentMove from './CurrentMove'
+import { hasEditPermission } from './utils'
 
 export default function PlayerContent() {
   const { id: playerHandle } = useParams()
@@ -54,10 +55,7 @@ export default function PlayerContent() {
   }
 
   const isOwner = player.id === currentUser?.user_id
-  const canEdit =
-    isOwner ||
-    (currentUser?.role === 'moder' && currentUser?.moder_for === player.id) ||
-    currentUser?.role === 'admin'
+  const canEdit = hasEditPermission(currentUser, player.id)
 
   playerMoves.sort((a, b) => {
     return b.id - a.id

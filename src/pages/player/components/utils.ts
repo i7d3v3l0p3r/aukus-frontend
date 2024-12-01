@@ -1,3 +1,5 @@
+import { CurrentUser } from 'src/utils/types'
+
 export function formatDate(dateString: string) {
   // Create a new Date object
   const date = new Date(dateString)
@@ -29,4 +31,23 @@ export function formatNumber(i: number) {
   } else {
     return `${i}`
   }
+}
+
+export function hasEditPermission(
+  user: CurrentUser | null,
+  player_id?: number
+) {
+  if (user?.role === 'admin') {
+    return true
+  }
+  if (!player_id || !user) {
+    return false
+  }
+  if (user?.role === 'player' && user?.user_id === player_id) {
+    return true
+  }
+  if (user?.role === 'moder' && user?.moder_for === player_id) {
+    return true
+  }
+  return false
 }
