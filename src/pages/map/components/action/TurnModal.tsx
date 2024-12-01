@@ -84,7 +84,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   }, [gameName.length, status, fetchStatus, updateTs, refetch])
 
   let gameNameOptions: string[] = []
-  if (gameName.length > 3 && gameNamesData) {
+  if (gameName.length > 3 && gameNamesData && moveType !== 'movie') {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
   }
 
