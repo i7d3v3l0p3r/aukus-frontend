@@ -54,7 +54,9 @@ export default function MoveCard({
   const canEdit =
     (currentUser?.role === 'player' &&
       currentUser?.user_id === move.player_id) ||
-    (currentUser?.role === 'moder' && currentUser?.moder_for === move.player_id)
+    (currentUser?.role === 'moder' &&
+      currentUser?.moder_for === move.player_id) ||
+    currentUser?.role === 'admin'
 
   const updateVod = useMutation({ mutationFn: updateVodLink })
   const queryClient = useQueryClient()
