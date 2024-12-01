@@ -74,6 +74,11 @@ type Payment = {
 
 const sponsors: Payment[] = [
   {
+    name: 'Virtuoz',
+    text: 'делайте красиво',
+    amount: 1000,
+  },
+  {
     name: 'alevser',
     text: 'летс гооо',
     amount: 777,
