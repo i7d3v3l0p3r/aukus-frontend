@@ -39,6 +39,16 @@ export default function PlayerLinksMobile({ player }: Props) {
           <LinkSpan color={'#FF2B42'}>ВК Видео</LinkSpan>
         </Link>
       )}
+      {player.kick_stream_link && (
+        <Link
+          to={player.kick_stream_link}
+          target="_blank"
+          rel="noopener nereferrer"
+          style={{ marginRight: linksMargin }}
+        >
+          <LinkSpan color={Color.green}>Кик</LinkSpan>
+        </Link>
+      )}
       {player.telegram_link && (
         <Link
           to={player.telegram_link}
