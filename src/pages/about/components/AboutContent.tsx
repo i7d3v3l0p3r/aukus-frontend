@@ -66,7 +66,30 @@ const creators = [
   },
 ]
 
-const sponsors: string[] = ['Стань первым']
+type Payment = {
+  name: string
+  text: string
+  amount: string
+}
+
+const sponsors: Payment[] = [
+  {
+    name: 'alevser',
+    text: 'летс гооо',
+    amount: '777 ₽',
+  },
+  {
+    name: 'Vagner',
+    text: '❤️',
+    amount: '500 ₽',
+  },
+  {
+    name: 'CruxTerminatus',
+    text: 'Спонсируем хорошее настроение',
+    amount: '500 ₽',
+  },
+  { name: 'Quizy', text: '', amount: '300 ₽' },
+]
 
 export default function AboutContent() {
   const { headerSize } = useScreenSize()
@@ -104,7 +127,7 @@ export default function AboutContent() {
           {sponsors.map((item, index) => {
             return (
               <Box marginTop={'20px'} key={index} color={'white'}>
-                {item}
+                {item.name} — {item.text} ({item.amount})
               </Box>
             )
           })}
