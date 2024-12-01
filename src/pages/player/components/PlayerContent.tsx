@@ -23,7 +23,7 @@ export default function PlayerContent() {
 
   const { isMobile } = useScreenSize()
 
-  const currentPlayer = useUser()
+  const currentUser = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -53,9 +53,11 @@ export default function PlayerContent() {
     return <div>Игрок не найден</div>
   }
 
-  const isOwner = player.id === currentPlayer?.user_id
-  // const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
-  const canEdit = !!currentPlayer
+  const isOwner = player.id === currentUser?.user_id
+  const canEdit =
+    isOwner ||
+    (currentUser?.role === 'moder' && currentUser?.moder_for === player.id) ||
+    currentUser?.role === 'admin'
 
   playerMoves.sort((a, b) => {
     return b.id - a.id

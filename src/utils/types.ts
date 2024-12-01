@@ -183,7 +183,7 @@ export function getPlayerColorName(player: Player): CustomColorNames {
 
 export type CurrentUser = {
   user_id: number
-  role: 'player' | 'moder'
+  role: 'player' | 'moder' | 'admin'
   moder_for?: number
   url_handle: PlayerUrl | null
   name: string
