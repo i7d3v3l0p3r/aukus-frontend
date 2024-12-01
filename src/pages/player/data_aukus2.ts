@@ -1352,7 +1352,7 @@ const RoadhouseGames: PreviousGame[] = [
   {
     title: 'Library Of Ruina',
     rating: '',
-    review: 'О НЕТ! ИГРА НА 150 ЧАСОВ!!',
+    review: '-',
     status: 'drop',
   },
   {
