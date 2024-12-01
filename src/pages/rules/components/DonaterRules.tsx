@@ -9,14 +9,18 @@ import {
 import LinkSpan from 'components/LinkSpan'
 import { Color } from 'utils/types'
 
-const donaterRules = [
+type TextContent = string | string[]
+type Content = { title: string; content: TextContent[] }
+type Rule = { title: string; content: Content[] }
+
+const donaterRules: Rule[] = [
   {
     title: 'Ограничения на типы игр',
     content: [
       {
         title: 'Игры которых не было ранее',
         content: [
-          'Можно заказывать только те игры, которые стример ещё не проходил и не дропал ни в текущем, ни в прошлых сезонах ивента. На странице стримера есть информация о всех играх, которые они уже играли, и их можно найти через CTRL+F',
+          'Можно заказывать только те игры, которые стример ещё не проходил и не дропал ни в текущем, ни в прошлых сезонах ивента. На странице стримера есть информация о всех играх, которые они уже играли, и их можно найти через строку поиска или через CTRL+F',
         ],
       },
       {
@@ -27,9 +31,11 @@ const donaterRules = [
       },
       {
         title: 'Продолжительность игры',
-        special: true,
         content: [
-          'Минимальная длительность прохождения заказанной игры должна быть не менее 60 минут. Для проверки времени прохождения можно воспользоваться сайтом https://howlongtobeat.com/',
+          [
+            'Минимальная длительность прохождения заказанной игры должна быть не менее 60 минут. Для проверки времени прохождения можно воспользоваться сайтом',
+            'howlongtobeat.com',
+          ],
         ],
       },
       {
@@ -76,6 +82,7 @@ const donaterRules = [
         content: [
           'За донат в 25 000 ₽ донатер может с 50% вероятностью вынудить стримера дропнуть текущую игру (если успеть до финальных титров). Стример должен выпить шот или сделать физическое упражнение (отжимания или приседания), независимо от результата дропа. Эти деньги идут только на дроп, а не на заказ новой игры. "Шейх-момент" можно активировать только во время игры',
           'Если выпал вариант не дропать, каждый последующий шейх-момент на текущей игре стоит на 25 000 ₽ дороже, то есть 50 000 ₽, потом 75 000 ₽ и тд.',
+          ['Колесо для шейх моментов:', 'wheelofnames.com/ru/t2y-556'],
         ],
       },
       {
@@ -134,36 +141,20 @@ export default function DonaterRules() {
                       {':'}
                     </Typography>
                     <Box marginTop={1} />
-                    {content.special ? (
-                      <ul>
-                        <li>
-                          <Typography fontWeight={400} fontSize={'16px'}>
-                            Минимальная длительность прохождения заказанной игры
-                            должна быть не менее 60 минут. Для проверки времени
-                            прохождения можно воспользоваться сайтом{' '}
-                            <Link
-                              href="https://howlongtobeat.com/"
-                              rel="noopener nereferrer"
-                              target="_blank"
-                            >
-                              <LinkSpan color={Color.purple}>
-                                https://howlongtobeat.com/
-                              </LinkSpan>
-                            </Link>
-                          </Typography>
-                        </li>
-                      </ul>
-                    ) : (
-                      <ul>
-                        {content.content.map((text, index) => (
-                          <li key={index}>
-                            <Typography fontWeight={400} fontSize={'16px'}>
-                              {text}
-                            </Typography>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <ul style={{ fontWeight: 400, fontSize: '16px' }}>
+                      {content.content.map((text, index) => {
+                        if (Array.isArray(text)) {
+                          return (
+                            <li key={index}>
+                              {text.map((textItem, index) => (
+                                <ContentItem text={textItem} key={index} />
+                              ))}
+                            </li>
+                          )
+                        }
+                        return <li key={index}>{text}</li>
+                      })}
+                    </ul>
                   </Box>
                 ))}
               </AccordionDetails>
@@ -173,4 +164,38 @@ export default function DonaterRules() {
       ))}
     </Box>
   )
+}
+
+function ContentItem({ text }: { text: string }) {
+  if (text.startsWith('howlongtobeat.com')) {
+    return (
+      <>
+        {' '}
+        <Link
+          href="https://howlongtobeat.com/"
+          rel="noopener nereferrer"
+          target="_blank"
+        >
+          <LinkSpan color={Color.purple}>https://howlongtobeat.com/</LinkSpan>
+        </Link>
+      </>
+    )
+  }
+
+  if (text.startsWith('wheelofnames.com')) {
+    return (
+      <>
+        {' '}
+        <Link
+          href={'https://wheelofnames.com/ru/t2y-556'}
+          rel="noopener nereferrer"
+          target="_blank"
+        >
+          <LinkSpan color={Color.blue}>{text}</LinkSpan>
+        </Link>
+      </>
+    )
+  }
+
+  return text
 }
