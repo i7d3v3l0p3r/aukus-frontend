@@ -19,6 +19,8 @@ import PlayerPink from 'assets/map/PlayerPink.webp'
 import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
 import PlayerOrange from 'assets/map/PlayerOrange.webp'
 import PlayerPurple from 'assets/map/PlayerPurple.webp'
+import PlayerYellow from 'assets/map/PlayerYellow.webp'
+import PlayerBiege from 'assets/map/PlayerBiege.webp'
 
 import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
@@ -31,6 +33,7 @@ import PlayerBlueDarkMoving from 'assets/map/PlayerBlueDarkMoving.gif'
 import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
 import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
 import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
+import PlayerBiegeMoving from 'assets/map/PlayerBiegeMoving.gif'
 
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
@@ -45,12 +48,12 @@ const playerIcons: { [key in PlayerUrl]: string } = {
   uselessmouth: PlayerPink,
   roadhouse: PlayerPurple,
   melharucos: PlayerBlueLight,
-  maddyson: PlayerBlueDark,
+  maddyson: PlayerYellow,
   vovapain: PlayerRed,
   timofey: PlayerGreenLight,
   unclebjorn: PlayerPinkLight,
-  krabick: PlayerBlueLight,
-  keliq_q: PlayerBlueLight,
+  krabick: PlayerBlueDark,
+  keliq_q: PlayerBiege,
 }
 
 const playerMovingIcons: { [key in PlayerUrl]: string } = {
@@ -66,8 +69,8 @@ const playerMovingIcons: { [key in PlayerUrl]: string } = {
   vovapain: PlayerRedMoving,
   timofey: PlayerGreenLightMoving,
   unclebjorn: PlayerPinkLightMoving,
-  krabick: PlayerBlueLightMoving,
-  keliq_q: PlayerBlueLightMoving,
+  krabick: PlayerBlueDarkMoving,
+  keliq_q: PlayerBiegeMoving,
 }
 
 type Props = {
