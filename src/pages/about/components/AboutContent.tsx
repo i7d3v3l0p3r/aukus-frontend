@@ -69,30 +69,31 @@ const creators = [
 type Payment = {
   name: string
   text: string
-  amount: string
+  amount: number
 }
 
 const sponsors: Payment[] = [
   {
     name: 'alevser',
     text: 'летс гооо',
-    amount: '777 ₽',
+    amount: 777,
   },
   {
     name: 'Vagner',
     text: '❤️',
-    amount: '500 ₽',
+    amount: 500,
   },
   {
     name: 'CruxTerminatus',
     text: 'Спонсируем хорошее настроение',
-    amount: '500 ₽',
+    amount: 500,
   },
-  { name: 'Quizy', text: '', amount: '300 ₽' },
+  { name: 'Quizy', text: '', amount: 300 },
 ]
 
 export default function AboutContent() {
   const { headerSize } = useScreenSize()
+  const sponsorsSortedByAmount = sponsors.sort((a, b) => b.amount - a.amount)
   return (
     <Box display="flex" justifyContent="center">
       <Box
@@ -124,10 +125,13 @@ export default function AboutContent() {
           Наши спонсоры
         </Box>
         <Box marginTop={'10px'} fontSize={'20px'}>
-          {sponsors.map((item, index) => {
+          {sponsorsSortedByAmount.map((item, index) => {
+            const hasText = item.text.length > 0
+            const text = hasText ? ` — ${item.text}` : ''
             return (
               <Box marginTop={'20px'} key={index} color={'white'}>
-                {item.name} — {item.text} ({item.amount})
+                {item.name}
+                {text}
               </Box>
             )
           })}
