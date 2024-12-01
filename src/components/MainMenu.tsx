@@ -11,6 +11,8 @@ import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
 import FloatingClock from './FloatingClock'
+import MultistreamButton from 'src/pages/players/components/MultistreamButton'
+import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
 
 type Props = {
   currentPage: Page
@@ -36,6 +38,14 @@ export default function MainMenu({
 
   if (isMobile) {
     return <MainMenuMobile currentPage={currentPage} />
+  }
+
+  if (!leftSlot && currentUser) {
+    leftSlot = <DifficultyButton />
+  }
+
+  if (!rightSlot) {
+    rightSlot = <MultistreamButton />
   }
 
   return (
