@@ -28,7 +28,7 @@ export default function MapPage() {
   if (width < mapWidth) {
     return (
       <Box width={'fit-content'}>
-        <MainMenu currentPage={'map'} leftSlot={leftSlot} />
+        <MainMenu currentPage={'map'} rightSlot={leftSlot} />
         <Box
           alignContent={'center'}
           display="flex"
@@ -49,7 +49,7 @@ export default function MapPage() {
 
   return (
     <Box>
-      <MainMenu currentPage={'map'} leftSlot={leftSlot} />
+      <MainMenu currentPage={'map'} rightSlot={leftSlot} />
       <Box
         alignContent={'center'}
         display="flex"
