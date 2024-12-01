@@ -111,7 +111,7 @@ export const Color = {
   pinkLight: '#ECA3D4',
   white: '#FFFFFF',
   blueTg: '#27a7e7',
-  lime: '#A9DE2C',
+  biege: '#AF99DF',
   yellow: '#F2C200',
 }
 
@@ -146,11 +146,11 @@ export const ColorByUrlHandle: { [key in PlayerUrl]: string } = {
   uselessmouth: Color.pink,
   roadhouse: Color.purple,
   melharucos: Color.blueLight,
-  maddyson: Color.blueDark,
-  krabick: Color.lime,
+  maddyson: Color.yellow,
+  krabick: Color.blueDark,
   vovapain: Color.red,
   timofey: Color.greenLight,
-  keliq_q: Color.yellow,
+  keliq_q: Color.biege,
   unclebjorn: Color.pinkLight,
 }
 
@@ -165,11 +165,11 @@ export const ColorNameByUrlHandle: {
   uselessmouth: 'customPink',
   roadhouse: 'customPurple',
   melharucos: 'customBlueLight',
-  maddyson: 'customBlueDark',
-  krabick: 'customLime',
+  maddyson: 'customYellow',
+  krabick: 'customBlueDark',
   vovapain: 'customRed',
   timofey: 'customGreenLight',
-  keliq_q: 'customYellow',
+  keliq_q: 'customBiege',
   unclebjorn: 'customPinkLight',
 }
 
