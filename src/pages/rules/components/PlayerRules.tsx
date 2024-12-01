@@ -28,7 +28,7 @@ const playerRules: Rule[] = [
           'Время на таймере можно увеличивать за донат только если остаётся менее двух минут (по минуте за донат)',
           [
             'После завершения аукциона и выбора игры (время вращения колеса — не менее 60 секунд), стример ролит сложность на сайте аукуса или ',
-            'wheelofnames.com/ru/krm-bsb',
+            'wheelofnames.com/ru/63f-qjq',
           ],
           'После ролла сложности начинается прохождение с максимально подходящим уровнем сложности',
           'Участники ивента не могут заказывать друг другу игры',
@@ -300,12 +300,12 @@ function ContentItem({ text }: { text: string }) {
     )
   }
 
-  if (text === 'wheelofnames.com/ru/krm-bsb') {
+  if (text.startsWith('wheelofnames.com')) {
     return (
       <>
         {' '}
         <Link
-          href={'https://wheelofnames.com/ru/krm-bsb'}
+          href={'https://wheelofnames.com/ru/63f-qjq'}
           rel="noopener nereferrer"
           target="_blank"
         >
