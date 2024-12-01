@@ -17,6 +17,7 @@ import {
   SelectChangeEvent,
   styled,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
@@ -362,26 +363,30 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               {moveType === 'completed' && (
                 <>
                   <Box display="flex" justifyContent={'center'}>
-                    <Button
-                      onClick={() => handleGameHoursChange('tiny')}
-                      variant={gameHours === 'tiny' ? 'contained' : 'outlined'}
-                      color={gameHours === 'tiny' ? 'secondary' : 'info'}
-                      style={{
-                        width: '200px',
-                        height: '44px',
-                        fontSize: '16px',
-                        border:
-                          gameHours === 'tiny'
-                            ? '2px solid transparent'
-                            : `2px solid ${Color.greyLight}`,
-                        paddingTop: '5px',
-                        paddingBottom: '5px',
-                        paddingLeft: '15px',
-                        paddingRight: '15px',
-                      }}
-                    >
-                      0-3 часов
-                    </Button>
+                    <Tooltip title="Нельзя подниматься по лестницам">
+                      <Button
+                        onClick={() => handleGameHoursChange('tiny')}
+                        variant={
+                          gameHours === 'tiny' ? 'contained' : 'outlined'
+                        }
+                        color={gameHours === 'tiny' ? 'secondary' : 'info'}
+                        style={{
+                          width: '200px',
+                          height: '44px',
+                          fontSize: '16px',
+                          border:
+                            gameHours === 'tiny'
+                              ? '2px solid transparent'
+                              : `2px solid ${Color.greyLight}`,
+                          paddingTop: '5px',
+                          paddingBottom: '5px',
+                          paddingLeft: '15px',
+                          paddingRight: '15px',
+                        }}
+                      >
+                        0-3 часов
+                      </Button>
+                    </Tooltip>
                     <Button
                       onClick={() => handleGameHoursChange('short')}
                       variant={gameHours === 'short' ? 'contained' : 'outlined'}
