@@ -314,6 +314,8 @@ export default function MapComponent() {
   const showActionButton = currentPlayer && !timelapseEnabled && !stopActions
   const showBigTimelapse = !showActionButton && !timelapseEnabled && !animating
 
+  const showTestButton = currentPlayer && !timelapseEnabled && false
+
   const winner = top3players[0] ?? null
 
   return (
@@ -597,7 +599,7 @@ export default function MapComponent() {
         <Box display="flex" justifyContent="center" width={'100%'}>
           {showBigTimelapse && <TimelapseButton variant="big" />}
         </Box>
-        {currentPlayer && !timelapseEnabled && (
+        {showTestButton && (
           <Box marginTop={'10px'} display="block" textAlign="center">
             <TesterButton player={currentPlayer} freezeDice={setFrozenDice} />
           </Box>
