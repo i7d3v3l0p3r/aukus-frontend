@@ -16,6 +16,7 @@ export default function BottomSection() {
       justifyContent="start"
       margin={'auto'}
       width={'fit-content'}
+      position={'relative'}
     >
       <Box width="1200px">
         <Box display="flex" justifyContent="center" marginTop={30}>
