@@ -357,7 +357,8 @@ export function getPlayerScore(player: PlayerStats) {
   const mediumGamesScore = mediumGames * 1.5
   const longGamesScore = longGames * 2
 
-  const row = Math.floor(player.map_position / 10) || 1
+  const row = Math.ceil(player.map_position / 10)
+
   return (
     (shortGamesScore +
       mediumGamesScore +
