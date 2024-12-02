@@ -149,7 +149,10 @@ export default function PlayerContent() {
               {!filter && (
                 <CurrentMove
                   id={playerMoves.length + 1}
-                  title={player.current_game || '<Не обновлено>'}
+                  title={
+                    player.current_game ||
+                    '<Для автоматического обновления привяжи PointAuc>'
+                  }
                   player={player}
                   updatedAt={player.current_game_updated_at}
                   canEdit={canEdit}
