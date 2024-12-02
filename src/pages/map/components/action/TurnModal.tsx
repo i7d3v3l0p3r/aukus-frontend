@@ -68,7 +68,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     fetchStatus,
     status,
   } = useQuery({
-    queryKey: ['game_names'],
+    queryKey: ['game_names_action_modal'],
     queryFn: () => fetchGameNames(gameName),
     enabled: gameName.length > 3 && moveType !== 'movie',
   })
