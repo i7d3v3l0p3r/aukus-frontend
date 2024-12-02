@@ -163,6 +163,7 @@ export default function PlayerContent() {
                 return (
                   <Box key={index}>
                     <MoveCard
+                      player={player}
                       id={playerMoves.length - index}
                       move={move}
                       displayType="player"
