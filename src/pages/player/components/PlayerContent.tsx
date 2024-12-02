@@ -146,7 +146,7 @@ export default function PlayerContent() {
                 />
               </Box>
 
-              {!filter && (
+              {player.current_game && !filter && (
                 <CurrentMove
                   id={playerMoves.length + 1}
                   title={
