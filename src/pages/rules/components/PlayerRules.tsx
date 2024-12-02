@@ -341,7 +341,7 @@ function ContentItem({ text }: { text: string }) {
       <>
         {' '}
         <Link
-          href={'https://wheelofnames.com/ru/63f-qjq'}
+          href={'https://wheelofnames.com/ru/stm-kge'}
           rel="noopener nereferrer"
           target="_blank"
         >
