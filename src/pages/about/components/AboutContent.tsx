@@ -28,10 +28,10 @@ const creators = [
     name: 'olegsvs',
     text: 'Сайт, домен, хостинг, бекенд',
   },
-  {
-    name: 'gawk',
-    text: 'Домен, хостинг',
-  },
+  // {
+  //   name: 'gawk',
+  //   text: 'Домен, хостинг',
+  // },
   {
     name: 'kozjar',
     text: 'Интеграция с PointAuc.com',
