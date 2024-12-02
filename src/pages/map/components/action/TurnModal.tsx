@@ -58,6 +58,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     if (player.current_game) {
       setGameName(player.current_game)
     }
+    setGameImage(null)
   }, [player.current_game])
 
   const {
