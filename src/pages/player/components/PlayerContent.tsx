@@ -146,10 +146,10 @@ export default function PlayerContent() {
                 />
               </Box>
 
-              {player.current_game && !filter && (
+              {!filter && (
                 <CurrentMove
                   id={playerMoves.length + 1}
-                  title={player.current_game}
+                  title={player.current_game || '<Не обновлено>'}
                   player={player}
                   updatedAt={player.current_game_updated_at}
                   canEdit={canEdit}
