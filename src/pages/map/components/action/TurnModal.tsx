@@ -341,7 +341,9 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           </Box>
           <Box width={'100%'}>
             <span style={{ marginLeft: '15px', fontSize: '20px' }}>
-              {moveType === 'movie' ? 'Фильм' : 'Игра (время по HLTB)'}
+              {moveType === 'movie'
+                ? 'Фильм'
+                : 'Игра (время по HLTB - Average)'}
             </span>
             <Autocomplete
               freeSolo
