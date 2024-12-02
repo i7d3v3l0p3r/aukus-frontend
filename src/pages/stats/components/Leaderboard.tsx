@@ -306,9 +306,14 @@ export default function Leaderboard() {
 }
 
 export function getPlayerScore(player: PlayerStats) {
-  const shortGamesScore = (player.short_games + player.tiny_games) * 1
-  const mediumGamesScore = player.medium_games * 1.5
-  const longGamesScore = player.long_games * 2
+  const shortGames = player.short_games || 0
+  const mediumGames = player.medium_games || 0
+  const longGames = player.long_games || 0
+  const tinyGames = player.tiny_games || 0
+
+  const shortGamesScore = (shortGames + tinyGames) * 1
+  const mediumGamesScore = mediumGames * 1.5
+  const longGamesScore = longGames * 2
 
   const row = Math.floor(player.map_position / 10) || 1
   return (
