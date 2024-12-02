@@ -32,7 +32,7 @@ export default function Leaderboard() {
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
-  const [orderBy, setOrderBy] = useState<HeaderType>('id')
+  const [orderBy, setOrderBy] = useState<HeaderType>('map_position')
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
