@@ -306,6 +306,16 @@ export default function Leaderboard() {
 }
 
 export function getPlayerScore(player: PlayerStats) {
+  const shortGamesScore = (player.short_games + player.tiny_games) * 1
+  const mediumGamesScore = player.medium_games * 1.5
+  const longGamesScore = player.long_games * 2
+
   const row = Math.floor(player.map_position / 10) || 1
-  return (player.games_completed - player.games_dropped) * row
+  return (
+    (shortGamesScore +
+      mediumGamesScore +
+      longGamesScore -
+      player.games_dropped) *
+    row
+  )
 }
