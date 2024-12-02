@@ -99,14 +99,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         gameNamesData.games.find((game) => game.gameName === gameName)
           ?.box_art_url || gameNamesData.games[0].box_art_url
 
-      console.log('matchingUrl', matchingUrl, gameNamesData.games[0])
-
       const imageUrl = matchingUrl
         .replace('{width}', '200')
         .replace('{height}', '300')
 
       const validateImage = async (url: string) => {
-        console.log('checking image validity', url)
         const isValid = await checkImageValid(url)
         setGameImage(isValid ? url : null)
       }
