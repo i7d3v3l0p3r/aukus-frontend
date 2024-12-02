@@ -10,6 +10,7 @@ import {
   FormControl,
   IconButton,
   InputLabel,
+  Link,
   MenuItem,
   Popper,
   PopperProps,
@@ -88,6 +89,8 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   if (gameName.length > 3 && gameNamesData && moveType !== 'movie') {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
   }
+
+  const hltbLink = `https://howlongtobeat.com/?q=${gameName}`
 
   useEffect(() => {
     if (
@@ -267,43 +270,54 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       <DialogContent
         sx={{ paddingLeft: '30px', paddingRight: '30px', paddingBottom: 0 }}
       >
-        <FormControl size="small" fullWidth>
-          {!moveType && (
-            <InputLabel style={{ color: 'grey' }}>Действие</InputLabel>
-          )}
-          <Select
-            onChange={handleMoveTypeChange}
-            value={moveType ? moveType : ''}
-            IconComponent={KeyboardArrowDownSharp}
-            sx={{ fontSize: '16px', fontWeight: 500 }}
-            MenuProps={{
-              sx: {
-                '&& .Mui-selected': { backgroundColor: selectedItemColor },
-                fontSize: '16px',
-              },
-              transitionDuration: 0,
-            }}
-            className="CustomSelect"
-          >
-            <MenuItemStyled value="completed" color={Color.green}>
-              Прошел игру
-            </MenuItemStyled>
-            <MenuItemStyled value="drop" color={Color.red}>
-              Дропнул игру
-            </MenuItemStyled>
-            <MenuItemStyled value="reroll" color={Color.blue}>
-              Реролл
-            </MenuItemStyled>
-            <MenuItemStyled value="sheikh" color={Color.orange}>
-              Шейх-момент
-            </MenuItemStyled>
-            {canWatchMovie && (
-              <MenuItemStyled value="movie" color={Color.purple}>
-                Посмотрел фильм
-              </MenuItemStyled>
+        <Box
+          display="flex"
+          justifyContent="flex-start
+          "
+        >
+          <FormControl size="small" sx={{ width: '394px' }}>
+            {!moveType && (
+              <InputLabel style={{ color: 'grey' }}>Действие</InputLabel>
             )}
-          </Select>
-        </FormControl>
+            <Select
+              onChange={handleMoveTypeChange}
+              value={moveType ? moveType : ''}
+              IconComponent={KeyboardArrowDownSharp}
+              style={{ fontSize: '16px', fontWeight: 500 }}
+              MenuProps={{
+                sx: {
+                  '&& .Mui-selected': { backgroundColor: selectedItemColor },
+                  fontSize: '16px',
+                },
+                transitionDuration: 0,
+              }}
+              className="CustomSelect"
+            >
+              <MenuItemStyled value="completed" color={Color.green}>
+                Прошел игру
+              </MenuItemStyled>
+              <MenuItemStyled value="drop" color={Color.red}>
+                Дропнул игру
+              </MenuItemStyled>
+              <MenuItemStyled value="reroll" color={Color.blue}>
+                Реролл
+              </MenuItemStyled>
+              <MenuItemStyled value="sheikh" color={Color.orange}>
+                Шейх-момент
+              </MenuItemStyled>
+              {canWatchMovie && (
+                <MenuItemStyled value="movie" color={Color.purple}>
+                  Посмотрел фильм
+                </MenuItemStyled>
+              )}
+            </Select>
+          </FormControl>
+          <Link href={hltbLink} rel="noopener nereferrer" target="_blank">
+            <Button sx={{ height: '44px', width: '230px', marginLeft: '15px' }}>
+              Открыть на HLTB
+            </Button>
+          </Link>
+        </Box>
 
         <Box marginTop={'30px'} lineHeight={1} display={'flex'}>
           <Box marginRight={'30px'}>
@@ -327,7 +341,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
           </Box>
           <Box width={'100%'}>
             <span style={{ marginLeft: '15px', fontSize: '20px' }}>
-              {moveType === 'movie' ? 'Фильм' : 'Игра'}
+              {moveType === 'movie' ? 'Фильм' : 'Игра (время по HLTB)'}
             </span>
             <Autocomplete
               freeSolo
@@ -353,7 +367,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               )}
               sx={{
                 marginTop: '10px',
-                width: '420px',
+                width: '100%',
               }}
               className={
                 gameNameOptions.length > 0 ? 'has-options' : 'no-options'
@@ -371,7 +385,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                         }
                         color={gameHours === 'tiny' ? 'secondary' : 'info'}
                         style={{
-                          width: '200px',
+                          width: '230px',
                           height: '44px',
                           fontSize: '16px',
                           border:
@@ -392,7 +406,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       variant={gameHours === 'short' ? 'contained' : 'outlined'}
                       color={gameHours === 'short' ? 'secondary' : 'info'}
                       style={{
-                        width: '200px',
+                        width: '230px',
                         height: '44px',
                         marginLeft: 20,
                         fontSize: '16px',
@@ -422,7 +436,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       color={gameHours === 'medium' ? 'secondary' : 'info'}
                       style={{
                         // marginLeft: 20,
-                        width: '200px',
+                        width: '230px',
                         height: '44px',
                         fontSize: '16px',
                         border:
@@ -443,7 +457,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                       color={gameHours === 'long' ? 'secondary' : 'info'}
                       style={{
                         marginLeft: 20,
-                        width: '200px',
+                        width: '230px',
                         height: '44px',
                         fontSize: '16px',
                         border:
