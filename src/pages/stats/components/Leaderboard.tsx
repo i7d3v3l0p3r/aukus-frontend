@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
@@ -177,7 +178,7 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('map_position')}>
-                  <span style={{ width: '80px', display: 'block' }}>
+                  <span style={{ width: '69px', display: 'block' }}>
                     <span
                       style={
                         orderBy === 'map_position' ? selectedStyle : headerStyle
@@ -188,7 +189,7 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('score')}>
-                  <span style={{ display: 'block', width: '60px' }}>
+                  <span style={{ display: 'block', width: '40px' }}>
                     <span
                       style={orderBy === 'score' ? selectedStyle : headerStyle}
                     >
@@ -197,7 +198,7 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_completed')}>
-                  <span style={{ display: 'block', width: '130px' }}>
+                  <span style={{ display: 'block', width: '80px' }}>
                     <span
                       style={
                         orderBy === 'games_completed'
@@ -205,40 +206,67 @@ export default function Leaderboard() {
                           : headerStyle
                       }
                     >
-                      Пройдено игр
+                      Пройдено
                     </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_dropped')}>
-                  <span
-                    style={
-                      orderBy === 'games_dropped' ? selectedStyle : headerStyle
-                    }
-                  >
-                    Дропы
+                  <span style={{ display: 'block', width: '53px' }}>
+                    <span
+                      style={
+                        orderBy === 'games_dropped'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Дропы
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('rerolls')}>
-                  <span
-                    style={orderBy === 'rerolls' ? selectedStyle : headerStyle}
-                  >
-                    Реролы
+                  <span style={{ display: 'block', width: '61px' }}>
+                    <span
+                      style={
+                        orderBy === 'rerolls' ? selectedStyle : headerStyle
+                      }
+                    >
+                      Реролы
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('movies')}>
-                  <span
-                    style={orderBy === 'movies' ? selectedStyle : headerStyle}
-                  >
-                    Фильмы
+                  <span style={{ display: 'block', width: '66px' }}>
+                    <span
+                      style={orderBy === 'movies' ? selectedStyle : headerStyle}
+                    >
+                      Фильмы
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('sheikh_moments')}>
-                  <span
-                    style={
-                      orderBy === 'sheikh_moments' ? selectedStyle : headerStyle
-                    }
-                  >
-                    Шейх-моменты
+                  <span style={{ display: 'block', width: '54px' }}>
+                    <span
+                      style={
+                        orderBy === 'sheikh_moments'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Шейхи
+                    </span>
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span style={{ display: 'block', maxWidth: '285px' }}>
+                    <span
+                      style={
+                        orderBy === 'sheikh_moments'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Выпало на ауке
+                    </span>
                   </span>
                 </TableCell>
               </TableRow>
@@ -282,7 +310,6 @@ export default function Leaderboard() {
                         color={getPlayerColor(
                           playersById[playerStat.id].url_handle
                         )}
-                        hideUnderline
                       >
                         {playersById[playerStat.id].name}
                       </LinkSpan>
@@ -295,6 +322,21 @@ export default function Leaderboard() {
                   <TableCell>{playerStat.rerolls}</TableCell>
                   <TableCell>{playerStat.movies}</TableCell>
                   <TableCell>{playerStat.sheikh_moments}</TableCell>
+                  <TableCell>
+                    <Tooltip title={playersById[playerStat.id].current_game}>
+                      <span
+                        style={{
+                          display: 'block',
+                          maxWidth: '285px',
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {playersById[playerStat.id]?.current_game}
+                      </span>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
