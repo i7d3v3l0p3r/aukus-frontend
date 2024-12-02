@@ -74,6 +74,16 @@ type Payment = {
 
 const sponsors: Payment[] = [
   {
+    name: 'Tsessarsky',
+    text: 'Спасибо за ивент!',
+    amount: 5000,
+  },
+  {
+    name: 'Arrivelen',
+    text: 'Я Пепега! Спасибо всем ребятам за все что вы делаете <3',
+    amount: 5000,
+  },
+  {
     name: 'Balabama',
     text: 'Кто прочитал это сообщение, обязан закинуть 100 рублей разрабам на бусти',
     amount: 5000,
@@ -102,6 +112,11 @@ const sponsors: Payment[] = [
     name: 'CruxTerminatus',
     text: 'Спонсируем хорошее настроение',
     amount: 500,
+  },
+  {
+    name: 'Tr4visTouchd0wn',
+    amount: 300,
+    text: '',
   },
   { name: 'Quizy', text: '', amount: 300 },
 ]
