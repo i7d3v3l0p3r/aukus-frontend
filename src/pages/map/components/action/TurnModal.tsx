@@ -303,7 +303,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
                 Реролл
               </MenuItemStyled>
               <MenuItemStyled value="sheikh" color={Color.orange}>
-                Шейх-момент
+                Шейх-момент (если прокнул дроп)
               </MenuItemStyled>
               {canWatchMovie && (
                 <MenuItemStyled value="movie" color={Color.purple}>
