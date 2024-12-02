@@ -74,6 +74,11 @@ type Payment = {
 
 const sponsors: Payment[] = [
   {
+    name: 'CruxTerminatus',
+    amount: 500,
+    text: 'а я еще дам деняк на пиво (или не на пиво)',
+  },
+  {
     name: 'Tsessarsky',
     text: 'Спасибо за ивент!',
     amount: 5000,
@@ -123,7 +128,23 @@ const sponsors: Payment[] = [
 
 export default function AboutContent() {
   const { headerSize } = useScreenSize()
-  const sponsorsSortedByAmount = sponsors.sort((a, b) => b.amount - a.amount)
+
+  const groupDuplicateSponsors = (sponsors: Payment[]) => {
+    const result: Payment[] = []
+    sponsors.forEach((sponsor) => {
+      const existing = result.find((item) => item.name === sponsor.name)
+      if (existing) {
+        existing.amount += sponsor.amount
+      } else {
+        result.push({ ...sponsor })
+      }
+    })
+    return result
+  }
+
+  const grouped = groupDuplicateSponsors(sponsors)
+  const sponsorsSortedByAmount = grouped.sort((a, b) => b.amount - a.amount)
+
   return (
     <Box display="flex" justifyContent="center">
       <Box
