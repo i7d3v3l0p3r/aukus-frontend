@@ -104,7 +104,6 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
         .replace('{height}', '300')
 
       const validateImage = async (url: string) => {
-        // console.log('checking image validity')
         const isValid = await checkImageValid(url)
         setGameImage(isValid ? url : null)
       }
