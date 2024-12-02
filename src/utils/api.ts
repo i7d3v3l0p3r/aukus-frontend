@@ -20,9 +20,9 @@ export async function fetchPlayers(move_id?: number): Promise<PlayersResponse> {
     return Promise.resolve({ players: playersMock })
   }
   if (move_id) {
-    return fetch(`/api/players?move_id=${move_id}`).then((res) => res.json())
+    return fetch(`/test_api/players?move_id=${move_id}`).then((res) => res.json())
   }
-  return fetch(`/api/players`).then((res) => res.json())
+  return fetch(`/test_api/players`).then((res) => res.json())
 }
 
 export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
@@ -30,7 +30,7 @@ export async function createPlayerMove(move: PlayerMoveRequest): Promise<void> {
     console.log('creating player move', move)
     return Promise.resolve()
   }
-  return fetch(`/api/player_move`, {
+  return fetch(`/test_api/player_move`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export async function fetchCurrentUser(): Promise<CurrentUser> {
       name: 'Lasqa',
     })
   }
-  return fetch(`/api/current_user`).then((res) => {
+  return fetch(`/test_api/current_user`).then((res) => {
     if (res.status !== 200) {
       throw new Error('auth required')
     }
@@ -70,7 +70,7 @@ export async function fetchStats(): Promise<StatsResponse> {
       players: playerStatsMock(),
     })
   }
-  return fetch(`/api/player_stats`).then((res) => res.json())
+  return fetch(`/test_api/player_stats`).then((res) => res.json())
 }
 
 type Game = {
@@ -94,7 +94,7 @@ export async function fetchGameNames(name: string): Promise<GamesResponse> {
     })
   }
 
-  return fetch(`/api/games?title=${name}`).then((res) => res.json())
+  return fetch(`/test_api/games?title=${name}`).then((res) => res.json())
 }
 
 type UpdateLinkParams = {
@@ -112,7 +112,7 @@ export async function updateVodLink({
     console.log('setting vod link', link)
     return Promise.resolve()
   }
-  return fetch(`/api/player_move_vod_link`, {
+  return fetch(`/test_api/player_move_vod_link`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ export async function fetchPlayerMoves(
     console.log('fetching player moves', id)
     return Promise.resolve({ moves: playerMovesMock() })
   }
-  return fetch(`/api/moves?player_id=${id}`).then((res) => res.json())
+  return fetch(`/test_api/moves?player_id=${id}`).then((res) => res.json())
 }
 
 export async function fetchMovesByDate(
@@ -143,7 +143,7 @@ export async function fetchMovesByDate(
     console.log('fetching moves by date', date)
     return Promise.resolve({ moves: playerMovesMock() })
   }
-  return fetch(`/api/moves?date=${date}`).then((res) => res.json())
+  return fetch(`/test_api/moves?date=${date}`).then((res) => res.json())
 }
 
 type ResetPointaucTokenResponse = {
@@ -155,7 +155,7 @@ export async function resetPointaucToken(): Promise<ResetPointaucTokenResponse> 
     console.log('resetting token')
     return Promise.resolve({ token: 'xxx' })
   }
-  return fetch('/api/reset_pointauc_token', {
+  return fetch('/test_api/reset_pointauc_token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ export async function updateCurrentGame({
     console.log('updating current game', player_id, title)
     return Promise.resolve()
   }
-  return fetch(`/api/player_current_game`, {
+  return fetch(`/test_api/player_current_game`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

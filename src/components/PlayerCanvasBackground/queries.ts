@@ -77,7 +77,7 @@ async function fetchImages(playerId: number): Promise<CanvasImage[]> {
     return Promise.resolve(MOCK_IMAGES);
   }
 
-  const { objects } = await request(`/api/canvas/${playerId}`, {
+  const { objects } = await request(`/test_api/canvas/${playerId}`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
@@ -106,7 +106,7 @@ function saveCanvasImages(playerId: number, imageList: CanvasImage[]) {
     return Promise.resolve(new Response());
   }
 
-  return request(`/api/canvas/${playerId}/update`, {
+  return request(`/test_api/canvas/${playerId}/update`, {
     method: 'PUT',
     body: JSON.stringify(imageList),
     headers: {
@@ -148,7 +148,7 @@ function uploadCanvasImage(playerId: number, file: File, width: number, height: 
   formData.append('width', width.toString());
   formData.append('height', height.toString());
 
-  return request(`/api/canvas/${playerId}/upload`, {
+  return request(`/test_api/canvas/${playerId}/upload`, {
     method: 'POST',
     body: formData
   });
