@@ -119,7 +119,7 @@ export default function MapComponent() {
     const interval = setInterval(() => {
       const difference = getEventTimeLeft()
       setTimeLeft(difference)
-    }, 1000)
+    }, 100)
 
     return () => clearInterval(interval) // Cleanup interval on component unmount
   }, [])
