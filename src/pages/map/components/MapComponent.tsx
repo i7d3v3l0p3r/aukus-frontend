@@ -203,6 +203,7 @@ export default function MapComponent() {
   }
 
   const handleMakingTurn = (value: boolean) => {
+    console.log('set making turn', value)
     setMakingTurn(value)
   }
 
@@ -292,6 +293,7 @@ export default function MapComponent() {
   }
 
   const handleAnimationEnd = (player: Player, params: MoveParams) => {
+    console.log('ANIMATION END')
     if (player.id !== currentPlayer?.id) {
       return
     }

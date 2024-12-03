@@ -25,11 +25,13 @@ export default function ActionButton({
 
   const handleClick = () => {
     setTurnModalOpen(true)
+    console.log('on modal open')
     onMakingTurn(true)
   }
 
   const handleClose = () => {
     setTurnModalOpen(false)
+    console.log('on modal close')
     onMakingTurn(false)
   }
 
