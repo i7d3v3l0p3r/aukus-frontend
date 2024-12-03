@@ -295,12 +295,12 @@ export default function MapComponent() {
     if (player.id !== currentPlayer?.id) {
       return
     }
-    const newPosition = getNextPlayerPosition({
-      player,
-      moves: params.steps,
-      skipLadders: params.skipLadders,
-    })
-    player.map_position = newPosition
+    // const newPosition = getNextPlayerPosition({
+    //   player,
+    //   moves: params.steps,
+    //   skipLadders: params.skipLadders,
+    // })
+    // player.map_position = newPosition
     // setMoveSteps(0)
     setMoveParams(null)
     setMakingTurn(false)
