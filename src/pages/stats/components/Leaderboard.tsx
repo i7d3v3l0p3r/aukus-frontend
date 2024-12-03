@@ -276,6 +276,8 @@ export default function Leaderboard() {
                 const player = playersById[playerStat.id]
                 const score = getPlayerScore(playerStat)
                 const scoreDetails = getScoreDetails(playerStat)
+                const shortGames =
+                  scoreDetails.tinyGames + scoreDetails.shortGames
                 return (
                   <TableRow
                     key={index}
@@ -316,16 +318,26 @@ export default function Leaderboard() {
                       <Tooltip
                         title={
                           <span>
-                            Маленькие игры: {scoreDetails.tinyGames} x{' '}
-                            {scoreDetails.tinyGamesMultiplier} <br />
-                            Короткие игры: {scoreDetails.shortGames} x{' '}
+                            Короткие игры: {shortGames} x{' '}
                             {scoreDetails.shortGamesMultiplier} <br />
                             Средние игры: {scoreDetails.mediumGames} x{' '}
                             {scoreDetails.mediumGamesMultiplier} <br />
                             Длинные игры: {scoreDetails.longGames} x{' '}
                             {scoreDetails.longGamesMultiplier} <br />
                             Дропы: {scoreDetails.drops} <br />
-                            Ряд: {scoreDetails.row}
+                            Ряд: {scoreDetails.row} <br />
+                            Очки:{' ('}
+                            {shortGames * scoreDetails.shortGamesMultiplier}
+                            {' + '}
+                            {scoreDetails.mediumGames *
+                              scoreDetails.mediumGamesMultiplier}
+                            {' + '}
+                            {scoreDetails.longGames *
+                              scoreDetails.longGamesMultiplier}
+                            {' - '}
+                            {scoreDetails.drops}
+                            {') x '}
+                            {scoreDetails.row}
                           </span>
                         }
                       >
