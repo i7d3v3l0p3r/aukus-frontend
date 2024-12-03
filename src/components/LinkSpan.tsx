@@ -29,6 +29,7 @@ const LinkSpan = styled('span', {
     ':hover': {
       color: color || defaultColor,
       cursor: 'pointer',
+      borderBottom: hideUnderline ? '0' : `2px solid ${color || defaultColor}`,
     },
   }
 })
