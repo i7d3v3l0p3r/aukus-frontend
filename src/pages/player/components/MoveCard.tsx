@@ -190,7 +190,7 @@ export default function MoveCard({
                 Ролл кубика:&nbsp;&nbsp;&nbsp;
                 {formatNumber(move.dice_roll)}, позиция на
                 карте:&nbsp;&nbsp;&nbsp;
-                {move.cell_to}
+                {move.cell_from} {'->'} {move.cell_to}
               </Box>
               <Box fontSize={'16px'} fontWeight={400} lineHeight={1.2}>
                 {move.item_rating}/10 — {move.item_review}
