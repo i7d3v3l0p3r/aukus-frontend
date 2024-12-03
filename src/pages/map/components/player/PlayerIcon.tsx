@@ -382,10 +382,11 @@ export default function PlayerIcon({
                 verticalAlign: 'middle',
                 // boxShadow: 'inset 0px 0px 30px 10px rgba(0, 0, 0, 0.4)',
                 // boxShadow: `0px 0px 20px 10px rgba(0, 0, 0, 0.8)`,
-                filter: 'drop-shadow(0px -1px 10px rgba(0,0,0,0.9))',
+                filter: 'drop-shadow(0px -1px 15px rgba(0,0,0,1.0))',
                 // boxShadow: '0px 20px 20px rgba(0, 0, 0, 0.5)',
                 // border: '5px solid white',
                 borderRadius: '5px',
+                zIndex: 20,
               }}
             />
           )}
@@ -403,10 +404,16 @@ export default function PlayerIcon({
                 paddingLeft: '5px',
                 paddingRight: '5px',
                 borderRadius: '3px',
+                // border: '1px solid white',
+
                 display: 'flex',
                 alignItems: 'center',
                 paddingTop: '3px',
                 paddingBottom: '3px',
+                zIndex: 25,
+                position: 'relative',
+                boxShadow:
+                  '0px 6px 12px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.08)',
               }}
             >
               {player.name}
