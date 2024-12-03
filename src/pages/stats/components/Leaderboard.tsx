@@ -273,6 +273,9 @@ export default function Leaderboard() {
             </TableHead>
             <TableBody>
               {playersStatsSorted.map((playerStat, index) => {
+                const player = playersById[playerStat.id]
+                const score = getPlayerScore(playerStat)
+                const scoreDetails = getScoreDetails(playerStat)
                 return (
                   <TableRow
                     key={index}
@@ -296,35 +299,46 @@ export default function Leaderboard() {
                             marginLeft: '30px',
                             borderRadius: '2px',
                             height: '29px',
-                            borderColor: getPlayerColor(
-                              playersById[playerStat.id].url_handle
-                            ),
+                            borderColor: getPlayerColor(player.url_handle),
                           }}
                         />
                       </Box>
                     </TableCell>
                     <TableCell>
-                      <Link
-                        to={`/players/${playersById[playerStat.id].url_handle}`}
-                      >
-                        <LinkSpan
-                          color={getPlayerColor(
-                            playersById[playerStat.id].url_handle
-                          )}
-                        >
-                          {playersById[playerStat.id].name}
+                      <Link to={`/players/${player.url_handle}`}>
+                        <LinkSpan color={getPlayerColor(player.url_handle)}>
+                          {player.name}
                         </LinkSpan>
                       </Link>
                     </TableCell>
                     <TableCell>{playerStat.map_position}</TableCell>
-                    <TableCell>{getPlayerScore(playerStat)}</TableCell>
+                    <TableCell>
+                      <Tooltip
+                        title={
+                          <span>
+                            Маленькие игры: {scoreDetails.tinyGames} x{' '}
+                            {scoreDetails.tinyGamesMultiplier} <br />
+                            Короткие игры: {scoreDetails.shortGames} x{' '}
+                            {scoreDetails.shortGamesMultiplier} <br />
+                            Средние игры: {scoreDetails.mediumGames} x{' '}
+                            {scoreDetails.mediumGamesMultiplier} <br />
+                            Длинные игры: {scoreDetails.longGames} x{' '}
+                            {scoreDetails.longGamesMultiplier} <br />
+                            Дропы: {scoreDetails.drops} <br />
+                            Ряд: {scoreDetails.row}
+                          </span>
+                        }
+                      >
+                        <span>{score}</span>
+                      </Tooltip>
+                    </TableCell>
                     <TableCell>{playerStat.games_completed}</TableCell>
                     <TableCell>{playerStat.games_dropped}</TableCell>
                     <TableCell>{playerStat.rerolls}</TableCell>
                     <TableCell>{playerStat.movies}</TableCell>
                     <TableCell>{playerStat.sheikh_moments}</TableCell>
                     <TableCell>
-                      <Tooltip title={playersById[playerStat.id].current_game}>
+                      <Tooltip title={player.current_game}>
                         <span
                           style={{
                             display: 'block',
@@ -334,8 +348,7 @@ export default function Leaderboard() {
                             textOverflow: 'ellipsis',
                           }}
                         >
-                          {playersById[playerStat.id]?.current_game ||
-                            '<Ожидание аука>'}
+                          {player?.current_game || '<Ожидание аука>'}
                         </span>
                       </Tooltip>
                     </TableCell>
@@ -351,22 +364,45 @@ export default function Leaderboard() {
 }
 
 export function getPlayerScore(player: PlayerStats) {
-  const shortGames = player.short_games || 0
-  const mediumGames = player.medium_games || 0
-  const longGames = player.long_games || 0
-  const tinyGames = player.tiny_games || 0
+  const details = getScoreDetails(player)
+
+  const tinyGamesScore = details.tinyGames * details.tinyGamesMultiplier
+  const shortGamesScore = details.shortGames * details.shortGamesMultiplier
+  const mediumGamesScore = details.mediumGames * details.mediumGamesMultiplier
+  const longGamesScore = details.longGames * details.longGamesMultiplier
+
+  return (
+    (shortGamesScore +
+      tinyGamesScore +
+      mediumGamesScore +
+      longGamesScore -
+      details.drops) *
+    details.row
+  )
+}
+
+function getScoreDetails(stats: PlayerStats) {
+  const shortGames = stats.short_games || 0
+  const mediumGames = stats.medium_games || 0
+  const longGames = stats.long_games || 0
+  const tinyGames = stats.tiny_games || 0
 
   const shortGamesScore = (shortGames + tinyGames) * 1
   const mediumGamesScore = mediumGames * 1.5
   const longGamesScore = longGames * 2
 
-  const row = Math.ceil(player.map_position / 10)
+  const row = Math.ceil(stats.map_position / 10)
 
-  return (
-    (shortGamesScore +
-      mediumGamesScore +
-      longGamesScore -
-      player.games_dropped) *
-    row
-  )
+  return {
+    row,
+    shortGames,
+    shortGamesMultiplier: 1,
+    tinyGames,
+    tinyGamesMultiplier: 1,
+    mediumGames,
+    mediumGamesMultiplier: 1.5,
+    longGames,
+    longGamesMultiplier: 2,
+    drops: stats.games_dropped,
+  }
 }
