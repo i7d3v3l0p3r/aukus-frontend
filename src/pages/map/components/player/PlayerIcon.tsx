@@ -97,6 +97,8 @@ export default function PlayerIcon({
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const iconRef = useRef<HTMLImageElement>(null)
 
+  const [isAnimating, setIsAnimating] = useState(false)
+
   const updateContiner = (element: HTMLDivElement) => {
     setContainer(element)
   }
@@ -130,6 +132,7 @@ export default function PlayerIcon({
   }, [closePopup])
 
   const startChainedAnimation = (moveParams: MoveParams) => {
+    setIsAnimating(true)
     const moves = moveParams.steps
     const backward = moves < 0
     const moveOffset = backward ? -cellSize - 1 : cellSize + 1
@@ -212,13 +215,16 @@ export default function PlayerIcon({
             config: { duration: animationsList[i].duration || 1000 },
           })
         }
+      },
+      onRest: () => {
         onAnimationEnd(player, moveParams)
+        setIsAnimating(false)
       },
     })
   }
 
   useEffect(() => {
-    if (isMoving && !winAnimation && moveParams) {
+    if (isMoving && !winAnimation && moveParams && !isAnimating) {
       if (anchorCell) {
         window.scrollTo({
           top: anchorCell.offsetTop - window.innerHeight / 2 - 100,
@@ -228,7 +234,7 @@ export default function PlayerIcon({
       startChainedAnimation(moveParams)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMoving, moveParams, winAnimation])
+  }, [isMoving, moveParams, winAnimation, isAnimating])
 
   useEffect(() => {
     if (anchorCell) {
