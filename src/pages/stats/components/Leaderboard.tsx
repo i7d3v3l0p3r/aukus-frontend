@@ -274,6 +274,10 @@ export default function Leaderboard() {
             <TableBody>
               {playersStatsSorted.map((playerStat, index) => {
                 const player = playersById[playerStat.id]
+                const playerStream =
+                  player?.twitch_stream_link ||
+                  player?.vk_stream_link ||
+                  player?.kick_stream_link
                 const score = getPlayerScore(playerStat)
                 const scoreDetails = getScoreDetails(playerStat)
                 const shortGames =
@@ -351,17 +355,27 @@ export default function Leaderboard() {
                     <TableCell>{playerStat.sheikh_moments}</TableCell>
                     <TableCell>
                       <Tooltip title={player.current_game}>
-                        <span
+                        <Link
+                          to={playerStream}
+                          rel="noopener noreferrer"
+                          target="_blank"
                           style={{
-                            display: 'block',
-                            maxWidth: '285px',
-                            overflow: 'hidden',
-                            whiteSpace: 'nowrap',
-                            textOverflow: 'ellipsis',
+                            display: 'flex',
                           }}
                         >
-                          {player?.current_game || '<Ожидание аука>'}
-                        </span>
+                          <LinkSpan
+                            color={'white'}
+                            hideUnderline={!player?.is_online}
+                            style={{
+                              maxWidth: '285px',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            {player?.current_game || '<Ожидание аука>'}
+                          </LinkSpan>
+                        </Link>
                       </Tooltip>
                     </TableCell>
                   </TableRow>
