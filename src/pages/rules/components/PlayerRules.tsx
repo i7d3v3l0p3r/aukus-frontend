@@ -9,7 +9,14 @@ import {
 import LinkSpan from 'components/LinkSpan'
 import { Color } from 'utils/types'
 
-type TextContent = string | string[]
+type SpecialLink =
+  | '$pointauc'
+  | '$howlongtobeat'
+  | '$sheikh-wheel'
+  | '$difficulty-wheel'
+
+type InnerContent = string | SpecialLink
+type TextContent = string | InnerContent[]
 type Content = { title: string; content: TextContent[] }
 type Rule = { title: string; content: Content[] }
 
@@ -22,7 +29,7 @@ const playerRules: Rule[] = [
         content: [
           [
             'Стример запускает аукцион на сайте',
-            'pointauc.com',
+            '$pointauc',
             'с таймером 20 минут и минимальной ставкой',
           ],
           'Фиксированный минимальный донат (100-500 ₽) выбирается стримером в начале аукуса и остается неизменным',
@@ -31,7 +38,7 @@ const playerRules: Rule[] = [
           'Как только время таймера истекло все последующие донаты идут на следующий аук',
           [
             'После завершения аукциона и выбора игры (время вращения колеса — не менее 60 секунд), стример ролит сложность на сайте аукуса или ',
-            'wheelofnames.com/ru/63f-qjq',
+            '$difficulty-wheel',
             '. Сложности определяются относительно нормальной',
           ],
           'После ролла сложности начинается прохождение с максимально подходящим уровнем сложности',
@@ -45,7 +52,7 @@ const playerRules: Rule[] = [
           'После прохождения игры стример бросает шестигранный кубик и перемещается по игровому полю',
           [
             'Время игры определяется по ',
-            'howlongtobeat.com',
+            '$howlongtobeat',
             ' в основном режиме, колонке Average',
           ],
           'Если игра меньше 3 часов то бросается один шестигранный кубик без возможности подняться по лестнице',
@@ -200,6 +207,14 @@ const playerRules: Rule[] = [
           'На клетке "Финальный рывок" (101) проводить просмотровый аукцион запрещено',
         ],
       },
+      {
+        title: 'Шейх-момент',
+        content: [
+          'За донат в 25 000 ₽ донатер может с 50% вероятностью вынудить стримера дропнуть текущую игру (если успеть до финальных титров). Стример должен выпить шот или сделать физическое упражнение (отжимания или приседания), независимо от результата дропа. Эти деньги идут только на дроп, а не на заказ новой игры. "Шейх-момент" можно активировать только во время игры',
+          'Если выпал вариант не дропать, каждый последующий шейх-момент на текущей игре стоит на 25 000 ₽ дороже, то есть 50 000 ₽, потом 75 000 ₽ и тд.',
+          ['Колесо для шейх моментов: ', '$sheikh-wheel'],
+        ],
+      },
     ],
   },
   {
@@ -326,7 +341,7 @@ export default function PlayerRules() {
 }
 
 function ContentItem({ text }: { text: string }) {
-  if (text === 'pointauc.com') {
+  if (text === '$pointauc') {
     return (
       <>
         {' '}
@@ -335,13 +350,13 @@ function ContentItem({ text }: { text: string }) {
           rel="noopener nereferrer"
           target="_blank"
         >
-          <LinkSpan color={Color.blue}>{text}</LinkSpan>
+          <LinkSpan color={Color.blue}>pointauc.com</LinkSpan>
         </Link>{' '}
       </>
     )
   }
 
-  if (text.startsWith('wheelofnames.com')) {
+  if (text === '$difficulty-wheel') {
     return (
       <>
         {' '}
@@ -350,13 +365,13 @@ function ContentItem({ text }: { text: string }) {
           rel="noopener nereferrer"
           target="_blank"
         >
-          <LinkSpan color={Color.blue}>{text}</LinkSpan>
+          <LinkSpan color={Color.blue}>wheelofnames.com/ru/stm-kge</LinkSpan>
         </Link>
       </>
     )
   }
 
-  if (text.startsWith('howlongtobeat.com')) {
+  if (text === '$howlongtobeat') {
     return (
       <>
         <Link
@@ -364,7 +379,21 @@ function ContentItem({ text }: { text: string }) {
           rel="noopener nereferrer"
           target="_blank"
         >
-          <LinkSpan color={Color.blue}>{text}</LinkSpan>
+          <LinkSpan color={Color.blue}>howlongtobeat.com</LinkSpan>
+        </Link>
+      </>
+    )
+  }
+
+  if (text === '$sheikh-wheel') {
+    return (
+      <>
+        <Link
+          href={'https://wheelofnames.com/ru/2r3-q2j'}
+          rel="noopener nereferrer"
+          target="_blank"
+        >
+          <LinkSpan color={Color.blue}>wheelofnames.com/ru/2r3-q2j</LinkSpan>
         </Link>
       </>
     )
