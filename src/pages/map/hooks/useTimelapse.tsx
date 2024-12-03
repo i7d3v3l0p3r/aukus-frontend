@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import useLocalStorage from 'src/context/useLocalStorage'
-import { fetchMovesByDate, fetchPlayers, PlayerMovesResponse } from 'utils/api'
+import { fetchPlayerMoves, fetchPlayers, PlayerMovesResponse } from 'utils/api'
 import { Player, PlayerMove } from 'utils/types'
 
 type StateOption = 'closed' | 'date_selection' | 'move_selection'
@@ -62,7 +62,7 @@ export default function TimelapseProvider({
 
   const { data: movesByDay } = useQuery({
     queryKey: ['timelapse', selectedDate],
-    queryFn: () => fetchMovesByDate(selectedDate),
+    queryFn: () => fetchPlayerMoves({ date: selectedDate }),
     staleTime: 1000 * 60 * 5,
     enabled: openState !== 'closed',
     placeholderData: () => currentResponse,

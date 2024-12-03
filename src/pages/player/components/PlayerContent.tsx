@@ -36,7 +36,7 @@ export default function PlayerContent() {
 
   const { data: playerMovesData } = useQuery({
     queryKey: ['playerMoves', player?.id || 0],
-    queryFn: () => player && fetchPlayerMoves(player.id),
+    queryFn: () => player && fetchPlayerMoves({ id: player.id }),
     staleTime: 1000 * 60 * 1,
     enabled: !!player,
   })

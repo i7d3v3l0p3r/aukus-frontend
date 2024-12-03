@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { find } from 'lodash'
 import MoveCard from 'pages/player/components/MoveCard'
 import useScreenSize from 'src/context/useScreenSize'
-import { fetchMovesByDate, fetchPlayers } from 'utils/api'
+import { fetchPlayerMoves, fetchPlayers } from 'utils/api'
 import { Player } from 'utils/types'
 
 export default function TodaysMoves() {
@@ -13,7 +13,7 @@ export default function TodaysMoves() {
 
   const { data: todaysMoves, refetch: refetchMoves } = useQuery({
     queryKey: ['todaysMoves'],
-    queryFn: () => fetchMovesByDate(formattedDate),
+    queryFn: () => fetchPlayerMoves({ limit: 10 }),
     refetchInterval: 1000 * 60,
   })
 
@@ -31,7 +31,7 @@ export default function TodaysMoves() {
     <Box>
       <Box marginTop={'20px'} textAlign={'center'} marginBottom={'50px'}>
         <Box fontWeight={600} fontSize={headerSize}>
-          Ходы за день
+          Последние ходы
         </Box>
       </Box>
       {todaysMoves.moves.map((move, index) => {

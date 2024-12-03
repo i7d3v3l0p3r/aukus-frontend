@@ -126,24 +126,28 @@ export type PlayerMovesResponse = {
   last_move_id?: number
 }
 
-export async function fetchPlayerMoves(
-  id: number
-): Promise<PlayerMovesResponse> {
+type PlayerMovesParams = {
+  id?: number
+  date?: string
+  limit?: number
+}
+
+export async function fetchPlayerMoves({
+  id,
+  date,
+  limit,
+}: PlayerMovesParams): Promise<PlayerMovesResponse> {
   if (MOCK_API) {
     console.log('fetching player moves', id)
     return Promise.resolve({ moves: playerMovesMock() })
   }
-  return fetch(`/api/moves?player_id=${id}`).then((res) => res.json())
-}
-
-export async function fetchMovesByDate(
-  date: string
-): Promise<PlayerMovesResponse> {
-  if (MOCK_API) {
-    console.log('fetching moves by date', date)
-    return Promise.resolve({ moves: playerMovesMock() })
+  if (id) {
+    return fetch(`/api/moves?player_id=${id}`).then((res) => res.json())
   }
-  return fetch(`/api/moves?date=${date}`).then((res) => res.json())
+  if (date) {
+    return fetch(`/api/moves?date=${date}`).then((res) => res.json())
+  }
+  return fetch(`/api/moves?limit=${limit || 10}`).then((res) => res.json())
 }
 
 type ResetPointaucTokenResponse = {
