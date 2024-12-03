@@ -272,73 +272,76 @@ export default function Leaderboard() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {playersStatsSorted.map((playerStat, index) => (
-                <TableRow
-                  key={index}
-                  style={{
-                    backgroundColor: Color.greyDark,
-                    height: '39px',
-                    borderRadius: '10px',
-                    verticalAlign: 'middle',
-                  }}
-                >
-                  <TableCell style={{ height: '39px' }}>
-                    <Box display="flex" alignItems={'center'}>
-                      <Box width={'10px'}>
-                        {playerIdToPosition[playerStat.id]}
+              {playersStatsSorted.map((playerStat, index) => {
+                return (
+                  <TableRow
+                    key={index}
+                    style={{
+                      backgroundColor: Color.greyDark,
+                      height: '39px',
+                      borderRadius: '10px',
+                      verticalAlign: 'middle',
+                    }}
+                  >
+                    <TableCell style={{ height: '39px' }}>
+                      <Box display="flex" alignItems={'center'}>
+                        <Box width={'10px'}>
+                          {playerIdToPosition[playerStat.id]}
+                        </Box>
+                        <Divider
+                          flexItem
+                          orientation="vertical"
+                          style={{
+                            borderRightWidth: '3px',
+                            marginLeft: '30px',
+                            borderRadius: '2px',
+                            height: '29px',
+                            borderColor: getPlayerColor(
+                              playersById[playerStat.id].url_handle
+                            ),
+                          }}
+                        />
                       </Box>
-                      <Divider
-                        flexItem
-                        orientation="vertical"
-                        style={{
-                          borderRightWidth: '3px',
-                          marginLeft: '30px',
-                          borderRadius: '2px',
-                          height: '29px',
-                          borderColor: getPlayerColor(
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        to={`/players/${playersById[playerStat.id].url_handle}`}
+                      >
+                        <LinkSpan
+                          color={getPlayerColor(
                             playersById[playerStat.id].url_handle
-                          ),
-                        }}
-                      />
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Link
-                      to={`/players/${playersById[playerStat.id].url_handle}`}
-                    >
-                      <LinkSpan
-                        color={getPlayerColor(
-                          playersById[playerStat.id].url_handle
-                        )}
-                      >
-                        {playersById[playerStat.id].name}
-                      </LinkSpan>
-                    </Link>
-                  </TableCell>
-                  <TableCell>{playerStat.map_position}</TableCell>
-                  <TableCell>{getPlayerScore(playerStat)}</TableCell>
-                  <TableCell>{playerStat.games_completed}</TableCell>
-                  <TableCell>{playerStat.games_dropped}</TableCell>
-                  <TableCell>{playerStat.rerolls}</TableCell>
-                  <TableCell>{playerStat.movies}</TableCell>
-                  <TableCell>{playerStat.sheikh_moments}</TableCell>
-                  <TableCell>
-                    <Tooltip title={playersById[playerStat.id].current_game}>
-                      <span
-                        style={{
-                          display: 'block',
-                          maxWidth: '285px',
-                          overflow: 'hidden',
-                          whiteSpace: 'nowrap',
-                          textOverflow: 'ellipsis',
-                        }}
-                      >
-                        {playersById[playerStat.id]?.current_game}
-                      </span>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))}
+                          )}
+                        >
+                          {playersById[playerStat.id].name}
+                        </LinkSpan>
+                      </Link>
+                    </TableCell>
+                    <TableCell>{playerStat.map_position}</TableCell>
+                    <TableCell>{getPlayerScore(playerStat)}</TableCell>
+                    <TableCell>{playerStat.games_completed}</TableCell>
+                    <TableCell>{playerStat.games_dropped}</TableCell>
+                    <TableCell>{playerStat.rerolls}</TableCell>
+                    <TableCell>{playerStat.movies}</TableCell>
+                    <TableCell>{playerStat.sheikh_moments}</TableCell>
+                    <TableCell>
+                      <Tooltip title={playersById[playerStat.id].current_game}>
+                        <span
+                          style={{
+                            display: 'block',
+                            maxWidth: '285px',
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {playersById[playerStat.id]?.current_game ||
+                            '<Ожидание аука>'}
+                        </span>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
