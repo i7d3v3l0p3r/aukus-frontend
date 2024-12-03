@@ -43,9 +43,7 @@ function OnlineButton({ player }: Props) {
       color={getPlayerColorName(player)}
     >
       <Box display="flex" alignItems={'center'} fontSize={'14px'}>
-        <LinkSpan color={'white'}>
-          Сейчас на стриме: {player.stream_last_category}
-        </LinkSpan>
+        Смотреть: {player.stream_last_category}
         <img
           src={OpenIcon}
           alt=""
@@ -73,7 +71,7 @@ function OfflineButton({ player }: Props) {
       color={'customGreyDark'}
       variant="contained"
     >
-      <LinkSpan color={'white'}>Стример оффлайн</LinkSpan>
+      Стример оффлайн
     </Button>
   )
 }
