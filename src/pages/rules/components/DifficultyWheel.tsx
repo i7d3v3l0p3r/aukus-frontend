@@ -15,7 +15,7 @@ export default function DifficultyWheel() {
       />
       <Box>
         <iframe
-          src="https://wheelofnames.com/ru/79v-hfc"
+          src="https://wheelofnames.com/ru/stm-kge"
           title="Колесо сложности"
           width={'700px'}
           height={'700px'}

@@ -15,6 +15,7 @@ import OldMoveCard from './OldMoveCard'
 import StreamLink from './StreamLink'
 import useScreenSize from 'src/context/useScreenSize'
 import CurrentMove from './CurrentMove'
+import { hasEditPermission } from './utils'
 
 export default function PlayerContent() {
   const { id: playerHandle } = useParams()
@@ -23,7 +24,7 @@ export default function PlayerContent() {
 
   const { isMobile } = useScreenSize()
 
-  const currentPlayer = useUser()
+  const currentUser = useUser()
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -35,7 +36,7 @@ export default function PlayerContent() {
 
   const { data: playerMovesData } = useQuery({
     queryKey: ['playerMoves', player?.id || 0],
-    queryFn: () => player && fetchPlayerMoves(player.id),
+    queryFn: () => player && fetchPlayerMoves({ id: player.id }),
     staleTime: 1000 * 60 * 1,
     enabled: !!player,
   })
@@ -53,9 +54,8 @@ export default function PlayerContent() {
     return <div>Игрок не найден</div>
   }
 
-  const isOwner = player.id === currentPlayer?.user_id
-  // const canEdit = isOwner || (role === 'moder' && moderFor === player.id)
-  const canEdit = !!currentPlayer
+  const isOwner = player.id === currentUser?.user_id
+  const canEdit = hasEditPermission(currentUser, player.id)
 
   playerMoves.sort((a, b) => {
     return b.id - a.id
@@ -149,7 +149,10 @@ export default function PlayerContent() {
               {player.current_game && !filter && (
                 <CurrentMove
                   id={playerMoves.length + 1}
-                  title={player.current_game}
+                  title={
+                    player.current_game ||
+                    '<Для автоматического обновления привяжи PointAuc>'
+                  }
                   player={player}
                   updatedAt={player.current_game_updated_at}
                   canEdit={canEdit}
@@ -160,6 +163,7 @@ export default function PlayerContent() {
                 return (
                   <Box key={index}>
                     <MoveCard
+                      player={player}
                       id={playerMoves.length - index}
                       move={move}
                       displayType="player"

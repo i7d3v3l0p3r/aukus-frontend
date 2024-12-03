@@ -3,13 +3,14 @@ export type Player = {
   name: string
   twitch_stream_link: string
   vk_stream_link: string
+  kick_stream_link: string
   donation_link: string
   telegram_link: string
   is_online: boolean
   current_game: string | null
   current_game_updated_at: string
   current_game_image: string | null
-  url_handle: string
+  url_handle: PlayerUrl
   map_position: number
   stream_last_category: string
   first_name: string
@@ -27,6 +28,10 @@ export type PlayerStats = {
   movies: number
   ladders: number
   snakes: number
+  tiny_games?: number
+  short_games?: number
+  medium_games?: number
+  long_games?: number
 }
 
 export type MoveType = 'completed' | 'drop' | 'sheikh' | 'reroll' | 'movie'
@@ -111,6 +116,8 @@ export const Color = {
   pinkLight: '#ECA3D4',
   white: '#FFFFFF',
   blueTg: '#27a7e7',
+  biege: '#AF99DF',
+  yellow: '#F2C200',
 }
 
 type CustomColorNames = `custom${Capitalize<keyof typeof Color>}`
@@ -119,37 +126,59 @@ export type CustomColorOverrides = {
   [K in keyof typeof Color as CustomColorNames]: true
 }
 
-export const ColorByUrlHandle: { [key: string]: string } = {
+export type PlayerUrl =
+  | 'lasqa'
+  | 'segall'
+  | 'praden'
+  | 'predan'
+  | 'browjey'
+  | 'uselessmouth'
+  | 'roadhouse'
+  | 'melharucos'
+  | 'maddyson'
+  | 'krabick'
+  | 'vovapain'
+  | 'timofey'
+  | 'keliq_q'
+  | 'unclebjorn'
+
+export const ColorByUrlHandle: { [key in PlayerUrl]: string } = {
   lasqa: Color.blue,
-  segall: Color.orange,
+  segall: Color.green,
   praden: Color.brown,
   predan: Color.brown,
-  artur: Color.red,
+  browjey: Color.orange,
   uselessmouth: Color.pink,
   roadhouse: Color.purple,
-  unclobjorn: Color.blueDark,
   melharucos: Color.blueLight,
-  browjey: Color.green,
-  f1ashko: Color.pinkLight,
+  maddyson: Color.yellow,
+  krabick: Color.blueDark,
+  vovapain: Color.red,
+  timofey: Color.greenLight,
+  keliq_q: Color.biege,
+  unclebjorn: Color.pinkLight,
 }
 
 export const ColorNameByUrlHandle: {
-  [key: string]: CustomColorNames
+  [key in PlayerUrl]: CustomColorNames
 } = {
   lasqa: 'customBlue',
+  segall: 'customGreen',
   praden: 'customBrown',
   predan: 'customBrown',
-  roadhouse: 'customPurple',
-  segall: 'customOrange',
-  artur: 'customRed',
+  browjey: 'customOrange',
   uselessmouth: 'customPink',
-  unclobjorn: 'customBlueDark',
+  roadhouse: 'customPurple',
   melharucos: 'customBlueLight',
-  browjey: 'customGreen',
-  f1ashko: 'customPinkLight',
+  maddyson: 'customYellow',
+  krabick: 'customBlueDark',
+  vovapain: 'customRed',
+  timofey: 'customGreenLight',
+  keliq_q: 'customBiege',
+  unclebjorn: 'customPinkLight',
 }
 
-export function getPlayerColor(urlHandle: string): string {
+export function getPlayerColor(urlHandle: PlayerUrl): string {
   return ColorByUrlHandle[urlHandle] || Color.blueLight
 }
 
@@ -159,8 +188,8 @@ export function getPlayerColorName(player: Player): CustomColorNames {
 
 export type CurrentUser = {
   user_id: number
-  role: 'player' | 'moder'
+  role: 'player' | 'moder' | 'admin'
   moder_for?: number
-  url_handle: string
+  url_handle: PlayerUrl | null
   name: string
 }

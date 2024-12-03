@@ -56,6 +56,7 @@ export const ladders: Array<Ladder> = [
   { cellFrom: 1, cellTo: 20 },
   { cellFrom: 4, cellTo: 25 },
   { cellFrom: 13, cellTo: 46 },
+  { cellFrom: 33, cellTo: 49 },
   { cellFrom: 42, cellTo: 63 },
   { cellFrom: 44, cellTo: 68 },
   { cellFrom: 50, cellTo: 69 },

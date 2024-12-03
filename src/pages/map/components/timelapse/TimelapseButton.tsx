@@ -6,7 +6,7 @@ import { useTimelapse } from 'pages/map/hooks/useTimelapse'
 import { useEffect, useRef, useState } from 'react'
 import { Color, Player, PlayerMove } from 'utils/types'
 
-const StartDate = new Date('2024-11-20')
+const StartDate = new Date('2024-12-01')
 StartDate.setHours(0, 0, 0, 0)
 
 const Today = new Date()

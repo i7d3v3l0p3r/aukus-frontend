@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 
-const targetDate = new Date('2024-12-29T00:00:00+03:00')
+const targetDate = new Date('2024-12-25T20:00:00+03:00')
 
 export function getEventTimeLeft() {
   return Math.max(targetDate.getTime() - new Date().getTime(), 0)
@@ -40,9 +40,9 @@ export default function Countdown() {
 
   return (
     <span>
-      До конца ивента: <span style={{ fontFamily: 'monospace' }}>{days}</span>{' '}
+      До конца ивента: <span style={{ fontFamily: 'PT mono' }}>{days}</span>{' '}
       {daysString}{' '}
-      <span style={{ fontFamily: 'monospace' }}>
+      <span style={{ fontFamily: 'PT mono' }}>
         {hoursPadded}:{minutesPadded}:{secondsPadded}
       </span>
     </span>

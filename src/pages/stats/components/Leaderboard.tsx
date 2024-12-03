@@ -7,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
@@ -32,7 +33,7 @@ export default function Leaderboard() {
   const { headerSize } = useScreenSize()
   const [fetchStart] = useState(Date.now())
   const [order, setOrder] = useState<'asc' | 'desc'>('desc')
-  const [orderBy, setOrderBy] = useState<HeaderType>('id')
+  const [orderBy, setOrderBy] = useState<HeaderType>('map_position')
 
   const { data: playersData } = useQuery({
     queryKey: ['players'],
@@ -177,7 +178,7 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('map_position')}>
-                  <span style={{ width: '80px', display: 'block' }}>
+                  <span style={{ width: '69px', display: 'block' }}>
                     <span
                       style={
                         orderBy === 'map_position' ? selectedStyle : headerStyle
@@ -188,7 +189,7 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('score')}>
-                  <span style={{ display: 'block', width: '60px' }}>
+                  <span style={{ display: 'block', width: '40px' }}>
                     <span
                       style={orderBy === 'score' ? selectedStyle : headerStyle}
                     >
@@ -197,7 +198,7 @@ export default function Leaderboard() {
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_completed')}>
-                  <span style={{ display: 'block', width: '130px' }}>
+                  <span style={{ display: 'block', width: '80px' }}>
                     <span
                       style={
                         orderBy === 'games_completed'
@@ -205,98 +206,142 @@ export default function Leaderboard() {
                           : headerStyle
                       }
                     >
-                      Пройдено игр
+                      Пройдено
                     </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('games_dropped')}>
-                  <span
-                    style={
-                      orderBy === 'games_dropped' ? selectedStyle : headerStyle
-                    }
-                  >
-                    Дропы
+                  <span style={{ display: 'block', width: '53px' }}>
+                    <span
+                      style={
+                        orderBy === 'games_dropped'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Дропы
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('rerolls')}>
-                  <span
-                    style={orderBy === 'rerolls' ? selectedStyle : headerStyle}
-                  >
-                    Реролы
+                  <span style={{ display: 'block', width: '61px' }}>
+                    <span
+                      style={
+                        orderBy === 'rerolls' ? selectedStyle : headerStyle
+                      }
+                    >
+                      Реролы
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('movies')}>
-                  <span
-                    style={orderBy === 'movies' ? selectedStyle : headerStyle}
-                  >
-                    Фильмы
+                  <span style={{ display: 'block', width: '66px' }}>
+                    <span
+                      style={orderBy === 'movies' ? selectedStyle : headerStyle}
+                    >
+                      Фильмы
+                    </span>
                   </span>
                 </TableCell>
                 <TableCell onClick={() => onHeaderClick('sheikh_moments')}>
-                  <span
-                    style={
-                      orderBy === 'sheikh_moments' ? selectedStyle : headerStyle
-                    }
-                  >
-                    Шейх-моменты
+                  <span style={{ display: 'block', width: '54px' }}>
+                    <span
+                      style={
+                        orderBy === 'sheikh_moments'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Шейхи
+                    </span>
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span style={{ display: 'block', maxWidth: '285px' }}>
+                    <span
+                      style={
+                        orderBy === 'sheikh_moments'
+                          ? selectedStyle
+                          : headerStyle
+                      }
+                    >
+                      Выпало на ауке
+                    </span>
                   </span>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {playersStatsSorted.map((playerStat, index) => (
-                <TableRow
-                  key={index}
-                  style={{
-                    backgroundColor: Color.greyDark,
-                    height: '39px',
-                    borderRadius: '10px',
-                    verticalAlign: 'middle',
-                  }}
-                >
-                  <TableCell style={{ height: '39px' }}>
-                    <Box display="flex" alignItems={'center'}>
-                      <Box width={'10px'}>
-                        {playerIdToPosition[playerStat.id]}
+              {playersStatsSorted.map((playerStat, index) => {
+                return (
+                  <TableRow
+                    key={index}
+                    style={{
+                      backgroundColor: Color.greyDark,
+                      height: '39px',
+                      borderRadius: '10px',
+                      verticalAlign: 'middle',
+                    }}
+                  >
+                    <TableCell style={{ height: '39px' }}>
+                      <Box display="flex" alignItems={'center'}>
+                        <Box width={'10px'}>
+                          {playerIdToPosition[playerStat.id]}
+                        </Box>
+                        <Divider
+                          flexItem
+                          orientation="vertical"
+                          style={{
+                            borderRightWidth: '3px',
+                            marginLeft: '30px',
+                            borderRadius: '2px',
+                            height: '29px',
+                            borderColor: getPlayerColor(
+                              playersById[playerStat.id].url_handle
+                            ),
+                          }}
+                        />
                       </Box>
-                      <Divider
-                        flexItem
-                        orientation="vertical"
-                        style={{
-                          borderRightWidth: '3px',
-                          marginLeft: '30px',
-                          borderRadius: '2px',
-                          height: '29px',
-                          borderColor: getPlayerColor(
-                            playersById[playerStat.id].url_handle
-                          ),
-                        }}
-                      />
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Link
-                      to={`/players/${playersById[playerStat.id].url_handle}`}
-                    >
-                      <LinkSpan
-                        color={getPlayerColor(
-                          playersById[playerStat.id].url_handle
-                        )}
-                        hideUnderline
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        to={`/players/${playersById[playerStat.id].url_handle}`}
                       >
-                        {playersById[playerStat.id].name}
-                      </LinkSpan>
-                    </Link>
-                  </TableCell>
-                  <TableCell>{playerStat.map_position}</TableCell>
-                  <TableCell>{getPlayerScore(playerStat)}</TableCell>
-                  <TableCell>{playerStat.games_completed}</TableCell>
-                  <TableCell>{playerStat.games_dropped}</TableCell>
-                  <TableCell>{playerStat.rerolls}</TableCell>
-                  <TableCell>{playerStat.movies}</TableCell>
-                  <TableCell>{playerStat.sheikh_moments}</TableCell>
-                </TableRow>
-              ))}
+                        <LinkSpan
+                          color={getPlayerColor(
+                            playersById[playerStat.id].url_handle
+                          )}
+                        >
+                          {playersById[playerStat.id].name}
+                        </LinkSpan>
+                      </Link>
+                    </TableCell>
+                    <TableCell>{playerStat.map_position}</TableCell>
+                    <TableCell>{getPlayerScore(playerStat)}</TableCell>
+                    <TableCell>{playerStat.games_completed}</TableCell>
+                    <TableCell>{playerStat.games_dropped}</TableCell>
+                    <TableCell>{playerStat.rerolls}</TableCell>
+                    <TableCell>{playerStat.movies}</TableCell>
+                    <TableCell>{playerStat.sheikh_moments}</TableCell>
+                    <TableCell>
+                      <Tooltip title={playersById[playerStat.id].current_game}>
+                        <span
+                          style={{
+                            display: 'block',
+                            maxWidth: '285px',
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          {playersById[playerStat.id]?.current_game ||
+                            '<Ожидание аука>'}
+                        </span>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -306,6 +351,22 @@ export default function Leaderboard() {
 }
 
 export function getPlayerScore(player: PlayerStats) {
-  const row = Math.floor(player.map_position / 10) || 1
-  return (player.games_completed - player.games_dropped) * row
+  const shortGames = player.short_games || 0
+  const mediumGames = player.medium_games || 0
+  const longGames = player.long_games || 0
+  const tinyGames = player.tiny_games || 0
+
+  const shortGamesScore = (shortGames + tinyGames) * 1
+  const mediumGamesScore = mediumGames * 1.5
+  const longGamesScore = longGames * 2
+
+  const row = Math.ceil(player.map_position / 10)
+
+  return (
+    (shortGamesScore +
+      mediumGamesScore +
+      longGamesScore -
+      player.games_dropped) *
+    row
+  )
 }

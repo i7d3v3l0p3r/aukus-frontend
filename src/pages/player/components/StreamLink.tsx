@@ -8,13 +8,19 @@ type Props = {
 }
 
 export default function StreamLink({ player }: Props) {
+  const isKick = player.kick_stream_link?.length > 0
+  const showOnline = player.is_online
   return (
     <Link
-      to={player.twitch_stream_link || player.vk_stream_link}
+      to={
+        player.twitch_stream_link ||
+        player.kick_stream_link ||
+        player.vk_stream_link
+      }
       target="_blank"
       rel="noopener noreferrer"
     >
-      {player.is_online ? (
+      {showOnline ? (
         <OnlineButton player={player} />
       ) : (
         <OfflineButton player={player} />

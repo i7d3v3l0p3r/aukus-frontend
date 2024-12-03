@@ -1,4 +1,4 @@
-import { Box, Button, Link } from '@mui/material'
+import { Box, Button, Link, Tooltip } from '@mui/material'
 import useScreenSize from 'src/context/useScreenSize'
 import { Color } from 'utils/types'
 
@@ -9,11 +9,16 @@ const creators = [
   },
   {
     name: 'Wabar (Ваки)',
-    text: 'Графический дизайн',
+    text: 'Графический дизайн, карта',
   },
   {
     name: 'Рот в говне',
     text: 'Графический дизайн',
+    tooltip: 'Он сам так назывался',
+  },
+  {
+    name: 'Pepedg13ch',
+    text: 'Анимации',
   },
   {
     name: 'CorruptedMushroom',
@@ -23,10 +28,10 @@ const creators = [
     name: 'olegsvs',
     text: 'Сайт, домен, хостинг, бекенд',
   },
-  {
-    name: 'gawk',
-    text: 'Домен, хостинг',
-  },
+  // {
+  //   name: 'gawk',
+  //   text: 'Домен, хостинг',
+  // },
   {
     name: 'kozjar',
     text: 'Интеграция с PointAuc.com',
@@ -61,10 +66,85 @@ const creators = [
   },
 ]
 
-const sponsors: string[] = ['Стань первым']
+type Payment = {
+  name: string
+  text: string
+  amount: number
+}
+
+const sponsors: Payment[] = [
+  {
+    name: 'CruxTerminatus',
+    amount: 500,
+    text: 'а я еще дам деняк на пиво (или не на пиво)',
+  },
+  {
+    name: 'Tsessarsky',
+    text: 'Спасибо за ивент!',
+    amount: 5000,
+  },
+  {
+    name: 'Arrivelen',
+    text: 'Я Пепега! Спасибо всем ребятам за все что вы делаете <3',
+    amount: 5000,
+  },
+  {
+    name: 'Balabama',
+    text: 'Кто прочитал это сообщение, обязан закинуть 100 рублей разрабам на бусти',
+    amount: 5000,
+  },
+  {
+    name: 'Юзя',
+    text: 'Спасибо вам всем огромное от всей души за сайт и интеграцию с поинтауком! ❤️',
+    amount: 5000,
+  },
+  {
+    name: 'Virtuoz',
+    text: 'делайте красиво',
+    amount: 1000,
+  },
+  {
+    name: 'alevser',
+    text: 'летс гооо',
+    amount: 777,
+  },
+  {
+    name: 'Vagner',
+    text: '❤️',
+    amount: 500,
+  },
+  {
+    name: 'CruxTerminatus',
+    text: 'Спонсируем хорошее настроение',
+    amount: 500,
+  },
+  {
+    name: 'Tr4visTouchd0wn',
+    amount: 300,
+    text: '',
+  },
+  { name: 'Quizy', text: '', amount: 300 },
+]
 
 export default function AboutContent() {
   const { headerSize } = useScreenSize()
+
+  const groupDuplicateSponsors = (sponsors: Payment[]) => {
+    const result: Payment[] = []
+    sponsors.forEach((sponsor) => {
+      const existing = result.find((item) => item.name === sponsor.name)
+      if (existing) {
+        existing.amount += sponsor.amount
+      } else {
+        result.push({ ...sponsor })
+      }
+    })
+    return result
+  }
+
+  const grouped = groupDuplicateSponsors(sponsors)
+  const sponsorsSortedByAmount = grouped.sort((a, b) => b.amount - a.amount)
+
   return (
     <Box display="flex" justifyContent="center">
       <Box
@@ -96,10 +176,13 @@ export default function AboutContent() {
           Наши спонсоры
         </Box>
         <Box marginTop={'10px'} fontSize={'20px'}>
-          {sponsors.map((item, index) => {
+          {sponsorsSortedByAmount.map((item, index) => {
+            const hasText = item.text.length > 0
+            const text = hasText && item.amount >= 5000 ? ` — ${item.text}` : ''
             return (
               <Box marginTop={'20px'} key={index} color={'white'}>
-                {item}
+                {item.name}
+                <span style={{ color: Color.greyNew }}>{text}</span>
               </Box>
             )
           })}
@@ -111,7 +194,9 @@ export default function AboutContent() {
           {creators.map((item, index) => {
             return (
               <Box key={index} marginTop={'20px'}>
-                <span style={{ color: 'white' }}>{item.name}</span>{' '}
+                <Tooltip title={item.tooltip} key={index}>
+                  <span style={{ color: 'white' }}>{item.name}</span>
+                </Tooltip>{' '}
                 <span style={{ color: Color.greyNew }}>— {item.text}</span>
               </Box>
             )

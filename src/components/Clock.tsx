@@ -22,5 +22,9 @@ export default function Clock() {
     return () => clearInterval(interval)
   }, [])
 
-  return <Box fontFamily={'monospace'}>{time} МСК</Box>
+  return (
+    <Box>
+      <span style={{ fontFamily: 'PT mono' }}>{time}</span> МСК
+    </Box>
+  )
 }

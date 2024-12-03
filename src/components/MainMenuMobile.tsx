@@ -8,7 +8,7 @@ import RulesIcon from 'assets/icons/rules.svg'
 import AboutIcon from 'assets/icons/about.svg'
 import LinkSpan from './LinkSpan'
 import { useUser } from 'src/context/UserProvider'
-import { Color, getPlayerColor, Page } from 'src/utils/types'
+import { Color, getPlayerColor, Page, PlayerUrl } from 'src/utils/types'
 import Clock from './Clock'
 
 type Props = {
@@ -17,7 +17,9 @@ type Props = {
 
 export default function MainMenuMobile({ currentPage }: Props) {
   const currentUser = useUser()
-  const playerColor = getPlayerColor(currentUser?.url_handle || '')
+  const playerColor = currentUser?.url_handle
+    ? getPlayerColor(currentUser.url_handle)
+    : Color.blueLight
   const urlHandle = currentUser?.url_handle
 
   return (
@@ -51,7 +53,7 @@ export default function MainMenuMobile({ currentPage }: Props) {
               height={'15px'}
               style={{ marginRight: '8px' }}
             />
-            АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
+            АУКУС 2024 {currentUser && `// ${currentUser.name}`}
           </LinkSpan>
         </Link>
         <Box

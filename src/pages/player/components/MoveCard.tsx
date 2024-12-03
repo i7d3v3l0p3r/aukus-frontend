@@ -7,14 +7,14 @@ import { updateVodLink } from 'utils/api'
 import { PlayerMove, Color, Player, getPlayerColor } from 'utils/types'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 import EditVodModal from './EditVodModal'
-import { formatDate, formatNumber } from './utils'
+import { formatDate, formatNumber, hasEditPermission } from './utils'
 import TextRender from './TextRender'
 import { Link } from 'react-router-dom'
 
 type Props = {
   id: number
   move: PlayerMove
-  player?: Player
+  player: Player
   displayType?: 'map' | 'player'
   onSave?: () => void
 }
@@ -51,11 +51,7 @@ export default function MoveCard({
     gameImage = gameImage.replace('{width}', '200').replace('{height}', '300')
   }
 
-  const canEdit =
-    (currentUser?.role === 'player' &&
-      currentUser?.user_id === move.player_id) ||
-    (currentUser?.role === 'moder' && currentUser?.moder_for === move.player_id)
-
+  const canEdit = hasEditPermission(currentUser, player?.id)
   const updateVod = useMutation({ mutationFn: updateVodLink })
   const queryClient = useQueryClient()
 
@@ -94,7 +90,7 @@ export default function MoveCard({
 
   let moveTitle = `Ход — ${id}`
   if (player && displayType === 'map') {
-    moveTitle = player.name.toUpperCase()
+    moveTitle = player.name
   }
 
   return (
@@ -134,7 +130,9 @@ export default function MoveCard({
                       marginRight: '5px',
                     }}
                   />
-                  <Box>{moveTitle}</Box>
+                  <Box color={playerColor} fontWeight={600}>
+                    {moveTitle}
+                  </Box>
                 </Box>
               </Link>
             )}

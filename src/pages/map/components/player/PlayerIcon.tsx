@@ -1,7 +1,13 @@
 import { Box } from '@mui/material'
 import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useRef, useState } from 'react'
-import { Color, getPlayerColor, MoveParams, Player } from 'utils/types'
+import {
+  Color,
+  getPlayerColor,
+  MoveParams,
+  Player,
+  PlayerUrl,
+} from 'utils/types'
 import PlayerGreen from 'assets/map/PlayerGreen.webp'
 import PlayerGreenLight from 'assets/map/PlayerGreenLight.webp'
 import PlayerRed from 'assets/map/PlayerRed.webp'
@@ -13,6 +19,8 @@ import PlayerPink from 'assets/map/PlayerPink.webp'
 import PlayerPinkLight from 'assets/map/PlayerPinkLight.webp'
 import PlayerOrange from 'assets/map/PlayerOrange.webp'
 import PlayerPurple from 'assets/map/PlayerPurple.webp'
+import PlayerYellow from 'assets/map/PlayerYellow.webp'
+import PlayerBiege from 'assets/map/PlayerBiege.webp'
 
 import PlayerPurpleMoving from 'assets/map/PlayerPurpleMoving.gif'
 import PlayerOrangeMoving from 'assets/map/PlayerOrangeMoving.gif'
@@ -25,37 +33,45 @@ import PlayerBlueDarkMoving from 'assets/map/PlayerBlueDarkMoving.gif'
 import PlayerGreenMoving from 'assets/map/PlayerGreenMoving.gif'
 import PlayerGreenLightMoving from 'assets/map/PlayerGreenLightMoving.gif'
 import PlayerBrownMoving from 'assets/map/PlayerBrownMoving.gif'
+import PlayerBiegeMoving from 'assets/map/PlayerBiegeMoving.gif'
+import PlayerYellowMoving from 'assets/map/PlayerYellowMoving.gif'
 
 import { cellSize } from '../../types'
 import PlayerPopup from './PlayerPopup'
 import { getMapCellById, laddersByCell, snakesByCell } from '../utils'
 
-const playerIcons: { [key: string]: string } = {
+const playerIcons: { [key in PlayerUrl]: string } = {
   lasqa: PlayerBlue,
+  segall: PlayerGreen,
   praden: PlayerBrown,
   predan: PlayerBrown,
-  roadhouse: PlayerPurple,
-  segall: PlayerOrange,
-  artur: PlayerRed,
+  browjey: PlayerOrange,
   uselessmouth: PlayerPink,
-  unclobjorn: PlayerBlueDark,
+  roadhouse: PlayerPurple,
   melharucos: PlayerBlueLight,
-  browjey: PlayerGreen,
-  f1ashko: PlayerPinkLight,
+  maddyson: PlayerYellow,
+  vovapain: PlayerRed,
+  timofey: PlayerGreenLight,
+  unclebjorn: PlayerPinkLight,
+  krabick: PlayerBlueDark,
+  keliq_q: PlayerBiege,
 }
 
-const playerMovingIcons: { [key: string]: string } = {
+const playerMovingIcons: { [key in PlayerUrl]: string } = {
   lasqa: PlayerBlueMoving,
+  segall: PlayerGreenMoving,
   praden: PlayerBrownMoving,
   predan: PlayerBrownMoving,
-  roadhouse: PlayerPurpleMoving,
-  segall: PlayerOrangeMoving,
-  artur: PlayerRedMoving,
+  browjey: PlayerOrangeMoving,
   uselessmouth: PlayerPinkMoving,
-  unclobjorn: PlayerBlueDarkMoving,
+  roadhouse: PlayerPurpleMoving,
   melharucos: PlayerBlueLightMoving,
-  browjey: PlayerGreenMoving,
-  f1ashko: PlayerPinkLightMoving,
+  maddyson: PlayerYellowMoving,
+  vovapain: PlayerRedMoving,
+  timofey: PlayerGreenLightMoving,
+  unclebjorn: PlayerPinkLightMoving,
+  krabick: PlayerBlueDarkMoving,
+  keliq_q: PlayerBiegeMoving,
 }
 
 type Props = {

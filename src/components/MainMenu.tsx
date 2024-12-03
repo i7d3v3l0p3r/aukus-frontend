@@ -11,6 +11,8 @@ import useScreenSize from 'src/context/useScreenSize'
 import MainMenuMobile from './MainMenuMobile'
 import Clock from './Clock'
 import FloatingClock from './FloatingClock'
+import MultistreamButton from 'src/pages/players/components/MultistreamButton'
+import DifficultyButton from 'src/pages/rules/components/DifficultyButton'
 
 type Props = {
   currentPage: Page
@@ -27,13 +29,23 @@ export default function MainMenu({
 }: Props) {
   const currentUser = useUser()
   const { isMobile } = useScreenSize()
-  const playerColor = getPlayerColor(currentUser?.url_handle || '')
+  const playerColor = currentUser?.url_handle
+    ? getPlayerColor(currentUser.url_handle)
+    : Color.blueLight
   const urlHandle = currentUser?.url_handle
 
   const enableScrollRestoration = currentPage !== 'map'
 
   if (isMobile) {
     return <MainMenuMobile currentPage={currentPage} />
+  }
+
+  if (!leftSlot && currentUser) {
+    leftSlot = <DifficultyButton />
+  }
+
+  if (!rightSlot) {
+    rightSlot = <MultistreamButton />
   }
 
   return (
@@ -100,7 +112,7 @@ export default function MainMenu({
                 height={'15px'}
                 style={{ marginRight: '8px' }}
               />
-              АУКУС Сезон 3 {currentUser && `// ${currentUser.name}`}
+              АУКУС 2024 {currentUser && `// ${currentUser.name}`}
             </LinkSpan>
           </Link>
           <Box

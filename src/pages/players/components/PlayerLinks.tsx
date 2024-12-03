@@ -44,6 +44,18 @@ export default function PlayerLinks({ player }: Props) {
           </LinkSpan>
         </Link>
       )}
+      {player.kick_stream_link && (
+        <Link
+          to={player.kick_stream_link}
+          target="_blank"
+          rel="noopener nereferrer"
+          style={{ marginRight: linksMargin }}
+        >
+          <LinkSpan color={Color.green} style={{ fontSize: '20px' }}>
+            Кик
+          </LinkSpan>
+        </Link>
+      )}
       {player.telegram_link && (
         <Link
           to={player.telegram_link}

@@ -92,7 +92,11 @@ export default function PlayerPopup({
           {player.is_online ? (
             <Box fontSize={'14px'} fontWeight={600}>
               <Link
-                to={player.twitch_stream_link || player.vk_stream_link}
+                to={
+                  player.twitch_stream_link ||
+                  player.kick_stream_link ||
+                  player.vk_stream_link
+                }
                 target="_blank"
                 rel="noopener noreferrer"
               >
