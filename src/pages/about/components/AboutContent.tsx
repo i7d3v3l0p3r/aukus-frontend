@@ -99,6 +99,11 @@ const sponsors: Payment[] = [
     amount: 5000,
   },
   {
+    name: 'Sppoo',
+    text: '',
+    amount: 1000,
+  },
+  {
     name: 'Virtuoz',
     text: 'делайте красиво',
     amount: 1000,
