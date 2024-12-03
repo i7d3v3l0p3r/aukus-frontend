@@ -99,7 +99,7 @@ export default function MapComponent() {
   const { data: playersData } = useQuery({
     queryKey: ['players'],
     queryFn: () => fetchPlayers(),
-    refetchInterval: 1000 * 30,
+    refetchInterval: 2000,
     enabled: !makingTurn,
   })
 
