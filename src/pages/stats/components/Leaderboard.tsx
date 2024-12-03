@@ -308,10 +308,7 @@ export default function Leaderboard() {
                     </TableCell>
                     <TableCell>
                       <Link to={`/players/${player.url_handle}`}>
-                        <LinkSpan
-                          color={getPlayerColor(player.url_handle)}
-                          underlineColor="white"
-                        >
+                        <LinkSpan color={getPlayerColor(player.url_handle)}>
                           {player.name}
                         </LinkSpan>
                       </Link>
