@@ -378,7 +378,15 @@ export default function PlayerIcon({
               src={playerIcon}
               width={'40px'}
               alt=""
-              style={{ verticalAlign: 'middle' }}
+              style={{
+                verticalAlign: 'middle',
+                // boxShadow: 'inset 0px 0px 30px 10px rgba(0, 0, 0, 0.4)',
+                // boxShadow: `0px 0px 20px 10px rgba(0, 0, 0, 0.8)`,
+                filter: 'drop-shadow(0px -1px 10px rgba(0,0,0,0.9))',
+                // boxShadow: '0px 20px 20px rgba(0, 0, 0, 0.5)',
+                // border: '5px solid white',
+                borderRadius: '5px',
+              }}
             />
           )}
           <p style={{ padding: 0, margin: 0, lineHeight: 1 }}>
