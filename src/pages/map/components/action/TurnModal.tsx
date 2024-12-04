@@ -114,24 +114,27 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
       gameNamesData.games.length > 0 &&
       gameName.length > 3
     ) {
-      const matchingUrl =
-        gameNamesData.games.find((game) => game.gameName === gameName)
-          ?.box_art_url || gameNamesData.games[0].box_art_url
+      const matchingUrl = gameNamesData.games.find(
+        (game) =>
+          game.gameName === gameName || game.gameName === gameNameOptions[0]
+      )?.box_art_url
 
-      const imageUrl = matchingUrl
-        .replace('{width}', '200')
-        .replace('{height}', '300')
+      if (matchingUrl) {
+        const imageUrl = matchingUrl
+          .replace('{width}', '200')
+          .replace('{height}', '300')
 
-      const validateImage = async (url: string) => {
-        const isValid = await checkImageValid(url)
-        setGameImage(isValid ? url : null)
+        const validateImage = async (url: string) => {
+          const isValid = await checkImageValid(url)
+          setGameImage(isValid ? url : null)
+        }
+
+        validateImage(imageUrl)
       }
-
-      validateImage(imageUrl)
     } else {
       setGameImage(null) // No game data
     }
-  }, [gameNamesData?.games, gameName])
+  }, [gameNamesData?.games, gameName, gameNameOptions])
 
   const handleRatingChange = (
     _: React.SyntheticEvent,
