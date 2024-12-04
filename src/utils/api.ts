@@ -86,11 +86,28 @@ export async function fetchGameNames(name: string): Promise<GamesResponse> {
   if (MOCK_API) {
     console.log('fetching game names', name)
     return Promise.resolve({
-      games: times(20, (index) => ({
-        gameName: `${name} ${index}`,
-        box_art_url: `https://static-cdn.jtvnw.net/ttv-boxart/${index}-{width}x{height}.jpg`,
-        id: index,
-      })),
+      games: [
+        {
+          gameName: `Worms 3d`,
+          box_art_url: `https://static-cdn.jtvnw.net/ttv-boxart/${1}-{width}x{height}.jpg`,
+          id: 1,
+        },
+        {
+          gameName: `Earthworm Jim`,
+          box_art_url: `https://static-cdn.jtvnw.net/ttv-boxart/${2}-{width}x{height}.jpg`,
+          id: 2,
+        },
+        {
+          gameName: `Worms World Party`,
+          box_art_url: `https://static-cdn.jtvnw.net/ttv-boxart/${3}-{width}x{height}.jpg`,
+          id: 3,
+        },
+        {
+          gameName: `Worms Armageddon`,
+          box_art_url: `https://static-cdn.jtvnw.net/ttv-boxart/${4}-{width}x{height}.jpg`,
+          id: 4,
+        },
+      ],
     })
   }
 

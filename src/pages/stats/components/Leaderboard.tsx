@@ -364,7 +364,7 @@ export default function Leaderboard() {
                           }}
                         >
                           <LinkSpan
-                            color={'white'}
+                            color={getPlayerColor(player.url_handle)}
                             hideUnderline={!player?.is_online}
                             style={{
                               maxWidth: '285px',
