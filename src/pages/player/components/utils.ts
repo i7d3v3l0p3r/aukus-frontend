@@ -64,5 +64,5 @@ export function formatSecondsToTime(seconds: number | string): string | null {
   const hours = Math.floor(totalSeconds / 3600)
   const minutes = Math.floor((totalSeconds % 3600) / 60)
 
-  return `${hours}ч${minutes}м`
+  return `${hours}ч ${minutes}м`
 }
