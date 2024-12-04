@@ -391,11 +391,11 @@ function ContentItem({ text }: { text: string }) {
     return (
       <>
         <Link
-          href={'https://wheelofnames.com/ru/2r3-q2j'}
+          href={'https://wheelofnames.com/ru/th2-utw'}
           rel="noopener nereferrer"
           target="_blank"
         >
-          <LinkSpan color={Color.blue}>wheelofnames.com/ru/2r3-q2j</LinkSpan>
+          <LinkSpan color={Color.blue}>wheelofnames.com/ru/th2-utw</LinkSpan>
         </Link>
       </>
     )
