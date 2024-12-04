@@ -606,7 +606,7 @@ export default function MapComponent() {
         )}
         {timelapseEnabled && <TimelapseButton variant="big" />}
       </StaticPanel>
-      <TodaysMoves />
+      <TodaysMoves players={playersData?.players || []} />
     </Box>
   )
 }
