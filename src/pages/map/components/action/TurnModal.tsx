@@ -88,6 +88,22 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   let gameNameOptions: string[] = []
   if (gameName.length > 3 && gameNamesData && moveType !== 'movie') {
     gameNameOptions = gameNamesData.games.map((game) => game.gameName)
+    // sort game name options by position of matching gameName
+    gameNameOptions.sort((a, b) => {
+      const lowerGameName = gameName.toLowerCase()
+      const aIndex = a.toLowerCase().indexOf(lowerGameName)
+      const bIndex = b.toLowerCase().indexOf(lowerGameName)
+
+      // Items with earlier matches come first
+      if (aIndex !== bIndex) {
+        if (aIndex === -1) return 1 // No match for 'a'
+        if (bIndex === -1) return -1 // No match for 'b'
+        return aIndex - bIndex // Compare positions
+      }
+
+      // If match positions are equal or both don't match, maintain original order
+      return 0
+    })
   }
 
   const hltbLink = `https://howlongtobeat.com/?q=${gameName}`
