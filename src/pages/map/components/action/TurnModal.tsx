@@ -22,7 +22,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { fetchGameNames } from 'utils/api'
 import ImagePlaceholder from 'assets/icons/image_placeholder.svg?react'
 
@@ -36,7 +36,7 @@ import {
   Player,
 } from 'utils/types'
 import NumRating from './NumRating'
-import { isNumber } from 'lodash'
+import { debounce, isNumber } from 'lodash'
 import { checkImageValid } from '../utils'
 
 type Props = {
@@ -50,10 +50,25 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
   const [rating, setRating] = useState<number | null>(null)
   const [ratingHover, setRatingHover] = useState<number | null>(null)
   const [gameName, setGameName] = useState(player.current_game || '')
+  const [debouncedGameName, setDebouncedGameName] = useState('')
   const [review, setReview] = useState('')
   const [gameHours, setGameHours] = useState<ItemLength | null>(null)
   const [moveType, setMoveType] = useState<MoveType | null>(null)
   const [gameImage, setGameImage] = useState<string | null>(null)
+
+  const debounceGameName = useCallback(
+    debounce((value: string) => {
+      setDebouncedGameName(value)
+    }, 100),
+    []
+  )
+
+  useEffect(() => {
+    debounceGameName(gameName)
+    return () => {
+      debounceGameName.cancel()
+    }
+  }, [gameName])
 
   useEffect(() => {
     if (player.current_game) {
@@ -62,28 +77,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     setGameImage(null)
   }, [player.current_game])
 
-  const {
-    data: gameNamesData,
-    dataUpdatedAt: updateTs,
-    refetch,
-    fetchStatus,
-    status,
-  } = useQuery({
-    queryKey: ['game_names_action_modal'],
-    queryFn: () => fetchGameNames(gameName),
-    enabled: gameName.length > 3 && moveType !== 'movie',
+  const { data: gameNamesData } = useQuery({
+    queryKey: ['game_names_action_modal', debouncedGameName],
+    queryFn: () => fetchGameNames(debouncedGameName),
+    enabled: debouncedGameName.length > 3,
   })
-
-  useEffect(() => {
-    if (
-      status !== 'pending' &&
-      fetchStatus === 'idle' &&
-      gameName.length > 3 &&
-      updateTs + 500 < Date.now()
-    ) {
-      refetch()
-    }
-  }, [gameName.length, status, fetchStatus, updateTs, refetch])
 
   let gameNameOptions: string[] = []
   if (gameName.length > 3 && gameNamesData && moveType !== 'movie') {
@@ -373,11 +371,11 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
               onChange={(_, newValue) => {
                 setGameName(newValue || '')
               }}
+              onInputChange={(_, newValue) => {
+                setGameName(newValue)
+              }}
               renderInput={(params) => (
                 <TextField
-                  onChange={(
-                    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                  ) => setGameName(event.target.value)}
                   {...params}
                   style={{
                     paddingTop: '10px',
