@@ -81,6 +81,7 @@ export default function TurnModal({ open, onClose, onConfirm, player }: Props) {
     queryKey: ['game_names_action_modal', debouncedGameName],
     queryFn: () => fetchGameNames(debouncedGameName),
     enabled: debouncedGameName.length > 3,
+    staleTime: 1000 * 60 * 60,
   })
 
   let gameNameOptions: string[] = []
