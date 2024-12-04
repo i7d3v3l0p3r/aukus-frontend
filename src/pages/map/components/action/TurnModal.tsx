@@ -36,7 +36,8 @@ import {
   Player,
 } from 'utils/types'
 import NumRating from './NumRating'
-import { debounce, isNumber } from 'lodash'
+import isNumber from 'lodash/isNumber'
+import debounce from 'lodash/debounce'
 import { checkImageValid } from '../utils'
 
 type Props = {
