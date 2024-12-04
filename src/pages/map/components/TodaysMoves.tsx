@@ -13,7 +13,6 @@ type Props = {
 export default function TodaysMoves({ players }: Props) {
   const { headerSize } = useScreenSize()
   const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-  const formattedDate = today.toISOString().split('T')[0]
 
   const { data: todaysMoves, refetch: refetchMoves } = useQuery({
     queryKey: ['todaysMoves'],
