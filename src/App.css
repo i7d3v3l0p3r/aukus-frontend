@@ -261,3 +261,7 @@ span.MuiSlider-thumb:active {
 div#root {
   padding-top: 15px;
 }
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+}

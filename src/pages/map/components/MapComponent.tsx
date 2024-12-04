@@ -403,7 +403,7 @@ export default function MapComponent() {
             >
               <Box>
                 До конца ивента{' — '}
-                <span style={{ fontFamily: 'PT mono' }}>{timerText}</span>
+                <span className={'mono'}>{timerText}</span>
               </Box>
             </Box>
           </Box>
